@@ -26,4 +26,7 @@ public class RecipeService {
 		recipeRepository.save(recipe);
 	}
 
+	public boolean existsByTitle(String title) {
+		return recipeRepository.existsByTitle(title);
+	}
 }
