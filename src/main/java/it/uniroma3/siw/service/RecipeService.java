@@ -12,13 +12,18 @@ public class RecipeService {
 	@Autowired
 	private RecipeRepository recipeRepository;
 
-	
+	//ricetta con id 
 	public Recipe findById(Long id) {
 		return recipeRepository.findById(id).get();
 	}
 	
+	//tutte le ricette 
 	public Iterable<Recipe> findAll() {
 		return recipeRepository.findAll();
+	}
+	
+	public void save(Recipe recipe) {
+		recipeRepository.save(recipe);
 	}
 
 }
