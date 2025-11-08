@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Elenco Ricette</title>
+   <link rel="stylesheet" href="/css/stile.css">
+</head>
+<body>
+    <h1>Elenco Ricette</h1>
+
+    <ul>
+        <li th:each="recipe : ${recipes}">
+            <a th:href="@{'/recipe/' + ${recipe.id}}" th:text="${recipe.name}">Nome ricetta</a>
+        </li>
+    </ul>
+
+    <p th:if="${#lists.isEmpty(recipes)}">Nessuna ricetta trovata.</p>
+</body>
+</html>
