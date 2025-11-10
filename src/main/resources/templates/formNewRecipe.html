@@ -44,6 +44,12 @@
             <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
         </div>
 
+		<!-- Procedimento -->
+		        <div>
+		            <label>Procedimento:</label>
+		            <textarea th:field="*{procedure}"></textarea>
+		            <span th:if="${#fields.hasErrors('procedure')}" th:errors="*{procedure}"></span>
+		        </div>
         <!-- Tempo di preparazione -->
         <div>
             <label>Tempo di preparazione (minuti):</label>
@@ -71,6 +77,8 @@
             <input type="number" th:field="*{servings}" min="1" />
             <span th:if="${#fields.hasErrors('servings')}" th:errors="*{servings}"></span>
         </div>
+		
+		
 
         <!-- Pulsante di submit -->
         <div>

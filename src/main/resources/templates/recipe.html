@@ -47,11 +47,15 @@
 	    </li>
 	</ul>
 
+	<!-- SEZIONE PROCEDIMENTO -->
+	<h3>Procedimento</h3>
+	<p th:text="${recipe.procedure}">Qui ci sarà il procedimento della ricetta...</p>
+
 
     <!-- FORM PER AGGIUNGERE NUOVO INGREDIENTE -->
   
 	
-	<h3>Aggiungi Ingrediente</h3>
+	<h4>Aggiungi Ingrediente</h4>
 	<form th:action="@{/recipe/{id}(id=${recipe.id})}" th:object="${ingredient}" method="post">
 	    <label>Nome: <input type="text" th:field="*{name}" /></label><br/>
 	    <label>Quantità: <input type="text" th:field="*{quantity}" /></label><br/>
