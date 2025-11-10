@@ -35,6 +35,20 @@
     <p><strong>Difficoltà:</strong> <span th:text="${recipe.difficulty}">Facile</span></p>
     <p><strong>Porzioni:</strong> <span th:text="${recipe.servings}">1</span></p>
 
+    <!-- SEZIONE INGREDIENTI INTEGRATA -->
+    <h2>Ingredienti</h2>
+    <ul>
+        <li th:each="ing : ${recipe.ingredients}" th:text="${ing.name}">Ingrediente</li>
+    </ul>
+
+    <!-- FORM PER AGGIUNGERE NUOVO INGREDIENTE -->
+    <h3>Aggiungi Ingrediente</h3>
+    <form th:action="@{/recipe/{id}(id=${recipe.id})}" th:object="${ingredient}" method="post">
+        <label>Nome: <input type="text" th:field="*{name}" /></label>
+        <button type="submit">Aggiungi</button>
+    </form>
+
+    <br>
     <a href="/recipes">Torna all'elenco delle ricette</a>
 </body>
 

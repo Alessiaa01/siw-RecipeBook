@@ -5,6 +5,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import jakarta.persistence.OneToMany;
+import java.util.Set;
+
 // Non sono necessari altri import per gli attributi semplici richiesti
 
 @Entity
@@ -44,6 +47,9 @@ public class Recipe {
         this.imageUrl = imageUrl;
         this.servings = servings;
     }
+
+    @OneToMany
+    private Set<Ingredient> ingredients;
 
     // --- Getter e Setter ---
 
@@ -102,6 +108,15 @@ public class Recipe {
     public void setServings(Integer servings) {
         this.servings = servings;
     }
+    
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
 
     // --- Metodi equals e hashCode (importanti per la persistenza e il confronto) ---
     // Due oggetti Recipe sono considerati uguali se hanno lo stesso titolo.
