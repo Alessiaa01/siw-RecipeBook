@@ -16,6 +16,9 @@ public class Ingredient {
     private Long id;
 
     private String name;
+    
+    private String quantity; // es. "100"
+    private String unit;     // es. "g", "ml", "pz"
 
    // private String quantity; // opzionale, se vuoi specificare quantità tipo "100g", "2 cucchiai", ecc.
 
@@ -40,7 +43,7 @@ public class Ingredient {
     public void setName(String name) {
         this.name = name;
     }
-/*
+
     public String getQuantity() {
         return quantity;
     }
@@ -48,7 +51,15 @@ public class Ingredient {
     public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
-*/
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+    
     public Recipe getRecipe() {
         return recipe;
     }

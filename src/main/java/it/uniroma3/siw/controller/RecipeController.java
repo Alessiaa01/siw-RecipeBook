@@ -73,6 +73,8 @@ public class RecipeController {
         // Crea sempre un nuovo ingrediente
         Ingredient newIngredient = new Ingredient();
         newIngredient.setName(ingredient.getName());
+        newIngredient.setQuantity(ingredient.getQuantity());
+        newIngredient.setUnit(ingredient.getUnit());
         newIngredient.setRecipe(recipe);
 
         ingredientService.save(newIngredient);
