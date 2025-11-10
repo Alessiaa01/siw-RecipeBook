@@ -5,9 +5,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 
 import jakarta.persistence.OneToMany;
 import java.util.Set;
+import java.util.HashSet;
 
 // Non sono necessari altri import per gli attributi semplici richiesti
 
@@ -32,7 +34,10 @@ public class Recipe {
     private Integer servings; // Numero di porzioni
     
     @Column(length = 5000) 
-    private String procedure;
+    private String procedure; //procedimento
+    
+    private String category; //categoria es antipasto, primo, secondo , dolce
+    
 
     // ---------------------------------------------------------------------------------
     // Costruttori, Getter, Setter, equals e hashCode
@@ -54,6 +59,12 @@ public class Recipe {
 
     @OneToMany
     private Set<Ingredient> ingredients;
+    
+    @ElementCollection
+    private Set<String> tags = new HashSet<>();
+
+   
+
 
     // --- Getter e Setter ---
 
@@ -129,6 +140,22 @@ public class Recipe {
         this.procedure = procedure;
     }
 
+    
+    public Set<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<String> tags) {
+        this.tags = tags;
+    }
+    
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category =  category;
+    }
     // --- Metodi equals e hashCode (importanti per la persistenza e il confronto) ---
     // Due oggetti Recipe sono considerati uguali se hanno lo stesso titolo.
     // In un sistema reale, dovresti considerare anche l'Utente che l'ha creata

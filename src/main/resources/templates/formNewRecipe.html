@@ -3,88 +3,125 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Nuova Ricetta</title>
+    <title>Nuova Ricetta - Cookbook</title>
     <link rel="stylesheet" href="/css/stile.css" />
 </head>
 
 <body>
     <header>
-        <div th:if="${userDetails}">
-            <span th:text="${userDetails.username}"></span>
-            <a href="/logout">Logout</a>
-        </div>
-        <div th:unless="${userDetails}">
-            <a href="/login">Login</a>
+        <div class="header-content">
+            <div class="logo">
+                <a href="/">
+                    <img src="/images/logo-siw.png" width="100" alt="Logo Siw Cookbook"/>
+                </a>
+            </div>
+            
+            <div class="user-area">
+                <div th:if="${userDetails}">
+                    Ciao, <span th:text="${userDetails.username}"></span>
+                    <a href="/logout">Logout</a>
+                </div>
+                <div th:unless="${userDetails}">
+                    <a href="/login">Login</a>
+                </div>
+            </div>
         </div>
     </header>
     
-    <div>
-        <a href="/"><img src="/images/logo-siw.png" width="50%"/></a>
-    </div>
+    <main>
+        <h1>Aggiungi una ricetta</h1>
 
-    <h1>Aggiungi una ricetta</h1>
+        <form th:action="@{/recipe}" method="POST" th:object="${recipe}">
+            
+            <div th:if="${#fields.hasGlobalErrors()}" class="global-errors">
+                <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p> 
+            </div>
 
-    <form th:action="@{/recipe}" method="POST" th:object="${recipe}">
-        <!-- Errori globali -->
-        <div th:if="${#fields.hasGlobalErrors()}">
-            <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p> 
-        </div>
+            <fieldset>
+                <legend>Informazioni Base</legend>
 
-        <!-- Titolo -->
-        <div>
-            <label>Titolo:</label>
-            <input type="text" th:field="*{title}" />
-            <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
-        </div>
+                <div>
+                    <label for="title-input">Titolo:</label>
+                    <input id="title-input" type="text" th:field="*{title}" />
+                    <span class="error-message" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+                </div>
 
-        <!-- Descrizione -->
-        <div>
-            <label>Descrizione:</label>
-            <textarea th:field="*{description}"></textarea>
-            <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
-        </div>
+                <div>
+                    <label for="description-input">Descrizione:</label>
+                    <textarea id="description-input" th:field="*{description}"></textarea>
+                    <span class="error-message" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+                </div>
 
-		<!-- Procedimento -->
-		        <div>
-		            <label>Procedimento:</label>
-		            <textarea th:field="*{procedure}"></textarea>
-		            <span th:if="${#fields.hasErrors('procedure')}" th:errors="*{procedure}"></span>
-		        </div>
-        <!-- Tempo di preparazione -->
-        <div>
-            <label>Tempo di preparazione (minuti):</label>
-            <input type="number" th:field="*{preparationTime}" min="1" />
-            <span th:if="${#fields.hasErrors('preparationTime')}" th:errors="*{preparationTime}"></span>
-        </div>
+                <div>
+                    <label for="procedure-input">Procedimento:</label>
+                    <textarea id="procedure-input" th:field="*{procedure}"></textarea>
+                    <span class="error-message" th:if="${#fields.hasErrors('procedure')}" th:errors="*{procedure}"></span>
+                </div>
+                
+                <div>
+                    <label for="imageUrl-input">URL Immagine (opzionale):</label>
+                    <input id="imageUrl-input" type="text" th:field="*{imageUrl}" placeholder="http://..." />
+                    <span class="error-message" th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}"></span>
+                </div>
+            </fieldset>
 
-        <!-- Difficoltà -->
-        <div>
-            <label>Difficoltà:</label>
-            <input type="text" th:field="*{difficulty}" />
-            <span th:if="${#fields.hasErrors('difficulty')}" th:errors="*{difficulty}"></span>
-        </div>
+            <fieldset>
+                <legend>Dettagli Tecnici</legend>
 
-        <!-- URL immagine -->
-        <div>
-            <label>URL immagine:</label>
-            <input type="text" th:field="*{imageUrl}" />
-            <span th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}"></span>
-        </div>
+                <div>
+                    <label for="preparationTime-input">Tempo di preparazione (minuti):</label>
+                    <input id="preparationTime-input" type="number" th:field="*{preparationTime}" min="1" />
+                    <span class="error-message" th:if="${#fields.hasErrors('preparationTime')}" th:errors="*{preparationTime}"></span>
+                </div>
 
-        <!-- Porzioni -->
-        <div>
-            <label>Porzioni:</label>
-            <input type="number" th:field="*{servings}" min="1" />
-            <span th:if="${#fields.hasErrors('servings')}" th:errors="*{servings}"></span>
-        </div>
-		
-		
+                <div>
+                    <label for="servings-input">Porzioni:</label>
+                    <input id="servings-input" type="number" th:field="*{servings}" min="1" />
+                    <span class="error-message" th:if="${#fields.hasErrors('servings')}" th:errors="*{servings}"></span>
+                </div>
+                
+                <div>
+                    <label for="difficulty-input">Difficoltà:</label>
+                    <input id="difficulty-input" type="text" th:field="*{difficulty}" placeholder="Es. Facile, Media, Difficile" />
+                    <span class="error-message" th:if="${#fields.hasErrors('difficulty')}" th:errors="*{difficulty}"></span>
+                </div>
+                
+            </fieldset>
 
-        <!-- Pulsante di submit -->
-        <div>
-            <button type="submit">Conferma</button>
-        </div>
-    </form>
-</body>
+            <fieldset>
+                <legend>Tag e Categorie</legend>
+                
+				<div>
+					<label>Categoria:
+					    <select th:field="*{category}">
+					        <option value="Antipasto">Antipasto</option>
+					        <option value="Primo">Primo</option>
+					        <option value="Secondo">Secondo</option>
+					        <option value="Dolce">Dolce</option>
+							<option value="Altro">Altro</option>
+					    </select>
+					</label><br/>
+				</div>
+				
+                <div>
+                    <label for="tags-select">Seleziona Tag (puoi selezionarne più di uno):</label>
+                    <select id="tags-select" th:field="*{tags}" multiple>
+                        <option value="">-- Seleziona uno o più tag --</option>
+                        <option value="Vegetariano">Vegetariano</option>
+                        <option value="Vegano">Vegano</option>
+                        <option value="Senza Glutine">Senza Glutine</option>
+                        <option value="Senza Lattosio">Senza Lattosio</option>
+                        </select>
+                    </div>
+            </fieldset>
+
+            <div class="submit-button">
+                <button type="submit">Conferma Aggiunta Ricetta</button>
+            </div>
+            
+        </form>
+    </main>
+    
+    </body>
 
 </html>

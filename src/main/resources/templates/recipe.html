@@ -51,9 +51,18 @@
 	<h3>Procedimento</h3>
 	<p th:text="${recipe.procedure}">Qui ci sarà il procedimento della ricetta...</p>
 
+	<h3>Tag:</h3>
+	<ul>
+	    <li th:each="tag : ${recipe.tags}" th:text="${tag}">Tag</li>
+	</ul>
 
     <!-- FORM PER AGGIUNGERE NUOVO INGREDIENTE -->
-  
+	
+	<!-- SEZIONE CATEGORIA -->
+	<div class="recipe-category">
+	    <h3>Categoria:</h3>
+	    <p th:text="${recipe.category}">Categoria Ricetta</p>
+	</div>
 	
 	<h4>Aggiungi Ingrediente</h4>
 	<form th:action="@{/recipe/{id}(id=${recipe.id})}" th:object="${ingredient}" method="post">
