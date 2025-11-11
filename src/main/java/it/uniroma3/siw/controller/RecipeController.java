@@ -84,4 +84,66 @@ public class RecipeController {
 
         return "redirect:/recipe/" + id; // rimani sulla stessa pagina della ricetta
     }
+  /*  
+    @PostMapping("/recipe/{recipeId}/ingredient/{ingredientId}/delete")
+    public String deleteIngredient(@PathVariable("recipeId") Long recipeId,
+                                   @PathVariable("ingredientId") Long ingredientId) {
+        Recipe recipe = recipeService.findById(recipeId);
+        Ingredient ingredient = ingredientService.findById(ingredientId);
+
+        if (recipe != null && ingredient != null) {
+            recipe.getIngredients().remove(ingredient); // rimuove dalla lista della ricetta
+            recipeService.save(recipe); // aggiorna la ricetta
+            ingredientService.delete(ingredient); // elimina l’ingrediente dal DB
+        }
+
+        return "redirect:/recipe/" + recipeId;
+    }
+*/
+    @GetMapping("/recipe/{id}/edit")
+    public String editRecipe(@PathVariable("id") Long id, Model model) {
+        Recipe recipe = recipeService.findById(id);
+        model.addAttribute("recipe", recipe);
+        model.addAttribute("ingredient", new Ingredient());
+        return "editRecipe.html";
+    }
+
+    @PostMapping("/recipe/{id}/update")
+    public String updateRecipe(@PathVariable("id") Long id, @ModelAttribute("recipe") Recipe updatedRecipe) {
+        Recipe recipe = recipeService.findById(id);
+
+        if (recipe != null) {
+            recipe.setTitle(updatedRecipe.getTitle());
+            recipe.setDescription(updatedRecipe.getDescription());
+            recipe.setPreparationTime(updatedRecipe.getPreparationTime());
+            recipe.setDifficulty(updatedRecipe.getDifficulty());
+            recipe.setServings(updatedRecipe.getServings());
+            recipe.setProcedure(updatedRecipe.getProcedure());
+            recipe.setCategory(updatedRecipe.getCategory());
+            recipe.setTags(updatedRecipe.getTags());
+
+            recipeService.save(recipe);
+        }
+
+        return "redirect:/recipe/" + id;
+    }
+
+   
+
+    @PostMapping("/recipe/{recipeId}/ingredient/{ingredientId}/remove")
+    public String removeIngredient(@PathVariable Long recipeId, @PathVariable Long ingredientId) {
+        Recipe recipe = recipeService.findById(recipeId);
+        Ingredient ingredient = ingredientService.findById(ingredientId);
+
+        if (recipe != null && ingredient != null) {
+            recipe.getIngredients().remove(ingredient); // rimuove dalla lista
+            recipeService.save(recipe); // salva la ricetta aggiornata
+        }
+
+        // orphanRemoval farà eliminare automaticamente l’ingrediente dal DB
+        return "redirect:/recipe/" + recipeId + "/edit";
+    }
+
+
+    
 }

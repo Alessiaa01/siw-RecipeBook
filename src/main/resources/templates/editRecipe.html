@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Modifica ' + ${recipe.title}">Modifica Ricetta</title>
+    <link rel="stylesheet" href="/css/stile.css"/>
+</head>
+<body>
+
+    <header>
+        <a href="/recipes">← Torna alle ricette</a>
+    </header>
+
+    <h1 th:text="'Modifica: ' + ${recipe.title}">Modifica Ricetta</h1>
+
+    <!-- FORM MODIFICA RICETTA -->
+    <form th:action="@{'/recipe/' + ${recipe.id} + '/update'}" th:object="${recipe}" method="post">
+        <label>Titolo:</label><br>
+        <input type="text" th:field="*{title}" /><br><br>
+
+        <label>Descrizione:</label><br>
+        <textarea th:field="*{description}" rows="3" cols="50"></textarea><br><br>
+
+        <label>Procedimento:</label><br>
+        <textarea th:field="*{procedure}" rows="5" cols="50"></textarea><br><br>
+
+        <label>Tempo di preparazione (minuti):</label><br>
+        <input type="number" th:field="*{preparationTime}" /><br><br>
+
+        <label>Difficoltà:</label><br>
+        <input type="text" th:field="*{difficulty}" /><br><br>
+
+        <label>Porzioni:</label><br>
+        <input type="number" th:field="*{servings}" /><br><br>
+
+        <label>Categoria:</label><br>
+        <select th:field="*{category}">
+            <option value="Antipasto">Antipasto</option>
+            <option value="Primo">Primo</option>
+            <option value="Secondo">Secondo</option>
+            <option value="Dolce">Dolce</option>
+        </select><br><br>
+
+        <label>Tag (es. vegetariana, vegana...):</label><br>
+        <input type="text" th:field="*{tags}" placeholder="Separati da virgola" /><br><br>
+
+        <button type="submit">💾 Salva modifiche</button>
+    </form>
+
+    <hr>
+
+    <!-- INGREDIENTI ESISTENTI -->
+    <h2>Ingredienti</h2>
+    <ul>
+        <li th:each="ingredient : ${recipe.ingredients}">
+            <span th:text="${ingredient.name}">Ingrediente</span> -
+            <span th:text="${ingredient.quantity}">Quantità</span> 
+            <span th:text="${ingredient.unit}">Unità</span>
+            
+            <!-- Bottone Rimuovi -->
+            <form th:action="@{'/recipe/' + ${recipe.id} + '/ingredient/' + ${ingredient.id} + '/remove'}"
+                  method="post" style="display:inline;">
+                <button type="submit">❌ Rimuovi</button>
+            </form>
+        </li>
+    </ul>
+
+    <!-- FORM AGGIUNTA NUOVO INGREDIENTE -->
+    <h3>Aggiungi nuovo ingrediente</h3>
+    <form th:action="@{'/recipe/' + ${recipe.id}}" th:object="${ingredient}" method="post">
+        <label>Nome:</label>
+        <input type="text" th:field="*{name}" required/><br>
+
+        <label>Quantità:</label>
+        <input type="text" th:field="*{quantity}" required/><br>
+
+        <label>Unità:</label>
+        <input type="text" th:field="*{unit}" /><br>
+
+        <button type="submit">➕ Aggiungi Ingrediente</button>
+    </form>
+
+</body>
+</html>

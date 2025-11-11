@@ -23,6 +23,8 @@
     </div>
 
     <h1 th:text="${recipe.title}">Titolo Ricetta</h1>
+	<a th:href="@{'/recipe/' + ${recipe.id} + '/edit'}">✏️ Modifica ricetta</a>
+
 
     <div>
         <img th:if="${recipe.imageUrl}" th:src="${recipe.imageUrl}" alt="Immagine Ricetta" width="300px"/>
@@ -38,15 +40,20 @@
     <!-- SEZIONE INGREDIENTI INTEGRATA -->
    
 	
+	
+
 	<h2>Ingredienti</h2>
 	<ul>
 	    <li th:each="ing : ${recipe.ingredients}">
 	        <span th:text="${ing.name}">Ingrediente</span> - 
 	        <span th:text="${ing.quantity}">0</span> 
 	        <span th:text="${ing.unit}">unità</span>
-	    </li>
+	        
+	        <!-- Pulsante per rimuovere l'ingrediente -->
+	       
 	</ul>
 
+	
 	<!-- SEZIONE PROCEDIMENTO -->
 	<h3>Procedimento</h3>
 	<p th:text="${recipe.procedure}">Qui ci sarà il procedimento della ricetta...</p>

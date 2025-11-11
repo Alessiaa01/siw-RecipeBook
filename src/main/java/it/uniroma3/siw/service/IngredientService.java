@@ -18,6 +18,10 @@ public class IngredientService {
     public Ingredient save(Ingredient ingredient) {
         return ingredientRepository.save(ingredient);
     }
+    
+    public void delete(Ingredient ingredient) {
+        ingredientRepository.delete(ingredient);
+    }
 
    // @Transactional
     public List<Ingredient> findAll() {
@@ -31,6 +35,9 @@ public class IngredientService {
         return ingredientRepository.findById(id).get();
     }
 
+    public void deleteById(Long id) {
+        ingredientRepository.deleteById(id);
+    }
     //@Transactional
     public boolean existsByName(String name) {
         return ingredientRepository.existsByName(name);
