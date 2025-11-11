@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import it.uniroma3.siw.model.Recipe;
 import it.uniroma3.siw.repository.RecipeRepository;
 
+import java.util.List;
+
 @Service
 public class RecipeService {
 
@@ -21,6 +23,10 @@ public class RecipeService {
 	public Iterable<Recipe> findAll() {
 		return recipeRepository.findAll();
 	}
+	
+	public List<Recipe> findByTitleContainingIgnoreCase(String title) {
+        return recipeRepository.findByTitleContainingIgnoreCase(title);
+    }
 	
 	public void save(Recipe recipe) {
 		recipeRepository.save(recipe);

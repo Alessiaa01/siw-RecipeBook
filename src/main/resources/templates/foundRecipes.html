@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
-    <title>Elenco Ricette</title>
+    <title>Risultati Ricerca</title>
     <link rel="stylesheet" href="/css/stile.css" />
 </head>
-
 <body>
     <header>
         <div th:if="${userDetails}">
@@ -22,18 +20,10 @@
         <a href="/"><img src="/images/logo-siw.png" width="50%"/></a>
     </div>
 
-    <h1>Elenco Ricette</h1>
-
-    <!-- FORM DI RICERCA PER TITOLO -->
-    <form th:action="@{/searchRecipes}" method="get">
-        <label>Cerca per titolo:
-            <input type="text" name="title" placeholder="Inserisci titolo..." />
-        </label>
-        <button type="submit">Cerca</button>
-    </form>
+    <h1>Risultati della ricerca</h1>
 
     <div th:if="${#lists.isEmpty(recipes)}">
-        <p>Nessuna ricetta presente.</p>
+        <p>Nessuna ricetta trovata.</p>
     </div>
 
     <ul>
@@ -42,7 +32,7 @@
         </li>
     </ul>
 
-    <a href="/formNewRecipe">Aggiungi nuova ricetta</a>
+    <br>
+    <a href="/recipes">Torna all'elenco delle ricette</a>
 </body>
-
 </html>

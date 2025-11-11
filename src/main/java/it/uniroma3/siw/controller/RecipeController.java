@@ -8,12 +8,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import it.uniroma3.siw.model.Recipe;
 import it.uniroma3.siw.model.Ingredient;
 import it.uniroma3.siw.service.RecipeService;
 import it.uniroma3.siw.service.IngredientService;
 import it.uniroma3.siw.controller.validator.RecipeValidator;
+
+import java.util.List;
 
 import jakarta.validation.Valid;
 
@@ -144,6 +147,18 @@ public class RecipeController {
         return "redirect:/recipe/" + recipeId + "/edit";
     }
 
+    // Mostra la pagina con il form di ricerca
+    @GetMapping("/formSearchRecipes")
+    public String formSearchRecipes() {
+        return "formSearchRecipes.html";
+    }
 
+    // Gestisce il submit del form e mostra i risultati
+    @GetMapping("/searchRecipes")
+    public String searchRecipes(Model model, @RequestParam String title) {
+    	 List<Recipe> foundRecipes = recipeService.findByTitleContainingIgnoreCase(title);
+        model.addAttribute("recipes", foundRecipes);
+        return "foundRecipes.html";
+    }
     
 }
