@@ -14,7 +14,7 @@
     <h1 th:text="'Modifica: ' + ${recipe.title}">Modifica Ricetta</h1>
 
     <!-- FORM MODIFICA RICETTA -->
-    <form th:action="@{'/recipe/' + ${recipe.id} + '/update'}" th:object="${recipe}" method="post">
+    <form th:action="@{'/admin/recipe/' + ${recipe.id} + '/update'}" th:object="${recipe}" method="post">
         <label>Titolo:</label><br>
         <input type="text" th:field="*{title}" /><br><br>
 
@@ -58,7 +58,7 @@
             <span th:text="${ingredient.unit}">Unità</span>
             
             <!-- Bottone Rimuovi -->
-            <form th:action="@{'/recipe/' + ${recipe.id} + '/ingredient/' + ${ingredient.id} + '/remove'}"
+            <form th:action="@{'/admin/recipe/' + ${recipe.id} + '/ingredient/' + ${ingredient.id} + '/remove'}"
                   method="post" style="display:inline;">
                 <button type="submit">❌ Rimuovi</button>
             </form>
@@ -67,18 +67,17 @@
 
     <!-- FORM AGGIUNTA NUOVO INGREDIENTE -->
     <h3>Aggiungi nuovo ingrediente</h3>
-    <form th:action="@{'/recipe/' + ${recipe.id}}" th:object="${ingredient}" method="post">
-        <label>Nome:</label>
-        <input type="text" th:field="*{name}" required/><br>
+	<form th:action="@{'/admin/recipe/' + ${recipe.id} + '/ingredient/add'}" th:object="${ingredient}" method="post">
+	    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+	    <label>Nome:</label>
+	    <input type="text" th:field="*{name}" required/><br>
+	    <label>Quantità:</label>
+	    <input type="text" th:field="*{quantity}" required/><br>
+	    <label>Unità:</label>
+	    <input type="text" th:field="*{unit}" /><br>
+	    <button type="submit">➕ Aggiungi Ingrediente</button>
+	</form>
 
-        <label>Quantità:</label>
-        <input type="text" th:field="*{quantity}" required/><br>
-
-        <label>Unità:</label>
-        <input type="text" th:field="*{unit}" /><br>
-
-        <button type="submit">➕ Aggiungi Ingrediente</button>
-    </form>
 
 </body>
 </html>

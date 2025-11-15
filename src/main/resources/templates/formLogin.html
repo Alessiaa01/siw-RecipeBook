@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SiwRecipe - Login</title>
+    <link rel="stylesheet" href="/css/stile.css" />
+</head>
+
+<body>
+    <header>
+        <div th:if="${userDetails}">
+            <span th:text="${userDetails.username}"></span>
+            <a href="/logout">Logout</a>
+        </div>
+        <div th:unless="${userDetails}">
+            <a href="/login">Login</a>
+            <a href="/register">Registrati</a>
+        </div>
+    </header>
+
+    <div>
+        <a href="/"><img src="/images/logo-siw.png" width="50%" /></a>
+    </div>
+
+    <h1>Login</h1>
+    <form th:action="@{/login}" method="POST">
+        <div>
+            <label>Username</label>
+            <input type="text" placeholder="username" name="username" required />
+        </div>
+        <div>
+            <label>Password</label>
+            <input type="password" placeholder="password" name="password" required />
+        </div>
+        <div>
+            <button type="submit">Accedi</button>
+        </div>
+        <div th:if="${param.error}">
+            <span style="color:red">Username o password non corretti</span>
+        </div>
+    </form>
+</body>
+
+</html>

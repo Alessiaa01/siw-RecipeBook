@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
-<head>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"> <head>
     <meta charset="UTF-8">
     <title>Elenco Ricette</title>
     <link rel="stylesheet" href="/css/stile.css" />
@@ -24,13 +23,16 @@
 
     <h1>Elenco Ricette</h1>
 
-    <!-- FORM DI RICERCA PER TITOLO -->
     <form th:action="@{/searchRecipes}" method="get">
         <label>Cerca per titolo:
             <input type="text" name="title" placeholder="Inserisci titolo..." />
         </label>
         <button type="submit">Cerca</button>
     </form>
+    
+    <div sec:authorize="hasAuthority('ADMIN')" style="margin-top: 10px;">
+        <a th:href="@{/admin/manageRecipes}">Vai alla gestione Admin</a>
+    </div>
 
     <div th:if="${#lists.isEmpty(recipes)}">
         <p>Nessuna ricetta presente.</p>
@@ -42,7 +44,9 @@
         </li>
     </ul>
 
-    <a href="/formNewRecipe">Aggiungi nuova ricetta</a>
+    <div sec:authorize="hasAuthority('ADMIN')" style="margin-top: 20px;">
+        <a th:href="@{/admin/formNewRecipe}">➕ Aggiungi nuova ricetta</a>
+    </div>
 </body>
 
 </html>

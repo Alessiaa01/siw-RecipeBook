@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestione Ricette</title>
+    <link rel="stylesheet" th:href="@{/css/stile.css}" />
+</head>
+<body>
+<header>
+    <div th:if="${userDetails}">
+        <span th:text="${userDetails.username}"></span>
+        <a th:href="@{/logout}">Logout</a>
+    </div>
+</header>
+
+<h1>Gestione Ricette</h1>
+
+<a th:href="@{/admin/formNewRecipe}">➕ Aggiungi Nuova Ricetta</a>
+
+<ul>
+    <li th:each="recipe : ${recipes}">
+        <span th:text="${recipe.title}"></span>
+        <a th:href="@{'/admin/recipe/' + ${recipe.id} + '/edit'}">✏️ Modifica</a>
+        <form th:action="@{'/admin/recipe/' + ${recipe.id} + '/delete'}" method="post" style="display:inline">
+            <button type="submit" onclick="return confirm('Eliminare questa ricetta?')">🗑️ Elimina</button>
+        </form>
+    </li>
+</ul>
+
+<a th:href="@{/recipes}">⬅️ Torna alla lista generale</a>
+</body>
+</html>

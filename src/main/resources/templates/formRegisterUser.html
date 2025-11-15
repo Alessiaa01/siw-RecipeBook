@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <title> Recipes - Registrazione</title>
+    <link rel="stylesheet" href="/css/stile.css" />
+</head>
+
+<body>
+    <header>
+        <!-- Mostra username e logout se l'utente è loggato -->
+        <div th:if="${userDetails}">
+            <span th:text="${userDetails.username}"></span>
+            <a href="/logout">Logout</a>
+        </div>
+        <!-- Mostra login se l'utente non è loggato -->
+        <div th:unless="${userDetails}">
+            <a href="/login">Login</a>
+        </div>
+    </header>
+
+    <div>
+        <!-- Logo della tua app -->
+        <a href="/"><img src="/images/logo-recipes.png" width="50%" alt="Acme Recipes Logo" /></a>
+    </div>
+
+    <h1>Registrazione nuovo utente</h1>
+
+    <!-- Form di registrazione -->
+    <form th:action="@{/register}" method="POST">
+        <div>
+            <label>Nome</label>
+            <span><input type="text" placeholder="Nome" required th:field="${user.name}" /></span>
+            <span th:if="${#fields.hasErrors('user.name')}" th:errors="${user.name}" style="color:red"></span>
+        </div>
+
+        <div>
+            <label>Cognome</label>
+            <span><input type="text" placeholder="Cognome" required th:field="${user.surname}" /></span>
+            <span th:if="${#fields.hasErrors('user.surname')}" th:errors="${user.surname}" style="color:red"></span>
+        </div>
+
+        <div>
+            <label>Email</label>
+            <span><input type="email" placeholder="Email" required th:field="${user.email}" /></span>
+            <span th:if="${#fields.hasErrors('user.email')}" th:errors="${user.email}" style="color:red"></span>
+        </div>
+
+        <div>
+            <label>Username</label>
+            <span><input type="text" placeholder="Username" required th:field="${credentials.username}" /></span>
+            <span th:if="${#fields.hasErrors('credentials.username')}" th:errors="${credentials.username}" style="color:red"></span>
+        </div>
+
+        <div>
+            <label>Password</label>
+            <span><input type="password" placeholder="Password" required th:field="${credentials.password}" /></span>
+            <span th:if="${#fields.hasErrors('credentials.password')}" th:errors="${credentials.password}" style="color:red"></span>
+        </div>
+
+        <div>
+            <button type="submit">Registra</button>
+        </div>
+    </form>
+</body>
+
+</html>

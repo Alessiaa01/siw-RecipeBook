@@ -8,8 +8,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 
 import jakarta.persistence.OneToMany;
+import java.util.List;
 import java.util.Set;
+import java.util.ArrayList;
 import java.util.HashSet;
+import jakarta.persistence.CascadeType;
+
 
 // Non sono necessari altri import per gli attributi semplici richiesti
 
@@ -57,8 +61,10 @@ public class Recipe {
         this.servings = servings;
     }
 
-    @OneToMany
-    private Set<Ingredient> ingredients;
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Ingredient> ingredients = new ArrayList<>();
+
+    
     
     @ElementCollection
     private Set<String> tags = new HashSet<>();
@@ -124,11 +130,11 @@ public class Recipe {
         this.servings = servings;
     }
     
-    public Set<Ingredient> getIngredients() {
+    public List<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(Set<Ingredient> ingredients) {
+    public void setIngredients(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 

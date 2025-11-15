@@ -8,6 +8,8 @@ import it.uniroma3.siw.repository.RecipeRepository;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 @Service
 public class RecipeService {
 
@@ -15,11 +17,13 @@ public class RecipeService {
 	private RecipeRepository recipeRepository;
 
 	//ricetta con id 
+	@Transactional(readOnly = true)
 	public Recipe findById(Long id) {
 		return recipeRepository.findById(id).get();
 	}
 	
 	//tutte le ricette 
+	@Transactional(readOnly = true)
 	public Iterable<Recipe> findAll() {
 		return recipeRepository.findAll();
 	}
@@ -28,11 +32,19 @@ public class RecipeService {
         return recipeRepository.findByTitleContainingIgnoreCase(title);
     }
 	
+	@Transactional
 	public void save(Recipe recipe) {
 		recipeRepository.save(recipe);
 	}
 
 	public boolean existsByTitle(String title) {
 		return recipeRepository.existsByTitle(title);
+	}
+	
+	
+
+	@Transactional 
+	public void deleteById(Long id) {
+	    recipeRepository.deleteById(id);
 	}
 }
