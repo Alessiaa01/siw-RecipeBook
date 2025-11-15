@@ -1,0 +1,188 @@
+
+    :root {
+        --primary-color: #ff6347;
+        --admin-color: #10b981; /* Verde Menta Admin */
+        --accent-color: #ffcc00;
+        --background-light: #f0f8ff;
+        --shadow: 6px 6px 0px rgba(0, 0, 0, 0.2);
+        --error-color: #ef4444;
+    }
+
+    body {
+        font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', sans-serif;
+        background-color: var(--background-light);
+        margin: 0;
+        padding: 20px;
+        color: #333;
+        line-height: 1.6;
+        max-width: 950px;
+        margin: 0 auto;
+    }
+
+    /* ==== Header ==== */
+    header {
+        background-color: var(--admin-color);
+        color: white;
+        padding: 15px 30px;
+        box-shadow: 0 4px 0 var(--accent-color);
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    header a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    header a:hover {
+        color: var(--accent-color);
+    }
+
+    /* ==== Titolo Pagina ==== */
+    h1 {
+        text-align: center;
+        color: var(--admin-color);
+        font-size: 3.2rem;
+        text-shadow: 4px 4px 0 var(--accent-color);
+        margin: 0 0 2rem;
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+    
+    h2, h3 {
+        color: var(--primary-color);
+        margin-top: 2rem;
+        border-bottom: 2px dashed #ccc;
+        padding-bottom: 5px;
+    }
+
+    /* ==== Form Contenitore (Adesivo Gigante) ==== */
+    form {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        border: 4px solid var(--admin-color);
+    }
+
+    /* ==== Fieldsets ==== */
+    fieldset {
+        border: 3px dashed var(--admin-color);
+        padding: 25px;
+        margin-bottom: 30px;
+        border-radius: 15px;
+        background-color: #fffaf0;
+    }
+
+    legend {
+        font-weight: 900;
+        color: var(--admin-color);
+        padding: 0 15px;
+        font-size: 1.5rem;
+        text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
+    }
+
+    /* ==== Input Standard ==== */
+    label {
+        display: block;
+        margin-top: 10px;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: var(--admin-color);
+    }
+
+    input[type="text"], input[type="number"], textarea, select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 2px solid #ccc;
+        border-radius: 10px;
+        box-sizing: border-box;
+    }
+
+    /* Input in Linea */
+    fieldset > div:nth-child(2) > div {
+        display: inline-block;
+        width: 30%;
+        margin-right: 2%;
+    }
+
+    /* ==== Bottone Submit Principale ==== */
+    form > div:last-child button[type="submit"] {
+        background-color: var(--admin-color);
+        color: white;
+        padding: 15px 20px;
+        border: 3px solid #333;
+        border-radius: 15px;
+        cursor: pointer;
+        margin-top: 25px;
+        font-size: 1.5rem;
+        font-weight: 900;
+        width: 100%;
+        box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
+        transition: transform 0.1s, box-shadow 0.1s;
+    }
+    form > div:last-child button[type="submit"]:hover {
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
+        background-color: #0d9970;
+    }
+
+    /* ==== Sezione Ingredienti ==== */
+    .ingredient-block, ul li {
+        background-color: #ffffff;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        border: 2px dashed var(--primary-color);
+        box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    /* Stile input ingredienti in linea */
+    .ingredient-block label {
+        display: inline-block;
+        font-weight: bold;
+        color: #333;
+        margin-right: 5px;
+    }
+    .ingredient-block input {
+        width: auto;
+        display: inline-block;
+        max-width: 150px;
+        margin-right: 15px;
+    }
+
+    /* Bottone Rimuovi/Aggiungi Ingrediente */
+    button[type="button"], form[th\:action*="remove"] button, form[th\:action*="add"] button {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        margin-top: 5px;
+        box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    button[type="button"]:hover, form[th\:action*="add"] button:hover {
+        background-color: #d84534;
+        box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Bottone Rimuovi */
+    form[th\:action*="remove"] button {
+        background-color: #ef4444;
+        margin-top: 0;
+    }
+    form[th\:action*="remove"] button:hover {
+        background-color: #c93434;
+    }
+
+    /* ==== Errori ==== */
+    span[style*="red"], p[style*="red"] {
+        display: block;
+        color: var(--error-color) !important;
+        font-size: 0.9em;
+        font-weight: bold;
+        margin-top: 5px;
+        margin-bottom: 15px;
+    }

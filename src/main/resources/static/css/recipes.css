@@ -1,0 +1,195 @@
+
+
+
+:root {
+    --primary-color: #f4978e; /* Salmone Pastello - Tema Ricetta */
+    --accent-color: #85d6e2; /* Azzurro Pastello - Accento */
+    --admin-color: #a8a0d9; /* Viola Lavanda - Admin */
+    --background-light: #fcfcfc; /* Sfondo quasi bianco, molto soft */
+    --text-color: #4a4a4a;
+    --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.05); /* Ombra leggera e sfocata */
+}
+
+body {
+    font-family: 'Arial Rounded MT Bold', 'Helvetica Neue', sans-serif;
+    background-color: var(--background-light);
+    margin: 0;
+    padding: 0;
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+body > div, main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* ==== Header (Striscia Elegante) ==== */
+header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+header a {
+    color: white;
+    margin-left: 20px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+header a:hover {
+    color: #fff0f0;
+}
+
+/* ==== Titolo e Logo ==== */
+body > div:first-of-type {
+    text-align: center;
+    margin: 2.5rem auto 2rem;
+    padding: 0;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+h1 {
+    text-align: center;
+    color: var(--primary-color);
+    font-size: 3rem;
+    font-weight: 700;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 10px;
+    margin-bottom: 2rem;
+}
+
+/* ==== Contenitore Form di Ricerca (Integrato) ==== */
+/* Il layout dei form è centrato tramite il div contenitore in HTML */
+form {
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+    vertical-align: top;
+}
+
+form label {
+    font-weight: 600;
+    color: var(--text-color);
+    display: inline-block;
+    margin-right: 15px;
+}
+
+form input[type="text"] {
+    border: 1px solid var(--accent-color);
+    border-radius: 8px;
+    padding: 10px 15px;
+    width: 250px;
+    margin-right: 10px;
+    transition: box-shadow 0.3s;
+    box-sizing: border-box;
+}
+form input[type="text"]:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(244, 151, 142, 0.5);
+    outline: none;
+}
+
+form button[type="submit"] {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+    margin-top: 0;
+}
+form button[type="submit"]:hover {
+    background-color: #72c6d4;
+}
+
+/* ==== Area Admin Link (Pulsante Morbido) ==== */
+div[sec\:authorize*="ADMIN"] a {
+    display: block;
+    text-align: center;
+    font-weight: 600;
+    color: white;
+    background-color: var(--admin-color);
+    padding: 10px 15px;
+    border-radius: 50px;
+    max-width: 300px;
+    margin: 10px auto 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+div[sec\:authorize*="ADMIN"] a:hover {
+    background-color: #8b80c9;
+}
+
+
+/* ==== Lista Ricette (Cards Morbide) ==== */
+ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+    max-width: 1000px;
+    margin-bottom: 3rem;
+}
+
+li {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid #eee;
+    transition: transform 0.3s, box-shadow 0.3s;
+    flex: 1 1 300px;
+    margin: 0;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+}
+
+li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary-color);
+}
+
+li a {
+    font-size: 1.5rem;
+    display: block;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 700;
+}
+li a:hover {
+    text-decoration: none;
+    color: var(--accent-color);
+}
+
+/* ==== Testo e Messaggi ==== */
+p {
+    line-height: 1.6;
+    margin: 0.8rem 0;
+}
+
+div[th\:if*="lists.isEmpty"] p {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #777;
+    margin-top: 30px;
+}

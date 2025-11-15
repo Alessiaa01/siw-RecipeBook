@@ -1,0 +1,151 @@
+
+    :root {
+        --primary-color: #ff6347;
+        --admin-color: #10b981; /* Verde Menta Admin */
+        --accent-color: #ffcc00; /* Giallo Accento */
+        --background-light: #f0f8ff;
+        --shadow: 5px 5px 0px rgba(0, 0, 0, 0.2);
+    }
+    
+    body {
+        font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', sans-serif;
+        background-color: var(--background-light);
+        margin: 0;
+        padding: 20px;
+        color: #333;
+        line-height: 1.6;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    /* ==== Header ==== */
+    header {
+        background-color: var(--admin-color);
+        color: white;
+        padding: 15px 30px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        box-shadow: 0 4px 0 var(--accent-color);
+        margin-bottom: 40px;
+    }
+    header a {
+        color: white;
+        margin-left: 20px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    header a:hover {
+        color: var(--accent-color);
+    }
+
+    /* ==== Titolo e Azione Aggiungi ==== */
+    h1 {
+        text-align: center;
+        color: var(--admin-color);
+        font-size: 3.5rem;
+        text-shadow: 4px 4px 0 var(--accent-color);
+        border-bottom: none;
+        padding-bottom: 0;
+        margin-bottom: 2rem;
+    }
+
+    a[th\:href*="formNewRecipe"] {
+        display: block;
+        text-align: center;
+        background-color: #3b82f6; /* Nuovo elemento in Blu */
+        color: white;
+        padding: 12px 20px;
+        border-radius: 10px;
+        max-width: 350px;
+        margin: 20px auto;
+        font-weight: bold;
+        box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
+        transition: transform 0.1s, box-shadow 0.1s;
+    }
+    a[th\:href*="formNewRecipe"]:hover {
+        transform: translate(1px, 1px);
+        box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+        text-decoration: none;
+    }
+
+    /* ==== Lista di Gestione ==== */
+    ul {
+        list-style: none;
+        padding: 0;
+        max-width: 700px;
+        margin: 20px auto;
+        gap: 15px;
+    }
+
+    li {
+        background-color: #ffffff;
+        padding: 15px 20px;
+        margin-bottom: 15px;
+        border-radius: 15px;
+        box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
+        border: 3px solid var(--admin-color);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1.1rem;
+    }
+    li:hover {
+        border-color: var(--primary-color);
+    }
+
+    li span {
+        font-weight: bold;
+        color: var(--primary-color);
+    }
+
+    /* Gruppo Bottoni Azione */
+    li > div {
+        display: flex;
+        gap: 10px;
+    }
+
+    /* Bottone Modifica */
+    a[th\:href*="edit"] {
+        background-color: var(--admin-color);
+        color: white;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-weight: bold;
+        text-decoration: none;
+        box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+        transition: transform 0.1s, box-shadow 0.1s;
+    }
+    a[th\:href*="edit"]:hover {
+        transform: translate(1px, 1px);
+        box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    /* Bottone Elimina */
+    form button[type="submit"] {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        margin-top: 0;
+        box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+        transition: transform 0.1s, box-shadow 0.1s;
+    }
+
+    form button[type="submit"]:hover {
+        background-color: #d84534;
+        transform: translate(1px, 1px);
+        box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    /* Link Torna Indietro */
+    a[th\:href*="recipes"] {
+        text-align: center;
+        display: block;
+        margin-top: 30px;
+        color: #666;
+        font-weight: bold;
+    }

@@ -1,0 +1,150 @@
+
+
+    :root {
+        --primary-color: #ff6347; /* Rosso Tomate Caldo */
+        --accent-color: #3b82f6; /* Blu Brillante */
+        --admin-color: #10b981; /* Verde Menta Admin */
+        --background-light: #f0f8ff;
+        --shadow: 5px 5px 0px rgba(0, 0, 0, 0.2);
+    }
+
+    body {
+        font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', sans-serif;
+        background-color: var(--background-light);
+        margin: 0;
+        padding: 0;
+        color: #333;
+        line-height: 1.6;
+    }
+
+    /* ==== Header ==== */
+    header {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 15px 30px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        box-shadow: 0 4px 0 var(--accent-color);
+    }
+
+    header a {
+        color: white;
+        margin-left: 20px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    header a:hover {
+        color: var(--accent-color);
+    }
+
+    /* ==== Titolo e Logo ==== */
+    body > div:first-of-type {
+        text-align: center;
+        margin: 2rem auto 1.5rem;
+    }
+
+    h1 {
+        text-align: center;
+        color: var(--primary-color);
+        font-size: 3.2rem;
+        text-shadow: 4px 4px 0 var(--accent-color);
+        border-bottom: none;
+        padding-bottom: 0;
+        margin-bottom: 2rem;
+    }
+
+    /* ==== Form di Ricerca (Stile Adesivo) ==== */
+    div + form {
+        text-align: center;
+        padding: 0;
+        margin: 20px auto 40px;
+        max-width: 900px;
+    }
+    div + form label {
+        font-weight: bold;
+        color: #333;
+        display: inline-block;
+        margin-right: 15px;
+    }
+    div + form input[type="text"] {
+        border: 2px solid var(--accent-color);
+        border-radius: 10px;
+        padding: 8px 15px;
+        width: 200px;
+        margin-right: 10px;
+        display: inline-block;
+    }
+    div + form button[type="submit"] {
+        background-color: var(--accent-color);
+        color: white;
+        padding: 8px 15px;
+        border: none;
+        border-radius: 10px;
+        font-weight: bold;
+        box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+        transition: transform 0.1s, box-shadow 0.1s;
+    }
+    div + form button[type="submit"]:hover {
+        transform: translate(1px, 1px);
+        box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+    }
+    
+    /* ==== Area Admin Link (Pulsante) ==== */
+    div[sec\:authorize*="ADMIN"] a {
+        display: block;
+        text-align: center;
+        margin: 10px 0 20px;
+        font-weight: bold;
+        color: white;
+        background-color: var(--admin-color);
+        padding: 10px 15px;
+        border-radius: 10px;
+        max-width: 300px;
+        margin: 10px auto;
+        box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
+        transition: transform 0.1s, box-shadow 0.1s;
+    }
+    div[sec\:authorize*="ADMIN"] a:hover {
+        transform: translate(1px, 1px);
+        box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+    }
+
+
+    /* ==== Lista Ricette (Cards Staccate) ==== */
+    ul {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        justify-content: center;
+        max-width: 1000px;
+        margin-bottom: 3rem;
+    }
+
+    li {
+        background-color: #ffffff;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: var(--shadow);
+        border: 3px solid var(--primary-color);
+        transition: transform 0.3s, box-shadow 0.3s;
+        flex: 1 1 300px;
+    }
+
+    li:hover {
+        transform: translate(1px, 1px) scale(1.02);
+        box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
+        border-color: var(--accent-color);
+    }
+
+    li a {
+        font-size: 1.4rem;
+        display: block;
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: 900;
+        text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
+    }

@@ -1,79 +1,111 @@
-/* ==== Stile generale ==== */
-body {
-    font-family: "Segoe UI", Roboto, Arial, sans-serif;
-    background-color: #fffaf2;
-    margin: 0;
-    padding: 0 2rem;
-    color: #333;
-}
 
-/* ==== Titoli ==== */
-h1 {
-    text-align: center;
-    margin-top: 2rem;
-    color: #c4452f;
-    font-size: 2rem;
-}
 
-/* ==== Elenco ricette ==== */
-ul {
-    list-style: none;
-    padding: 0;
-    max-width: 700px;
-    margin: 2rem auto;
-}
 
-li {
-    background-color: #fff;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
-}
+    :root {
+        --primary-color: #f4978e; /* Salmone Pastello - Tema Ricetta */
+        --admin-color: #a8a0d9; /* Viola Lavanda - Colore Admin */
+        --accent-color: #85d6e2; /* Azzurro Pastello - Accento */
+        --background-light: #fcfcfc; /* Sfondo chiaro */
+        --text-color: #4a4a4a;
+        --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.05); /* Ombra morbida */
+    }
 
-li:hover {
-    transform: translateY(-3px);
-}
+    body {
+        font-family: 'Arial Rounded MT Bold', 'Helvetica Neue', sans-serif;
+        background-color: var(--background-light);
+        margin: 0;
+        padding: 0;
+        color: var(--text-color);
+        line-height: 1.6;
+        max-width: 900px;
+        margin: 0 auto;
+        min-height: 100vh;
+    }
 
-/* ==== Link ricette ==== */
-a {
-    text-decoration: none;
-    color: #c4452f;
-    font-weight: bold;
-}
+    /* ==== Header (Striscia Elegante Admin) ==== */
+    header {
+        background-color: var(--admin-color);
+        color: white;
+        padding: 15px 30px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
 
-a:hover {
-    text-decoration: underline;
-}
+    header span {
+        font-weight: 600;
+        margin-right: 20px;
+        font-size: 1.1rem;
+    }
 
-/* ==== Dettaglio ricetta ==== */
-div {
-    background-color: #fff;
-    max-width: 700px;
-    margin: 2rem auto;
-    padding: 1.5rem;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
+    header a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.2s;
+    }
 
-p {
-    line-height: 1.6;
-    margin: 0.5rem 0;
-}
+    header a:hover {
+        color: #e0e0e0;
+    }
 
-strong {
-    color: #c4452f;
-}
+    /* ==== Logo e Titolo ==== */
+    body > div:first-of-type {
+        text-align: center;
+        margin: 2rem auto 1.5rem;
+        padding: 0;
+        background-color: transparent;
+        box-shadow: none;
+    }
 
-/* ==== Link di ritorno ==== */
-a[href="/recipes"] {
-    display: block;
-    text-align: center;
-    margin: 2rem auto;
-    color: #444;
-}
+    h1 {
+        text-align: center;
+        margin: 1.5rem 0 2.5rem;
+        color: var(--admin-color);
+        font-size: 3rem;
+        font-weight: 700;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.05);
+        border-bottom: 3px solid var(--primary-color);
+        padding-bottom: 10px;
+    }
 
-a[href="/recipes"]:hover {
-    color: #c4452f;
-}
+    /* ==== Lista Opzioni Admin (Card Soft) ==== */
+    ul {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        max-width: 550px;
+        margin: 0 auto;
+    }
+
+    li {
+        background-color: #ffffff;
+        padding: 25px 30px;
+        border-radius: 12px;
+        box-shadow: var(--shadow-soft);
+        border: 2px solid var(--accent-color); /* Bordo soft in azzurro */
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    li:hover {
+        transform: translateY(-4px); /* Solleva con eleganza */
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        border-color: var(--admin-color); /* Bordo si intensifica */
+    }
+
+    li a {
+        display: block;
+        color: var(--admin-color);
+        text-decoration: none;
+        font-size: 1.4rem;
+        font-weight: 800;
+    }
+
+    li a:hover {
+        color: var(--primary-color);
+        text-decoration: none;
+    }

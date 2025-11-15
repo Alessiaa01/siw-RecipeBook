@@ -1,0 +1,135 @@
+
+
+    :root {
+        --primary-color: #ff6347; /* Rosso Tomate Caldo */
+        --accent-color: #3b82f6; /* Blu Brillante */
+        --admin-color: #10b981; /* Verde Admin */
+        --background-light: #f0f8ff;
+        --shadow: 8px 8px 0px rgba(0, 0, 0, 0.2);
+    }
+
+    body {
+        font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', sans-serif;
+        background-color: var(--background-light);
+        margin: 0;
+        padding: 0;
+        color: #333;
+        line-height: 1.6;
+    }
+
+    /* ==== Header ==== */
+    header {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 15px 30px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        box-shadow: 0 4px 0 var(--accent-color);
+    }
+    header a {
+        color: white;
+        margin-left: 20px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    header a:hover {
+        color: var(--accent-color);
+    }
+
+    /* ==== Contenitore Ricetta (Pannello Principale) ==== */
+    body > div:last-of-type {
+        background-color: #ffffff;
+        max-width: 800px;
+        margin: 3rem auto 4rem;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        border: 4px solid var(--primary-color);
+    }
+    
+    /* Centra il logo */
+    body > div:first-of-type {
+        text-align: center;
+        margin: 2rem auto 1.5rem;
+        background-color: transparent;
+        box-shadow: none;
+        padding: 0;
+    }
+
+    /* ==== Titoli e Sezioni ==== */
+    h1 {
+        color: var(--primary-color);
+        font-size: 3.5rem;
+        text-shadow: 4px 4px 0 var(--accent-color);
+        border-bottom: 2px dashed #ccc;
+        padding-bottom: 10px;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+    
+    h2, h3 {
+        color: var(--primary-color);
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        font-weight: 800;
+        border-bottom: 2px solid var(--accent-color);
+        padding-bottom: 5px;
+    }
+
+    /* ==== Immagine ==== */
+    div img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        border-radius: 15px;
+        margin: 30px auto;
+        border: 5px solid var(--accent-color);
+        box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    /* ==== Liste (Ingredienti/Tag) ==== */
+    ul {
+        list-style: none;
+        padding-left: 0;
+        margin: 1rem 0 2rem;
+    }
+
+    ul li {
+        margin-bottom: 8px;
+        padding: 5px 10px;
+        background-color: #f7f7f7;
+        border-radius: 5px;
+        border-left: 5px solid var(--accent-color);
+    }
+    
+    /* ==== Area Admin (Link Modifica) ==== */
+    div[sec\:authorize*="ADMIN"] {
+        text-align: right;
+        margin-bottom: 15px;
+    }
+    div[sec\:authorize*="ADMIN"] a {
+        color: white;
+        background-color: var(--admin-color);
+        padding: 10px 15px;
+        border-radius: 10px;
+        font-weight: bold;
+        text-decoration: none;
+        box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
+        transition: transform 0.1s, box-shadow 0.1s;
+    }
+    div[sec\:authorize*="ADMIN"] a:hover {
+        transform: translate(1px, 1px);
+        box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+    }
+    
+    /* ==== Link di ritorno ==== */
+    a[href="/recipes"] {
+        display: block;
+        text-align: center;
+        margin: 40px auto 10px;
+        color: var(--primary-color);
+        font-weight: bold;
+        border-top: 2px dashed #eee;
+        padding-top: 15px;
+    }
