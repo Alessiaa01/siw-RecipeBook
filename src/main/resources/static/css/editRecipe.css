@@ -1,189 +1,192 @@
 
+/* ========================================================== */
+/* STILE PER editRecipe.html (Form Modifica Ricetta - Admin) */
+/* (Molto simile a formNewRecipes.css per coerenza Admin) */
+/* ========================================================== */
 
-    :root {
-        --primary-color: #ff6347;
-        --admin-color: #10b981; /* Verde Menta Admin */
-        --accent-color: #ffcc00;
-        --background-light: #f0f8ff;
-        --shadow: 6px 6px 0px rgba(0, 0, 0, 0.2);
-        --error-color: #ef4444;
-    }
+/* FONT E COLORI (Definizioni coerenti con il tema Admin/Magico) */
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Quicksand:wght@400;700&display=swap');
 
-    body {
-        font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', sans-serif;
-        background-color: var(--background-light);
-        margin: 0;
-        padding: 20px;
-        color: #333;
-        line-height: 1.6;
-        max-width: 950px;
-        margin: 0 auto;
-    }
+:root {
+    --primary-color: #FF4500; /* Rosso-Arancione (Accento Forte/Pericolo) */
+    --secondary-color: #9370DB; /* Viola Magico (Admin, Bordi) */
+    --accent-color: #FFD700; /* Oro Magico (Ombre, Highlight) */
+    --background-color: #F7E9FF; /* Lilla Chiaro (Body) */
+    --form-bg-accent: #F0FFF0; /* Sfondo Form leggero (Verde chiaro) */
+    --button-base-admin: #3CB371; /* Verde (Base Bottone Admin) */
+    --button-shadow-admin: #2E8B57; /* Verde Scuro (Ombra 3D) */
+}
 
-    /* ==== Header ==== */
-    header {
-        background-color: var(--admin-color);
-        color: white;
-        padding: 15px 30px;
-        box-shadow: 0 4px 0 var(--accent-color);
-        text-align: center;
-        margin-bottom: 20px;
-    }
-    header a {
-        color: white;
-        text-decoration: none;
-        font-weight: bold;
-    }
-    header a:hover {
-        color: var(--accent-color);
-    }
+/* === BASE E LAYOUT === */
+body {
+    font-family: 'Quicksand', sans-serif;
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 20px;
+    color: #333;
+    line-height: 1.6;
+    max-width: 900px;
+    margin: 0 auto;
+}
 
-    /* ==== Titolo Pagina ==== */
-    h1 {
-        text-align: center;
-        color: var(--admin-color);
-        font-size: 3.2rem;
-        text-shadow: 4px 4px 0 var(--accent-color);
-        margin: 0 0 2rem;
-        border-bottom: none;
-        padding-bottom: 0;
-    }
-    
-    h2, h3 {
-        color: var(--primary-color);
-        margin-top: 2rem;
-        border-bottom: 2px dashed #ccc;
-        padding-bottom: 5px;
-    }
+/* === Titolo H1 === */
+h1 {
+    font-family: 'Bangers', cursive; 
+    text-align: center;
+    margin-top: 2rem;
+    color: var(--secondary-color); 
+    font-size: 3.5rem;
+    text-shadow: 5px 5px 0px var(--accent-color), 7px 7px 0px #483D8B; 
+    letter-spacing: 2px;
+    margin-bottom: 2rem;
+}
 
-    /* ==== Form Contenitore (Adesivo Gigante) ==== */
-    form {
-        background-color: #ffffff;
-        padding: 30px;
-        border-radius: 20px;
-        box-shadow: var(--shadow);
-        border: 4px solid var(--admin-color);
-    }
+/* === Form Contenitore Principale (Adesivo Gigante) === */
+/* Contiene i fieldset per Modifica Ricetta e Modifica Ingredienti/Tag */
+form:first-of-type {
+    background-color: #FFFFFF;
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: 8px 8px 0 var(--primary-color);
+    border: 5px solid var(--secondary-color);
+    margin: 20px auto;
+}
 
-    /* ==== Fieldsets ==== */
-    fieldset {
-        border: 3px dashed var(--admin-color);
-        padding: 25px;
-        margin-bottom: 30px;
-        border-radius: 15px;
-        background-color: #fffaf0;
-    }
+/* === Fieldsets (Sezioni del Form) === */
+fieldset {
+    border: 3px dashed var(--secondary-color);
+    padding: 25px;
+    margin-bottom: 30px;
+    border-radius: 15px;
+    background-color: var(--form-bg-accent); 
+}
 
-    legend {
-        font-weight: 900;
-        color: var(--admin-color);
-        padding: 0 15px;
-        font-size: 1.5rem;
-        text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
-    }
+legend {
+    font-family: 'Bangers', cursive;
+    color: var(--primary-color);
+    padding: 0 15px;
+    font-size: 1.8rem;
+    text-shadow: 2px 2px 0 var(--accent-color);
+}
 
-    /* ==== Input Standard ==== */
-    label {
-        display: block;
-        margin-top: 10px;
-        margin-bottom: 5px;
-        font-weight: bold;
-        color: var(--admin-color);
-    }
+/* === Input e Testo === */
+label {
+    font-weight: 700;
+    color: var(--secondary-color);
+    display: block;
+    margin-top: 15px;
+}
 
-    input[type="text"], input[type="number"], textarea, select {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 15px;
-        border: 2px solid #ccc;
-        border-radius: 10px;
-        box-sizing: border-box;
-    }
+input[type="text"], input[type="number"], textarea, select {
+    border: 3px solid var(--secondary-color);
+    border-radius: 10px;
+    padding: 12px;
+    width: 100%;
+    box-sizing: border-box;
+}
 
-    /* Input in Linea */
-    fieldset > div:nth-child(2) > div {
-        display: inline-block;
-        width: 30%;
-        margin-right: 2%;
-    }
+/* ========================================================== */
+/* SEZIONE INGREDIENTI (Modifica/Aggiungi) */
+/* ========================================================== */
 
-    /* ==== Bottone Submit Principale ==== */
-    form > div:last-child button[type="submit"] {
-        background-color: var(--admin-color);
-        color: white;
-        padding: 15px 20px;
-        border: 3px solid #333;
-        border-radius: 15px;
-        cursor: pointer;
-        margin-top: 25px;
-        font-size: 1.5rem;
-        font-weight: 900;
-        width: 100%;
-        box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
-        transition: transform 0.1s, box-shadow 0.1s;
-    }
-    form > div:last-child button[type="submit"]:hover {
-        transform: translate(2px, 2px);
-        box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
-        background-color: #0d9970;
-    }
+/* === Lista Ingredienti ESISTENTI (ul/li) === */
+ul {
+    list-style: none;
+    padding: 0;
+}
+ul li {
+    background-color: #FFFACD; /* Giallo chiaro */
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border: 2px solid var(--accent-color);
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+}
 
-    /* ==== Sezione Ingredienti ==== */
-    .ingredient-block, ul li {
-        background-color: #ffffff;
-        padding: 15px;
-        border-radius: 10px;
-        margin-bottom: 10px;
-        border: 2px dashed var(--primary-color);
-        box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
-    }
+/* === Form di RIMOZIONE Ingrediente === */
+form[th\:action*="remove"] {
+    display: inline;
+    padding: 0;
+    margin: 0;
+    background: none;
+    box-shadow: none;
+    border: none;
+}
+form[th\:action*="remove"] button {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    box-shadow: 0 4px 0 0 #CD5C5C;
+    margin: 0; /* Rimuove il margin-top di default */
+    font-size: 0.9rem;
+}
+form[th\:action*="remove"] button:active {
+    transform: translateY(4px);
+    box-shadow: 0 0px 0 0 #CD5C5C;
+}
 
-    /* Stile input ingredienti in linea */
-    .ingredient-block label {
-        display: inline-block;
-        font-weight: bold;
-        color: #333;
-        margin-right: 5px;
-    }
-    .ingredient-block input {
-        width: auto;
-        display: inline-block;
-        max-width: 150px;
-        margin-right: 15px;
-    }
+/* === Form di AGGIUNTA Ingrediente (Blocco) === */
+/* Notare che l'aggiunta ha un suo form separato in editRecipe.html */
+form[th\:action*="ingredient/add"] {
+    background-color: #F0FFF0;
+    border: 2px dashed var(--accent-color);
+    box-shadow: none;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 15px;
+    text-align: right;
+}
 
-    /* Bottone Rimuovi/Aggiungi Ingrediente */
-    button[type="button"], form[th\:action*="remove"] button, form[th\:action*="add"] button {
-        background-color: var(--primary-color);
-        color: white;
-        padding: 8px 12px;
-        border: none;
-        border-radius: 8px;
-        font-weight: bold;
-        margin-top: 5px;
-        box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
-    }
+form[th\:action*="ingredient/add"] input {
+    width: 25%;
+    display: inline-block;
+    margin-right: 1%;
+}
+form[th\:action*="ingredient/add"] label {
+    display: inline-block;
+    width: auto;
+    margin-right: 5px;
+}
+form[th\:action*="ingredient/add"] button {
+    background-color: var(--secondary-color);
+    box-shadow: 0 4px 0 0 #483D8B;
+    padding: 8px 15px;
+    font-size: 1rem;
+    width: auto;
+    margin-top: 0;
+}
+form[th\:action*="ingredient/add"] button:active {
+    transform: translateY(4px);
+    box-shadow: 0 0px 0 0 #483D8B;
+}
 
-    button[type="button"]:hover, form[th\:action*="add"] button:hover {
-        background-color: #d84534;
-        box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
-    }
-    
-    /* Bottone Rimuovi */
-    form[th\:action*="remove"] button {
-        background-color: #ef4444;
-        margin-top: 0;
-    }
-    form[th\:action*="remove"] button:hover {
-        background-color: #c93434;
-    }
+/* === Bottone Submit Principale: Salva Modifiche === */
+form:first-of-type > div:last-child button[type="submit"] {
+    width: 100%;
+    font-size: 1.5rem;
+    background-color: var(--button-base-admin);
+    box-shadow: 0 6px 0 0 var(--button-shadow-admin);
+    margin-top: 30px;
+}
+form:first-of-type > div:last-child button[type="submit"]:active {
+    transform: translateY(6px); 
+    box-shadow: 0 0px 0 0 var(--button-shadow-admin);
+}
 
-    /* ==== Errori ==== */
-    span[style*="red"], p[style*="red"] {
-        display: block;
-        color: var(--error-color) !important;
-        font-size: 0.9em;
-        font-weight: bold;
-        margin-top: 5px;
-        margin-bottom: 15px;
-    }
+/* Link di ritorno */
+a[href="/admin/manageRecipes"] {
+    display: block;
+    text-align: center;
+    margin: 2rem auto;
+    color: var(--secondary-color);
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-decoration: none;
+}

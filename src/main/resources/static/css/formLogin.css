@@ -1,118 +1,116 @@
+/* Importa lo stile base, i font (Bangers/Quicksand) e le variabili */
+@import url('/css/stile.css');
 
+:root {
+    /* Le variabili vengono caricate da stile.css */
+    --error-color: #F44336;
+}
 
-    :root {
-        --primary-color: #3b82f6; /* Blu Brillante */
-        --accent-color: #ffcc00; /* Giallo Limone Giocoso */
-        --background-light: #f0f8ff; /* Azzurro Chiaro */
-        --shadow: 6px 6px 0px rgba(0, 0, 0, 0.2);
-        --error-color: #ef4444;
-    }
+body {
+    font-family: 'Quicksand', sans-serif;
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
+    color: #333;
+    line-height: 1.6;
+}
 
-    body {
-        font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', sans-serif;
-        background-color: var(--background-light);
-        margin: 0;
-        padding: 0;
-        color: #333;
-        line-height: 1.6;
-    }
+/* ==== Header (Viola) ==== */
+header {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 15px 0; /* Lo zero è per la full-width, il padding laterale è nel div interno di stile.css */
+    display: flex;
+    justify-content: flex-end;
+    border-bottom: 5px solid var(--button-shadow);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
 
-    /* ==== Header ==== */
-    header {
-        background-color: var(--primary-color);
-        color: white;
-        padding: 15px 30px;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        box-shadow: 0 4px 0 var(--accent-color);
-    }
+/* ==== Logo e Titolo (Bangers) ==== */
+body > div:first-of-type {
+    text-align: center;
+    margin: 2rem auto 1.5rem;
+    padding: 0 2rem;
+    box-shadow: none;
+    border: none;
+    background: none;
+}
 
-    header a {
-        color: white;
-        margin-left: 20px;
-        text-decoration: none;
-        font-weight: bold;
-    }
+h1 {
+    font-family: 'Bangers', cursive;
+    text-align: center;
+    color: var(--secondary-color); /* Viola */
+    font-size: 3.2rem;
+    text-shadow: 4px 4px 0 var(--accent-color); /* Ombra Oro */
+    margin-bottom: 2.5rem;
+}
 
-    header a:hover {
-        color: var(--accent-color);
-    }
+/* ==== Form (Adesivo UNICO) ==== */
+form {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 25px;
+    max-width: 450px;
+    margin: 30px auto;
+    
+    /* Adesivo BOLD */
+    box-shadow: 8px 8px 0px var(--primary-color); /* Ombra Crimson */
+    border: 4px solid var(--secondary-color); /* Bordo Viola */
+    
+    transition: transform 0.1s, box-shadow 0.1s;
+}
 
-    /* ==== Logo e Titolo ==== */
-    body > div:first-of-type {
-        text-align: center;
-        margin: 2rem auto 1.5rem;
-    }
+form:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.2);
+}
 
-    h1 {
-        text-align: center;
-        color: var(--primary-color);
-        font-size: 3.2rem;
-        text-shadow: 4px 4px 0 var(--accent-color);
-        margin-bottom: 2.5rem;
-    }
+label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: 700;
+    color: var(--primary-color); /* Crimson */
+}
 
-    /* ==== Form (Adesivo) ==== */
-    form {
-        background-color: #ffffff;
-        padding: 40px;
-        border-radius: 20px; /* Angoli super arrotondati */
-        max-width: 450px;
-        margin: 30px auto;
-        box-shadow: var(--shadow);
-        border: 3px solid var(--primary-color);
-        transition: transform 0.1s;
-    }
-    form:hover {
-        transform: translate(1px, 1px);
-        box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.2);
-    }
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 2px solid var(--secondary-color); /* Bordo Viola */
+    border-radius: 10px;
+    box-sizing: border-box;
+}
 
-    label {
-        display: block;
-        margin-top: 15px;
-        margin-bottom: 5px;
-        font-weight: 700;
-        color: var(--primary-color);
-    }
+/* ==== Bottone Accedi (Pulsante 3D) ==== */
+button[type="submit"] {
+    background-color: var(--button-base); /* Verde */
+    color: white;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    margin-top: 25px;
+    font-size: 1.2rem;
+    font-weight: 900;
+    width: 100%;
+    
+    /* Ombra 3D (ereditata ma forzata) */
+    box-shadow: 0 6px 0 0 var(--button-shadow); 
+    transition: transform 0.1s, box-shadow 0.1s;
+}
 
-    input[type="text"], input[type="password"] {
-        width: 100%;
-        padding: 12px;
-        margin-bottom: 15px;
-        border: 2px solid #ccc;
-        border-radius: 10px;
-        box-sizing: border-box;
-    }
+button[type="submit"]:active {
+    transform: translateY(6px);
+    box-shadow: 0 0px 0 0 var(--button-shadow);
+}
 
-    button[type="submit"] {
-        background-color: var(--accent-color);
-        color: var(--primary-color);
-        padding: 15px 20px;
-        border: 2px solid var(--primary-color);
-        border-radius: 15px;
-        cursor: pointer;
-        margin-top: 25px;
-        font-size: 1.2rem;
-        font-weight: 900;
-        width: 100%;
-        box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
-        transition: transform 0.1s, box-shadow 0.1s;
-    }
-
-    button[type="submit"]:hover {
-        background-color: #ffb800;
-        transform: translate(1px, 1px);
-        box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
-    }
-
-    /* ==== Messaggio di Errore ==== */
-    div[th\:if="${param\.error}"] span {
-        color: var(--error-color);
-        font-size: 1em;
-        font-weight: bold;
-        text-align: center;
-        display: block;
-        margin-top: 15px;
-    }
+/* ==== Messaggio di Errore ==== */
+div[th\:if="${param\.error}"] span {
+    color: var(--error-color);
+    font-size: 1em;
+    font-weight: bold;
+    text-align: center;
+    display: block;
+    margin-top: 15px;
+}

@@ -1,111 +1,228 @@
+/* ========================================================== */
+/* 1. FONT E IMPORTAZIONI: Google Fonts (Gratuiti) */
+/* ========================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Quicksand:wght@400;700&display=swap');
 
+html {
+    height: 100%; 
+}
 
+:root {
+    --primary-color: #FF4500; /* Rosso-Arancione (Titoli) */
+    --secondary-color: #9370DB; /* Viola Magico (Header, Bordi) */
+    --accent-color: #FFD700; /* Oro Magico (Ombre, Hover) */
+    --background-color: #F7E9FF; /* Lilla Chiaro (Body) */
+    --box-shadow-color: rgba(106, 90, 205, 0.3);
+    --button-base: #3CB371; /* Verde (Base Bottone) */
+    --button-shadow: #2E8B57; /* Verde Scuro (Ombra 3D) */
+    --max-content-width: 900px;
+}
 
-    :root {
-        --primary-color: #f4978e; /* Salmone Pastello - Tema Ricetta */
-        --admin-color: #a8a0d9; /* Viola Lavanda - Colore Admin */
-        --accent-color: #85d6e2; /* Azzurro Pastello - Accento */
-        --background-light: #fcfcfc; /* Sfondo chiaro */
-        --text-color: #4a4a4a;
-        --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.05); /* Ombra morbida */
-    }
+/* ========================================================== */
+/* 2. STILE GENERALE E LAYOUT */
+/* ========================================================== */
+body {
+    font-family: 'Quicksand', sans-serif;
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
+    color: #333;
+    line-height: 1.6;
+    min-height: 100vh;
+}
 
-    body {
-        font-family: 'Arial Rounded MT Bold', 'Helvetica Neue', sans-serif;
-        background-color: var(--background-light);
-        margin: 0;
-        padding: 0;
-        color: var(--text-color);
-        line-height: 1.6;
-        max-width: 900px;
-        margin: 0 auto;
-        min-height: 100vh;
-    }
+/* Nuovo contenitore per centrare tutti i contenuti */
+main, 
+body > div:not(header), 
+form { 
+    max-width: var(--max-content-width);
+    margin: 0 auto;
+    padding: 0 2rem;
+    box-sizing: border-box;
+}
 
-    /* ==== Header (Striscia Elegante Admin) ==== */
-    header {
-        background-color: var(--admin-color);
-        color: white;
-        padding: 15px 30px;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        margin-bottom: 20px;
-    }
+/* ==== Header (Striscia Magica - Full Width) ==== */
+header {
+    background-color: var(--secondary-color);
+    padding: 15px 0; 
+    border-bottom: 5px solid var(--button-shadow);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    /* Rimosso flex per non interferire con il div interno */
+    margin-bottom: 20px;
+    width: 100%;
+}
 
-    header span {
-        font-weight: 600;
-        margin-right: 20px;
-        font-size: 1.1rem;
-    }
-
-    header a {
-        color: white;
-        text-decoration: none;
-        font-weight: bold;
-        transition: color 0.2s;
-    }
-
-    header a:hover {
-        color: #e0e0e0;
-    }
-
-    /* ==== Logo e Titolo ==== */
-    body > div:first-of-type {
-        text-align: center;
-        margin: 2rem auto 1.5rem;
-        padding: 0;
-        background-color: transparent;
-        box-shadow: none;
-    }
-
-    h1 {
-        text-align: center;
-        margin: 1.5rem 0 2.5rem;
-        color: var(--admin-color);
-        font-size: 3rem;
-        font-weight: 700;
-        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.05);
-        border-bottom: 3px solid var(--primary-color);
-        padding-bottom: 10px;
-    }
-
-    /* ==== Lista Opzioni Admin (Card Soft) ==== */
-    ul {
-        list-style: none;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 18px;
-        max-width: 550px;
-        margin: 0 auto;
-    }
-
-    li {
-        background-color: #ffffff;
-        padding: 25px 30px;
-        border-radius: 12px;
-        box-shadow: var(--shadow-soft);
-        border: 2px solid var(--accent-color); /* Bordo soft in azzurro */
-        transition: transform 0.2s, box-shadow 0.2s;
-    }
+/* Contenitore interno per centrare gli elementi dell'header */
+header > div {
+    max-width: var(--max-content-width);
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 2rem;
+    box-sizing: border-box;
     
-    li:hover {
-        transform: translateY(-4px); /* Solleva con eleganza */
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-        border-color: var(--admin-color); /* Bordo si intensifica */
-    }
+    /* FIX: Assicura che i link siano a destra e occupino il massimo spazio */
+    display: flex; 
+    justify-content: flex-end; 
+    align-items: center; /* Centra verticalmente */
+    
+    /* Neutralizzazione */
+    background: none !important; 
+    box-shadow: none !important;
+    border: none !important;
+}
 
-    li a {
-        display: block;
-        color: var(--admin-color);
-        text-decoration: none;
-        font-size: 1.4rem;
-        font-weight: 800;
-    }
 
-    li a:hover {
-        color: var(--primary-color);
-        text-decoration: none;
-    }
+/* FIX: Rimuovi il margin-left dal primo elemento dell'header (username) per farlo aderire al bordo destro del contenitore */
+header a:first-of-type, header span { 
+    margin-left: 15px; 
+}
+header a:first-of-type {
+    margin-left: auto; /* SPINGE TUTTO A DESTRA */
+}
+header span {
+    margin-right: 15px; /* Spazio a destra del nome utente prima del logout */
+    margin-left: auto; /* Rimosso, usa quello del link */
+    font-weight: 700;
+}
+header a:last-of-type {
+    margin-left: 15px;
+}
+
+header a, header span {
+    color: white; 
+    font-weight: 700;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+header a:hover {
+    color: var(--accent-color); 
+    text-decoration: none;
+}
+
+/* Logo (centratura) */
+body > div:first-of-type {
+    text-align: center;
+    margin: 20px auto 0 auto;
+    background: none;
+    box-shadow: none;
+    border: none;
+    padding: 0 2rem;
+}
+
+/* ==== Titoli: Stile Cartoon/Fumetto ==== */
+h1 {
+    font-family: 'Bangers', cursive; 
+    text-align: center;
+    margin-top: 2rem;
+    color: var(--primary-color);
+    font-size: 3.5rem;
+    text-shadow: 5px 5px 0px var(--accent-color), 7px 7px 0px #A0522D; 
+    letter-spacing: 2px;
+}
+
+h2, h3 {
+    font-family: 'Bangers', cursive;
+    color: var(--secondary-color);
+    text-shadow: 2px 2px 0px var(--background-color);
+    margin-top: 1.5rem;
+}
+
+/* ==== Contenitori (div generici) ==== */
+div {
+    background-color: #FFFFFF;
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    border-radius: 20px; 
+    box-shadow: 0 8px 15px var(--box-shadow-color); 
+    border: 3px solid var(--secondary-color);
+}
+
+/* === REGOLA AGGIUNTA PER NEUTRALIZZARE I DIV STRUTTURALI === */
+body > div:not(header):not(:first-of-type) {
+    background: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 2rem !important;
+    max-width: var(--max-content-width) !important;
+}
+
+
+/* ==== Form (Login / Registrazione / Search) ==== */
+form {
+    padding: 20px 2rem;
+}
+form > div {
+    background: none;
+    box-shadow: none;
+    border: none;
+    padding: 0;
+    margin: 10px 0;
+}
+form label {
+    font-weight: 700;
+    color: var(--secondary-color);
+    display: block;
+    margin-bottom: 5px;
+}
+input[type="text"], input[type="password"], input[type="email"], input[type="number"], textarea, select {
+    border: 2px solid var(--secondary-color);
+    border-radius: 8px;
+    padding: 10px;
+    margin: 5px 0;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: 'Quicksand', sans-serif;
+}
+
+/* ==== Bottoni: Effetto 3D (Premibile) ==== */
+button[type="submit"], button, a.button {
+    background-color: var(--button-base); 
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-top: 15px;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    
+    box-shadow: 0 6px 0 0 var(--button-shadow); 
+    transition: all 0.1s ease;
+}
+
+button[type="submit"]:active, button:active, a.button:active {
+    transform: translateY(6px); 
+    box-shadow: 0 0px 0 0 var(--button-shadow);
+}
+
+/* ==== Link e Testo ==== */
+a {
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: var(--secondary-color);
+}
+strong {
+    color: var(--secondary-color);
+    font-weight: 700;
+}
+
+/* Link di ritorno */
+a[href="/recipes"], a[href="/login"] {
+    display: block;
+    text-align: center;
+    margin: 2rem auto;
+    color: var(--secondary-color);
+    font-size: 1.2rem;
+    font-family: 'Quicksand', sans-serif;
+}
