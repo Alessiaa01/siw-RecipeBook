@@ -46,7 +46,7 @@ public class AuthenticationController {
 	public String index(Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication instanceof AnonymousAuthenticationToken) {
-	        return "recipes.html"; // utenti anonimi
+			return "redirect:/recipes"; 
 		} else {		
 			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 			Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
@@ -56,7 +56,7 @@ public class AuthenticationController {
 				return "redirect:/admin";
 			} else {
 				// se è utente normale, vai alla lista ricette
-				return "recipes.html";
+				return "redirect:/recipes";
 			}
 		}
 	}
@@ -69,7 +69,7 @@ public class AuthenticationController {
     	if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
             return "admin/indexAdmin.html"; // dashboard admin
         } 
-        return "recipes.html"; // lista ricette per utenti normali
+    	return "redirect:/recipes";// lista ricette per utenti normali
     }
 
 	// Registrazione utente
