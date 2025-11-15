@@ -47,4 +47,10 @@ public class RecipeService {
 	public void deleteById(Long id) {
 	    recipeRepository.deleteById(id);
 	}
+	
+	// NUOVO METODO: cerca ricette per nome ingrediente
+    @Transactional(readOnly = true)
+    public List<Recipe> findByIngredientNameContainingIgnoreCase(String ingredientName) {
+        return recipeRepository.findByIngredientsNameContainingIgnoreCase(ingredientName);
+    }
 }

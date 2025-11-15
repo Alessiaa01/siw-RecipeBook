@@ -58,7 +58,37 @@ public class RecipeController {
     public String formSearchRecipes() {
         return "formSearchRecipes.html";
     }
+    
+ // Nel file it.uniroma3.siw.controller.RecipeController.java
 
+ // ... (assicurati che esista l'import: import java.util.ArrayList;) ...
+ // ... (e l'import: import org.springframework.web.bind.annotation.RequestParam;) ...
+
+     // MODIFICATO: Gestisce il submit del form e mostra i risultati per titolo o ingrediente
+     @GetMapping("/searchRecipes")
+     public String searchRecipes(Model model, 
+                                 @RequestParam(value = "title", required = false) String title, 
+                                 @RequestParam(value = "ingredient", required = false) String ingredientName) {
+     	
+     	 List<Recipe> foundRecipes = new ArrayList<>();
+
+         if (title != null && !title.trim().isEmpty()) {
+             // Ricerca per Titolo
+             foundRecipes = recipeService.findByTitleContainingIgnoreCase(title);
+             model.addAttribute("searchTerm", title);
+             model.addAttribute("searchType", "Titolo");
+         } else if (ingredientName != null && !ingredientName.trim().isEmpty()) {
+              // NUOVA Ricerca per Ingrediente
+             foundRecipes = recipeService.findByIngredientNameContainingIgnoreCase(ingredientName);
+             model.addAttribute("searchTerm", ingredientName);
+             model.addAttribute("searchType", "Ingrediente");
+         }
+         // Se entrambi sono vuoti, foundRecipes è vuoto.
+
+         model.addAttribute("recipes", foundRecipes);
+         return "foundRecipes.html"; // Ritorna la pagina dei risultati
+     }
+/*
     // Gestisce il submit del form e mostra i risultati
     @GetMapping("/searchRecipes")
     public String searchRecipes(Model model, @RequestParam String title) {
@@ -67,7 +97,7 @@ public class RecipeController {
         return "foundRecipes.html";
     }
 
-    
+  */  
     //----------ADMIN----------
     // Form per inserire una nuova ricetta
     @GetMapping("/admin/formNewRecipe")
