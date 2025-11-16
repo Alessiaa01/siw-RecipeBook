@@ -1,5 +1,5 @@
 
-/* Importa lo stile base e i font */
+/* Importa lo stile base elegante */
 @import url('/css/stile.css');
 
 /* === Layout Admin === */
@@ -7,89 +7,104 @@ body {
     max-width: 1000px;
 }
 
-/* === Titolo H1 === */
+/* === Titolo H1 (Cormorant Unicase) === */
 h1 {
-    color: var(--secondary-color);
-    text-shadow: 5px 5px 0px var(--accent-color);
+    font-family: 'Cormorant Unicase', serif;
+    color: var(--primary-color);
+    font-size: 3rem; 
+    text-shadow: none; 
+    font-weight: 700;
 }
 
-/* === Bottone Aggiungi (Header) === */
+/* === Bottone Aggiungi (Header) - Stile Elegante e Dorato === */
 a[th\:href*="formNewRecipe"] {
     display: block;
     text-align: center;
-    background-color: #3b82f6; /* Blu più neutro per azione positiva */
-    color: white;
+    
+    background-color: var(--button-base); 
+    color: var(--primary-color);
+    
     padding: 12px 20px;
-    border-radius: 10px;
+    border-radius: 8px; 
     max-width: 350px;
     margin: 20px auto;
     font-weight: 700;
-    box-shadow: 0 4px 0 0 #2A68CC;
-    transition: all 0.1s ease;
+    
+    /* Bordo e ombra Dorata */
+    border: 1px solid var(--accent-color);
+    box-shadow: 0 4px 10px var(--accent-color);
+    transition: all 0.2s ease;
+    
+    font-family: 'Cormorant Unicase', serif; 
 }
 a[th\:href*="formNewRecipe"]:hover {
-    background-color: #4C9AFF;
+    color: white;
+    background-color: var(--secondary-color);
+    box-shadow: 0 6px 15px var(--accent-color);
 }
 a[th\:href*="formNewRecipe"]:active {
-    transform: translateY(4px);
-    box-shadow: 0 0px 0 0 #2A68CC;
+    transform: translateY(1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* === Lista di Gestione (li) === */
+/* === Lista di Gestione (li) - Stile Pulito/Elegante === */
 ul {
     max-width: 900px;
-    gap: 15px;
+    padding: 0;
+    list-style: none;
 }
 li {
-    background-color: #FFFACD; /* Giallo chiaro */
+    background-color: #FFFFFF; 
     padding: 15px 20px;
-    border: 3px solid var(--secondary-color);
-    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
+    
+    /* Bordo Dorato */
+    border: 1px solid var(--accent-color);
+    box-shadow: 0 2px 5px var(--box-shadow-color);
+    border-radius: 5px;
+    
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 1.1rem;
+    margin-bottom: 10px; 
 }
 
 li span {
-    font-weight: bold;
+    font-weight: 600;
     color: var(--primary-color);
-    font-family: 'Quicksand', sans-serif;
+    font-family: 'Quicksand', sans-serif; 
 }
 
-/* === Gruppo Bottoni Azione === */
+/* === Gruppo Bottoni Azione (Modifica/Elimina) - Dorato e Pulito === */
 /* Bottone Modifica */
 a[th\:href*="edit"] {
-    background-color: var(--secondary-color);
-    color: white;
+    background-color: var(--accent-color); /* Sfondo Dorato */
+    color: var(--primary-color);
     padding: 8px 12px;
-    border-radius: 8px;
-    font-weight: bold;
-    box-shadow: 0 4px 0 0 #483D8B;
+    border-radius: 5px;
+    font-weight: 600;
+    
+    box-shadow: 0 2px 5px var(--accent-color); /* Ombra Dorata */
     display: inline-block;
     margin-right: 10px;
 }
 a[th\:href*="edit"]:active {
-    transform: translateY(4px);
-    box-shadow: 0 0px 0 0 #483D8B;
+    transform: translateY(1px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 /* Bottone Elimina */
 form button[type="submit"] {
-    background-color: var(--primary-color);
+    background-color: var(--primary-color); 
     color: white;
     padding: 8px 12px;
     border: none;
-    border-radius: 8px;
-    box-shadow: 0 4px 0 0 #CD5C5C;
+    border-radius: 5px;
+    
+    box-shadow: 0 2px 5px var(--primary-color);
     margin-top: 0;
 }
 form button[type="submit"]:active {
-    transform: translateY(4px);
-    box-shadow: 0 0px 0 0 #CD5C5C;
-}
-
-/* Link Torna Indietro */
-a[th\:href*="recipes"] {
-    margin-top: 30px;
+    transform: translateY(1px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }

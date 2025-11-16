@@ -1,64 +1,68 @@
-/* Importa lo stile base e i font */
+/* Importa lo stile base elegante */
 @import url('/css/stile.css');
 
-/* ==== Titolo H1 (Bangers - Grande e Centrato) ==== */
+/* ==== Titolo H1 (Cormorant Unicase - Elegante) ==== */
 h1 {
-    font-family: 'Bangers', cursive;
-    color: var(--secondary-color); /* Viola */
-    font-size: 4.0rem;
-    text-shadow: 6px 6px 0 var(--accent-color); /* Ombra Oro forte */
+    font-family: 'Cormorant Unicase', serif;
+    color: var(--secondary-color); 
+    font-size: 3.5rem; 
+    text-shadow: none; 
     margin-top: 3rem; 
     margin-bottom: 2rem;
     text-align: center;
+    font-weight: 700;
     
-    /* Aggiunta linea di separazione per impatto */
-    border-bottom: 3px solid var(--primary-color); 
+    border-bottom: 1px solid var(--accent-color); /* Linea Dorata */
     padding-bottom: 15px;
 }
 
-/* ==== Paragrafi di Messaggio (Centrati e BOLD) ==== */
+/* ==== Paragrafi di Messaggio ==== */
 p {
-    font-size: 1.6rem;
-    color: var(--text-color);
+    font-size: 1.2rem; 
+    color: var(--text-color); 
     margin: 1.5rem auto;
     text-align: center;
     max-width: 600px;
-    font-weight: 700;
+    font-weight: 400; 
+    font-family: 'Quicksand', sans-serif; 
 }
 
 p span {
-    font-weight: 900;
-    color: var(--primary-color); /* Crimson */
+    font-weight: 700;
+    color: var(--primary-color); 
 }
 
-/* ==== Pulsante Accedi (3D - CTA Principale) ==== */
+/* ==== Pulsante Accedi (CTA Principale - Dorato) ==== */
 a[href="/login"] {
     display: block;
-    width: 350px; /* Aumento la larghezza per renderlo più visibile */
+    width: 350px; 
     text-align: center;
-    margin: 3rem auto; /* Spazio maggiore */
+    margin: 3rem auto; 
     padding: 15px 25px;
-    color: white; 
-    font-weight: 900;
-    font-size: 1.5rem; /* Aumento la dimensione del testo */
     
-    background-color: var(--button-base); /* Verde Base (Successo) */
-    border-radius: 15px; 
+    color: var(--primary-color); 
+    font-weight: 700;
+    font-size: 1.3rem; 
+    
+    /* Colore e ombra Dorata */
+    background-color: var(--accent-color); /* Sfondo Dorato */
+    border-radius: 8px; 
     text-decoration: none;
+    border: 1px solid var(--primary-color);
     
-    /* Ombra 3D: Aumento la profondità per maggiore enfasi */
-    box-shadow: 0 8px 0 0 var(--button-shadow); 
-    transition: transform 0.1s, box-shadow 0.1s, background-color 0.1s;
+    box-shadow: 0 4px 10px var(--accent-color); /* Ombra Dorata */
+    transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
 }
 
 a[href="/login"]:hover {
-    color: white;
-    background-color: #4CB582; /* Tonalità leggermente più chiara su hover */
+    color: var(--primary-color);
+    background-color: #F8E3B6; /* Oro leggermente più chiaro su hover */
+    box-shadow: 0 6px 15px var(--accent-color);
     text-decoration: none;
     cursor: pointer;
 }
 
 a[href="/login"]:active {
-    transform: translateY(8px); /* Effetto premuto più evidente */
-    box-shadow: 0 0px 0 0 var(--button-shadow);
+    transform: translateY(1px); 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }

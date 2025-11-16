@@ -1,20 +1,21 @@
 /* ========================================================== */
-/* 1. FONT E IMPORTAZIONI: Google Fonts (Gratuiti) */
+/* 1. FONT E IMPORTAZIONI: Cormorant Unicase, Cinzel, Rouge Script, Quicksand */
 /* ========================================================== */
-@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Quicksand:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Unicase:wght@300;400;500;600;700&family=Rouge+Script&family=Quicksand:wght@300;400;500;600;700&display=swap');
 
 html {
     height: 100%; 
 }
 
+/* NUOVE VARIABILI: Palette Elegante Pastello (Lavanda e Oro Opaco) */
 :root {
-    --primary-color: #FF4500; /* Rosso-Arancione (Titoli) */
-    --secondary-color: #9370DB; /* Viola Magico (Header, Bordi) */
-    --accent-color: #FFD700; /* Oro Magico (Ombre, Hover) */
-    --background-color: #F7E9FF; /* Lilla Chiaro (Body) */
-    --box-shadow-color: rgba(106, 90, 205, 0.3);
-    --button-base: #3CB371; /* Verde (Base Bottone) */
-    --button-shadow: #2E8B57; /* Verde Scuro (Ombra 3D) */
+    --primary-color: #9B59B6; /* Viola Lavanda Scuro */
+    --secondary-color: #C39BD3; /* Lavanda Chiaro */
+    --accent-color: #FAD7A0; /* Oro Opaco */
+    --background-color: #FBF7FF; /* Bianco Sporco/Lilla Subtilo */
+    --box-shadow-color: rgba(195, 155, 211, 0.3); 
+    --button-base: #C39BD3; 
+    --button-shadow: #9B59B6; 
     --max-content-width: 900px;
 }
 
@@ -22,121 +23,48 @@ html {
 /* 2. STILE GENERALE E LAYOUT */
 /* ========================================================== */
 body {
-    font-family: 'Quicksand', sans-serif;
+    font-family: 'Quicksand', sans-serif; 
     background-color: var(--background-color);
     margin: 0;
     padding: 0;
     color: #333;
     line-height: 1.6;
     min-height: 100vh;
+    font-weight: 400; 
 }
 
-/* Nuovo contenitore per centrare tutti i contenuti */
-main, 
-body > div:not(header), 
-form { 
-    max-width: var(--max-content-width);
-    margin: 0 auto;
-    padding: 0 2rem;
-    box-sizing: border-box;
-}
-
-/* ==== Header (Striscia Magica - Full Width) ==== */
-header {
-    background-color: var(--secondary-color);
-    padding: 15px 0; 
-    border-bottom: 5px solid var(--button-shadow);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    /* Rimosso flex per non interferire con il div interno */
-    margin-bottom: 20px;
-    width: 100%;
-}
-
-/* Contenitore interno per centrare gli elementi dell'header */
-header > div {
-    max-width: var(--max-content-width);
-    margin: 0 auto;
-    width: 100%;
-    padding: 0 2rem;
-    box-sizing: border-box;
-    
-    /* FIX: Assicura che i link siano a destra e occupino il massimo spazio */
-    display: flex; 
-    justify-content: flex-end; 
-    align-items: center; /* Centra verticalmente */
-    
-    /* Neutralizzazione */
-    background: none !important; 
-    box-shadow: none !important;
-    border: none !important;
-}
-
-
-/* FIX: Rimuovi il margin-left dal primo elemento dell'header (username) per farlo aderire al bordo destro del contenitore */
-header a:first-of-type, header span { 
-    margin-left: 15px; 
-}
-header a:first-of-type {
-    margin-left: auto; /* SPINGE TUTTO A DESTRA */
-}
-header span {
-    margin-right: 15px; /* Spazio a destra del nome utente prima del logout */
-    margin-left: auto; /* Rimosso, usa quello del link */
-    font-weight: 700;
-}
-header a:last-of-type {
-    margin-left: 15px;
-}
-
-header a, header span {
-    color: white; 
-    font-weight: 700;
-    text-decoration: none;
-    transition: color 0.2s;
-}
-
-header a:hover {
-    color: var(--accent-color); 
-    text-decoration: none;
-}
-
-/* Logo (centratura) */
-body > div:first-of-type {
-    text-align: center;
-    margin: 20px auto 0 auto;
-    background: none;
-    box-shadow: none;
-    border: none;
-    padding: 0 2rem;
-}
-
-/* ==== Titoli: Stile Cartoon/Fumetto ==== */
+/* ==== Titoli H1 (Default): Cormorant Unicase (se non sovrascritto) ==== */
 h1 {
-    font-family: 'Bangers', cursive; 
+    font-family: 'Cormorant Unicase', serif;
+    font-weight: 700; 
     text-align: center;
-    margin-top: 2rem;
-    color: var(--primary-color);
-    font-size: 3.5rem;
-    text-shadow: 5px 5px 0px var(--accent-color), 7px 7px 0px #A0522D; 
-    letter-spacing: 2px;
+    margin-top: 2.5rem;
+    color: var(--primary-color); 
+    font-size: 3rem;
+    text-shadow: none; 
+    letter-spacing: 1px;
 }
 
+/* ==== Sotto-Titoli H2/H3: Cormorant Unicase ==== */
 h2, h3 {
-    font-family: 'Bangers', cursive;
-    color: var(--secondary-color);
-    text-shadow: 2px 2px 0px var(--background-color);
+    font-family: 'Cormorant Unicase', serif;
+    font-weight: 700; 
+    color: var(--primary-color);
+    text-shadow: none;
     margin-top: 1.5rem;
 }
 
-/* ==== Contenitori (div generici) ==== */
+
+
+/* ==== Contenitori (div generici) - Leggeri ==== */
 div {
     background-color: #FFFFFF;
     max-width: 700px;
     margin: 2rem auto;
     padding: 1.5rem;
-    border-radius: 20px; 
-    box-shadow: 0 8px 15px var(--box-shadow-color); 
-    border: 3px solid var(--secondary-color);
+    border-radius: 10px; 
+    box-shadow: 0 4px 10px var(--box-shadow-color); 
+    border: 1px solid var(--secondary-color); 
 }
 
 /* === REGOLA AGGIUNTA PER NEUTRALIZZARE I DIV STRUTTURALI === */
@@ -149,10 +77,15 @@ body > div:not(header):not(:first-of-type) {
 }
 
 
-/* ==== Form (Login / Registrazione / Search) ==== */
+/* ==== Form (Contenitore) - Leggero (Solo se non è un form speciale come formLogin) ==== */
 form {
     padding: 20px 2rem;
+    border: 1px solid var(--secondary-color); 
+    box-shadow: 0 4px 10px var(--box-shadow-color); 
+    border-radius: 10px;
+    max-width: 500px;
 }
+
 form > div {
     background: none;
     box-shadow: none;
@@ -161,44 +94,45 @@ form > div {
     margin: 10px 0;
 }
 form label {
-    font-weight: 700;
-    color: var(--secondary-color);
+    font-weight: 600;
+    color: var(--primary-color); 
     display: block;
     margin-bottom: 5px;
 }
 input[type="text"], input[type="password"], input[type="email"], input[type="number"], textarea, select {
-    border: 2px solid var(--secondary-color);
-    border-radius: 8px;
+    border: 1px solid var(--secondary-color); 
+    border-radius: 5px; 
     padding: 10px;
     margin: 5px 0;
     width: 100%;
     box-sizing: border-box;
     font-family: 'Quicksand', sans-serif;
+    transition: border-color 0.2s;
 }
 
-/* ==== Bottoni: Effetto 3D (Premibile) ==== */
+/* ==== Bottoni: Effetto Elegante (Rimuovi 3D) ==== */
 button[type="submit"], button, a.button {
     background-color: var(--button-base); 
-    color: white;
+    color: var(--primary-color); 
     border: none;
-    padding: 10px 20px;
-    border-radius: 10px;
-    font-family: 'Quicksand', sans-serif;
-    font-weight: 700;
-    font-size: 1.1rem;
-    cursor: pointer;
-    margin-top: 15px;
-    display: block;
-    text-align: center;
-    text-decoration: none;
+    padding: 12px 25px;
+    border-radius: 5px; 
+    font-weight: 600;
+    font-size: 1rem;
     
-    box-shadow: 0 6px 0 0 var(--button-shadow); 
-    transition: all 0.1s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+    transition: all 0.2s ease;
+}
+
+button[type="submit"]:hover, button:hover, a.button:hover {
+    background-color: var(--secondary-color);
+    color: white; 
+    box-shadow: 0 4px 8px var(--box-shadow-color);
 }
 
 button[type="submit"]:active, button:active, a.button:active {
-    transform: translateY(6px); 
-    box-shadow: 0 0px 0 0 var(--button-shadow);
+    transform: translateY(1px); 
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 /* ==== Link e Testo ==== */

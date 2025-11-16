@@ -1,192 +1,103 @@
-
-/* ========================================================== */
-/* STILE PER editRecipe.html (Form Modifica Ricetta - Admin) */
-/* (Molto simile a formNewRecipes.css per coerenza Admin) */
-/* ========================================================== */
-
-/* FONT E COLORI (Definizioni coerenti con il tema Admin/Magico) */
-@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Quicksand:wght@400;700&display=swap');
+/* Importa lo stile base elegante */
+@import url('/css/stile.css');
 
 :root {
-    --primary-color: #FF4500; /* Rosso-Arancione (Accento Forte/Pericolo) */
-    --secondary-color: #9370DB; /* Viola Magico (Admin, Bordi) */
-    --accent-color: #FFD700; /* Oro Magico (Ombre, Highlight) */
-    --background-color: #F7E9FF; /* Lilla Chiaro (Body) */
-    --form-bg-accent: #F0FFF0; /* Sfondo Form leggero (Verde chiaro) */
-    --button-base-admin: #3CB371; /* Verde (Base Bottone Admin) */
-    --button-shadow-admin: #2E8B57; /* Verde Scuro (Ombra 3D) */
+    --button-base-admin: var(--secondary-color); 
+    --button-shadow-admin: var(--primary-color); 
 }
 
-/* === BASE E LAYOUT === */
-body {
-    font-family: 'Quicksand', sans-serif;
-    background-color: var(--background-color);
-    margin: 0;
-    padding: 20px;
-    color: #333;
-    line-height: 1.6;
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-/* === Titolo H1 === */
+/* === Titolo H1 (Cormorant Unicase) === */
 h1 {
-    font-family: 'Bangers', cursive; 
+    font-family: 'Cormorant Unicase', serif; 
     text-align: center;
-    margin-top: 2rem;
-    color: var(--secondary-color); 
-    font-size: 3.5rem;
-    text-shadow: 5px 5px 0px var(--accent-color), 7px 7px 0px #483D8B; 
-    letter-spacing: 2px;
+    color: var(--primary-color); 
+    font-size: 3rem;
+    text-shadow: none; 
+    font-weight: 700;
     margin-bottom: 2rem;
 }
 
-/* === Form Contenitore Principale (Adesivo Gigante) === */
-/* Contiene i fieldset per Modifica Ricetta e Modifica Ingredienti/Tag */
+/* === Form Contenitore Principale (Pannello Elegante e Dorato) === */
 form:first-of-type {
     background-color: #FFFFFF;
     padding: 30px;
-    border-radius: 25px;
-    box-shadow: 8px 8px 0 var(--primary-color);
-    border: 5px solid var(--secondary-color);
+    border-radius: 10px;
+    
+    /* Bordo e Ombra Dorati */
+    box-shadow: 0 4px 10px var(--accent-color);
+    border: 1px solid var(--accent-color);
     margin: 20px auto;
 }
 
 /* === Fieldsets (Sezioni del Form) === */
 fieldset {
-    border: 3px dashed var(--secondary-color);
+    border: 1px solid var(--secondary-color); 
     padding: 25px;
     margin-bottom: 30px;
-    border-radius: 15px;
-    background-color: var(--form-bg-accent); 
+    border-radius: 8px;
+    background-color: var(--background-color); 
 }
 
 legend {
-    font-family: 'Bangers', cursive;
+    font-family: 'Cormorant Unicase', serif;
     color: var(--primary-color);
     padding: 0 15px;
-    font-size: 1.8rem;
-    text-shadow: 2px 2px 0 var(--accent-color);
+    font-size: 1.6rem;
+    text-shadow: none;
+    font-weight: 700;
 }
 
 /* === Input e Testo === */
 label {
-    font-weight: 700;
-    color: var(--secondary-color);
+    font-weight: 600;
+    color: var(--primary-color);
     display: block;
     margin-top: 15px;
+    font-family: 'Cormorant Unicase', serif; 
 }
 
 input[type="text"], input[type="number"], textarea, select {
-    border: 3px solid var(--secondary-color);
-    border-radius: 10px;
-    padding: 12px;
+    border: 1px solid var(--accent-color); /* Bordo Dorato */
+    border-radius: 5px;
+    padding: 10px;
     width: 100%;
     box-sizing: border-box;
 }
 
-/* ========================================================== */
-/* SEZIONE INGREDIENTI (Modifica/Aggiungi) */
-/* ========================================================== */
-
-/* === Lista Ingredienti ESISTENTI (ul/li) === */
-ul {
-    list-style: none;
-    padding: 0;
-}
+/* === Lista Ingredienti ESISTENTI (li) === */
 ul li {
-    background-color: #FFFACD; /* Giallo chiaro */
+    background-color: #FFFFFF; 
     padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    border: 2px solid var(--accent-color);
-    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: 700;
-}
-
-/* === Form di RIMOZIONE Ingrediente === */
-form[th\:action*="remove"] {
-    display: inline;
-    padding: 0;
-    margin: 0;
-    background: none;
-    box-shadow: none;
-    border: none;
-}
-form[th\:action*="remove"] button {
-    background-color: var(--primary-color);
-    color: white;
-    padding: 8px 12px;
-    border: none;
     border-radius: 8px;
-    font-weight: bold;
-    box-shadow: 0 4px 0 0 #CD5C5C;
-    margin: 0; /* Rimuove il margin-top di default */
-    font-size: 0.9rem;
-}
-form[th\:action*="remove"] button:active {
-    transform: translateY(4px);
-    box-shadow: 0 0px 0 0 #CD5C5C;
+    margin-bottom: 8px;
+    border: 1px solid var(--accent-color); /* Bordo Dorato */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* === Form di AGGIUNTA Ingrediente (Blocco) === */
-/* Notare che l'aggiunta ha un suo form separato in editRecipe.html */
+/* === Form di RIMOZIONE Ingrediente (Bottone Elegante) === */
+form[th\:action*="remove"] button {
+    background-color: var(--primary-color); 
+    box-shadow: 0 2px 5px var(--primary-color);
+}
+
+/* === Form di AGGIUNTA Ingrediente (Bottone Elegante Dorato) === */
 form[th\:action*="ingredient/add"] {
-    background-color: #F0FFF0;
-    border: 2px dashed var(--accent-color);
+    background-color: var(--background-color);
+    border: 1px dashed var(--accent-color); /* Bordo Dorato */
     box-shadow: none;
-    padding: 20px;
-    margin-top: 20px;
-    border-radius: 15px;
-    text-align: right;
 }
 
-form[th\:action*="ingredient/add"] input {
-    width: 25%;
-    display: inline-block;
-    margin-right: 1%;
-}
-form[th\:action*="ingredient/add"] label {
-    display: inline-block;
-    width: auto;
-    margin-right: 5px;
-}
 form[th\:action*="ingredient/add"] button {
-    background-color: var(--secondary-color);
-    box-shadow: 0 4px 0 0 #483D8B;
-    padding: 8px 15px;
-    font-size: 1rem;
-    width: auto;
-    margin-top: 0;
-}
-form[th\:action*="ingredient/add"] button:active {
-    transform: translateY(4px);
-    box-shadow: 0 0px 0 0 #483D8B;
+    background-color: var(--accent-color); /* Sfondo Dorato */
+    color: var(--primary-color);
+    box-shadow: 0 2px 5px var(--accent-color);
 }
 
 /* === Bottone Submit Principale: Salva Modifiche === */
-form:first-of-type > div:last-child button[type="submit"] {
+form:first-of-type button[type="submit"] {
     width: 100%;
-    font-size: 1.5rem;
-    background-color: var(--button-base-admin);
-    box-shadow: 0 6px 0 0 var(--button-shadow-admin);
-    margin-top: 30px;
-}
-form:first-of-type > div:last-child button[type="submit"]:active {
-    transform: translateY(6px); 
-    box-shadow: 0 0px 0 0 var(--button-shadow-admin);
-}
-
-/* Link di ritorno */
-a[href="/admin/manageRecipes"] {
-    display: block;
-    text-align: center;
-    margin: 2rem auto;
-    color: var(--secondary-color);
     font-size: 1.2rem;
-    font-weight: bold;
-    text-decoration: none;
+    background-color: var(--primary-color); 
+    color: white;
+    box-shadow: 0 4px 10px var(--accent-color); /* Ombra Dorata */
 }

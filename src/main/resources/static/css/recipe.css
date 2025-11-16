@@ -1,17 +1,12 @@
-/* Importa lo stile base, i font (Bangers/Quicksand) e le variabili */
+/* Importa lo stile base elegante */
 @import url('/css/stile.css');
 
-/* === Header === */
+/* === Header - Ereditato e neutro === */
 header {
-    background-color: var(--secondary-color); 
-    color: white;
-    padding: 15px 30px;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    box-shadow: 0 4px 0 var(--accent-color);
+    box-shadow: none;
+    border-bottom: none; 
+    padding: 15px 0;
 }
-/* ... stili header omessi ... */
 
 /* Centra il logo */
 body > div:first-of-type {
@@ -23,23 +18,26 @@ body > div:first-of-type {
 }
 
 
-/* ==== Contenitore Ricetta (Adesivo Gigante UNICO) ==== */
+/* ==== Contenitore Ricetta (Pannello Elegante) ==== */
 body > div:last-of-type {
     background-color: #ffffff;
-    max-width: 800px;
+    max-width: 900px;
     margin: 3rem auto 4rem;
-    padding: 40px;
-    border-radius: 25px;
-    box-shadow: 12px 12px 0px rgba(0, 0, 0, 0.2); 
-    border: 5px solid var(--secondary-color); 
+    padding: 50px; /* Più spazio interno */
+    border-radius: 10px;
+    
+    /* NUOVO STILE: Bordo sottile e ombra morbida */
+    box-shadow: 0 5px 15px var(--box-shadow-color); 
+    border: 1px solid var(--secondary-color); 
+    
     transition: transform 0.2s; 
 }
 body > div:last-of-type:hover {
-    transform: translate(-3px, -3px); 
-    box-shadow: 15px 15px 0px var(--primary-color); 
+    transform: none; /* Rimuovi l'effetto di spostamento */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); 
 }
 
-/* === Neutralizza tutti i div interni per eliminare i riquadri non voluti === */
+/* === Neutralizza tutti i div interni (mantenuto per pulizia) === */
 body > div:last-of-type div {
     border: none !important; 
     box-shadow: none !important;
@@ -48,27 +46,28 @@ body > div:last-of-type div {
     margin: 0;
 }
 
-/* ==== Titolo H1 (Bangers con Ombra Oro) ==== */
+/* ==== Titolo H1 (Ereditato Cormorant Unicase) ==== */
 h1 {
-    font-family: 'Bangers', cursive;
-    color: var(--secondary-color);
-    font-size: 4.0rem;
-    text-shadow: 6px 6px 0 var(--accent-color);
-    border-bottom: 3px dashed var(--accent-color);
+    font-family: 'Cormorant Unicase', serif; 
+    color: var(--primary-color);
+    font-size: 3.5rem;
+    text-shadow: none; /* Rimuovi le ombre massicce */
+    border-bottom: 1px solid var(--secondary-color); /* Linea di separazione sottile */
     padding-bottom: 15px;
-    margin-bottom: 2rem;
-    text-align: center;
+    margin-bottom: 2.5rem;
+    text-align: left; 
+    font-weight: 700;
 }
 
-/* ==== Sotto-Titoli H2, H3 (Quicksand Bold - Linea Sottile) ==== */
+/* ==== Sotto-Titoli H2, H3 (Ereditano Cormorant Unicase) ==== */
 h2, h3 {
     color: var(--primary-color); 
-    margin-top: 2.5rem;
+    margin-top: 2rem;
     margin-bottom: 1rem;
-    font-weight: 800;
-    border-bottom: 2px solid var(--primary-color);
+    font-weight: 700;
+    border-bottom: 1px solid var(--secondary-color); /* Linea sottile */
     padding-bottom: 5px;
-    font-family: 'Quicksand', sans-serif;
+    font-family: 'Cormorant Unicase', serif;
     font-size: 1.8rem;
 }
 
@@ -98,7 +97,7 @@ body > div:last-of-type p strong {
     color: var(--primary-color);
 }
 
-/* ==== Liste (Ingredienti/Tag) - Nessun riquadro, solo testo/accendo grafico in linea ==== */
+/* ==== Liste (Ingredienti/Tag) - Rimuovi il punto grafico aggressivo ==== */
 ul {
     list-style: none;
     padding-left: 0;
@@ -107,20 +106,19 @@ ul {
 
 ul li {
     margin-bottom: 5px;
-    padding: 5px 0;
+    padding: 5px 0 5px 25px; 
     background-color: transparent; 
-    border-left: none;
-    font-weight: 700;
+    font-weight: 500;
     position: relative;
-    padding-left: 25px; 
+    list-style: none;
 }
 
-/* Aggiunge un punto colorato come accento visivo */
+/* Sostituisci l'elemento grafico con un trattino elegante */
 ul li::before {
-    content: "●";
+    content: "—"; /* Trattino elegante al posto del pallino/triangolo */
     color: var(--secondary-color); 
-    font-size: 0.8em;
-    font-weight: 900;
+    font-size: 1em;
+    font-weight: 400;
     position: absolute;
     left: 0;
     top: 50%;
@@ -129,80 +127,59 @@ ul li::before {
 }
 
 ul li:hover::before {
-    content: "▶"; 
-    color: var(--primary-color);
+    content: "—"; 
+    color: var(--primary-color); 
 }
 
-/* ==== Area Admin (Link Modifica) - Pulsante 3D ==== */
+/* ==== Area Admin (Link Modifica) - Pulsante Elegante ==== */
 div[sec\:authorize*="ADMIN"] {
     text-align: right;
     margin-bottom: 20px;
 }
 div[sec\:authorize*="ADMIN"] a {
-    color: white;
-    background-color: var(--secondary-color);
-    padding: 12px 18px;
-    border-radius: 10px;
-    font-weight: bold;
+    color: var(--primary-color);
+    background-color: var(--button-base); 
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: 600;
     text-decoration: none;
     
-    box-shadow: 0 4px 0 0 var(--admin-color);
-    transition: transform 0.1s, box-shadow 0.1s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.1s, box-shadow 0.1s, background-color 0.2s;
 }
 div[sec\:authorize*="ADMIN"] a:active {
-    transform: translateY(4px);
-    box-shadow: 0 0px 0 0 var(--admin-color);
+    transform: translateY(1px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* ==== Blocco Categoria - Pulito ==== */
-.recipe-category {
-    padding: 0; 
-    border: none;
-    background-color: transparent;
-    display: block;
-    margin-top: 20px;
-    text-align: right; 
-}
-.recipe-category h3 {
-    margin-top: 0;
-    border-bottom: none;
-    padding-bottom: 0;
-    color: var(--secondary-color);
-    display: inline;
-    font-size: 1.5rem;
-}
-.recipe-category p {
-    margin: 0;
-    font-weight: bold;
-    color: var(--primary-color);
-    display: inline;
-    font-size: 1.5rem;
-    margin-left: 10px;
-}
-
-
-/* ==== Link di ritorno (Pulsante 3D Adesivo) ==== */
+/* ==== Link di ritorno (Pulsante Elegante) ==== */
 a[href="/recipes"] {
     display: block; 
     width: 300px;
     text-align: center;
     margin: 40px auto 10px;
-    padding: 10px 20px;
-    color: white; 
-    font-weight: bold;
+    padding: 12px 20px;
+    color: var(--primary-color); 
+    font-weight: 700;
     text-decoration: none;
     
-    border: 3px solid var(--primary-color); 
-    border-radius: 10px;
-    background-color: var(--secondary-color);
-    box-shadow: 0 4px 0 0 var(--primary-color); 
+    border: 1px solid var(--primary-color); 
+    border-radius: 5px;
+    background-color: var(--button-base);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
     transition: transform 0.1s, box-shadow 0.1s;
 }
 a[href="/recipes"]:hover {
-    background-color: #6a408c;
-    box-shadow: 0 6px 0 0 var(--primary-color);
+    background-color: var(--secondary-color);
+    color: white; 
+    box-shadow: 0 4px 8px var(--box-shadow-color);
 }
 a[href="/recipes"]:active {
-    transform: translateY(4px);
-    box-shadow: 0 0px 0 0 var(--primary-color);
+    transform: translateY(1px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* ==== Blocco Categoria - Pulito (eredita stile.css, ma rimuovi vecchi override) ==== */
+.recipe-category h3 {
+    border-bottom: none;
 }

@@ -1,146 +1,70 @@
 /* ========================================================== */
 /* STILE PER foundRecipes.html (Risultati della Ricerca) */
 /* ========================================================== */
+@import url('/css/stile.css');
 
-/* FONT E COLORI (Definizioni coerenti con gli altri file) */
-@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Quicksand:wght@400;700&display=swap');
-
-:root {
-    --primary-color: #FF4500; /* Rosso-Arancione (Titoli) */
-    --secondary-color: #9370DB; /* Viola Magico (Header, Bordi) */
-    --accent-color: #FFD700; /* Oro Magico (Ombre, Link) */
-    --background-color: #F7E9FF; /* Lilla Chiaro (Body) */
-}
-
-/* === BASE E LAYOUT === */
-body {
-    font-family: 'Quicksand', sans-serif;
-    background-color: var(--background-color);
-    margin: 0;
-    padding: 0 2rem;
-    color: #333;
-    line-height: 1.6;
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-/* ==== Header (Striscia Magica - Coerenza) ==== */
-header {
-    background-color: var(--secondary-color);
-    padding: 15px 30px;
-    border-bottom: 5px solid #2E8B57; /* Ombra verde per l'header */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    display: flex;
-    justify-content: flex-end; 
-    margin-bottom: 20px;
-}
-header a, header span {
-    color: white; 
-    font-weight: 700;
-    margin-left: 15px;
-    text-decoration: none;
-    transition: color 0.2s;
-}
-header a:hover {
-    color: var(--accent-color); 
-}
-
-/* Logo (centratura e reset del div) */
-body > div:first-of-type, div {
-    background: none;
-    box-shadow: none;
-    border: none;
-    padding: 0;
-    margin: 20px auto 0 auto;
-    text-align: center;
-}
-
-/* ==== Titolo H1 (Risultati) ==== */
+/* === Titolo H1 (Risultati) - Dorato === */
 h1 {
-    font-family: 'Bangers', cursive; 
-    text-align: center;
-    margin-top: 2rem;
+    font-family: 'Cormorant Unicase', serif; 
+    font-weight: 700;
     color: var(--primary-color);
     font-size: 3rem;
-    /* Ombra da fumetto/sticker */
-    text-shadow: 4px 4px 0 var(--accent-color), 6px 6px 0 #A0522D;
+    text-shadow: none; 
     letter-spacing: 1px;
-    border-bottom: 4px dashed var(--secondary-color);
+    
+    border-bottom: 1px solid var(--accent-color); /* Linea Dorata */
     padding-bottom: 10px;
     margin-bottom: 2rem;
 }
 
 h1 span {
-    color: var(--secondary-color); /* Evidenzia il termine di ricerca */
-    font-size: 1.1em;
+    color: var(--accent-color); /* Evidenzia il termine di ricerca in Dorato */
+    font-size: 1em;
 }
 
-/* ==== Messaggio Nessuna Ricetta Trovata ==== */
+/* ==== Messaggio Nessuna Ricetta Trovata (Bordo Dorato) ==== */
 div[th\:if*="lists.isEmpty"] {
-    background-color: #FFFACD; /* Giallo chiaro */
-    text-align: center;
-    font-weight: 700;
-    padding: 20px;
-    border-radius: 15px;
-    border: 3px solid var(--primary-color);
-    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
-    max-width: 500px;
-    margin: 30px auto;
+    background-color: var(--background-color); 
+    border: 1px solid var(--accent-color); /* Bordo Dorato */
+    box-shadow: 0 4px 10px var(--box-shadow-color);
+    color: var(--primary-color);
 }
 
-/* ==== Lista Ricette (Cards Staccate in Stile Sticker) ==== */
-ul {
-    list-style: none;
-    padding: 0;
-    max-width: 800px;
-    margin: 2rem auto;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-}
-
+/* ==== Lista Ricette (Cards Eleganti e Dorate) ==== */
 li {
     background-color: #FFFFFF;
-    flex: 1 1 300px; 
-    max-width: 350px;
     padding: 25px;
-    text-align: center;
+    border-radius: 8px;
     
-    /* Stile Sticker / Cartone Animato */
-    border: 4px solid var(--secondary-color);
-    border-radius: 15px;
-    box-shadow: 6px 6px 0 var(--primary-color); /* Ombra laterale pronunciata */
+    border: 1px solid var(--accent-color); /* Bordo Dorato */
+    box-shadow: 0 4px 10px var(--box-shadow-color); 
     transition: transform 0.2s, box-shadow 0.2s;
-    margin: 0; /* Annulla il margin generico */
+    
+    flex: 1 1 280px; 
 }
 
 li:hover {
-    transform: translate(1px, 1px);
-    box-shadow: 5px 5px 0 var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px var(--accent-color); /* Ombra Dorata al passaggio */
 }
 
 li a {
+    font-family: 'Cormorant Unicase', serif; 
     font-size: 1.5rem;
-    font-family: 'Bangers', cursive;
     color: var(--primary-color);
     text-decoration: none;
-    display: block;
-    text-shadow: 1px 1px 0 var(--accent-color);
-}
-li a:hover {
-    color: var(--secondary-color);
-    text-decoration: none;
+    font-weight: 700;
 }
 
 /* === Link Torna Indietro (Footer) === */
 body > a {
-    display: block;
-    text-align: center;
-    margin: 3rem auto 1rem;
-    color: var(--secondary-color);
+    font-family: 'Cormorant Unicase', serif;
+    color: var(--accent-color); /* Link in Dorato */
     font-size: 1.2rem;
-    font-weight: bold;
-    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
     text-decoration: none;
+}
+body > a:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
 }

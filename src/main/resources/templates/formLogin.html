@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>SiwRecipe - Login</title>
+    <title>Siw-RecipeBook</title>
     <link rel="stylesheet" href="/css/formLogin.css" />
 </head>
 
@@ -13,30 +13,36 @@
             <a href="/logout">Logout</a>
         </div>
         <div th:unless="${userDetails}">
-           
-            <a href="/register">Registrati</a>
-        </div>
+            </div>
     </header>
 
     <div>
-        <a href="/"><img src="/images/logo-siw.png" width="50%" /></a>
-    </div>
+        </div>
 
-    <h1>Login</h1>
-    <form th:action="@{/login}" method="POST">
+    <form th:action="@{/login}" method="POST" class="elegant-form">
+        
+        <h1>LOGIN</h1>
+        
         <div>
-            <label>Username</label>
+            <label>USERNAME</label>
             <input type="text" placeholder="username" name="username" required />
         </div>
         <div>
-            <label>Password</label>
+            <label>PASSWORD</label>
             <input type="password" placeholder="password" name="password" required />
         </div>
-        <div>
-            <button type="submit">Accedi</button>
+        
+        <div class="center-button">
+            <button type="submit">ENTRA</button>
         </div>
-        <div th:if="${param.error}">
-            <span style="color:red">Username o password non corretti</span>
+        
+        <div class="extra-links">
+            <div th:if="${param.error}" style="text-align: center; margin-bottom: 10px;">
+                <span style="color:#E74C3C; font-weight: 500;">Username o password non corretti</span>
+            </div>
+            
+            <a href="#">Password dimenticata?</a> • 
+            <a th:href="@{/register}">Crea un account</a>
         </div>
     </form>
 </body>

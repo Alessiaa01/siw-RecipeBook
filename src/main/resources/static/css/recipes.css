@@ -1,132 +1,167 @@
-/* Importa lo stile base e i font */
+/* Importa lo stile base elegante */
 @import url('/css/stile.css');
 
-/* === Titolo H1 (Ereditato da stile.css ma forzato) === */
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body > div, main {
+    max-width: var(--max-content-width); 
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* ==== Titolo H1 (Elenco Ricette) ==== */
 h1 {
-    color: var(--primary-color); /* Utilizzo di primary per il colore del titolo */
-    text-shadow: 5px 5px 0px var(--accent-color);
-    margin-bottom: 2rem;
-    font-family: 'Bangers', cursive;
-    font-size: 3.5rem; /* Forziamo Bangers come in stile.css */
-}
-
-/* === Form Contenitore (Adesivo Gigante) === */
-form {
-    background-color: #FFFFFF;
-    padding: 30px;
-    border-radius: 25px;
-    /* Ombra/Bordo Adesivo */
-    box-shadow: 8px 8px 0 var(--primary-color);
-    border: 5px solid var(--secondary-color);
-    max-width: 900px;
-    margin: 20px auto;
-}
-
-/* === Fieldsets (Sezioni del Form) === */
-fieldset {
-    border: 3px dashed var(--secondary-color);
-    padding: 25px;
-    margin-bottom: 30px;
-    border-radius: 15px;
-    background-color: #F0FFF0; /* Sfondo leggermente verde/neutro */
-}
-
-legend {
-    font-family: 'Bangers', cursive;
+    font-family: 'Cormorant Unicase', serif;
+    text-align: center;
     color: var(--primary-color);
-    padding: 0 15px;
-    font-size: 1.8rem;
-    text-shadow: 2px 2px 0 var(--accent-color);
-}
-
-/* === Stile Input === */
-label {
+    font-size: 3rem;
     font-weight: 700;
-    color: var(--secondary-color);
-    display: block;
-    margin-top: 15px;
-}
-
-input[type="text"], input[type="number"], textarea, select {
-    /* Forziamo un aspetto coerente con i bottoni 3D */
-    border: 3px solid var(--secondary-color); 
-    border-radius: 10px;
-    padding: 12px;
-    width: 100%; /* Aggiunto per coerenza */
-    box-sizing: border-box; /* Aggiunto per coerenza */
-    font-family: 'Quicksand', sans-serif;
-}
-
-/* === Sezione Ingredienti (Blocco dinamico) === */
-.ingredient-block {
-    background-color: #FFFACD; /* Giallo chiaro */
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    border: 2px solid var(--accent-color);
-    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
-}
-
-.ingredient-block h4 {
-    font-family: 'Quicksand', sans-serif;
-    color: var(--primary-color);
     text-shadow: none;
-    font-size: 1.1rem;
-    margin: 5px 0;
-}
-
-.ingredient-block input {
-    width: auto; /* Sovrascrive il 100% per gli ingredienti */
-    display: inline-block;
-    max-width: 30%;
-    margin-right: 1%;
-    /* Rimuove l'ombra interna non necessaria per gli input */
-    box-shadow: none;
-    padding: 8px;
-}
-
-/* === Bottoni Aggiungi/Rimuovi (Effetto 3D Corretto) === */
-button[type="button"], .ingredient-block button[type="button"] {
-    background-color: var(--secondary-color);
-    color: white; 
-    border: none;
-    padding: 8px 15px;
-    font-size: 1rem;
-    font-weight: 700;
-    border-radius: 10px;
     
-    /* Ombra 3D: usa un colore scuro (Admin Color) per la profondità */
-    box-shadow: 0 4px 0 0 var(--admin-color); 
-    transition: transform 0.1s, box-shadow 0.1s;
-    margin-top: 10px;
+    border-bottom: 1px solid var(--accent-color); /* Dorato */
+    padding-bottom: 10px;
+    margin-bottom: 2rem;
+}
+
+/* ==== Contenitore Form di Ricerca (Layout Integrato e Pulito) ==== */
+div[style*="text-align: center;"] {
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+    padding: 0;
+    margin: 0 auto 30px;
+}
+
+form {
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+    padding: 0;
+    margin: 0 15px 0 0; 
+    display: inline-block;
+    vertical-align: top;
+}
+
+form label {
+    font-family: 'Cormorant Unicase', serif; 
+    font-weight: 700;
+    color: var(--primary-color);
+    display: inline-block;
+    margin-right: 10px;
+    letter-spacing: 1px;
+}
+
+form input[type="text"] {
+    border: 1px solid var(--accent-color); /* Dorato */
+    border-radius: 5px;
+    padding: 8px 12px;
+    width: 220px; 
+    margin-right: 8px;
+    transition: box-shadow 0.3s;
+    box-sizing: border-box;
+    font-family: 'Quicksand', sans-serif;
+}
+form input[type="text"]:focus {
+    border-color: var(--accent-color); /* Dorato */
+    box-shadow: 0 0 5px var(--accent-color); /* Ombra dorata */
+    outline: none;
+}
+
+/* ==== Bottoni Ricerca (Dorati) ==== */
+form button[type="submit"] {
+    background-color: var(--button-base);
+    color: var(--primary-color);
+    padding: 8px 15px;
+    border: 1px solid var(--accent-color); /* Bordo Dorato */
+    border-radius: 5px;
+    font-weight: 600;
+    box-shadow: 0 2px 5px var(--accent-color); /* Ombra Dorata */
+    transition: all 0.2s;
+    margin-top: 0;
     display: inline-block;
     width: auto;
 }
-
-button[type="button"]:active, .ingredient-block button[type="button"]:active {
-    transform: translateY(4px);
-    box-shadow: 0 0px 0 0 var(--admin-color);
+form button[type="submit"]:hover {
+    background-color: var(--secondary-color);
+    color: white;
+}
+form button[type="submit"]:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* Bottone Rimuovi */
-.ingredient-block button[onclick*="removeIngredientField"] {
-    background-color: var(--primary-color); /* Crimson */
-    /* Ombra 3D: usa una sfumatura scura di primary-color */
-    box-shadow: 0 4px 0 0 #A93452; /* Hardcoded shadow per Crimson scuro */
+/* ==== Area Admin Link (Pulsante Elegante) ==== */
+div[sec\:authorize*="ADMIN"] a {
+    display: block;
+    text-align: center;
+    font-weight: 600;
+    color: white;
+    background-color: var(--primary-color); 
+    padding: 10px 15px;
+    border-radius: 5px;
+    max-width: 300px;
+    margin: 10px auto 20px;
+    box-shadow: 0 4px 8px var(--accent-color); /* Ombra Dorata */
+    transition: background-color 0.3s;
 }
-.ingredient-block button[onclick*="removeIngredientField"]:active {
-    box-shadow: 0 0px 0 0 #A93452;
+div[sec\:authorize*="ADMIN"] a:hover {
+    background-color: var(--button-shadow);
 }
 
-/* === Bottone Submit Principale (Eredita il 3D da stile.css ma forza la larghezza) === */
-form > div:last-child button[type="submit"] {
-    width: 100%;
+
+/* ==== Lista Ricette (Cards Eleganti) ==== */
+ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px; 
+    justify-content: center;
+    max-width: 100%;
+    margin-bottom: 3rem;
+}
+
+li {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 10px; 
+    box-shadow: 0 4px 10px var(--box-shadow-color); 
+    border: 1px solid var(--accent-color); /* Bordo Dorato */
+    transition: transform 0.3s, box-shadow 0.3s;
+    flex: 1 1 280px; 
+    margin: 0;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+}
+
+li:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px var(--accent-color); /* Ombra Dorata al passaggio */
+    border-color: var(--primary-color);
+}
+
+li a {
+    font-family: 'Cormorant Unicase', serif; 
     font-size: 1.5rem;
-    
-    /* Assicuriamo che l'ombra 3D funzioni */
-    box-shadow: 0 6px 0 0 var(--button-shadow); 
+    display: block;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 700;
 }
-form > div:last-child button[type="submit"]:active {
-    transform: translateY(6px);
-    box-shadow: 0 0px 0 0 var(--button-shadow);
+li a:hover {
+    text-decoration: underline;
+    color: var(--secondary-color);
+}
+
+/* ==== Testo e Messaggi ==== */
+div[th\:if*="lists.isEmpty"] p {
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    margin-top: 30px;
 }

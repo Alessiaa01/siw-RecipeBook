@@ -1,116 +1,149 @@
-/* Importa lo stile base, i font (Bangers/Quicksand) e le variabili */
+/* Carica la palette Pastello Elegante */
 @import url('/css/stile.css');
 
 :root {
-    /* Le variabili vengono caricate da stile.css */
-    --error-color: #F44336;
+    --error-color: #E74C3C; 
+    --parchment-bg: #FFFFFF; 
+    --parchment-border-color: var(--accent-color); 
+    --parchment-shadow: rgba(0, 0, 0, 0.3); 
+    --page-bg-color: #F7E9FF; 
 }
 
+/* === 0. STILE BODY (SFONDO CORNICE PAGINA) === */
 body {
-    font-family: 'Quicksand', sans-serif;
-    background-color: var(--background-color);
+    background-color: var(--page-bg-color); 
+    
+    /* Usa la tua immagine della cornice esterna */
+    background-image: url('/images/sfondo1.jpeg'); 
+    background-size: cover;      
+    background-position: center; 
+    background-repeat: no-repeat; 
+    background-attachment: fixed;
+    
+    font-family: 'Quicksand', sans-serif; 
+    min-height: 100vh;
     margin: 0;
     padding: 0;
-    color: #333;
-    line-height: 1.6;
-}
-
-/* ==== Header (Viola) ==== */
-header {
-    background-color: var(--secondary-color);
-    color: white;
-    padding: 15px 0; /* Lo zero è per la full-width, il padding laterale è nel div interno di stile.css */
+    
     display: flex;
-    justify-content: flex-end;
-    border-bottom: 5px solid var(--button-shadow);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    justify-content: center;
+    align-items: center;
 }
 
-/* ==== Logo e Titolo (Bangers) ==== */
-body > div:first-of-type {
-    text-align: center;
-    margin: 2rem auto 1.5rem;
-    padding: 0 2rem;
-    box-shadow: none;
-    border: none;
-    background: none;
+/* === 1. Disabilita elementi esterni (invariato) === */
+header, body > div {
+    display: none !important; 
 }
 
-h1 {
-    font-family: 'Bangers', cursive;
-    text-align: center;
-    color: var(--secondary-color); /* Viola */
-    font-size: 3.2rem;
-    text-shadow: 4px 4px 0 var(--accent-color); /* Ombra Oro */
-    margin-bottom: 2.5rem;
-}
 
-/* ==== Form (Adesivo UNICO) ==== */
+/* === 2. Contenitore Form: Riquadro Bianco con Decorazioni in PNG === */
 form {
-    background-color: #ffffff;
-    padding: 40px;
-    border-radius: 25px;
-    max-width: 450px;
-    margin: 30px auto;
-    
-    /* Adesivo BOLD */
-    box-shadow: 8px 8px 0px var(--primary-color); /* Ombra Crimson */
-    border: 4px solid var(--secondary-color); /* Bordo Viola */
-    
-    transition: transform 0.1s, box-shadow 0.1s;
-}
-
-form:hover {
-    transform: translate(2px, 2px);
-    box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.2);
-}
-
-label {
-    display: block;
-    margin-top: 15px;
-    margin-bottom: 5px;
-    font-weight: 700;
-    color: var(--primary-color); /* Crimson */
-}
-
-input[type="text"], input[type="password"] {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 2px solid var(--secondary-color); /* Bordo Viola */
+    background-color: var(--parchment-bg); 
+    padding: 35px 50px; 
     border-radius: 10px;
-    box-sizing: border-box;
-}
-
-/* ==== Bottone Accedi (Pulsante 3D) ==== */
-button[type="submit"] {
-    background-color: var(--button-base); /* Verde */
-    color: white;
-    padding: 15px 20px;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    margin-top: 25px;
-    font-size: 1.2rem;
-    font-weight: 900;
-    width: 100%;
     
-    /* Ombra 3D (ereditata ma forzata) */
-    box-shadow: 0 6px 0 0 var(--button-shadow); 
-    transition: transform 0.1s, box-shadow 0.1s;
+    /* ***** MODIFICATO QUI: Dimensioni fisse per 1920x1080 ***** */
+	width: 650px; /* Larghezza ridotta */
+	    max-width: 650px; 
+	    min-height:500px; /* Altezza significativamente aumentata */
+    
+    box-sizing: border-box;
+    margin: 0; /* Il body flexbox gestisce la centratura */
+    
+    /* Cornice: 3px dorato e 5px di ombra dorata */
+    border: 3px solid var(--parchment-border-color); 
+    box-shadow: 
+        0 0 0 5px var(--parchment-border-color), 
+        0 20px 30px -10px var(--parchment-shadow); 
+        
+    /* DECORAZIONI ANGOLARI CON PNG TRASPARENTE */
+    background-image: url('/images/rr.jpeg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%; 
+    background-position: center;
+
+    /* Questi due non sono più necessari poiché la centratura è gestita dal body */
+    transition: none;
+    transform: none; 
 }
 
-button[type="submit"]:active {
-    transform: translateY(6px);
-    box-shadow: 0 0px 0 0 var(--button-shadow);
-}
-
-/* ==== Messaggio di Errore ==== */
-div[th\:if="${param\.error}"] span {
-    color: var(--error-color);
-    font-size: 1em;
-    font-weight: bold;
+/* === 3. Titolo Principale (ACCEDI AL REGNO) === */
+h1 {
+    font-family: 'Cormorant Unicase', serif; 
+    font-weight: 700; 
     text-align: center;
+    color: var(--parchment-border-color); 
+    font-size: 2.5rem; 
+    text-shadow: 0 0 1px var(--parchment-border-color); /* EFFETTO SPESSORE */
+    margin-top: 0;
+    margin-bottom: 45px; 
+}
+
+/* === 4. Campi Input e Label (USERNAME, PASSWORD) === */
+label {
+    font-family: 'Cormorant Unicase', serif; 
+    font-weight: 700; 
+    color: var(--primary-color); 
     display: block;
-    margin-top: 15px;
+    margin-top: 20px; 
+    margin-bottom: 5px;
+    font-size: 1.0em; /* Aumentato leggermente */
+    letter-spacing: 2px;
+    text-shadow: 0 0 1px var(--primary-color); /* EFFETTO SPESSORE */
+}
+input[type="text"], input[type="password"] {
+    border: 1px solid var(--parchment-border-color); 
+    border-radius: 5px;
+    padding: 10px; 
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); 
+    width: 100%;
+    box-sizing: border-box; 
+    font-family: 'Quicksand', sans-serif; 
+    font-weight: 500;
+}
+
+/* === 5. Bottone ENTRA (Ovale Dorato) === */
+.center-button {
+    text-align: center;
+    margin: 40px 0 15px; 
+}
+
+button[type="submit"] {
+    background: linear-gradient(to top, var(--accent-color) 0%, #F8E3B6 100%); 
+    color: var(--primary-color); 
+    border: 1px solid var(--primary-color);
+    padding: 12px 50px; 
+    font-size: 1.1rem;
+    font-weight: 700;
+    width: auto;
+    
+    border-radius: 50px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    font-family: 'Cormorant Unicase', serif; 
+    text-shadow: 0 0 1px var(--primary-color); /* EFFETTO SPESSORE */
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+button[type="submit"]:hover {
+    background: linear-gradient(to top, #F8E3B6 0%, var(--accent-color) 100%); 
+    color: var(--primary-color);
+}
+button[type="submit"]:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* === 6. Link Extra (Password dimenticata? • Crea un account) === */
+.extra-links {
+    text-align: center;
+    font-size: 0.9em;
+    margin-top: 10px; 
+}
+.extra-links a {
+    color: var(--primary-color); 
+    font-weight: 700; 
+    text-decoration: none;
+    transition: color 0.2s;
+    font-family: 'Cormorant Unicase', serif; 
+    text-shadow: 0 0 1px var(--primary-color); /* EFFETTO SPESSORE */
 }

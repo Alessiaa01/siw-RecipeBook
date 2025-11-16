@@ -1,0 +1,344 @@
+/* Importa lo stile base elegante */
+@import url('/css/stile.css');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Unicase:wght@400;700&family=Quicksand:wght@300;500;700&family=Rouge+Script&display=swap');
+
+/* === 0. DEFINIZIONE VARIABILI === */
+:root {
+    --form-bg-color: #F8F4E8; /* Colore Parchemnt/Cream per Fieldsets */
+    --body-bg-color: #F7E9FF; /* Manteniamo il Lilla Subtilo */
+    --primary-color-dark: #5D4037; /* Marrone Scuro per testo principale */
+    --accent-gold: #D4AF37; /* Oro per icone/bottoni */
+    --error-color: #E74C3C; /* Rosso per errori/rimuovi */
+}
+
+/* === 1. Reset Body e Header === */
+body {
+    background-color: var(--body-bg-color); 
+    background-image: url('/images/sfondo_pagina.jpg'); 
+    background-size: cover;      
+    background-position: center; 
+    background-repeat: no-repeat; 
+    background-attachment: fixed;
+    
+    font-family: 'Quicksand', sans-serif; 
+    min-height: 100vh;
+    margin: 0;
+    /* Spazio per il link in alto */
+    padding: 60px 0 40px 0;
+    
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+/* Rimosso display: none !important per l'header per farlo comparire */
+main > div {
+    display: none !important; 
+}
+
+/* NUOVI STILI PER IL LINK IN ALTO (Header) */
+.page-header-link {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px; 
+    max-width: 90%;
+    text-align: left;
+    padding-left: 20px;
+}
+.page-header-link a {
+    font-family: 'Quicksand', sans-serif;
+    color: var(--primary-color-dark); /* Testo Marrone Scuro */
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.page-header-link a:hover {
+    color: var(--accent-gold); /* Link Oro all'hover */
+}
+
+
+/* === 2. Titolo H1 e Form Generale === */
+h1 {
+    font-family: 'Rouge Script', cursive; 
+    color: var(--primary-color-dark);
+    font-size: 3.5rem;
+    text-shadow: none;
+    margin-bottom: 1rem;
+    padding-bottom: 0;
+    border-bottom: none;
+    text-align: center;
+}
+
+.parchment-form {
+    background-color: var(--form-bg-color); 
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); 
+    border: 1px solid var(--accent-gold); 
+    max-width: 800px;
+    margin: 20px auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* === 3. Fieldsets e Input Generici === */
+fieldset {
+    border: none; 
+    padding: 10px 0;
+    margin-bottom: 20px;
+    background-color: transparent;
+    border-top: 1px solid var(--accent-gold); 
+}
+legend {
+    font-family: 'Cormorant Unicase', serif;
+    color: var(--primary-color-dark);
+    padding: 0 10px;
+    font-size: 1.2rem; 
+    font-weight: 700;
+    background-color: var(--form-bg-color); 
+    text-align: left;
+    margin-left: -10px;
+}
+
+/* Stili a griglia/inline */
+.grid-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; align-items: start; margin-top: 20px; }
+.inline-metadata-group { display: flex; justify-content: space-between; gap: 15px; }
+.inline-metadata-group .half-field { flex: 1; }
+.inline-metadata-group .inline-field { flex: 1; } 
+
+
+label { font-weight: 500; color: var(--primary-color-dark); display: block; margin-top: 5px; margin-bottom: 5px; font-family: 'Quicksand', sans-serif; font-size: 0.9rem; }
+input[type="text"], input[type="number"], textarea, select { 
+    border: 1px solid var(--accent-gold); 
+    border-radius: 5px; 
+    padding: 8px; 
+    font-family: 'Quicksand', sans-serif; 
+    width: 100%; 
+    box-sizing: border-box; 
+    background-color: white; /* Sfondo bianco */
+    color: var(--primary-color-dark);
+}
+.field-row { margin-bottom: 20px; }
+
+/* Stili Area Immagine */
+.placeholder-box { width: 150px; height: 150px; border: 2px dashed #D4AF37; background-color: #fff; border-radius: 8px; margin: 10px auto; display: flex; justify-content: center; align-items: center; cursor: pointer; }
+
+
+/* === 4. INGREDIENTI (Correzione Layout) === */
+
+.ingredients-section #ingredients-container .ingredient-block,
+.ingredients-section #ingredients-container .ingredient-block > div 
+{ 
+    background-color: transparent !important; 
+    border: none !important; 
+    padding: 0 !important; 
+    margin: 0 !important; 
+    box-shadow: none !important; 
+}
+
+.ingredient-fields-row { 
+    display: flex; 
+    gap: 15px; 
+    align-items: flex-end; 
+    margin-bottom: 20px;
+    padding: 10px 0;
+    border-bottom: 1px dashed #E0D3C0; 
+}
+.ingredient-fields-row:last-child {
+    border-bottom: none;
+}
+
+.ing-field { display: flex; flex-direction: column; flex-grow: 1; }
+.ing-name-full { flex-grow: 3; min-width: 180px; }
+.ing-quantity { flex-grow: 1.2; min-width: 90px; }
+.ing-unit { flex-grow: 1; min-width: 70px; }
+
+.ingredient-fields-row input[type="text"],
+.ingredient-fields-row input[type="number"] { 
+    border: 1px solid var(--accent-gold); 
+    border-radius: 5px; 
+    padding: 8px 10px; 
+    font-size: 0.95em; 
+    width: 100%; 
+    box-sizing: border-box; 
+    height: 38px;
+    background-color: white; 
+    color: var(--primary-color-dark);
+}
+
+/* Pulsante Rimuovi */
+.remove-button.inline-button { 
+    background-color: var(--error-color); 
+    color: white; 
+    border: none; 
+    padding: 10px 15px; 
+    cursor: pointer; 
+    white-space: nowrap; 
+    height: 38px; 
+    line-height: 18px; 
+    border-radius: 5px; 
+    font-weight: 700; 
+    margin: 0; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    box-shadow: 0 2px 3px rgba(0,0,0,0.2); 
+    transition: background-color 0.2s, transform 0.1s; 
+}
+.remove-button.inline-button:hover { background-color: #C0392B; transform: translateY(-1px); }
+
+
+/* === 5. AZIONI INGREDIENTI E TAGS === */
+.ingredient-actions-bottom { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-top: 25px; 
+    padding-top: 15px; 
+    border-top: 1px dashed #E0D3C0; 
+}
+
+/* STILE PULSANTE AGGIUNGI INGREDIENTE (Opzione 3: Bordo Dorato Sottile) */
+.add-ingredient-button { width: auto; font-size: 1rem; padding: 8px 20px; border-radius: 20px; background-color: transparent; color: var(--primary-color-dark); border: 2px solid var(--accent-gold); box-shadow: none; transition: all 0.2s ease; cursor: pointer; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.add-ingredient-button:hover { background-color: var(--accent-gold); color: white; border-color: var(--accent-gold); transform: none; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
+.add-ingredient-button .icon-plus { background-color: transparent; color: var(--accent-gold); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; font-weight: 700; }
+.add-ingredient-button:hover .icon-plus { color: white; }
+.ingredient-note { font-style: italic; font-size: 0.85em !important; color: var(--primary-color-dark); margin: 0; }
+
+
+/* --- TAGS (SOLUZIONE PILLOLA VIOLA) --- */
+
+/* 1. Contenitore Esterno (Nessun Bordo, Sfondo Bianco) */
+.tag-group-container {
+    padding: 15px 20px; 
+    margin-top: 15px;
+    margin-bottom: 20px;
+    
+    background-color: white; /* SFONDO BIANCO */
+    border: none; /* Rimuove il bordo dorato interno */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Ombra leggera */
+}
+
+/* 2. Titolo "Tag:" (Forza il colore Marrone Scuro) */
+.tag-label { 
+    font-family: 'Cormorant Unicase', serif; 
+    font-weight: 700; 
+    color: var(--primary-color-dark) !important; /* Testo Marrone Scuro */
+    display: block; 
+    margin-bottom: 15px; 
+    font-size: 1.2rem; 
+    display: flex; 
+    align-items: center;
+    gap: 8px; 
+}
+
+/* 3. Layout delle Pillole */
+.tag-group { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 10px 15px; 
+    padding: 0; 
+    margin: 0; 
+}
+
+/* Nasconde il checkbox standard */
+.tag-group label input[type="checkbox"] { 
+    position: absolute; 
+    opacity: 0; 
+    width: 0; 
+    height: 0;
+    cursor: pointer;
+}
+
+/* Stile della label (la pillola cliccabile - Colori Viola) */
+.tag-group label {
+    padding: 8px 15px; 
+    border: 1px solid var(--primary-color-dark); /* Bordo Marrone Scuro */
+    border-radius: 5px; 
+    transition: all 0.2s ease-in-out;
+    font-family: 'Quicksand', sans-serif; 
+    font-weight: 500;
+    
+    /* Colori richiesti per la pillola a riposo */
+    color: var(--primary-color-dark) !important; 
+    background-color: var(--body-bg-color); /* Sfondo Viola/Lilla */
+    
+    cursor: pointer;
+    white-space: nowrap; 
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Ombra discreta */
+    display: inline-block;
+}
+
+/* Stile al passaggio del mouse (hover) */
+.tag-group label:hover { 
+    border-color: var(--accent-gold); /* Bordo Oro all'hover */
+    background-color: #E0D3C0; /* Tono più caldo */
+    transform: translateY(-1px); 
+}
+
+/* Stile quando la pillola è selezionata (:checked) */
+.tag-group label:has(input[type="checkbox"]:checked) { 
+    background-color: var(--accent-gold); /* Riempimento ORO quando selezionato */
+    color: var(--primary-color-dark) !important;
+    border: 3px solid var(--accent-gold); 
+    padding: 6px 14px; /* Adattato per il bordo di 3px */
+    font-weight: 700; 
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); 
+}
+
+/* === 6. Bottone Submit Finale e Conferma === */
+.submit-container { text-align: center; margin-top: 40px; }
+
+/* STILE REVISIONATO: Oro Solido, Piatto (Elegante/Fiabesco) */
+.submit-container button[type="submit"] { 
+    width: auto; 
+    font-size: 1.3rem; 
+    font-weight: 700; 
+    padding: 12px 50px; 
+    border-radius: 25px; 
+    background: var(--accent-gold); /* Sfondo Oro Solido */
+    color: var(--primary-color-dark); /* Testo Marrone Scuro */
+    border: 1px solid var(--primary-color-dark); 
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); /* Ombra morbida (no 3D) */
+    transition: all 0.2s ease; 
+    cursor: pointer;
+}
+.submit-container button[type="submit"]:hover {
+    background: #EEDD82; /* Oro leggermente più chiaro all'hover */
+    transform: translateY(-2px); /* Solleva il bottone */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.submit-links { border: none !important; background-color: transparent !important; padding: 0 !important; margin-top: 15px; text-align: center; }
+.submit-links a { color: var(--primary-color-dark); font-size: 0.9rem; margin: 0 5px; text-decoration: none; }
+
+/* STILE MESSAGGIO DI CONFERMA (NESSUNA MODIFICA) */
+.parchment-confirmation {
+    background-color: var(--form-bg-color); 
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); 
+    border: 3px solid var(--accent-gold); 
+    max-width: 600px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    margin: 20px auto;
+}
+
+.parchment-confirmation h2 {
+    font-family: 'Rouge Script', cursive; 
+    color: var(--primary-color-dark);
+    font-size: 3rem;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.parchment-confirmation p {
+    color: var(--primary-color-dark);
+    font-size: 1.1rem;
+    line-height: 1.5;
+    margin-bottom: 30px;
+}
