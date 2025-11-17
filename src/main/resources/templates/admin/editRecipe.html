@@ -40,14 +40,18 @@
             <option value="Secondo">Secondo</option>
             <option value="Dolce">Dolce</option>
         </select><br><br>
+		<label>Tag (es. vegetariana, vegana...):</label><br>
+		        <input type="text" th:field="*{tags}" placeholder="Separati da virgola" /><br><br>
 
-        <label>Tag (es. vegetariana, vegana...):</label><br>
-        <input type="text" th:field="*{tags}" placeholder="Separati da virgola" /><br><br>
+		        <label>URL Immagine:</label><br>
+		        <input type="text" th:field="*{imageUrl}" placeholder="Inserisci l'URL dell'immagine..." /><br><br>
+		        
+		        <button type="submit">💾 Salva modifiche</button>
+		    </form>
 
-        <button type="submit">💾 Salva modifiche</button>
-    </form>
+		    <hr>
 
-    <hr>
+    
 
     <!-- INGREDIENTI ESISTENTI -->
     <h2>Ingredienti</h2>

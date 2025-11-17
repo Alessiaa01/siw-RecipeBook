@@ -40,7 +40,7 @@ public class AuthenticationController {
 	public String showLoginForm() {
 		return "formLogin"; // template Thymeleaf
 	}
-
+/*
 	// Home page (index)
 	@GetMapping("/") 
 	public String index(Model model) {
@@ -71,7 +71,41 @@ public class AuthenticationController {
         } 
     	return "redirect:/recipes";// lista ricette per utenti normali
     }
+*/
+	// File: src/main/java/it/uniroma3/siw/controller/AuthenticationController.java
 
+	// ...
+
+		@GetMapping("/") 
+		public String index(Model model) {
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			if (authentication instanceof AnonymousAuthenticationToken) {
+				return "redirect:/recipes"; 
+			} else {		
+				UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+				Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
+				if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
+					// MODIFICA: Reindirizza direttamente a manageRecipes (saltando indexAdmin)
+					return "redirect:/admin/manageRecipes"; 
+				} else {
+					// se è utente normale, vai alla lista ricette
+					return "redirect:/recipes";
+				}
+			}
+		}
+			
+	    @GetMapping("/success")
+	    public String defaultAfterLogin() {
+	    	UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    	Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
+	    	if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
+	            // MODIFICA: Reindirizza direttamente a manageRecipes (saltando indexAdmin)
+	            return "redirect:/admin/manageRecipes";
+	        } 
+	    	return "redirect:/recipes"; // lista ricette per utenti normali
+	    }
+	    
+	// ...
 	// Registrazione utente
 	@PostMapping("/register")
     public String registerUser(@Valid @ModelAttribute("user") User user,

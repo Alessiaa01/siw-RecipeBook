@@ -1,4 +1,4 @@
-/* ========================================================== */
+/* =/* ========================================================== */
 /* 1. FONT E IMPORTAZIONI: Cormorant Unicase, Cinzel, Rouge Script, Quicksand */
 /* ========================================================== */
 @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Unicase:wght@300;400;500;600;700&family=Rouge+Script&family=Quicksand:wght@300;400;500;600;700&display=swap');
@@ -7,11 +7,11 @@ html {
     height: 100%; 
 }
 
-/* NUOVE VARIABILI: Palette Elegante Pastello (Lavanda e Oro Opaco) */
+/* NUOVE VARIABILI: Palette Elegante Pastello (Lavanda e Oro Scuro) */
 :root {
     --primary-color: #9B59B6; /* Viola Lavanda Scuro */
     --secondary-color: #C39BD3; /* Lavanda Chiaro */
-    --accent-color: #FAD7A0; /* Oro Opaco */
+    --accent-color: #B8860B; /* <<< MODIFICATO: ORO SCURO (DarkGoldenrod) >>> */
     --background-color: #FBF7FF; /* Bianco Sporco/Lilla Subtilo */
     --box-shadow-color: rgba(195, 155, 211, 0.3); 
     --button-base: #C39BD3; 

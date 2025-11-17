@@ -1,11 +1,14 @@
-/* Importa lo stile base elegante */
+/* ========================================================== */
+/* STILE PER recipes.html (Lista Ricette) */
+/* ========================================================== */
 @import url('/css/stile.css');
 
+/* === Layout Body (Centratura) === */
 body {
-    margin: 0;
+    background-size: cover;
+    background-attachment: fixed;
     padding: 0;
 }
-
 body > div, main {
     max-width: var(--max-content-width); 
     margin: 0 auto;
@@ -13,8 +16,8 @@ body > div, main {
     box-sizing: border-box;
 }
 
-/* ==== Titolo H1 (Elenco Ricette) ==== */
-h1 {
+/* === Titolo H1 (Biblioteca Incantata) === */
+.main-title {
     font-family: 'Cormorant Unicase', serif;
     text-align: center;
     color: var(--primary-color);
@@ -22,12 +25,61 @@ h1 {
     font-weight: 700;
     text-shadow: none;
     
-    border-bottom: 1px solid var(--accent-color); /* Dorato */
-    padding-bottom: 10px;
-    margin-bottom: 2rem;
+    border-bottom: 3px double var(--secondary-color); /* Linea Doppia Sottile */
+    padding-bottom: 15px;
+    margin-bottom: 3rem;
 }
 
-/* ==== Contenitore Form di Ricerca (Layout Integrato e Pulito) ==== */
+/* === Header (Nome Chef) - Stile per l'username tematico === */
+header {
+    background-color: transparent;
+    padding: 20px 0;
+    border-bottom: none;
+    box-shadow: none;
+}
+header div {
+    max-width: var(--max-content-width);
+    margin: 0 auto;
+    padding: 0 20px;
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+    display: flex;
+    justify-content: flex-end; /* Sposta a destra */
+    align-items: center;
+}
+header div[th\:if*="userDetails"] {
+    justify-content: space-between; 
+    padding: 0;
+    max-width: 100%;
+}
+.chef-name {
+    color: var(--primary-color); 
+    font-weight: 700;
+    margin-right: 15px;
+    font-family: 'Cormorant Unicase', serif; 
+    font-size: 1.1rem;
+}
+.chef-name span {
+    color: var(--accent-color);
+}
+header a {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+/* Neutralizza il div che contiene il logo (body > div:first-of-type) */
+body > div:first-of-type {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 20px auto 10px !important;
+    text-align: center;
+}
+
+/* === 1. Area di Ricerca/Filtro (Contenitore Semplice) === */
+.search-container {
+    text-align: center;
+    margin: 0 auto 30px;
+}
 div[style*="text-align: center;"] {
     background-color: transparent;
     box-shadow: none;
@@ -36,65 +88,94 @@ div[style*="text-align: center;"] {
     margin: 0 auto 30px;
 }
 
-form {
+/* Stile del form contenitore */
+.elegant-search-form {
+    background-color: var(--background-color);
+    padding: 15px 30px;
+    border-radius: 5px;
+    border: 1px solid var(--secondary-color);
+    box-shadow: 0 2px 5px var(--box-shadow-color);
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex; 
+    gap: 15px;
+}
+
+.search-field {
+    flex: 1; 
+    display: block;
+}
+
+/* Modifica il layout dei form per adattarsi alla nuova struttura */
+form[th\:action*="searchRecipes"] {
     background-color: transparent;
     box-shadow: none;
     border: none;
     padding: 0;
-    margin: 0 15px 0 0; 
-    display: inline-block;
+    margin: 0;
+    display: block !important;
     vertical-align: top;
+    max-width: 100%;
 }
 
-form label {
-    font-family: 'Cormorant Unicase', serif; 
-    font-weight: 700;
+.elegant-search-form label {
+    font-family: 'Quicksand', sans-serif; 
+    font-weight: 500;
     color: var(--primary-color);
-    display: inline-block;
+    display: block;
     margin-right: 10px;
-    letter-spacing: 1px;
+    letter-spacing: 0;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
 }
 
-form input[type="text"] {
-    border: 1px solid var(--accent-color); /* Dorato */
+.elegant-search-form input[type="text"] {
+    border: 1px solid var(--secondary-color); /* Viola Chiaro */
     border-radius: 5px;
     padding: 8px 12px;
-    width: 220px; 
+    width: 100%; 
     margin-right: 8px;
     transition: box-shadow 0.3s;
     box-sizing: border-box;
     font-family: 'Quicksand', sans-serif;
 }
-form input[type="text"]:focus {
-    border-color: var(--accent-color); /* Dorato */
+.elegant-search-form input[type="text"]:focus {
+    border-color: var(--accent-color); /* Oro */
     box-shadow: 0 0 5px var(--accent-color); /* Ombra dorata */
     outline: none;
 }
 
-/* ==== Bottoni Ricerca (Dorati) ==== */
-form button[type="submit"] {
-    background-color: var(--button-base);
-    color: var(--primary-color);
+/* ==== Bottoni Ricerca (Dorati) - Uniformati al nuovo stile ==== */
+.search-container .search-button {
+    background-color: var(--accent-color); /* Oro */
+    color: var(--primary-color); /* Testo Viola Scuro */
     padding: 8px 15px;
-    border: 1px solid var(--accent-color); /* Bordo Dorato */
+    border: 1px solid var(--primary-color); /* Bordo Viola Scuro */
     border-radius: 5px;
-    font-weight: 600;
-    box-shadow: 0 2px 5px var(--accent-color); /* Ombra Dorata */
+    font-weight: 700;
+    box-shadow: 0 2px 5px var(--box-shadow-color);
     transition: all 0.2s;
-    margin-top: 0;
-    display: inline-block;
-    width: auto;
+    margin-top: 25px; /* Spostato sotto per adattarsi al layout */
+    display: block;
+    width: 100%;
+    font-size: 1rem;
+    font-family: 'Cormorant Unicase', serif;
 }
-form button[type="submit"]:hover {
+.search-container .search-button:hover {
     background-color: var(--secondary-color);
     color: white;
-}
-form button[type="submit"]:active {
-    transform: translateY(1px);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary-color);
 }
 
+
 /* ==== Area Admin Link (Pulsante Elegante) ==== */
+div[sec\:authorize*="ADMIN"] {
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+    padding: 0;
+    margin: 0 auto;
+}
 div[sec\:authorize*="ADMIN"] a {
     display: block;
     text-align: center;
@@ -105,7 +186,7 @@ div[sec\:authorize*="ADMIN"] a {
     border-radius: 5px;
     max-width: 300px;
     margin: 10px auto 20px;
-    box-shadow: 0 4px 8px var(--accent-color); /* Ombra Dorata */
+    box-shadow: 0 4px 8px var(--box-shadow-color); /* Ombra Dorata */
     transition: background-color 0.3s;
 }
 div[sec\:authorize*="ADMIN"] a:hover {
@@ -113,55 +194,128 @@ div[sec\:authorize*="ADMIN"] a:hover {
 }
 
 
-/* ==== Lista Ricette (Cards Eleganti) ==== */
-ul {
+/* === 2. LISTA CARD (Adattata per mostrare ingredienti/tempo) === */
+.recipe-cards-list {
     list-style: none;
     padding: 0;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column; 
     gap: 25px; 
     justify-content: center;
     max-width: 100%;
     margin-bottom: 3rem;
 }
 
-li {
+.recipe-card {
     background-color: #ffffff;
-    padding: 25px;
+    padding: 20px;
     border-radius: 10px; 
-    box-shadow: 0 4px 10px var(--box-shadow-color); 
-    border: 1px solid var(--accent-color); /* Bordo Dorato */
+    box-shadow: 0 5px 15px var(--box-shadow-color); 
+    border: 2px solid var(--accent-color); /* Bordo Oro */
     transition: transform 0.3s, box-shadow 0.3s;
-    flex: 1 1 280px; 
-    margin: 0;
-    min-height: 100px;
-    display: flex;
+    
+    display: grid;
+    grid-template-columns: 100px 1fr auto; /* Immagine, Contenuto, Azioni */
     align-items: center;
+    gap: 20px;
 }
 
-li:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px var(--accent-color); /* Ombra Dorata al passaggio */
-    border-color: var(--primary-color);
+.recipe-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px var(--box-shadow-color);
+    border-color: var(--primary-color); /* Bordo Viola su hover */
 }
 
-li a {
+/* Immagine */
+.card-image {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 8px;
+    border: 1px solid var(--secondary-color);
+    flex-shrink: 0;
+}
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Contenuto e Titolo */
+.card-content {
+    padding-right: 20px;
+}
+.recipe-title {
     font-family: 'Cormorant Unicase', serif; 
     font-size: 1.5rem;
     display: block;
     color: var(--primary-color);
     text-decoration: none;
     font-weight: 700;
+    margin-bottom: 5px;
 }
-li a:hover {
-    text-decoration: underline;
+.recipe-description {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 5px 0 10px 0;
+}
+
+/* Metadati (Tempo, Difficoltà, Porzioni) */
+.card-metadata {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px 10px;
+    font-size: 0.85rem;
+    color: var(--primary-color);
+    max-width: 300px;
+}
+.card-metadata p {
+    margin: 0;
+    font-weight: 500;
+    white-space: nowrap;
+}
+.card-metadata span {
+    font-weight: 700;
     color: var(--secondary-color);
 }
 
-/* ==== Testo e Messaggi ==== */
-div[th\:if*="lists.isEmpty"] p {
+
+/* Azioni/Bottone */
+.card-actions {
     text-align: center;
-    font-size: 1.1rem;
-    color: var(--primary-color);
-    margin-top: 30px;
+    flex-shrink: 0;
+}
+.action-button {
+    background-color: var(--accent-color); /* Oro */
+    color: var(--primary-color); /* Viola Scuro */
+    padding: 8px 15px;
+    border-radius: 20px; /* Bottone ovale come nel mockup */
+    font-weight: 700;
+    text-transform: uppercase;
+    box-shadow: 0 2px 5px var(--box-shadow-color);
+    display: block;
+    margin-top: 15px;
+    white-space: nowrap;
+    transition: all 0.2s;
+    font-family: 'Quicksand', sans-serif; 
+}
+.action-button:hover {
+    background-color: var(--secondary-color); /* Viola Chiaro al hover */
+    color: white; 
+    text-decoration: none;
+}
+
+/* Link Admin (Bottom) */
+.admin-link-bottom a {
+    background-color: var(--secondary-color) !important;
+    border: 1px solid var(--primary-color) !important;
+    box-shadow: 0 4px 8px var(--box-shadow-color) !important;
+    max-width: 400px !important;
+    color: white !important;
+    text-decoration: none !important;
+    margin-top: 40px !important;
+}
+.admin-link-bottom a:hover {
+    background-color: var(--button-shadow) !important;
 }

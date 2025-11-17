@@ -8,25 +8,42 @@
 <body>
 <header>
     <div th:if="${userDetails}">
-        <span th:text="${userDetails.username}"></span>
+        <span class="chef-name">✨ Chef <span th:text="${userDetails.username}"></span></span>
         <a th:href="@{/logout}">Logout</a>
     </div>
 </header>
 
-<h1>Gestione Ricette</h1>
+<main class="management-container">
+    <h1 class="elegant-title">GESTIONE RICETTE</h1>
 
-<a th:href="@{/admin/formNewRecipe}">➕ Aggiungi Nuova Ricetta</a>
+    <div class="add-button-container">
+        <a th:href="@{/admin/formNewRecipe}" class="elegant-add-button">
+            ✨ Aggiungi Nuova Ricetta
+        </a>
+    </div>
 
-<ul>
-    <li th:each="recipe : ${recipes}">
-        <span th:text="${recipe.title}"></span>
-        <a th:href="@{'/admin/recipe/' + ${recipe.id} + '/edit'}">✏️ Modifica</a>
-        <form th:action="@{'/admin/recipe/' + ${recipe.id} + '/delete'}" method="post" style="display:inline">
-            <button type="submit" onclick="return confirm('Eliminare questa ricetta?')">🗑️ Elimina</button>
-        </form>
-    </li>
-</ul>
+    <ul class="recipe-management-list">
+        <li th:each="recipe : ${recipes}" class="management-card">
+            
+            <span th:text="${recipe.title}" class="recipe-title-display"></span>
+            
+            <div class="card-actions">
+                <a th:href="@{'/admin/recipe/' + ${recipe.id} + '/edit'}" class="action-button edit-button">
+                    ✏️ Modifica
+                </a>
+                
+                <form th:action="@{'/admin/recipe/' + ${recipe.id} + '/delete'}" method="post" class="delete-form">
+                    <button type="submit" onclick="return confirm('Eliminare questa ricetta?')">
+                        🗑️ Elimina
+                    </button>
+                </form>
+            </div>
+        </li>
+    </ul>
 
-<a th:href="@{/recipes}">⬅️ Torna alla lista generale</a>
+    <a th:href="@{/recipes}" class="back-to-list-link">
+        ← Torna alla lista generale
+    </a>
+</main>
 </body>
 </html>

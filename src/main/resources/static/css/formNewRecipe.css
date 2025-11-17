@@ -298,23 +298,22 @@ input[type="text"], input[type="number"], textarea, select {
     font-weight: 700; 
     padding: 12px 50px; 
     border-radius: 25px; 
-    background: var(--accent-gold); /* Sfondo Oro Solido */
-    color: var(--primary-color-dark); /* Testo Marrone Scuro */
+    background: var(--accent-gold); 
+    color: var(--primary-color-dark); 
     border: 1px solid var(--primary-color-dark); 
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); /* Ombra morbida (no 3D) */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); 
     transition: all 0.2s ease; 
-    cursor: pointer;
 }
 .submit-container button[type="submit"]:hover {
-    background: #EEDD82; /* Oro leggermente più chiaro all'hover */
-    transform: translateY(-2px); /* Solleva il bottone */
+    background: #EEDD82; 
+    transform: translateY(-2px); 
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 .submit-links { border: none !important; background-color: transparent !important; padding: 0 !important; margin-top: 15px; text-align: center; }
 .submit-links a { color: var(--primary-color-dark); font-size: 0.9rem; margin: 0 5px; text-decoration: none; }
 
-/* STILE MESSAGGIO DI CONFERMA (NESSUNA MODIFICA) */
+/* STILE MESSAGGIO DI CONFERMA (SUCCESS) */
 .parchment-confirmation {
     background-color: var(--form-bg-color); 
     padding: 40px;
@@ -342,3 +341,4 @@ input[type="text"], input[type="number"], textarea, select {
     line-height: 1.5;
     margin-bottom: 30px;
 }
+

@@ -10,7 +10,7 @@
 <body>
     <header>
         <div th:if="${userDetails}">
-            <span th:text="${userDetails.username}"></span>
+            <span class="chef-name">✨ Chef <span th:text="${userDetails.username}"></span></span>
             <a href="/logout">Logout</a>
         </div>
         <div th:unless="${userDetails}">
@@ -19,43 +19,58 @@
     </header>
 
     <div>
-        <a href="/"><img src="/images/logo-siw.png" width="50%" alt="Logo Siw Recipe"/></a> 
+        <a href="/"><img src="/images/logo-siw.png" width="50%" alt="Logo Biblioteca Incantata"/></a>  
     </div>
 
-    <h1>Elenco Ricette</h1>
+    <h1 class="main-title"><ELENCO RICETTE></h1>
 
-    <div style="text-align: center;">
-        <form th:action="@{/searchRecipes}" method="get" style="display:inline-block; margin-right: 15px;">
-            <label>Cerca per titolo:
-                <input type="text" name="title" placeholder="Inserisci titolo..." />
-            </label>
-            <button type="submit">Cerca</button>
-        </form>
-        
-        <form th:action="@{/searchRecipes}" method="get" style="display:inline-block;">
-            <label>Cerca per ingrediente:
-                <input type="text" name="ingredient" placeholder="Es. farina, uova..." />
-            </label>
-            <button type="submit">Cerca</button>
+    <div class="search-container">
+        <form th:action="@{/searchRecipes}" method="get" class="elegant-search-form">
+            
+            <div class="search-field">
+                <label>Filtra per titolo o ingrediente:</label>
+                <input type="text" name="title" placeholder="Es. biscotti di mela, farina..." />
+            </div>
+            
+            <button type="submit" class="search-button">CERCA NEL REGNO</button>
         </form>
     </div>
     
-    <div sec:authorize="hasAuthority('ADMIN')" style="margin-top: 10px;">
-        <a th:href="@{/admin/manageRecipes}">Vai alla gestione Admin</a>
+    <div sec:authorize="hasAuthority('ADMIN')" class="admin-link-top">
+        <a th:href="@{/admin/manageRecipes}">Vai alla gestione del (Admin)</a>
     </div>
 
     <div th:if="${#lists.isEmpty(recipes)}">
-        <p>Nessuna ricetta presente.</p>
+        <p>Nessuna ricetta  è stata ancora trovata .</p>
     </div>
 
-    <ul>
-        <li th:each="recipe : ${recipes}">
-            <a th:href="@{/recipe/{id}(id=${recipe.id})}" th:text="${recipe.title}">Titolo Ricetta</a>
+    <ul class="recipe-cards-list">
+        <li th:each="recipe : ${recipes}" class="recipe-card">
+            
+            <div class="card-image">
+                <img th:src="${recipe.imageUrl} ? ${recipe.imageUrl} : '/images/placeholder-piatto.jpg'" 
+                     th:alt="'Immagine di ' + ${recipe.title}"/>
+            </div>
+            
+            <div class="card-content">
+                <a th:href="@{/recipe/{id}(id=${recipe.id})}" th:text="${recipe.title}" class="recipe-title">Titolo Ricetta</a>
+                
+                <div class="card-metadata">
+                    <p>🕒 Tempo: <span th:text="${recipe.preparationTime}">0</span> min</p>
+                    <p>⭐ Difficoltà: <span th:text="${recipe.difficulty}">Facile</span></p>
+                    <p>🍽️ Porzioni: <span th:text="${recipe.servings}">0</span></p>
+                    <p>🏷️ Categoria: <span th:text="${recipe.category}">Categoria</span></p>
+                </div>
+            </div>
+            
+            <div class="card-actions">
+                <a th:href="@{/recipe/{id}(id=${recipe.id})}" class="action-button">SCOPRI LA MAGIA</a>
+            </div>
         </li>
     </ul>
 
-    <div sec:authorize="hasAuthority('ADMIN')" style="margin-top: 20px;">
-        <a th:href="@{/admin/formNewRecipe}">➕ Aggiungi nuova ricetta</a>
+    <div sec:authorize="hasAuthority('ADMIN')" class="admin-link-bottom">
+        <a th:href="@{/admin/formNewRecipe}">➕ Aggiungi una nuova Ricetta</a>
     </div>
 </body>
 

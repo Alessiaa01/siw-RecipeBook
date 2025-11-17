@@ -1,110 +1,207 @@
-
-/* Importa lo stile base elegante */
+/* ========================================================== */
+/* STILE PER manageRecipes.html (Gestione Admin) - STILE DECORATO */
+/* ========================================================== */
 @import url('/css/stile.css');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Unicase:wght@400;700&family=Rouge+Script&display=swap'); 
 
-/* === Layout Admin === */
+
+/* === Layout Body/Main (SFONDO ESTERNO) === */
 body {
-    max-width: 1000px;
-}
-
-/* === Titolo H1 (Cormorant Unicase) === */
-h1 {
-    font-family: 'Cormorant Unicase', serif;
-    color: var(--primary-color);
-    font-size: 3rem; 
-    text-shadow: none; 
-    font-weight: 700;
-}
-
-/* === Bottone Aggiungi (Header) - Stile Elegante e Dorato === */
-a[th\:href*="formNewRecipe"] {
-    display: block;
-    text-align: center;
-    
-    background-color: var(--button-base); 
-    color: var(--primary-color);
-    
-    padding: 12px 20px;
-    border-radius: 8px; 
-    max-width: 350px;
-    margin: 20px auto;
-    font-weight: 700;
-    
-    /* Bordo e ombra Dorata */
-    border: 1px solid var(--accent-color);
-    box-shadow: 0 4px 10px var(--accent-color);
-    transition: all 0.2s ease;
-    
-    font-family: 'Cormorant Unicase', serif; 
-}
-a[th\:href*="formNewRecipe"]:hover {
-    color: white;
-    background-color: var(--secondary-color);
-    box-shadow: 0 6px 15px var(--accent-color);
-}
-a[th\:href*="formNewRecipe"]:active {
-    transform: translateY(1px);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-/* === Lista di Gestione (li) - Stile Pulito/Elegante === */
-ul {
-    max-width: 900px;
+    background-color: #E0F7FA; /* MODIFICATO: Celeste pastello (Numero esadecimale) */
+    min-height: 100vh;
     padding: 0;
-    list-style: none;
+    margin: 0;
+    padding-top: 20px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: flex-start;
 }
-li {
-    background-color: #FFFFFF; 
+
+/* === Header (Nome Chef/Logout) - Allineato al container === */
+header {
+    background-color: transparent;
+    padding: 10px 0;
+    border-bottom: none;
+    box-shadow: none;
+    width: 800px; /* Larghezza fissa per allinearsi al container */
+    margin: 0 auto 20px auto; 
+    display: flex;
+    justify-content: flex-end; 
+}
+header div {
+    max-width: none; 
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+    display: flex;
+    justify-content: flex-end; 
+}
+.chef-name {
+    font-family: 'Cormorant Unicase', serif; 
+    color: var(--primary-color); 
+    font-weight: 700;
+    margin-right: 15px;
+}
+
+/* === Contenitore Principale stile "PERGAMENA DECORATA" (Cruciale) === */
+.management-container {
+    max-width: 800px;
+    margin: 0 auto; 
+    padding: 60px 70px; /* Padding più ampio per fare spazio alla cornice */
+    
+    background-color: #FBF7FF; /* Bianco sporco/Lilla Subtile per lo sfondo interno */
+    border-radius: 15px; 
+    
+    /* Bordo esterno e ombra */
+    border: 1px solid var(--secondary-color); 
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); 
+    
+    /* CORNICE DECORATIVA DORATA TRAMITE BACKGROUND-IMAGE */
+    background-image: url('/images/ri.jpeg'); 
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100% 100%; 
+    
+    flex-grow: 1;
+}
+
+/* === Titolo H1 (Gestione Ricette) - FONT CORMORANT UNICASE + LINEA === */
+.elegant-title {
+    font-family: 'Cormorant Unicase', serif; /* MODIFICATO: Usa Cormorant Unicase */
+    color: var(--primary-color);
+    font-size: 4rem; 
+    text-shadow: none; 
+    font-weight: 700; /* MODIFICATO: Font Weight 700 per Cormorant Unicase */
+    text-align: center;
+    letter-spacing: normal;
+    
+    margin-bottom: 2.5rem;
+    
+    /* LINEA CONTINUA ORO SCURO */
+    border-bottom: 2px solid var(--accent-color); 
+    padding-bottom: 10px;
+}
+
+/* === Bottone Aggiungi Nuova Ricetta (Box Separatore) === */
+.add-button-container {
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 30px;
+    border: none; 
+    border-radius: 0;
+    background-color: transparent; 
+    box-shadow: none;
+}
+
+/* === Bottone Aggiungi (CTA Dorata - MODIFICATO: Bordo Dorato Sottile) === */
+.elegant-add-button { 
+    width: auto; 
+    font-size: 1rem; 
+    padding: 8px 20px; /* Padding ridotto */
+    border-radius: 20px; /* Forma a pillola */
+    
+    background-color: transparent; /* Sfondo Trasparente */
+    color: var(--primary-color); /* Testo Viola Scuro */
+    border: 2px solid var(--accent-color); /* Bordo Dorato Sottile */
+    
+    box-shadow: none; 
+    transition: all 0.2s ease; 
+    cursor: pointer; 
+    font-weight: 700; 
+    
+    display: inline-flex; /* Adattato per allineare testo ed eventuale icona */
+    align-items: center; 
+    gap: 8px; 
+    text-decoration: none;
+    font-family: 'Quicksand', sans-serif;
+}
+.elegant-add-button:hover { 
+    background-color: var(--accent-color); /* Riempie di Oro all'hover */
+    color: black; /* Testo Bianco all'hover */
+    border-color: var(--accent-color); 
+    transform: none; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Ombra morbida */
+    text-decoration: none;
+}
+
+/* === Lista di Gestione (Le singole schede) === */
+.recipe-management-list {
+    list-style: none;
+    padding: 0;
+}
+.management-card {
+    background-color: #FBF7FF; /* Colore più chiaro per lo sfondo della card */
     padding: 15px 20px;
     
-    /* Bordo Dorato */
-    border: 1px solid var(--accent-color);
+    border: 1px solid var(--secondary-color); 
     box-shadow: 0 2px 5px var(--box-shadow-color);
-    border-radius: 5px;
+    border-radius: 8px; 
     
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 1.1rem;
-    margin-bottom: 10px; 
+    margin-bottom: 15px; 
 }
 
-li span {
+.recipe-title-display {
     font-weight: 600;
     color: var(--primary-color);
-    font-family: 'Quicksand', sans-serif; 
+    font-family: 'Cormorant Unicase', serif; 
+    flex-grow: 1; 
 }
 
-/* === Gruppo Bottoni Azione (Modifica/Elimina) - Dorato e Pulito === */
-/* Bottone Modifica */
-a[th\:href*="edit"] {
-    background-color: var(--accent-color); /* Sfondo Dorato */
+/* === Gruppo Bottoni Azione (Modifica/Elimina) === */
+.card-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* Bottone Modifica (Oro/Giallo) */
+.action-button.edit-button {
+    background-color: var(--accent-color); 
     color: var(--primary-color);
-    padding: 8px 12px;
+    padding: 8px 15px;
     border-radius: 5px;
     font-weight: 600;
-    
-    box-shadow: 0 2px 5px var(--accent-color); /* Ombra Dorata */
-    display: inline-block;
-    margin-right: 10px;
-}
-a[th\:href*="edit"]:active {
-    transform: translateY(1px);
+    font-size: 0.9rem;
+    text-decoration: none;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
-
-/* Bottone Elimina */
-form button[type="submit"] {
-    background-color: var(--primary-color); 
+.action-button.edit-button:hover {
+    background-color: var(--secondary-color);
     color: white;
-    padding: 8px 12px;
+}
+
+/* Bottone Elimina (Viola Scuro/Rosso) */
+.delete-form button[type="submit"] {
+    background-color:#C0392B;
+    color: white;
+    padding: 8px 15px;
     border: none;
     border-radius: 5px;
-    
-    box-shadow: 0 2px 5px var(--primary-color);
-    margin-top: 0;
-}
-form button[type="submit"]:active {
-    transform: translateY(1px);
+    font-size: 0.9rem;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-top: 0;
+    font-weight: 600;
+}
+.delete-form button[type="submit"]:hover {
+    background-color: #C0392B; 
+}
+
+/* === Link Torna Indietro === */
+.back-to-list-link {
+    display: block;
+    text-align: center;
+    margin-top: 30px;
+    color: var(--secondary-color);
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+.back-to-list-link:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
 }
