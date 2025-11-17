@@ -1,13 +1,20 @@
 /* ========================================================== */
-/* STILE PER manageRecipes.html (Gestione Admin) - STILE DECORATO */
+/* STILE PER manageRecipes.html (Gestione Admin) - REFACTORING OTTIMIZZATO */
 /* ========================================================== */
 @import url('/css/stile.css');
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Unicase:wght@400;700&family=Rouge+Script&display=swap'); 
 
+/* Variabili Custom */
+:root {
+    --gold-accent: #B8860B; /* Oro Scuro (DarkGoldenrod) */
+    --parchment-bg: #FBF7FF; /* Bianco sporco/Lilla Subtile */
+    --lilla-button: #C39BD3; /* Lavanda Chiaro (per bottone Elimina) */
+    --primary-color-text: #5D4037; /* Marrone scuro o Viola scuro per testo principale */
+}
 
 /* === Layout Body/Main (SFONDO ESTERNO) === */
 body {
-    background-color: #E0F7FA; /* MODIFICATO: Celeste pastello (Numero esadecimale) */
+    background-color: rgb(185, 221, 235);
     min-height: 100vh;
     padding: 0;
     margin: 0;
@@ -18,26 +25,28 @@ body {
     justify-content: flex-start;
 }
 
-/* === Header (Nome Chef/Logout) - Allineato al container === */
+/* === Header (Nome Chef/Logout) === */
 header {
     background-color: transparent;
     padding: 10px 0;
     border-bottom: none;
     box-shadow: none;
-    width: 800px; /* Larghezza fissa per allinearsi al container */
+    width: 800px; 
     margin: 0 auto 20px auto; 
     display: flex;
     justify-content: flex-end; 
 }
 header div {
-    max-width: none; 
+    max-width: 800px; 
     margin: 0;
-    padding: 0;
+    padding: 0 70px; 
     background-color: transparent;
     box-shadow: none;
     border: none;
     display: flex;
-    justify-content: flex-end; 
+    justify-content: space-between; 
+    width: 100%;
+    box-sizing: border-box;
 }
 .chef-name {
     font-family: 'Cormorant Unicase', serif; 
@@ -45,101 +54,105 @@ header div {
     font-weight: 700;
     margin-right: 15px;
 }
+header a {
+    background-color: goldenrod; 
+    color: white;
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-weight: 700;
+	
+}
+
+header a:hover {
+    color: white!important; /* Forza il testo a nero all'hover */
+    background-color: var(--primary-color); /* Imposta lo sfondo Oro Chiaro all'hover */
+}
+
 
 /* === Contenitore Principale stile "PERGAMENA DECORATA" (Cruciale) === */
 .management-container {
     max-width: 800px;
     margin: 0 auto; 
-    padding: 60px 70px; /* Padding più ampio per fare spazio alla cornice */
+    padding: 60px 70px; /* Padding decorativo */
     
-    background-color: #FBF7FF; /* Bianco sporco/Lilla Subtile per lo sfondo interno */
+    background-color: var(--parchment-bg);
     border-radius: 15px; 
     
     /* Bordo esterno e ombra */
-    border: 1px solid var(--secondary-color); 
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); 
+    border: 3px solid var(--gold-accent); 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); 
     
-    /* CORNICE DECORATIVA DORATA TRAMITE BACKGROUND-IMAGE */
-    background-image: url('/images/ri.jpeg'); 
+    /* CORNICE DECORATIVA (riq.jpeg) */
+    background-image: url('/images/riq.jpeg'); 
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 100% 100%; 
     
-    flex-grow: 1;
+    flex-grow: 0; 
 }
 
-/* === Titolo H1 (Gestione Ricette) - FONT CORMORANT UNICASE + LINEA === */
+/* === Titolo H1 (Gestione Ricette) - Stile Decorativo === */
 .elegant-title {
-    font-family: 'Cormorant Unicase', serif; /* MODIFICATO: Usa Cormorant Unicase */
-    color: var(--primary-color);
-    font-size: 4rem; 
-    text-shadow: none; 
-    font-weight: 700; /* MODIFICATO: Font Weight 700 per Cormorant Unicase */
+    font-family: 'Cormorant Unicase', serif; 
+    color: var(--gold-accent); 
+    font-size: 5rem; 
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); 
+    font-weight: 400; 
     text-align: center;
-    letter-spacing: normal;
     
     margin-bottom: 2.5rem;
     
-    /* LINEA CONTINUA ORO SCURO */
-    border-bottom: 2px solid var(--accent-color); 
-    padding-bottom: 10px;
+    /* Linea Decorativa */
+    border-bottom: 1px solid var(--gold-accent); 
+    padding-bottom: 15px;
 }
 
-/* === Bottone Aggiungi Nuova Ricetta (Box Separatore) === */
+/* === Bottone Aggiungi Nuova Ricetta (Stile Decorativo) === */
 .add-button-container {
     text-align: center;
-    padding: 20px;
     margin-bottom: 30px;
+    padding: 0;
     border: none; 
     border-radius: 0;
     background-color: transparent; 
     box-shadow: none;
 }
-
-/* === Bottone Aggiungi (CTA Dorata - MODIFICATO: Bordo Dorato Sottile) === */
 .elegant-add-button { 
-    width: auto; 
-    font-size: 1rem; 
-    padding: 8px 20px; /* Padding ridotto */
-    border-radius: 20px; /* Forma a pillola */
-    
-    background-color: transparent; /* Sfondo Trasparente */
-    color: var(--primary-color); /* Testo Viola Scuro */
-    border: 2px solid var(--accent-color); /* Bordo Dorato Sottile */
-    
-    box-shadow: none; 
+    font-size: 1.1rem; 
+    padding: 12px 30px; 
+    border-radius: 50px; 
+    background-color: goldenrod; 
+    color: white; 
+    border: 1px solid var(--primary-color); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); 
     transition: all 0.2s ease; 
-    cursor: pointer; 
     font-weight: 700; 
-    
-    display: inline-flex; /* Adattato per allineare testo ed eventuale icona */
+    text-transform: none; 
+    font-family: 'Quicksand', sans-serif;
+    display: inline-flex; 
     align-items: center; 
     gap: 8px; 
     text-decoration: none;
-    font-family: 'Quicksand', sans-serif;
 }
 .elegant-add-button:hover { 
-    background-color: var(--accent-color); /* Riempie di Oro all'hover */
-    color: black; /* Testo Bianco all'hover */
-    border-color: var(--accent-color); 
-    transform: none; 
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Ombra morbida */
+    background-color: var(--primary-color); /* Sfondo chiaro all'hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
     text-decoration: none;
+    color: white !important; /* COLORE TESTO NERO FORZATO */
 }
 
-/* === Lista di Gestione (Le singole schede) === */
+/* === Lista di Gestione (Minimal Containers) === */
 .recipe-management-list {
     list-style: none;
     padding: 0;
 }
 .management-card {
-    background-color: #FBF7FF; /* Colore più chiaro per lo sfondo della card */
-    padding: 15px 20px;
-    
-    border: 1px solid var(--secondary-color); 
-    box-shadow: 0 2px 5px var(--box-shadow-color);
-    border-radius: 8px; 
-    
+    /* Remove internal borders/shadows/background */
+    background-color: var(--parchment-bg);
+    padding: 15px 5px; 
+   border: 1px solid var(--gold-accent);
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+   border-radius: 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -148,60 +161,96 @@ header div {
 }
 
 .recipe-title-display {
-    font-weight: 600;
-    color: var(--primary-color);
-    font-family: 'Cormorant Unicase', serif; 
+    font-weight: 500;
+    color: var(--primary-color); 
+    font-family: 'Quicksand', sans-serif; 
     flex-grow: 1; 
+    padding-left: 5px;
 }
 
-/* === Gruppo Bottoni Azione (Modifica/Elimina) === */
+/* === Gruppo Bottoni Azione (NON RIPETITIVO & Minimal Container) === */
 .card-actions {
     display: flex;
-    gap: 10px;
+    gap: 10px; 
+    background-color: transparent !important; 
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
 }
 
-/* Bottone Modifica (Oro/Giallo) */
-.action-button.edit-button {
-    background-color: var(--accent-color); 
-    color: var(--primary-color);
-    padding: 8px 15px;
-    border-radius: 5px;
-    font-weight: 600;
-    font-size: 0.9rem;
+/* * PULSANTI AZIONE: Base per Modifica e Elimina (COMMON PROPERTIES) */
+.action-button.edit-button,
+.delete-form button[type="submit"] {
+    /* Layout & Box Model (comune) */
+    padding: 10px 18px; 
+    border-radius: 25px; 
+    margin-top: 0; 
+    display: inline-flex; 
+    
+    /* MODIFICA PER OMOGENEITÀ */
+    justify-content: center; /* Centra il contenuto */
+    width: 120px; /* Larghezza fissa */
+    
+    align-items: center;
+    gap: 5px;
+    
+    /* Tipografia & Effetti (comune) */
+    font-weight: 700;
+    font-size: 0.95rem; 
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); 
+    transition: all 0.2s;
     text-decoration: none;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--primary-color);
+}
+
+/* 1. Bottone Modifica (UNIQUE STYLES) */
+.action-button.edit-button {
+    background-color: goldenrod; /* Oro chiaro */
+    color: white; 
 }
 .action-button.edit-button:hover {
-    background-color: var(--secondary-color);
-    color: white;
+    background-color: var(--primary-color); 
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
+    transform: translateY(-1px);
+}
+.icon-pencil {
+    font-family: sans-serif;
 }
 
-/* Bottone Elimina (Viola Scuro/Rosso) */
+/* 2. Bottone Elimina (UNIQUE STYLES & Container Neutralization) */
+.delete-form {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important; 
+    display: inline-block;
+}
 .delete-form button[type="submit"] {
-    background-color:#C0392B;
-    color: white;
-    padding: 8px 15px;
-    border: none;
-    border-radius: 5px;
-    font-size: 0.9rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    margin-top: 0;
-    font-weight: 600;
+    background-color: #E74C3C; 
+    color: white; 
 }
 .delete-form button[type="submit"]:hover {
-    background-color: #C0392B; 
+    background-color: #E74C3C; 
+    color: white; 
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
+    transform: translateY(-1px);
 }
-
+.icon-trash {
+    font-family: sans-serif;
+}
 /* === Link Torna Indietro === */
 .back-to-list-link {
     display: block;
     text-align: center;
     margin-top: 30px;
-    color: var(--secondary-color);
+    color: var(--primary-color);
     font-size: 1.1rem;
     font-weight: 600;
+    text-decoration: none;
+    font-family: 'Cormorant Unicase', serif;
 }
 .back-to-list-link:hover {
-    color: var(--primary-color);
+    color: var(--gold-accent);
     text-decoration: underline;
 }
