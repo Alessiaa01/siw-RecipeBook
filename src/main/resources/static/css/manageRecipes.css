@@ -187,6 +187,44 @@ body > div:first-of-type {
 }
 
 /* === Bottone Aggiungi Nuova Ricetta (Stile Decorativo) === */
+
+
+
+
+
+.btn-golden-oval {
+    background: linear-gradient(to top, var(--accent-color) 0%, #F8E3B6 100%); 
+    color: var(--primary-color); 
+    border: 1px solid var(--primary-color);
+    padding: 12px 50px; /* Usa il padding grande desiderato */
+    font-size: 1.1rem;
+    font-weight: 700;
+    width: auto;
+    
+    border-radius: 50px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    font-family: 'Cormorant Unicase', serif; 
+    text-shadow: 0 0 1px var(--primary-color);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    /* Proprietà di base per i link/bottoni */
+    display: inline-flex; 
+    align-items: center;
+    gap: 8px; /* Mantenuto il gap per l'icona */
+    text-decoration: none;
+    text-transform: none;
+}
+.btn-golden-oval:hover {
+    background: linear-gradient(to top, #F8E3B6 0%, var(--accent-color) 100%); 
+    color: var(--primary-color);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+    text-decoration: none;
+}
+.btn-golden-oval:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
 .add-button-container {
     text-align: center;
     margin-bottom: 30px;
@@ -196,29 +234,15 @@ body > div:first-of-type {
     background-color: transparent; 
     box-shadow: none;
 }
-.elegant-add-button { 
-    font-size: 1.1rem; 
-    padding: 12px 30px; 
-    border-radius: 50px; 
-    background-color: goldenrod; 
-    color: white; 
-    border: 1px solid var(--primary-color); 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); 
-    transition: all 0.2s ease; 
-    font-weight: 700; 
-    text-transform: none; 
-    font-family: 'Quicksand', sans-serif;
-    display: inline-flex; 
-    align-items: center; 
-    gap: 8px; 
-    text-decoration: none;
-}
-.elegant-add-button:hover { 
-    background-color: var(--primary-color); /* Sfondo chiaro all'hover */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
-    text-decoration: none;
-    color: white !important; /* COLORE TESTO NERO FORZATO */
-}
+
+
+
+
+
+
+
+
+
 
 /* === Lista di Gestione (Minimal Containers) === */
 .recipe-management-list {

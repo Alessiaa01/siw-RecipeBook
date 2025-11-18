@@ -292,22 +292,37 @@ input[type="text"], input[type="number"], textarea, select {
 .submit-container { text-align: center; margin-top: 40px; }
 
 /* STILE REVISIONATO: Oro Solido, Piatto (Elegante/Fiabesco) */
-.submit-container button[type="submit"] { 
-    width: auto; 
-    font-size: 1.3rem; 
-    font-weight: 700; 
+.btn-golden-oval {
+    /* STATO NORMALE: Inizia Dorato (usando il gradiente iniziale preferito) */
+    background: linear-gradient(to top, var(--accent-color) 0%, #F8E3B6 100%); 
+    color: var(--primary-color); /* Testo Viola Scuro */
+    border: 1px solid var(--primary-color);
+    
     padding: 12px 50px; 
-    border-radius: 25px; 
-    background: var(--accent-gold); 
-    color: var(--primary-color-dark); 
-    border: 1px solid var(--primary-color-dark); 
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); 
-    transition: all 0.2s ease; 
+    font-size: 1.1rem;
+    font-weight: 700;
+    width: auto;
+    
+    border-radius: 50px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    font-family: 'Cormorant Unicase', serif; 
+    text-shadow: 0 0 1px var(--primary-color);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    display: inline-block; 
+    text-decoration: none; 
 }
-.submit-container button[type="submit"]:hover {
-    background: #EEDD82; 
-    transform: translateY(-2px); 
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+.btn-golden-oval:hover {
+    /* STATO HOVER: Passa al gradiente Viola/Lavanda */
+    background: linear-gradient(to top, var(--primary-color) 0%, var(--secondary-color) 100%); 
+    color: white; /* Testo Bianco per maggiore contrasto sul viola */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+    text-decoration: none;
+    text-shadow: none; /* Rimuoviamo l'ombra del testo per pulizia */
+}
+.btn-golden-oval:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .submit-links { border: none !important; background-color: transparent !important; padding: 0 !important; margin-top: 15px; text-align: center; }
