@@ -4,6 +4,12 @@
 @import url('/css/stile.css');
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Unicase:wght@400;700&family=Rouge+Script&display=swap'); 
 
+html {
+    height: 100%; 
+    margin: 0; /* AGGIUNTO: Rimuove i margini predefiniti del browser */
+    padding: 0; /* AGGIUNTO: Rimuove il padding predefinito */
+}
+
 /* Variabili Custom */
 :root {
     --gold-accent: #B8860B; /* Oro Scuro (DarkGoldenrod) */
@@ -25,49 +31,122 @@ body {
     justify-content: flex-start;
 }
 
-/* === Header (Nome Chef/Logout) === */
+/* === Header Bar === */
 header {
-    background-color: transparent;
-    padding: 10px 0;
-    border-bottom: none;
-    box-shadow: none;
-    width: 800px; 
-    margin: 0 auto 20px auto; 
-    display: flex;
-    justify-content: flex-end; 
+    background-color: #F8F4E8; 
+    padding: 5px 0;
+    border-bottom: 1px solid var(--secondary-color);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%; 
+    margin: 0; 
+    display: block; 
+	margin: -20px 0 0 0 ;
 }
-header div {
-    max-width: 800px; 
-    margin: 0;
-    padding: 0 70px; 
-    background-color: transparent;
-    box-shadow: none;
-    border: none;
+
+/* Contenitore per allineare  Utente (destra) */
+.header-content-wrapper {
     display: flex;
     justify-content: space-between; 
-    width: 100%;
-    box-sizing: border-box;
+    align-items: center;
+    
+    /* MODIFICA 1: Rimuove la restrizione di max-width per occupare il 100% della finestra */
+    max-width: 100%; 
+    margin: 0; 
+    
+    /* MODIFICA 2: Aggiunge un padding laterale che spinge il contenuto ai bordi visivi */
+    padding: 0 150px !important; /* Uso 150px per un allineamento visivo all'estremo destro */
 }
+
+
+/* Contenitore interno delle azioni (Chef/Logout) */
+header div {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0; 
+    margin: 0 ;
+    
+    display: flex;
+    justify-content: flex-end; 
+    align-items: center;
+}
+
+/* Sezione Utente Loggato */
+header div[th\:if*="userDetails"] {
+    background-color: #FFFFFF !important;
+    /* ... (altre proprietà) ... */
+    
+    width: auto; 
+    padding: 8px 15px !important; 
+    
+    /* MODIFICA 3: RIPRISTINA IL MARGINE A ZERO! */
+    margin: 0 !important; 
+    
+    display: flex !important;
+    align-items: center !important; 
+    
+    justify-content: center; 
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+
+/* Stili del testo interno */
 .chef-name {
-    font-family: 'Cormorant Unicase', serif; 
     color: var(--primary-color); 
-    font-weight: 700;
+    font-weight: 600;
+    font-family: 'Cormorant Unicase', serif; 
+    font-size: 1.1rem; 
     margin-right: 15px;
+   
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
-header a {
-    background-color: goldenrod; 
-    color: white;
-    padding: 5px 15px;
-    border-radius: 5px;
+
+/* Icona Placeholder */
+.chef-name::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--secondary-color); 
+    border: 1px solid var(--primary-color);
+}
+.chef-name span {
+    color: var(--accent-color);
+}
+
+/* === Stile Bottone Logout */
+header a[href="/logout"] {
     font-weight: 700;
-	
+    font-size: 0.95rem;
+    padding: 5px 15px; 
+    text-decoration: none;
+    border-radius: 15px; 
+    
+    background-color: #D3B88C; 
+    color: #4a4a4a; 
+    border: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.2s;
+	margin-right: -700px;
 }
 
-header a:hover {
-    color: white!important; /* Forza il testo a nero all'hover */
-    background-color: var(--primary-color); /* Imposta lo sfondo Oro Chiaro all'hover */
+header a[href="/logout"]:hover {
+    background-color: var(--primary-color);
+    color: white;
+    text-decoration: none;
 }
 
+/* Neutralizza il div che contiene il logo */
+body > div:first-of-type {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 20px auto 10px !important;
+    text-align: center;
+}
 
 /* === Contenitore Principale stile "PERGAMENA DECORATA" (Cruciale) === */
 .management-container {
