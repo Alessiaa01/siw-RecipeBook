@@ -222,6 +222,14 @@ body > div:first-of-type {
     margin: 20px auto 10px !important;
     text-align: center;
 }
+/* Sposta la sezione utente verso sinistra staccandola dal bordo */
+.header-user-section {
+    margin-right: 50px; /* Puoi aumentare questo numero per spostarlo più a sinistra */
+    
+    /* Opzionale: se vuoi essere sicuro che le scritte restino allineate bene */
+    display: flex; 
+    align-items: center;
+}
 /* ========================================================== */
 /* 5. GRIGLIA CONTENUTO */
 /* ========================================================== */
@@ -356,11 +364,46 @@ body > div:first-of-type {
     border-bottom: 1px solid rgba(212, 175, 55, 0.3);
 }
 
-/* ========================================================== */
-/* 7. RESPONSIVE */
-/* ========================================================== */
-@media (max-width: 768px) {
-    .content-grid { grid-template-columns: 1fr; }
-    h1 { font-size: 3rem; }
-    .fairy-card { padding: 30px 15px; width: 95%; outline: none; border: 2px solid #D4AF37; }
+/* Contenitore per centrare i bottoni in basso */
+.action-buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    padding: 0 20px;
+}
+
+/* Stile base del bottone magico */
+.magic-btn {
+    display: inline-block;
+    padding: 10px 25px;
+    text-decoration: none;
+    font-family: 'Cinzel Decorative', serif; /* Usa lo stesso font del titolo */
+    font-weight: bold;
+    color: #5a3e1b; /* Un marrone scuro/oro scuro */
+    border: 1px solid #B8860B; /* Bordo color oro */
+    border-radius: 25px;
+    background-color: rgba(255, 255, 255, 0.6); /* Sfondo leggero */
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Effetto quando passi sopra col mouse */
+.magic-btn:hover {
+    background-color: #B8860B; /* Diventa oro */
+    color: white;
+    transform: translateY(-2px); /* Si alza leggermente */
+    box-shadow: 0 4px 8px rgba(184, 134, 11, 0.3);
+}
+
+/* Stile specifico per il tasto modifica (opzionale, per distinguerlo) */
+.edit-btn {
+    border-color: #8B0000; /* Rosso scuro per le modifiche */
+    color: #8B0000;
+}
+
+.edit-btn:hover {
+    background-color: #8B0000;
+    color: white;
 }

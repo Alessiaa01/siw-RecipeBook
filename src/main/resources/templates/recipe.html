@@ -11,29 +11,24 @@
 <body>
     <div class="magic-background"></div>
 
-    <header>
-        <div class="header-content-wrapper">
-            
-            <div class="left-nav-group" style="display: flex; align-items: center; gap: 15px;">
-                <a href="/recipes" class="back-link">← Torna all'elenco</a>
-                
-                <div sec:authorize="hasAuthority('ADMIN')" class="admin-link">
-                    <a th:href="@{'/admin/recipe/' + ${recipe.id} + '/edit'}">✏️ Modifica ricetta</a>
-                </div>
-            </div>
+	<header>
+	        <div class="header-content-wrapper">
+	            
+	            <div class="left-nav-group">
+	            </div>
 
-            <div>
-                <div th:if="${userDetails}">
-                    <span class="chef-name">✨ Chef <span th:text="${userDetails.username}"></span></span>
-                    <a href="/logout">Logout</a>
-                </div>
-                <div th:unless="${userDetails}">
-                    <a href="/login">Login</a>
-                </div>
-            </div>
-            
-        </div>
-    </header>
+	            <div class="header-user-section">
+	                <div th:if="${userDetails}">
+	                    <span class="chef-name">✨ Chef <span th:text="${userDetails.username}"></span></span>
+	                    <a href="/logout">Logout</a>
+	                </div>
+	                <div th:unless="${userDetails}">
+	                    <a href="/login">Login</a>
+	                </div>
+	            </div>
+	            
+	        </div>
+	    </header>
 
 
     <main class="fairy-card">
@@ -92,11 +87,11 @@
                             <span th:text="${recipe.difficulty}"></span>
                         </li>
                         
-						<li>
-						                            <strong>Cottura:</strong> 
-						                            <span th:text="${recipe.cookingTime != null} ? ${recipe.cookingTime} + ' minuti' : '-'">-</span>
-						                        </li>
-						
+                        <li>
+                            <strong>Cottura:</strong> 
+                            <span th:text="${recipe.cookingTime != null} ? ${recipe.cookingTime} + ' minuti' : '-'">-</span>
+                        </li>
+                        
                         <li>
                             <strong>Categoria:</strong> 
                             <span th:text="${recipe.category}">Categoria</span>
@@ -113,6 +108,17 @@
             </div>
         </div>
 
+        <div class="action-buttons-container">
+            <a href="/recipes" class="magic-btn">
+                ← Torna all'elenco
+            </a>
+            
+            <span sec:authorize="hasAuthority('ADMIN')">
+                <a th:href="@{'/admin/recipe/' + ${recipe.id} + '/edit'}" class="magic-btn edit-btn">
+                    ✏️ Modifica ricetta
+                </a>
+            </span>
+        </div>
         <div class="bottom-scroll-footer">
             <span>Una Ricetta Segreta dal Grimorio Fatato</span>
         </div>
