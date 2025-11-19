@@ -29,6 +29,8 @@ public class Recipe {
     private String description; // Descrizione e/o procedimento
     
     private Integer preparationTime; // Tempo di preparazione (in minuti)
+    
+    private Integer cookingTime;
 
     // Difficoltà potrebbe essere una stringa (es. "Facile", "Medio") o un Integer (es. da 1 a 5)
     private String difficulty; 
@@ -104,6 +106,14 @@ public class Recipe {
 
     public void setPreparationTime(Integer preparationTime) {
         this.preparationTime = preparationTime;
+    }
+    
+    public Integer getCookingTime() {
+        return cookingTime;
+    }
+
+    public void setCookingTime(Integer cookingTime) {
+        this.cookingTime = cookingTime;
     }
 
     public String getDifficulty() {

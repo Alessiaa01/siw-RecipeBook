@@ -4,90 +4,120 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${recipe.title}">Dettaglio Ricetta</title>
+    
     <link rel="stylesheet" href="/css/recipe.css" />
 </head>
 
 <body>
+    <div class="magic-background"></div>
+
     <header>
-        <div th:if="${userDetails}">
-            <span th:text="${userDetails.username}"></span>
-            <a href="/logout">Logout</a>
-        </div>
-        <div th:unless="${userDetails}">
-            <a href="/login">Login</a>
+        <div class="header-content-wrapper">
+            
+            <div class="left-nav-group" style="display: flex; align-items: center; gap: 15px;">
+                <a href="/recipes" class="back-link">← Torna all'elenco</a>
+                
+                <div sec:authorize="hasAuthority('ADMIN')" class="admin-link">
+                    <a th:href="@{'/admin/recipe/' + ${recipe.id} + '/edit'}">✏️ Modifica ricetta</a>
+                </div>
+            </div>
+
+            <div>
+                <div th:if="${userDetails}">
+                    <span class="chef-name">✨ Chef <span th:text="${userDetails.username}"></span></span>
+                    <a href="/logout">Logout</a>
+                </div>
+                <div th:unless="${userDetails}">
+                    <a href="/login">Login</a>
+                </div>
+            </div>
+            
         </div>
     </header>
 
-    <div>
-        <a href="/"><img src="/images/logo-siw.png" width="50%"/></a>
-    </div>
 
-    <div class="recipe-wrapper"> 
-        <h1 th:text="${recipe.title}">Titolo Ricetta</h1>
+    <main class="fairy-card">
+        
+        <div class="corner top-left"></div>
+        <div class="corner top-right"></div>
+        <div class="corner bottom-left"></div>
+        <div class="corner bottom-right"></div>
 
-        <div sec:authorize="hasAuthority('ADMIN')" class="admin-link-top">
-            <a th:href="@{'/admin/recipe/' + ${recipe.id} + '/edit'}">✏️ Modifica ricetta</a>
+        <div class="title-section">
+            <h1 th:text="${recipe.title}">Titolo Ricetta</h1>
+            <p class="subtitle" th:text="${recipe.description}">Descrizione...</p>
         </div>
 
-        <div class="main-content-grid">
+        <div class="content-grid">
             
             <div class="left-column">
                 
-                <div class="recipe-image-container">
-                    <img th:if="${recipe.imageUrl}" th:src="${recipe.imageUrl}" alt="Immagine Ricetta"/>
+                <div class="magic-scroll-header">
+                    <h2>Ingredienti</h2>
                 </div>
 
-                <div class="description-section">
-                    <p><strong>Descrizione:</strong></p>
-                    <p th:text="${recipe.description}">Testo descrizione...</p>
-                </div>
-                
-                <div class="procedure-section">
-                    <h2>Procedimento</h2>
-                    <p th:text="${recipe.procedure}">Qui ci sarà il procedimento della ricetta...</p>
+                <ul class="ingredients-list">
+                    <li th:each="ing : ${recipe.ingredients}">
+                        <span class="star">★</span> 
+                        <span th:text="${ing.name}">Nome</span>
+                        <span th:if="${ing.quantity} != null"> - <span th:text="${ing.quantity}">0</span></span>
+                        <span th:if="${ing.unit} != null" th:text="${ing.unit}">unità</span>
+                    </li>
+                </ul>
+
+                <div class="procedure-text">
+                    <h3 style="color: #B8860B; font-family: 'Cinzel Decorative', serif; margin-bottom: 10px;">Procedimento:</h3>
+                    <p th:text="${recipe.procedure}">Qui ci sarà il procedimento...</p>
                 </div>
             </div>
-            
+
             <div class="right-column">
                 
-                <div class="ingredients-metadata-card">
+                <div class="magic-frame">
+                    <img th:if="${recipe.imageUrl}" th:src="${recipe.imageUrl}" alt="Immagine Ricetta"/>
+                    <img th:unless="${recipe.imageUrl}" src="/images/placeholder-piatto.jpg" alt="Nessuna immagine"/>
+                </div>
+
+                <div class="details-section">
+                    <h3 class="cursive-sub">Dettagli Tecnici</h3>
+                    <div class="separator-line"></div>
                     
-                    <h2>Ingredienti</h2>
-                    <ul>
-                        <li th:each="ing : ${recipe.ingredients}">
-                            <span class="ingredient-name" th:text="${ing.name}">Ingrediente</span> - 
-                            <span th:text="${ing.quantity}">0</span> 
-                            <span th:text="${ing.unit}">unità</span>
+                    <ul class="tech-list">
+                        <li>
+                            <strong>Tempo:</strong> 
+                            <span th:text="${recipe.preparationTime} + ' minuti'"> min</span>
+                        </li>
+                        <li>
+                            <strong>Difficoltà:</strong> 
+                            <span th:text="${recipe.difficulty}"></span>
+                        </li>
+                        
+						<li>
+						                            <strong>Cottura:</strong> 
+						                            <span th:text="${recipe.cookingTime != null} ? ${recipe.cookingTime} + ' minuti' : '-'">-</span>
+						                        </li>
+						
+                        <li>
+                            <strong>Categoria:</strong> 
+                            <span th:text="${recipe.category}">Categoria</span>
+                        </li>
+                        
+                        <li th:if="${!recipe.tags.empty}">
+                            <strong>Tag:</strong>
+                            <span th:each="tag, iterStat : ${recipe.tags}" 
+                                  th:text="${tag} + ${!iterStat.last ? ', ' : ''}">Tag</span>
                         </li>
                     </ul>
-                    
-                    <hr>
-                    
-                    <h3>Dettagli Tecnici</h3>
-                    <div class="metadata-group">
-                        <p><strong>Tempo di preparazione:</strong> <span th:text="${recipe.preparationTime}">0</span> minuti</p>
-                        <p><strong>Difficoltà:</strong> <span th:text="${recipe.difficulty}">Facile</span></p>
-                        <p><strong>Porzioni:</strong> <span th:text="${recipe.servings}">1</span></p>
-                    </div>
-
-                    <div class="tags-category-group">
-                        <h3>Categoria:</h3>
-                        <p th:text="${recipe.category}">Categoria Ricetta</p>
-                        
-                        <h3>Tag:</h3>
-                        <ul class="tags-list">
-                            <li th:each="tag : ${recipe.tags}" th:text="${tag}">Tag</li>
-                        </ul>
-                    </div>
-
                 </div>
 
             </div>
         </div>
-        
-        <br>
-        <a href="/recipes" class="back-link">Torna all'elenco delle ricette</a>
-    </div>
-    </body>
 
+        <div class="bottom-scroll-footer">
+            <span>Una Ricetta Segreta dal Grimorio Fatato</span>
+        </div>
+
+    </main>
+
+</body>
 </html>

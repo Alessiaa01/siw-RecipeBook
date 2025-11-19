@@ -1,185 +1,366 @@
-/* Importa lo stile base elegante */
-@import url('/css/stile.css');
+/* ========================================================== */
+/* STILE "FIABA DISNEY" (Celeste, Oro e Magia) */
+/* ========================================================== */
 
-/* === Header - Ereditato e neutro === */
-header {
-    box-shadow: none;
-    border-bottom: none; 
-    padding: 15px 0;
-}
+/* 1. IMPORTAZIONE FONT MAGICI */
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap');
 
-/* Centra il logo */
-body > div:first-of-type {
-    text-align: center;
-    margin: 2rem auto 1.5rem;
-    background-color: transparent;
-    box-shadow: none;
+/* 2. SFONDO PAGINA */
+body {
+    margin: 0;
     padding: 0;
+    /* Sfondo Celeste con sfumatura radiale per dare "luce" al centro */
+    background: radial-gradient(circle at center, #E0F7FA 0%, #B2EBF2 100%);
+    min-height: 100vh;
+    font-family: 'Cormorant Garamond', serif;
+    color: #5D4037; /* Marrone Bronzo */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
+/* Texture "Polvere di Stelle" sullo sfondo */
+.magic-background {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: url('https://www.transparenttextures.com/patterns/stardust.png'); /* Texture leggera */
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 0;
+}
 
-/* ==== Contenitore Ricetta (Pannello Elegante) ==== */
-body > div:last-of-type {
-    background-color: #ffffff;
-    max-width: 900px;
-    margin: 3rem auto 4rem;
-    padding: 50px; /* Più spazio interno */
-    border-radius: 10px;
+/* Header di Navigazione (Minimal) */
+header {
+    width: 100%;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    z-index: 10;
+}
+header a { text-decoration: none; color: #8B4513; font-weight: bold; font-family: 'Cinzel Decorative', serif; }
+
+/* ========================================================== */
+/* 3. LA CARTA FATATA (Contenitore Principale) */
+/* ========================================================== */
+.fairy-card {
+    position: relative;
+    z-index: 1;
+    width: 90%;
+    max-width: 1100px;
+    margin: 20px auto 50px auto;
+    padding: 60px 50px;
     
-    /* NUOVO STILE: Bordo sottile e ombra morbida */
-    box-shadow: 0 5px 15px var(--box-shadow-color); 
-    border: 1px solid var(--secondary-color); 
+    /* Bordo Doppio Dorato */
+    border: 3px double #D4AF37; 
+    outline: 2px solid #D4AF37; /* Secondo bordo esterno */
+    outline-offset: 8px;
+    border-radius: 15px;
     
-    transition: transform 0.2s; 
-}
-body > div:last-of-type:hover {
-    transform: none; /* Rimuovi l'effetto di spostamento */
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); 
+    background-color: rgba(255, 255, 255, 0.2); /* Trasparenza vetrosa */
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.2); /* Alone dorato */
 }
 
-/* === Neutralizza tutti i div interni (mantenuto per pulizia) === */
-body > div:last-of-type div {
-    border: none !important; 
-    box-shadow: none !important;
+/* Decorazioni Angoli (Opzionale: simula i ghirigori) */
+.corner {
+    position: absolute;
+    width: 40px; height: 40px;
+    border: 3px solid #D4AF37;
+    transition: all 0.3s;
+}
+.top-left { top: 15px; left: 15px; border-right: none; border-bottom: none; border-radius: 10px 0 0 0; }
+.top-right { top: 15px; right: 15px; border-left: none; border-bottom: none; border-radius: 0 10px 0 0; }
+.bottom-left { bottom: 15px; left: 15px; border-right: none; border-top: none; border-radius: 0 0 0 10px; }
+.bottom-right { bottom: 15px; right: 15px; border-left: none; border-top: none; border-radius: 0 0 10px 0; }
+
+/* ========================================================== */
+/* 4. TIPOGRAFIA E TITOLI */
+/* ========================================================== */
+.title-section { text-align: center; margin-bottom: 40px; }
+
+h1 {
+    font-family: 'Great Vibes', cursive; /* Font Corsivo Magico */
+    font-size: 4.5rem;
+    color: #8B4513;
+    margin: 0;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+    line-height: 1.2;
+}
+
+.subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.5rem;
+    color: #A67B5B;
+    margin-top: 5px;
+}
+/* === Header Bar === */
+header {
+    background-color: #F8F4E8; 
+    padding: 10px 0;
+    border-bottom: 1px solid var(--secondary-color);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%; 
+    margin: 0; 
+    display: block; 
+}
+
+/* Contenitore per allineare Admin (sinistra) e Utente (destra) */
+.header-content-wrapper {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    max-width: var(--max-content-width); 
+    margin: 0 auto; 
+    padding: 0 !important; 
+}
+
+/* Stile per il link di Gestione Admin (Sinistra) */
+.admin-link-header-left {
+    margin-left: -250px; 
+}
+
+.admin-link-header-left a {
+    padding: 8px 15px; 
+    border-radius: 15px; 
+    font-weight: 700;
+    text-decoration: none;
+    background-color: #D3B88C !important; 
+    border: none !important;
+    color: #4a4a4a !important; 
+    transition: all 0.2s;
+}
+.admin-link-header-left a:hover {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+}
+
+
+/* Contenitore interno delle azioni (Chef/Logout) */
+header div {
     background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0; 
+    margin: 0; 
+    
+    display: flex;
+    justify-content: flex-end; 
+    align-items: center;
+}
+
+/* Sezione Utente Loggato */
+header div[th\:if*="userDetails"] {
+    background-color: #FFFFFF !important;
+    border: 1px solid var(--secondary-color) !important;
+    border-radius: 15px !important; 
+    box-shadow: 0 2px 5px var(--box-shadow-color) !important;
+    
+    width: auto; 
+    padding: 8px 15px !important; 
+    margin: 0 !important; 
+
+    justify-content: center; 
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+
+/* Stili del testo interno */
+.chef-name {
+    color: var(--primary-color); 
+    font-weight: 600;
+    font-family: 'Cormorant Unicase', serif; 
+    font-size: 1.1rem; 
+    margin-right: 15px; 
+    
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Icona Placeholder */
+.chef-name::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--secondary-color); 
+    border: 1px solid var(--primary-color);
+}
+.chef-name span {
+    color: var(--accent-color);
+}
+
+/* === Stile Bottone Logout */
+header a[href="/logout"] {
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 5px 15px; 
+    text-decoration: none;
+    border-radius: 15px; 
+    
+    background-color: #D3B88C; 
+    color: #4a4a4a; 
+    border: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.2s;
+	margin-right: 0;
+}
+
+header a[href="/logout"]:hover {
+    background-color: var(--primary-color);
+    color: white;
+    text-decoration: none;
+}
+
+/* Neutralizza il div che contiene il logo */
+body > div:first-of-type {
+    max-width: 100% !important;
     padding: 0 !important;
+    margin: 20px auto 10px !important;
+    text-align: center;
+}
+/* ========================================================== */
+/* 5. GRIGLIA CONTENUTO */
+/* ========================================================== */
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Due colonne */
+    gap: 60px;
+    align-items: start;
+}
+
+/* --- COLONNA SINISTRA (Ingredienti) --- */
+
+/* Nastro/Pergamena Titolo Ingredienti */
+.magic-scroll-header {
+    background: linear-gradient(to right, transparent 0%, #F3E5AB 20%, #F3E5AB 80%, transparent 100%);
+    text-align: center;
+    padding: 10px 0;
+    margin-bottom: 20px;
+    position: relative;
+}
+.magic-scroll-header h2 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.5rem;
+    color: #6D4C41;
     margin: 0;
 }
-
-/* ==== Titolo H1 (Ereditato Cormorant Unicase) ==== */
-h1 {
-    font-family: 'Cormorant Unicase', serif; 
-    color: var(--primary-color);
-    font-size: 3.5rem;
-    text-shadow: none; /* Rimuovi le ombre massicce */
-    border-bottom: 1px solid var(--secondary-color); /* Linea di separazione sottile */
-    padding-bottom: 15px;
-    margin-bottom: 2.5rem;
-    text-align: left; 
-    font-weight: 700;
-}
-
-/* ==== Sotto-Titoli H2, H3 (Ereditano Cormorant Unicase) ==== */
-h2, h3 {
-    color: var(--primary-color); 
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-    font-weight: 700;
-    border-bottom: 1px solid var(--secondary-color); /* Linea sottile */
-    padding-bottom: 5px;
-    font-family: 'Cormorant Unicase', serif;
-    font-size: 1.8rem;
-}
-
-/* ==== Immagine (Ombra Molle) ==== */
-div img {
-    display: block;
-    max-width: 100%;
-    height: auto;
-    border-radius: 10px;
-    margin: 30px auto;
-    border: none;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); 
-    transition: box-shadow 0.3s;
-}
-div img:hover {
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-}
-
-/* ==== Contenuto Principale (Descrizione/Procedura) ==== */
-body > div:last-of-type p {
-    font-size: 1.1rem;
-    margin-bottom: 1.5rem;
-    line-height: 1.7;
-    color: #4a4a4a;
-}
-body > div:last-of-type p strong {
-    color: var(--primary-color);
-}
-
-/* ==== Liste (Ingredienti/Tag) - Rimuovi il punto grafico aggressivo ==== */
-ul {
-    list-style: none;
-    padding-left: 0;
-    margin: 1rem 0 2rem;
-}
-
-ul li {
-    margin-bottom: 5px;
-    padding: 5px 0 5px 25px; 
-    background-color: transparent; 
-    font-weight: 500;
-    position: relative;
-    list-style: none;
-}
-
-/* Sostituisci l'elemento grafico con un trattino elegante */
-ul li::before {
-    content: "—"; /* Trattino elegante al posto del pallino/triangolo */
-    color: var(--secondary-color); 
-    font-size: 1em;
-    font-weight: 400;
+/* Decorazione ai lati del nastro */
+.magic-scroll-header::before, .magic-scroll-header::after {
+    content: '❧'; /* Simbolo floreale */
+    color: #D4AF37;
+    font-size: 1.5rem;
     position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: color 0.2s;
+    top: 10px;
 }
+.magic-scroll-header::before { left: 10%; }
+.magic-scroll-header::after { right: 10%; }
 
-ul li:hover::before {
-    content: "—"; 
-    color: var(--primary-color); 
-}
-
-/* ==== Area Admin (Link Modifica) - Pulsante Elegante ==== */
-div[sec\:authorize*="ADMIN"] {
-    text-align: right;
-    margin-bottom: 20px;
-}
-div[sec\:authorize*="ADMIN"] a {
-    color: var(--primary-color);
-    background-color: var(--button-base); 
-    padding: 10px 15px;
-    border-radius: 5px;
-    font-weight: 600;
-    text-decoration: none;
-    
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.1s, box-shadow 0.1s, background-color 0.2s;
-}
-div[sec\:authorize*="ADMIN"] a:active {
-    transform: translateY(1px);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-/* ==== Link di ritorno (Pulsante Elegante) ==== */
-a[href="/recipes"] {
-    display: block; 
-    width: 300px;
+/* Lista Ingredienti */
+.ingredients-list {
+    list-style: none;
+    padding: 0;
     text-align: center;
-    margin: 40px auto 10px;
-    padding: 12px 20px;
-    color: var(--primary-color); 
-    font-weight: 700;
-    text-decoration: none;
-    
-    border: 1px solid var(--primary-color); 
-    border-radius: 5px;
-    background-color: var(--button-base);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
-    transition: transform 0.1s, box-shadow 0.1s;
+    font-size: 1.3rem;
 }
-a[href="/recipes"]:hover {
-    background-color: var(--secondary-color);
-    color: white; 
-    box-shadow: 0 4px 8px var(--box-shadow-color);
-}
-a[href="/recipes"]:active {
-    transform: translateY(1px);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+.ingredients-list li { margin-bottom: 10px; }
+.star { color: #DAA520; margin-right: 8px; font-size: 1rem; }
+
+.procedure-text {
+    margin-top: 30px;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    text-align: justify;
+    padding: 0 20px;
 }
 
-/* ==== Blocco Categoria - Pulito (eredita stile.css, ma rimuovi vecchi override) ==== */
-.recipe-category h3 {
-    border-bottom: none;
+/* --- COLONNA DESTRA (Foto e Dettagli) --- */
+
+/* Cornice Foto Quadrata e Dorata */
+.magic-frame {
+    position: relative;
+    padding: 10px;
+    border: 4px solid #D4AF37;
+    border-radius: 5px;
+    background-color: #FFF;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    width: 300px; /* Dimensione fissa come nell'immagine */
+    height: 300px;
+    margin: 0 auto 30px auto;
+    transform: rotate(2deg); /* Leggera inclinazione */
+}
+
+/* Decorazione angoli foto */
+.magic-frame::after {
+    content: '';
+    position: absolute; top: -10px; left: -10px; right: -10px; bottom: -10px;
+    border: 1px solid #D4AF37;
+    border-radius: 10px;
+    pointer-events: none;
+}
+
+.magic-frame img {
+    width: 100%; height: 100%; object-fit: cover;
+    border: 1px solid #EEE;
+}
+
+/* Sezione Dettagli Tecnici */
+.details-section { text-align: center; }
+
+.cursive-sub {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.5rem;
+    color: #8B4513;
+    margin: 0 0 10px 0;
+}
+
+.separator-line {
+    height: 2px;
+    background: linear-gradient(to right, transparent, #D4AF37, transparent);
+    width: 80%;
+    margin: 0 auto 20px auto;
+    position: relative;
+}
+.separator-line::after { /* Stellina centrale */
+    content: '✦';
+    position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+    background-color: #E8F6F8; /* Colore sfondo per coprire la riga */
+    padding: 0 5px;
+    color: #D4AF37;
+}
+
+.tech-list {
+    list-style: none;
+    padding: 0;
+    font-size: 1.2rem;
+}
+.tech-list li { margin-bottom: 8px; font-style: italic; }
+.tech-list strong { color: #A67B5B; font-weight: normal; font-family: 'Cinzel Decorative', serif; }
+
+/* ========================================================== */
+/* 6. FOOTER NASTRO */
+/* ========================================================== */
+.bottom-scroll-footer {
+    margin-top: 60px;
+    background: linear-gradient(to right, transparent, #F3E5AB, transparent);
+    text-align: center;
+    padding: 10px;
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.8rem;
+    color: #5D4037;
+    position: relative;
+    border-top: 1px solid rgba(212, 175, 55, 0.3);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+/* ========================================================== */
+/* 7. RESPONSIVE */
+/* ========================================================== */
+@media (max-width: 768px) {
+    .content-grid { grid-template-columns: 1fr; }
+    h1 { font-size: 3rem; }
+    .fairy-card { padding: 30px 15px; width: 95%; outline: none; border: 2px solid #D4AF37; }
 }

@@ -216,9 +216,13 @@ public class RecipeController {
     public String updateRecipe(@PathVariable("id") Long id, @ModelAttribute("recipe") Recipe updatedRecipe) {
         Recipe recipe = recipeService.findById(id);
         if (recipe != null) {
+        	
+        	
+            recipe.setImageUrl(updatedRecipe.getImageUrl());
             recipe.setTitle(updatedRecipe.getTitle());
             recipe.setDescription(updatedRecipe.getDescription());
             recipe.setPreparationTime(updatedRecipe.getPreparationTime());
+            recipe.setCookingTime(updatedRecipe.getCookingTime()); 
             recipe.setDifficulty(updatedRecipe.getDifficulty());
             recipe.setServings(updatedRecipe.getServings());
             recipe.setProcedure(updatedRecipe.getProcedure());
