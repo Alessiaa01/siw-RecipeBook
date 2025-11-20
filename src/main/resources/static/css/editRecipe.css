@@ -1,103 +1,201 @@
-/* Importa lo stile base elegante */
+/* ========================================================== */
+/* STILE "MODIFICA INCANTESIMO" (Coerente con Manage/Recipes) */
+/* ========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap');
 @import url('/css/stile.css');
 
 :root {
-    --button-base-admin: var(--secondary-color); 
-    --button-shadow-admin: var(--primary-color); 
+    --primary-color: #8B4513;   /* Marrone Bronzo */
+    --secondary-color: #D4AF37; /* Oro */
+    --accent-color: #B2EBF2;    /* Celeste chiaro */
+    --text-color: #5D4037;      /* Marrone scuro */
+    --gold-border: #C5A059;
+    --parchment-bg: rgba(255, 255, 255, 0.6); /* Sfondo semi-trasparente */
 }
 
-/* === Titolo H1 (Cormorant Unicase) === */
-h1 {
-    font-family: 'Cormorant Unicase', serif; 
-    text-align: center;
-    color: var(--primary-color); 
-    font-size: 3rem;
-    text-shadow: none; 
-    font-weight: 700;
-    margin-bottom: 2rem;
-}
-
-/* === Form Contenitore Principale (Pannello Elegante e Dorato) === */
-form:first-of-type {
-    background-color: #FFFFFF;
-    padding: 30px;
-    border-radius: 10px;
+/* 1. SFONDO PAGINA (Fix: Gradiente + Texture direttamente nel body) */
+body {
+    margin: 0;
+    padding: 0;
+    /* Sovrapposizione: Texture Stardust SOPRA il Gradiente Radiale */
+    background-image: url('https://www.transparenttextures.com/patterns/stardust.png'), 
+                      radial-gradient(circle at center, #E0F7FA 0%, #B2EBF2 100%);
+    background-repeat: repeat, no-repeat;
+    background-attachment: fixed, fixed; /* Fissa lo sfondo durante lo scroll */
+    background-size: auto, cover;
     
-    /* Bordo e Ombra Dorati */
-    box-shadow: 0 4px 10px var(--accent-color);
-    border: 1px solid var(--accent-color);
-    margin: 20px auto;
+    min-height: 100vh;
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* === Fieldsets (Sezioni del Form) === */
-fieldset {
-    border: 1px solid var(--secondary-color); 
-    padding: 25px;
-    margin-bottom: 30px;
-    border-radius: 8px;
-    background-color: var(--background-color); 
+/* 2. HEADER */
+header {
+    width: 100%;
+    background-color: #F8F4E8;
+    border-bottom: 1px solid var(--secondary-color);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+    text-align: center;
+    z-index: 10;
 }
 
-legend {
-    font-family: 'Cormorant Unicase', serif;
+.back-link {
+    font-family: 'Cinzel Decorative', serif;
+    font-weight: bold;
     color: var(--primary-color);
-    padding: 0 15px;
-    font-size: 1.6rem;
-    text-shadow: none;
-    font-weight: 700;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: color 0.3s;
+}
+.back-link:hover {
+    color: var(--secondary-color);
 }
 
-/* === Input e Testo === */
+/* 3. CARD PRINCIPALE (Stile "Fairy Card" come in recipe.css) */
+.fairy-card {
+    position: relative;
+    z-index: 1;
+    width: 90%;
+    max-width: 850px;
+    margin: 40px auto 60px auto;
+    padding: 50px;
+    
+    /* Bordi e Sfondo */
+    border: 3px double var(--gold-border);
+    outline: 2px solid var(--gold-border);
+    outline-offset: 6px;
+    border-radius: 15px;
+    
+    background-color: var(--parchment-bg);
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+}
+
+/* Titoli */
+h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3.5rem;
+    color: var(--primary-color);
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
+}
+
+h2, h3 {
+    font-family: 'Cinzel Decorative', serif;
+    color: var(--primary-color);
+    border-bottom: 1px dashed var(--gold-border);
+    padding-bottom: 5px;
+    margin-top: 30px;
+}
+
+/* 4. CAMPI INPUT E FORM */
 label {
-    font-weight: 600;
+    font-family: 'Cinzel Decorative', serif;
+    font-weight: 700;
     color: var(--primary-color);
     display: block;
     margin-top: 15px;
-    font-family: 'Cormorant Unicase', serif; 
+    margin-bottom: 5px;
+    font-size: 0.95rem;
 }
 
-input[type="text"], input[type="number"], textarea, select {
-    border: 1px solid var(--accent-color); /* Bordo Dorato */
+input[type="text"], 
+input[type="number"], 
+textarea, 
+select {
+    width: 100%;
+    background-color: #FFF;
+    border: 1px solid var(--gold-border);
     border-radius: 5px;
     padding: 10px;
-    width: 100%;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--text-color);
     box-sizing: border-box;
 }
 
-/* === Lista Ingredienti ESISTENTI (li) === */
-ul li {
-    background-color: #FFFFFF; 
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 8px;
-    border: 1px solid var(--accent-color); /* Bordo Dorato */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(139, 69, 19, 0.2);
 }
 
-/* === Form di RIMOZIONE Ingrediente (Bottone Elegante) === */
-form[th\:action*="remove"] button {
-    background-color: var(--primary-color); 
-    box-shadow: 0 2px 5px var(--primary-color);
+/* 5. LISTA INGREDIENTI E BOTTONI */
+.ingredients-list {
+    list-style: none;
+    padding: 0;
+}
+.ingredient-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(255,255,255,0.5);
+    border-bottom: 1px dotted var(--gold-border);
+    padding: 8px 10px;
+    margin-bottom: 5px;
+    border-radius: 4px;
 }
 
-/* === Form di AGGIUNTA Ingrediente (Bottone Elegante Dorato) === */
-form[th\:action*="ingredient/add"] {
-    background-color: var(--background-color);
-    border: 1px dashed var(--accent-color); /* Bordo Dorato */
-    box-shadow: none;
+/* Bottoni */
+button {
+    font-family: 'Cinzel Decorative', serif;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    border-radius: 20px;
+    transition: transform 0.2s;
 }
 
-form[th\:action*="ingredient/add"] button {
-    background-color: var(--accent-color); /* Sfondo Dorato */
-    color: var(--primary-color);
-    box-shadow: 0 2px 5px var(--accent-color);
-}
-
-/* === Bottone Submit Principale: Salva Modifiche === */
-form:first-of-type button[type="submit"] {
-    width: 100%;
+/* Bottone Salva Principale */
+.save-btn {
+    background: linear-gradient(to right, #D4AF37, #F3E5AB);
+    color: #5a3e1b;
+    border: 1px solid #B8860B;
+    padding: 12px 40px;
     font-size: 1.2rem;
-    background-color: var(--primary-color); 
-    color: white;
-    box-shadow: 0 4px 10px var(--accent-color); /* Ombra Dorata */
+    width: 100%;
+    margin-top: 30px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.save-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+/* Bottone Rimuovi (Piccolo) */
+.remove-btn {
+    background-color: #ffcdd2;
+    color: #b71c1c;
+    padding: 5px 15px;
+    font-size: 0.85rem;
+    border: 1px solid #e57373;
+}
+
+/* Bottone Aggiungi (Medio) */
+.add-btn {
+    background-color: var(--accent-color);
+    color: #006064;
+    padding: 8px 20px;
+    font-size: 1rem;
+    border: 1px solid #4DD0E1;
+    margin-top: 10px;
+}
+
+/* Layout Griglia per Input brevi */
+.grid-2-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.add-ingredient-box {
+    background-color: rgba(255,255,255,0.4);
+    padding: 15px;
+    border: 1px solid var(--gold-border);
+    border-radius: 8px;
 }
