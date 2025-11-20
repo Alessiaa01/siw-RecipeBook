@@ -2,112 +2,121 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="'Modifica ' + ${recipe.title}">Modifica Ricetta</title>
+    <title th:text="'Modifica Incantesimo: ' + ${recipe.title}">Modifica Ricetta</title>
     <link rel="stylesheet" th:href="@{/css/editRecipe.css}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <header>
-        <a th:href="@{/admin/manageRecipes}" class="back-link">← Torna al Grimorio (Gestione)</a>
-    </header>
+    <div class="page-frame"></div>
 
-    <main class="fairy-card">
+    <div class="main-container">
         
-        <h1 th:text="'Modifica: ' + ${recipe.title}">Modifica Ricetta</h1>
-
-        <form th:action="@{'/admin/recipe/' + ${recipe.id} + '/update'}" th:object="${recipe}" method="post">
-            
-            <label>📜 Titolo Ricetta:</label>
-            <input type="text" th:field="*{title}" />
-
-            <label>✨ Descrizione:</label>
-            <textarea th:field="*{description}" rows="3"></textarea>
-
-            <label>📖 Procedimento:</label>
-            <textarea th:field="*{procedure}" rows="6"></textarea>
-
-            <div class="grid-2-col">
-                <div>
-                    <label>⏳ Prep. (min):</label>
-                    <input type="number" th:field="*{preparationTime}" />
-                </div>
-                <div>
-                    <label>🔥 Cottura (min):</label>
-                    <input type="number" th:field="*{cookingTime}" />
-                </div>
+        <div class="magic-header">
+            <div class="header-text">
+                <h1>Modifica un Antico Incantesimo</h1>
+                <p class="subtitle">Aggiorna i Segreti di questa Ricetta</p>
+                <div class="gold-divider"></div>
             </div>
-
-            <div class="grid-2-col">
-                <div>
-                    <label>⭐ Difficoltà:</label>
-                    <input type="text" th:field="*{difficulty}" />
-                </div>
-                <div>
-                    <label>🍽️ Porzioni:</label>
-                    <input type="number" th:field="*{servings}" />
-                </div>
-            </div>
-
-            <label>🏷️ Categoria:</label>
-            <select th:field="*{category}">
-                <option value="Antipasto">Antipasto</option>
-                <option value="Primo">Primo</option>
-                <option value="Secondo">Secondo</option>
-                <option value="Dolce">Dolce</option>
-                <option value="Altro">Altro</option>
-            </select>
-
-            <label>🏷️ Tag (es. vegetariana...):</label>
-            <input type="text" th:field="*{tags}" placeholder="Separati da virgola" />
-
-            <label>🖼️ URL Immagine:</label>
-            <input type="text" th:field="*{imageUrl}" placeholder="Inserisci l'URL dell'immagine..." />
             
-            <button type="submit" class="save-btn">💾 Salva modifiche</button>
-        </form>
-
-        <br><hr style="border-color: #C5A059; opacity: 0.5;"><br>
-
-        <h2>Ingredienti</h2>
-        <ul class="ingredients-list">
-            <li th:each="ingredient : ${recipe.ingredients}" class="ingredient-item">
-                <span>
-                    <strong th:text="${ingredient.name}">Ingrediente</strong> 
-                    <span th:if="${ingredient.quantity}"> - <span th:text="${ingredient.quantity}">Qt</span></span>
-                    <span th:if="${ingredient.unit}" th:text="${ingredient.unit}">Unità</span>
-                </span>
-                
-                <form th:action="@{'/admin/recipe/' + ${recipe.id} + '/ingredient/' + ${ingredient.id} + '/remove'}"
-                      method="post" style="display:inline; margin:0;">
-                    <button type="submit" class="remove-btn">❌ Rimuovi</button>
-                </form>
-            </li>
-        </ul>
-
-        <h3>Aggiungi nuovo ingrediente</h3>
-        <div class="add-ingredient-box">
-            <form th:action="@{'/admin/recipe/' + ${recipe.id} + '/ingredient/add'}" th:object="${ingredient}" method="post">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                
-                <label>Nome:</label>
-                <input type="text" th:field="*{name}" required placeholder="Es. Farina Magica"/>
-                
-                <div class="grid-2-col">
-                    <div>
-                        <label>Quantità:</label>
-                        <input type="text" th:field="*{quantity}" />
-                    </div>
-                    <div>
-                        <label>Unità:</label>
-                        <input type="text" th:field="*{unit}" placeholder="es. g, ml" />
-                    </div>
+            <div class="header-image-preview">
+                <div class="polaroid-frame">
+                    <img id="preview-img" th:src="${recipe.imageUrl} ? ${recipe.imageUrl} : '/images/placeholder-piatto.jpg'" alt="Anteprima">
                 </div>
-                
-                <button type="submit" class="add-btn">➕ Aggiungi Ingrediente</button>
-            </form>
+                <span class="img-label">Sostituisci Ricetta Attuale</span>
+            </div>
         </div>
 
-    </main>
+        <form th:action="@{'/admin/recipe/' + ${recipe.id} + '/update'}" th:object="${recipe}" method="post" class="scroll-parchment">
+            
+            <h2 class="scroll-title">Dettagli Principali</h2>
+            
+            <div class="input-group-full">
+                <label>Titolo dell'Incantesimo</label>
+                <input type="text" th:field="*{title}" placeholder="Es. Torta di Mele Fatata" class="magic-input"/>
+            </div>
+
+            <div class="input-group-full">
+                <label>Breve Descrizione Magica</label>
+                <input type="text" th:field="*{description}" class="magic-input"/>
+            </div>
+
+            <div class="scroll-grid">
+                <div>
+                    <label>Categoria</label>
+                    <select th:field="*{category}" class="magic-input">
+                        <option value="Antipasto">Antipasto</option>
+                        <option value="Primo">Primo</option>
+                        <option value="Secondo">Secondo</option>
+                        <option value="Dolce">Dolce</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Tempo Cottura (min)</label>
+                    <input type="number" th:field="*{cookingTime}" class="magic-input"/>
+                </div>
+                <div>
+                    <label>Difficoltà</label>
+                    <input type="text" th:field="*{difficulty}" class="magic-input"/>
+                </div>
+                <div>
+                    <label>Porzioni Incantate</label>
+                    <input type="number" th:field="*{servings}" class="magic-input"/>
+                </div>
+            </div>
+            
+            <div class="spacer"></div>
+
+            <div class="columns-container">
+                
+                <div class="ingredients-box">
+                    <h3>Ingredienti Fatati</h3>
+                    <div class="ing-list-scroll">
+                        <div th:each="ing, stat : ${recipe.ingredients}" class="ing-row">
+                            <i class="fa-solid fa-star star-icon"></i>
+                            <span th:text="${ing.name} + ' (' + ${ing.quantity} + ' ' + ${ing.unit} + ')'">Farina</span>
+                            <button type="submit" th:formaction="@{'/admin/recipe/' + ${recipe.id} + '/ingredient/' + ${ing.id} + '/remove'}" class="mini-del-btn">×</button>
+                        </div>
+                    </div>
+                    
+                    <div class="add-ing-mini">
+                        <input type="text" name="tempIngName" placeholder="Nuovo Ingrediente..." id="newIngName">
+                        <button type="button" class="btn-add-ing" onclick="alert('Implementare logica JS o form separato')">Aggiungi</button>
+                    </div>
+                </div>
+
+                <div class="procedure-box">
+                    <h3>Procedimento Magico</h3>
+                    <label>Tag Magici (es. Vegano, Magia Fredda)</label>
+                    <input type="text" th:field="*{tags}" class="magic-input mb-2" />
+                    
+                    <textarea th:field="*{procedure}" rows="8" class="magic-textarea"></textarea>
+                    
+                    <div class="gold-circles">
+                        <span></span><span></span><span></span><span></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group-full" style="margin-top: 20px;">
+                <label>URL Immagine (Copia qui il link)</label>
+                <input type="text" th:field="*{imageUrl}" id="imgUrlInput" oninput="updatePreview()" class="magic-input"/>
+            </div>
+
+        </form> <div class="footer-buttons">
+            <button type="submit" form="scroll-parchment" class="btn-oval gold" onclick="document.querySelector('.scroll-parchment').submit()">Salva Modifiche</button>
+            <a th:href="@{/admin/manageRecipes}" class="btn-oval beige">Annulla</a>
+        </div>
+
+    </div>
+
+    <script>
+        function updatePreview() {
+            const url = document.getElementById('imgUrlInput').value;
+            const img = document.getElementById('preview-img');
+            if(url) img.src = url;
+        }
+    </script>
 
 </body>
 </html>
