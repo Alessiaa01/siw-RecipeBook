@@ -70,15 +70,15 @@
 
 			                <div class="card-metadata-inline">
 			                    <p>🕒 Tempo: <span th:text="${recipe.preparationTime}">0</span> min</p>
+								<p>🕒 Tempo di cottura: <span th:text="${recipe.cookingTime}">0</span> min</p>
 			                    <p>⭐ Difficoltà: <span th:text="${recipe.difficulty}">Facile</span></p>
 			                    <p>🍽️ Porzioni: <span th:text="${recipe.servings}">0</span></p>
 			                    <p>🏷️ Categoria: <span th:text="${recipe.category}">Categoria</span></p>
+								<p>🏷️ Tag: <span th:text="${recipe.tags}">Tag</span></p>
 			                </div>
 			            </div>
 			            
-			            <div class="card-actions">
-			                <a th:href="@{/recipe/{id}(id=${recipe.id})}" class="action-button">SCOPRI </a>
-			            </div>
+			            
 			        </li>
 			    </ul>
 </body>

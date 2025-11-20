@@ -43,6 +43,16 @@ public class Recipe {
     private String procedure; //procedimento
     
     private String category; //categoria es antipasto, primo, secondo , dolce
+   
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Ingredient> ingredients = new ArrayList<>();
+
+    
+    
+    @ElementCollection
+    private Set<String> tags = new HashSet<>();
+
+   
     
 
     // ---------------------------------------------------------------------------------
@@ -63,16 +73,8 @@ public class Recipe {
         this.servings = servings;
     }
 
-    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Ingredient> ingredients = new ArrayList<>();
-
-    
-    
-    @ElementCollection
-    private Set<String> tags = new HashSet<>();
-
    
-
+ 
 
     // --- Getter e Setter ---
 
