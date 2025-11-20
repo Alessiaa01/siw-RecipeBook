@@ -1,359 +1,197 @@
-/* Importa lo stile base elegante */
-@import url('/css/stile.css');
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Unicase:wght@400;700&family=Quicksand:wght@300;500;700&family=Rouge+Script&display=swap');
+/* ========================================================== */
+/* STILE "DISNEY MAGIC SCROLL" - NUOVA RICETTA */
+/* ========================================================== */
 
-/* === 0. DEFINIZIONE VARIABILI === */
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&display=swap');
+
 :root {
-    --form-bg-color: #F8F4E8; /* Colore Parchemnt/Cream per Fieldsets */
-    --body-bg-color: #F7E9FF; /* Manteniamo il Lilla Subtilo */
-    --primary-color-dark: #5D4037; /* Marrone Scuro per testo principale */
-    --accent-gold: #D4AF37; /* Oro per icone/bottoni */
-    --error-color: #E74C3C; /* Rosso per errori/rimuovi */
+    /* === MODIFICA QUI: Sfondo Celeste Chiaro === */
+    --bg-sky: #E0F7FA;         /* Celeste chiarissimo (quasi bianco) al centro */
+    --bg-sky-dark: #B2EBF2;    /* Celeste pastello ai bordi */
+    
+    --gold-dark: #8B4513;      
+    --gold-light: #D4AF37;     
+    --parchment: #FDF5E6;      
+    --input-bg: #FFF8E1;       
 }
-
-/* === 1. Reset Body e Header === */
 body {
-    background-color: var(--body-bg-color); 
-    background-image: url('/images/sfondo_pagina.jpg'); 
-    background-size: cover;      
-    background-position: center; 
-    background-repeat: no-repeat; 
-    background-attachment: fixed;
-    
-    font-family: 'Quicksand', sans-serif; 
-    min-height: 100vh;
     margin: 0;
-    /* Spazio per il link in alto */
-    padding: 60px 0 40px 0;
-    
+    padding: 0;
+    background: radial-gradient(circle at center, var(--bg-sky) 0%, var(--bg-sky-dark) 100%);
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--gold-dark);
+    min-height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-}
-/* Rimosso display: none !important per l'header per farlo comparire */
-main > div {
-    display: none !important; 
+    position: relative;
+    overflow-x: hidden;
 }
 
-/* NUOVI STILI PER IL LINK IN ALTO (Header) */
-.page-header-link {
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.page-frame::before {
+    content: "✦";
     position: absolute;
-    top: 20px;
+    bottom: -15px; 
     left: 50%;
     transform: translateX(-50%);
-    width: 800px; 
-    max-width: 90%;
-    text-align: left;
-    padding-left: 20px;
-}
-.page-header-link a {
-    font-family: 'Quicksand', sans-serif;
-    color: var(--primary-color-dark); /* Testo Marrone Scuro */
-    font-weight: 700;
-    font-size: 1rem;
-    text-decoration: none;
-    transition: color 0.2s;
-}
-.page-header-link a:hover {
-    color: var(--accent-gold); /* Link Oro all'hover */
-}
-
-
-/* === 2. Titolo H1 e Form Generale === */
-h1 {
-    font-family: 'Rouge Script', cursive; 
-    color: var(--primary-color-dark);
-    font-size: 3.5rem;
-    text-shadow: none;
-    margin-bottom: 1rem;
-    padding-bottom: 0;
-    border-bottom: none;
-    text-align: center;
-}
-
-.parchment-form {
-    background-color: var(--form-bg-color); 
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); 
-    border: 1px solid var(--accent-gold); 
-    max-width: 800px;
-    margin: 20px auto;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-/* === 3. Fieldsets e Input Generici === */
-fieldset {
-    border: none; 
-    padding: 10px 0;
-    margin-bottom: 20px;
-    background-color: transparent;
-    border-top: 1px solid var(--accent-gold); 
-}
-legend {
-    font-family: 'Cormorant Unicase', serif;
-    color: var(--primary-color-dark);
+    
+    font-size: 2rem;
+    color: var(--gold-light);
+    background: var(--bg-sky);
     padding: 0 10px;
-    font-size: 1.2rem; 
-    font-weight: 700;
-    background-color: var(--form-bg-color); 
-    text-align: left;
-    margin-left: -10px;
+    z-index: 1; /* Assicura che stia sopra la linea */
 }
 
-/* Stili a griglia/inline */
-.grid-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; align-items: start; margin-top: 20px; }
-.inline-metadata-group { display: flex; justify-content: space-between; gap: 15px; }
-.inline-metadata-group .half-field { flex: 1; }
-.inline-metadata-group .inline-field { flex: 1; } 
 
 
-label { font-weight: 500; color: var(--primary-color-dark); display: block; margin-top: 5px; margin-bottom: 5px; font-family: 'Quicksand', sans-serif; font-size: 0.9rem; }
-input[type="text"], input[type="number"], textarea, select { 
-    border: 1px solid var(--accent-gold); 
-    border-radius: 5px; 
-    padding: 8px; 
-    font-family: 'Quicksand', sans-serif; 
-    width: 100%; 
-    box-sizing: border-box; 
-    background-color: white; /* Sfondo bianco */
-    color: var(--primary-color-dark);
-}
-.field-row { margin-bottom: 20px; }
 
-/* Stili Area Immagine */
-.placeholder-box { width: 150px; height: 150px; border: 2px dashed #D4AF37; background-color: #fff; border-radius: 8px; margin: 10px auto; display: flex; justify-content: center; align-items: center; cursor: pointer; }
-
-
-/* === 4. INGREDIENTI (Correzione Layout) === */
-
-.ingredients-section #ingredients-container .ingredient-block,
-.ingredients-section #ingredients-container .ingredient-block > div 
-{ 
-    background-color: transparent !important; 
-    border: none !important; 
-    padding: 0 !important; 
-    margin: 0 !important; 
-    box-shadow: none !important; 
+/* LAYOUT */
+.main-container {
+    position: relative; z-index: 1; width: 100%; max-width: 950px;
+    padding: 40px 20px 100px 20px;
+    display: flex; flex-direction: column; align-items: center;
 }
 
-.ingredient-fields-row { 
-    display: flex; 
-    gap: 15px; 
-    align-items: flex-end; 
-    margin-bottom: 20px;
-    padding: 10px 0;
-    border-bottom: 1px dashed #E0D3C0; 
+/* HEADER */
+.magic-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    width: 100%; margin-bottom: -30px; padding: 0 20px; position: relative; z-index: 2;
 }
-.ingredient-fields-row:last-child {
-    border-bottom: none;
+.header-text { flex: 1; padding-top: 20px; }
+.header-text h1 {
+    font-family: 'Great Vibes', cursive; font-size: 3.5rem; color: #8B4513; margin: 0;
+    text-shadow: 2px 2px 0px rgba(255,255,255,0.6);
 }
-
-.ing-field { display: flex; flex-direction: column; flex-grow: 1; }
-.ing-name-full { flex-grow: 3; min-width: 180px; }
-.ing-quantity { flex-grow: 1.2; min-width: 90px; }
-.ing-unit { flex-grow: 1; min-width: 70px; }
-
-.ingredient-fields-row input[type="text"],
-.ingredient-fields-row input[type="number"] { 
-    border: 1px solid var(--accent-gold); 
-    border-radius: 5px; 
-    padding: 8px 10px; 
-    font-size: 0.95em; 
-    width: 100%; 
-    box-sizing: border-box; 
-    height: 38px;
-    background-color: white; 
-    color: var(--primary-color-dark);
+.subtitle { font-family: 'Cinzel Decorative', serif; color: #795548; font-size: 1.1rem; margin-left: 10px; }
+.gold-divider {
+    height: 2px; background: linear-gradient(to right, transparent, var(--gold-light), transparent);
+    margin-top: 10px; width: 80%;
+}
+.header-image-preview { text-align: center; width: 200px; }
+.polaroid-frame {
+    background: #FFF; padding: 5px; border: 2px solid var(--gold-light);
+    border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    width: 160px; height: 160px; margin: 0 auto;
+}
+.polaroid-frame img { width: 100%; height: 100%; object-fit: cover; border-radius: 5px; }
+.img-label {
+    display: block; background: #f3e5ab; border: 1px solid var(--gold-light);
+    border-radius: 15px; font-size: 0.8rem; padding: 4px 10px; margin-top: -10px;
+    position: relative; z-index: 3; display: inline-block; font-weight: bold;
 }
 
-/* Pulsante Rimuovi */
-.remove-button.inline-button { 
-    background-color: var(--error-color); 
-    color: white; 
-    border: none; 
-    padding: 10px 15px; 
-    cursor: pointer; 
-    white-space: nowrap; 
-    height: 38px; 
-    line-height: 18px; 
-    border-radius: 5px; 
-    font-weight: 700; 
-    margin: 0; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    box-shadow: 0 2px 3px rgba(0,0,0,0.2); 
-    transition: background-color 0.2s, transform 0.1s; 
-}
-.remove-button.inline-button:hover { background-color: #C0392B; transform: translateY(-1px); }
-
-
-/* === 5. AZIONI INGREDIENTI E TAGS === */
-.ingredient-actions-bottom { 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    margin-top: 25px; 
-    padding-top: 15px; 
-    border-top: 1px dashed #E0D3C0; 
+/* PERGAMENA */
+.scroll-parchment {
+    background-color: var(--parchment); width: 100%;
+    border-radius: 15px 15px 40px 40px; padding: 60px 50px 50px 50px;
+    box-shadow: inset 0 0 60px rgba(139, 69, 19, 0.1), 0 15px 30px rgba(0,0,0,0.2), 0 0 0 5px rgba(255,255,255,0.4);
+    border: 1px solid #D7CCC8; position: relative;
+    background-image: linear-gradient(to bottom, transparent 98%, rgba(139,69,19,0.1) 100%), url('https://www.transparenttextures.com/patterns/cream-paper.png');
 }
 
-/* STILE PULSANTE AGGIUNGI INGREDIENTE (Opzione 3: Bordo Dorato Sottile) */
-.add-ingredient-button { width: auto; font-size: 1rem; padding: 8px 20px; border-radius: 20px; background-color: transparent; color: var(--primary-color-dark); border: 2px solid var(--accent-gold); box-shadow: none; transition: all 0.2s ease; cursor: pointer; font-weight: 700; display: flex; align-items: center; gap: 8px; }
-.add-ingredient-button:hover { background-color: var(--accent-gold); color: white; border-color: var(--accent-gold); transform: none; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
-.add-ingredient-button .icon-plus { background-color: transparent; color: var(--accent-gold); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; font-weight: 700; }
-.add-ingredient-button:hover .icon-plus { color: white; }
-.ingredient-note { font-style: italic; font-size: 0.85em !important; color: var(--primary-color-dark); margin: 0; }
 
+.scroll-title { font-family: 'Cinzel Decorative', serif; font-size: 1.5rem; border-bottom: none; margin-bottom: 20px; color: #3E2723; }
 
-/* --- TAGS (SOLUZIONE PILLOLA VIOLA) --- */
+/* INPUT */
+label { display: block; font-family: 'Cormorant Garamond', serif; font-weight: 600; margin-bottom: 5px; font-size: 1.1rem; color: #5D4037; }
+.magic-input, .magic-textarea, select.magic-input {
+    width: 100%; background-color: var(--input-bg); border: 1px solid var(--gold-light);
+    border-radius: 8px; padding: 10px; font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; color: #3E2723; box-sizing: border-box;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); transition: all 0.3s;
+}
+.magic-input:focus, .magic-textarea:focus {
+    background-color: #FFF; border-color: var(--gold-dark); outline: none;
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+}
+.input-group-full { margin-bottom: 20px; }
+.scroll-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 40px; }
+.spacer { height: 30px; border-bottom: 1px dashed #D7CCC8; margin-bottom: 30px; width: 100%; }
 
-/* 1. Contenitore Esterno (Nessun Bordo, Sfondo Bianco) */
-.tag-group-container {
-    padding: 15px 20px; 
-    margin-top: 15px;
-    margin-bottom: 20px;
-    
-    background-color: white; /* SFONDO BIANCO */
-    border: none; /* Rimuove il bordo dorato interno */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Ombra leggera */
+/* COLONNE */
+.columns-container { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; }
+
+/* INGREDIENTI */
+.ingredients-box {
+    border: 2px solid #F0E68C; border-radius: 10px; padding: 15px;
+    background-color: rgba(255, 255, 255, 0.4); position: relative;
+}
+.ingredients-box h3 { margin-top: 0; font-size: 1.3rem; border-bottom: 1px solid var(--gold-light); padding-bottom: 5px; }
+
+/* Stili specifici per le righe dinamiche JS */
+.ing-row-dynamic {
+    display: flex; align-items: center; margin-bottom: 10px; gap: 5px;
+    border-bottom: 1px dotted #E0E0E0; padding-bottom: 5px;
+}
+.ing-inputs { display: flex; gap: 5px; width: 100%; }
+.magic-input-sm {
+    padding: 5px; border: 1px solid #D7CCC8; border-radius: 5px;
+    background: #FFF; font-family: 'Cormorant Garamond', serif; font-size: 1rem;
+}
+.magic-input-sm.name { flex: 2; }
+.magic-input-sm.qty { flex: 1; }
+.magic-input-sm.unit { flex: 1; }
+.mini-del-btn { background: none; border: none; color: #E57373; cursor: pointer; font-size: 1.2rem; padding: 0 5px; }
+.btn-add-ing-dashed {
+    width: 100%; border: 2px dashed var(--gold-light); background: transparent;
+    padding: 8px; color: var(--gold-dark); font-weight: bold; cursor: pointer;
+    margin-top: 10px; border-radius: 8px; transition: 0.3s; font-family: 'Cinzel Decorative', serif;
+}
+.btn-add-ing-dashed:hover { background: rgba(212, 175, 55, 0.1); border-style: solid; }
+
+/* PROCEDIMENTO */
+.procedure-box h3 { margin-top: 0; font-size: 1.3rem; }
+.checkbox-wrapper { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; }
+.magic-check { font-size: 1rem; display: flex; align-items: center; gap: 5px; cursor: pointer; }
+.magic-textarea { width: 100%; resize: vertical; }
+.gold-circles { display: flex; gap: 5px; margin-top: 10px; }
+.gold-circles span { width: 12px; height: 12px; border: 2px solid var(--gold-light); border-radius: 50%; display: inline-block; }
+
+/* FOOTER */
+.footer-buttons { display: flex; gap: 20px; margin-top: -25px; z-index: 10; }
+.btn-oval {
+    padding: 12px 40px; border-radius: 50px; font-family: 'Cinzel Decorative', serif;
+    font-weight: bold; font-size: 1.1rem; cursor: pointer; text-decoration: none;
+    border: 2px solid #8B4513; transition: transform 0.2s; display: inline-block;
+}
+.btn-oval.gold { 
+	background: #F3E5AB;
+	 color: #5D4037; 
+	 box-shadow: 0 4px 0 #C5A059;
+  }
+.btn-oval.gold:hover { 
+	background: #FFF; 
+	transform: translateY(2px); 
+	box-shadow: 0 2px 0 #C5A059; 
+}
+/* MODIFICA QUI: Ora anche .beige (Annulla) è identico al .gold */
+.btn-oval.beige { 
+    background: #F3E5AB;   /* Era #FFF8E1 -> Ora Oro */
+    color: #5D4037;        /* Era #8D6E63 -> Ora Marrone scuro */
+    box-shadow: 0 4px 0 #C5A059; /* Era #D7CCC8 -> Ora Ombra scura */
 }
 
-/* 2. Titolo "Tag:" (Forza il colore Marrone Scuro) */
-.tag-label { 
-    font-family: 'Cormorant Unicase', serif; 
-    font-weight: 700; 
-    color: var(--primary-color-dark) !important; /* Testo Marrone Scuro */
-    display: block; 
-    margin-bottom: 15px; 
-    font-size: 1.2rem; 
-    display: flex; 
-    align-items: center;
-    gap: 8px; 
+/* Aggiungiamo anche l'hover uguale */
+.btn-oval.beige:hover { 
+    background: #FFF; 
+    transform: translateY(2px); 
+    box-shadow: 0 2px 0 #C5A059; 
 }
+/* Error Banner */
+.error-banner { background-color: #ffcdd2; color: #c62828; padding: 10px; border-radius: 5px; margin-bottom: 15px; text-align: center; }
 
-/* 3. Layout delle Pillole */
-.tag-group { 
-    display: flex; 
-    flex-wrap: wrap; 
-    gap: 10px 15px; 
-    padding: 0; 
-    margin: 0; 
+@media (max-width: 768px) {
+    .magic-header { flex-direction: column; align-items: center; text-align: center; }
+    .header-image-preview { margin-top: 20px; }
+    .scroll-grid, .columns-container { grid-template-columns: 1fr; }
+    .ing-inputs { flex-direction: column; }
 }
-
-/* Nasconde il checkbox standard */
-.tag-group label input[type="checkbox"] { 
-    position: absolute; 
-    opacity: 0; 
-    width: 0; 
-    height: 0;
-    cursor: pointer;
-}
-
-/* Stile della label (la pillola cliccabile - Colori Viola) */
-.tag-group label {
-    padding: 8px 15px; 
-    border: 1px solid var(--primary-color-dark); /* Bordo Marrone Scuro */
-    border-radius: 5px; 
-    transition: all 0.2s ease-in-out;
-    font-family: 'Quicksand', sans-serif; 
-    font-weight: 500;
-    
-    /* Colori richiesti per la pillola a riposo */
-    color: var(--primary-color-dark) !important; 
-    background-color: var(--body-bg-color); /* Sfondo Viola/Lilla */
-    
-    cursor: pointer;
-    white-space: nowrap; 
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Ombra discreta */
-    display: inline-block;
-}
-
-/* Stile al passaggio del mouse (hover) */
-.tag-group label:hover { 
-    border-color: var(--accent-gold); /* Bordo Oro all'hover */
-    background-color: #E0D3C0; /* Tono più caldo */
-    transform: translateY(-1px); 
-}
-
-/* Stile quando la pillola è selezionata (:checked) */
-.tag-group label:has(input[type="checkbox"]:checked) { 
-    background-color: var(--accent-gold); /* Riempimento ORO quando selezionato */
-    color: var(--primary-color-dark) !important;
-    border: 3px solid var(--accent-gold); 
-    padding: 6px 14px; /* Adattato per il bordo di 3px */
-    font-weight: 700; 
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); 
-}
-
-/* === 6. Bottone Submit Finale e Conferma === */
-.submit-container { text-align: center; margin-top: 40px; }
-
-/* STILE REVISIONATO: Oro Solido, Piatto (Elegante/Fiabesco) */
-.btn-golden-oval {
-    /* STATO NORMALE: Inizia Dorato (usando il gradiente iniziale preferito) */
-    background: linear-gradient(to top, var(--accent-color) 0%, #F8E3B6 100%); 
-    color: var(--primary-color); /* Testo Viola Scuro */
-    border: 1px solid var(--primary-color);
-    
-    padding: 12px 50px; 
-    font-size: 1.1rem;
-    font-weight: 700;
-    width: auto;
-    
-    border-radius: 50px; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-    font-family: 'Cormorant Unicase', serif; 
-    text-shadow: 0 0 1px var(--primary-color);
-    transition: all 0.2s ease;
-    cursor: pointer;
-    display: inline-block; 
-    text-decoration: none; 
-}
-.btn-golden-oval:hover {
-    /* STATO HOVER: Passa al gradiente Viola/Lavanda */
-    background: linear-gradient(to top, var(--primary-color) 0%, var(--secondary-color) 100%); 
-    color: white; /* Testo Bianco per maggiore contrasto sul viola */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
-    text-decoration: none;
-    text-shadow: none; /* Rimuoviamo l'ombra del testo per pulizia */
-}
-.btn-golden-oval:active {
-    transform: translateY(2px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.submit-links { border: none !important; background-color: transparent !important; padding: 0 !important; margin-top: 15px; text-align: center; }
-.submit-links a { color: var(--primary-color-dark); font-size: 0.9rem; margin: 0 5px; text-decoration: none; }
-
-/* STILE MESSAGGIO DI CONFERMA (SUCCESS) */
-.parchment-confirmation {
-    background-color: var(--form-bg-color); 
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); 
-    border: 3px solid var(--accent-gold); 
-    max-width: 600px;
-    width: 100%;
-    box-sizing: border-box;
-    text-align: center;
-    margin: 20px auto;
-}
-
-.parchment-confirmation h2 {
-    font-family: 'Rouge Script', cursive; 
-    color: var(--primary-color-dark);
-    font-size: 3rem;
-    margin-top: 0;
-    margin-bottom: 20px;
-}
-
-.parchment-confirmation p {
-    color: var(--primary-color-dark);
-    font-size: 1.1rem;
-    line-height: 1.5;
-    margin-bottom: 30px;
-}
-

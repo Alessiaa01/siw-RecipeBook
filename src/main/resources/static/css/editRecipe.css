@@ -5,12 +5,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&display=swap');
 
 :root {
-    --bg-sky: #B3E5FC;         /* Celeste sfondo */
-    --bg-sky-dark: #81D4FA;    /* Celeste scuro per gradiente */
-    --gold-dark: #8B4513;      /* Marrone/Oro scuro testo */
-    --gold-light: #D4AF37;     /* Oro brillante */
-    --parchment: #FDF5E6;      /* Colore carta */
-    --input-bg: #FFF8E1;       /* Sfondo input giallino */
+    /* === MODIFICA QUI: Sfondo Celeste Chiaro === */
+    --bg-sky: #E0F7FA;         /* Celeste chiarissimo (quasi bianco) al centro */
+    --bg-sky-dark: #B2EBF2;    /* Celeste pastello ai bordi */
+    
+    --gold-dark: #8B4513;      
+    --gold-light: #D4AF37;     
+    --parchment: #FDF5E6;      
+    --input-bg: #FFF8E1;       
 }
 
 body {
@@ -39,25 +41,23 @@ body::before {
 }
 
 /* === 1. CORNICE PAGINA DECORATIVA (Bordi Oro) === */
-.page-frame {
-    position: fixed;
-    top: 15px; left: 15px; right: 15px; bottom: 15px;
-    border: 3px double var(--gold-light);
-    border-radius: 20px;
-    pointer-events: none; /* Lascia cliccare attraverso */
-    z-index: 999;
-}
+
 /* Angoli decorativi simulati con pseudo-elementi */
-.page-frame::after {
+/* Simbolo IN BASSO (usando ::before) */
+.page-frame::before {
     content: "✦";
     position: absolute;
-    top: -15px; left: 50%;
+    bottom: -15px; 
+    left: 50%;
     transform: translateX(-50%);
+    
     font-size: 2rem;
     color: var(--gold-light);
     background: var(--bg-sky);
     padding: 0 10px;
+    z-index: 1; /* Assicura che stia sopra la linea */
 }
+
 
 /* === 2. LAYOUT PRINCIPALE === */
 .main-container {
@@ -323,12 +323,19 @@ label {
 }
 .btn-oval.gold:hover { background: #FFF; transform: translateY(2px); box-shadow: 0 2px 0 #C5A059; }
 
-.btn-oval.beige {
-    background: #FFF8E1;
-    color: #8D6E63;
-    box-shadow: 0 4px 0 #D7CCC8;
+/* MODIFICA QUI: Ora anche .beige (Annulla) è identico al .gold */
+.btn-oval.beige { 
+    background: #F3E5AB;   /* Era #FFF8E1 -> Ora Oro */
+    color: #5D4037;        /* Era #8D6E63 -> Ora Marrone scuro */
+    box-shadow: 0 4px 0 #C5A059; /* Era #D7CCC8 -> Ora Ombra scura */
 }
 
+/* Aggiungiamo anche l'hover uguale */
+.btn-oval.beige:hover { 
+    background: #FFF; 
+    transform: translateY(2px); 
+    box-shadow: 0 2px 0 #C5A059; 
+}
 /* RESPONSIVE */
 @media (max-width: 768px) {
     .magic-header { flex-direction: column; align-items: center; text-align: center; }

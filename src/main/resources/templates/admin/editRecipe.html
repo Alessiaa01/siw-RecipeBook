@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="'Modifica Incantesimo: ' + ${recipe.title}">Modifica Ricetta</title>
+    <title th:text="'Modifica Ricetta: ' + ${recipe.title}">Modifica Ricetta</title>
     <link rel="stylesheet" th:href="@{/css/editRecipe.css}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -14,8 +14,8 @@
         
         <div class="magic-header">
             <div class="header-text">
-                <h1>Modifica un Antico Incantesimo</h1>
-                <p class="subtitle">Aggiorna i Segreti di questa Ricetta</p>
+                <h1>Modifica la Ricetta</h1>
+                <p class="subtitle">Aggiorna la Ricetta</p>
                 <div class="gold-divider"></div>
             </div>
             
@@ -32,12 +32,12 @@
             <h2 class="scroll-title">Dettagli Principali</h2>
             
             <div class="input-group-full">
-                <label>Titolo dell'Incantesimo</label>
-                <input type="text" th:field="*{title}" placeholder="Es. Torta di Mele Fatata" class="magic-input"/>
+                <label>Titolo </label>
+                <input type="text" th:field="*{title}" placeholder="" class="magic-input"/>
             </div>
 
             <div class="input-group-full">
-                <label>Breve Descrizione Magica</label>
+                <label>Breve Descrizione </label>
                 <input type="text" th:field="*{description}" class="magic-input"/>
             </div>
 
@@ -60,7 +60,7 @@
                     <input type="text" th:field="*{difficulty}" class="magic-input"/>
                 </div>
                 <div>
-                    <label>Porzioni Incantate</label>
+                    <label>Porzioni </label>
                     <input type="number" th:field="*{servings}" class="magic-input"/>
                 </div>
             </div>
@@ -70,7 +70,7 @@
             <div class="columns-container">
                 
                 <div class="ingredients-box">
-                    <h3>Ingredienti Fatati</h3>
+                    <h3>Ingredienti </h3>
                     <div class="ing-list-scroll">
                         <div th:each="ing, stat : ${recipe.ingredients}" class="ing-row">
                             <i class="fa-solid fa-star star-icon"></i>
@@ -86,11 +86,16 @@
                 </div>
 
                 <div class="procedure-box">
-                    <h3>Procedimento Magico</h3>
-                    <label>Tag Magici (es. Vegano, Magia Fredda)</label>
-                    <input type="text" th:field="*{tags}" class="magic-input mb-2" />
-                    
-                    <textarea th:field="*{procedure}" rows="8" class="magic-textarea"></textarea>
+					<h3>Tag </h3>
+					                  <div class="checkbox-wrapper">
+					                      <label class="magic-check"><input type="checkbox" value="Vegetariano" th:field="*{tags}"> Vegetariano</label>
+					                      <label class="magic-check"><input type="checkbox" value="Vegano" th:field="*{tags}"> Vegano</label>
+					                      <label class="magic-check"><input type="checkbox" value="Senza Glutine" th:field="*{tags}"> No Glutine</label>
+					                      <label class="magic-check"><input type="checkbox" value="Senza Lattosio" th:field="*{tags}"> No Lattosio</label>
+					                  </div>
+									
+									<h3>Procedimento</h3>
+					                  <textarea th:field="*{procedure}" rows="10" class="magic-textarea" required></textarea>
                     
                     <div class="gold-circles">
                         <span></span><span></span><span></span><span></span>
