@@ -45,6 +45,9 @@ body {
     max-width: 1100px;
     margin: 20px auto 50px auto;
     padding: 60px 50px;
+	
+	background-color: rgba(255, 255, 255, 0.2); /* Trasparenza vetrosa */
+	    box-shadow: 0 0 30px rgba(212, 175, 55, 0.2); /* Alone dorato */
 	}
 
 
@@ -175,7 +178,7 @@ header div[th\:if*="userDetails"] {
 
 /* === Stile Bottone Logout */
 header a[href="/logout"] {
-	font-family: 'Cinzel Decorative', serif;
+ font-family: 'Cormorant Unicase', serif; 
     font-weight: 700;
 	padding: 8px 20px; 
 	    font-size: 0.95rem;
