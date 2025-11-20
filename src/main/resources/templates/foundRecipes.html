@@ -2,41 +2,67 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Risultati Ricerca</title>
-    <link rel="stylesheet" href="/css/foundRecipes.css" />
+    <title>Risultati dell'Incantesimo</title>
+    <link rel="stylesheet" th:href="@{/css/foundRecipes.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <header>
-        <div th:if="${userDetails}">
-            <span th:text="${userDetails.username}"></span>
-            <a href="/logout">Logout</a>
-        </div>
-        <div th:unless="${userDetails}">
-            <a href="/login">Login</a>
-        </div>
-    </header>
 
-    <div>
-        <a href="/"><img src="/images/logo-siw.png" width="50%"/></a>
+    <div class="page-frame"></div>
+
+    <div class="main-container">
+
+        <div class="magic-header">
+            <h1>Risultati Ricerca</h1>
+            
+            <p class="subtitle" th:if="${searchTerm}">
+                Risultati della ricerca: <span class="highlight" th:text="'“' + ${searchTerm} + '”'">“Torta”</span>
+            </p>
+            
+            
+            <div class="gold-divider-center"></div>
+        </div>
+
+        <div th:if="${#lists.isEmpty(recipes)}" class="empty-state-scroll">
+            <p>Nessuna ricetta trovata</p>
+        </div>
+
+        <div class="cards-grid">
+            
+            <div th:each="recipe : ${recipes}" class="magic-card">
+                
+                <div class="card-frame-gold">
+                    <img th:src="${recipe.imageUrl} ? ${recipe.imageUrl} : '/images/placeholder-piatto.jpg'" 
+                         alt="Immagine Ricetta" class="recipe-img"/>
+                </div>
+
+                <div class="card-content">
+                    <h3 th:text="${recipe.title}">Nome Ricetta</h3>
+                    <p class="desc" th:text="${recipe.description}">Descrizione breve...</p>
+                    
+                    <div class="stars-row">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+
+                    <div class="meta-info">
+                        <span><i class="fa-regular fa-clock"></i> <span th:text="${recipe.preparationTime} + 'm'">40m</span></span>
+                        <span th:text="${recipe.difficulty}">Facile</span>
+                        <span th:text="${recipe.category}">Dolce</span>
+                    </div>
+                </div>
+
+                <a th:href="@{/recipe/{id}(id=${recipe.id})}" class="card-link-overlay"></a>
+            </div>
+
+        </div>
+
+        <div class="footer-link-container">
+            <a href="/recipes" class="scroll-btn">
+                Torna all'elenco'
+            </a>
+        </div>
+
     </div>
 
-    <h1 th:if="${searchTerm}">
-        Risultati della ricerca per <span th:text="${searchType}"></span>: <span th:text="${searchTerm}"></span>
-    </h1>
-    <h1 th:unless="${searchTerm}">
-        Risultati della ricerca
-    </h1>
-    <div th:if="${#lists.isEmpty(recipes)}">
-        <p>Nessuna ricetta trovata.</p>
-    </div>
-
-    <ul>
-        <li th:each="recipe : ${recipes}">
-            <a th:href="@{/recipe/{id}(id=${recipe.id})}" th:text="${recipe.title}">Titolo Ricetta</a>
-        </li>
-    </ul>
-
-    <br>
-    <a href="/recipes">Torna all'elenco delle ricette</a>
 </body>
 </html>
