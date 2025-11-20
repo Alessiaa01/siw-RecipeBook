@@ -249,18 +249,7 @@ h1 {
     background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
 }
 
-/* Angoli della pergamena arricciati (Decorazione) */
-.recipe-management-list::before, .recipe-management-list::after {
-    content: '';
-    position: absolute;
-    width: 40px; height: 40px;
-    background: var(--parchment);
-    border: 3px solid var(--gold-border);
-    z-index: 2;
-    border-radius: 50%;
-}
-.recipe-management-list::before { top: -20px; left: -20px; box-shadow: 2px 2px 5px rgba(0,0,0,0.2); }
-.recipe-management-list::after { bottom: -20px; right: -20px; box-shadow: -2px -2px 5px rgba(0,0,0,0.2); }
+
 
 
 /* ========================================================== */
