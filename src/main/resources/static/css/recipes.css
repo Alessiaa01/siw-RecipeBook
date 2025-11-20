@@ -1,38 +1,50 @@
 /* ========================================================== */
-/* STILE PER recipes.html (Lista Ricette) - AGGIORNATO E CORRETTO */
+/* STILE "FIABA DISNEY" - VERSIONE FINALE */
 /* ========================================================== */
-@import url('/css/stile.css');
 
-/* === Layout Body (Centratura) === */
+/* 0. VARIABILI COLORI (Fondamentali per far funzionare tutto) */
+:root {
+    --primary-color: #8B4513;   /* Marrone Bronzo */
+    --secondary-color: #D4AF37; /* Oro */
+    --accent-color: #B2EBF2;    /* Celeste chiaro */
+    --box-shadow-color: rgba(0,0,0,0.1);
+    --max-content-width: 1200px;
+}
+
+/* 1. IMPORTAZIONE FONT MAGICI */
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap');
+
+/* 2. SFONDO PAGINA */
 body {
-    background-size: cover;
-    background-attachment: fixed;
+    margin: 0;
     padding: 0;
-    background-color:#E6FFFF; /* Celeste Pastello */
-}
-body > div, main {
-    max-width: var(--max-content-width); 
-    margin: 0 auto;
-    padding: 20px;
-    box-sizing: border-box;
+    background: radial-gradient(circle at center, #E0F7FA 0%, #B2EBF2 100%);
+    min-height: 100vh;
+    font-family: 'Cormorant Garamond', serif;
+    color: #5D4037;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* === Titolo H1 (Elenco ricette) === */
-.main-title {
-    font-family: 'Cormorant Unicase', serif;
-    text-align: center;
-    color: var(--primary-color);
-    font-size: 3.2rem;
-    font-weight: 700;
-    text-shadow: 1px 1px 3px var(--box-shadow-color);
-    letter-spacing: 2px;
-    line-height: 1.1;
-    
-    border-bottom: 3px solid goldenrod; 
-    padding-bottom: 15px; 
-    margin-bottom: 3rem; 
-    margin-top: 15px; 
+/* Texture "Polvere di Stelle" */
+.magic-background {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 0;
 }
+
+.fairy-card {
+    position: relative;
+    z-index: 1;
+    width: 90%;
+    max-width: 1100px;
+    margin: 20px auto 50px auto;
+    padding: 60px 50px;
+	}
 
 
 /* === Header Bar === */
@@ -56,26 +68,52 @@ header {
     padding: 0 !important; 
 }
 
-/* Stile per il link di Gestione Admin (Sinistra) */
+/* ========================================================== */
+/* TASTO GESTIONE ADMIN (Lato Sinistro) */
+/* ========================================================== */
+
 .admin-link-header-left {
-    margin-left: -250px; 
+    /* Assicura che stia a sinistra */
+    margin-right: auto; 
 }
 
 .admin-link-header-left a {
-    padding: 8px 15px; 
-    border-radius: 15px; 
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Spazio tra corona e testo */
+    
+    font-family: 'Cormorant Unicase', serif; /* Font regale */
     font-weight: 700;
+    font-size: 0.9rem;
     text-decoration: none;
-    background-color: #D3B88C !important; 
-    border: none !important;
-    color: #4a4a4a !important; 
-    transition: all 0.2s;
-}
-.admin-link-header-left a:hover {
-    background-color: var(--primary-color) !important;
-    color: white !important;
+    
+    /* Colori invertiti rispetto al logout per distinguerlo */
+    background-color: #D3B88C; 
+    color: #8B4513; /* Marrone */
+    border: 1px solid #B8860B; /* Bordo Oro Scuro */
+    
+	
+    font-size: 0.95rem;
+    padding: 8px 20px;
+    border-radius: 25px; /* Arrotondato */
+    transition: all 0.3s ease;
 }
 
+/* Effetto Hover: Diventa Oro */
+.admin-link-header-left a:hover {
+	background-color: var(--primary-color);
+	   color: white;
+   
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+/* Opzionale: Se vuoi l'icona della corona un po' più grande */
+.admin-link-header-left a::before {
+    /* Se non hai messo l'icona ♕ nell'HTML, puoi usarla qui */
+    /* content: '♕'; */ 
+    font-size: 1.2rem;
+}
 
 /* Contenitore interno delle azioni (Chef/Logout) */
 header div {
@@ -136,9 +174,10 @@ header div[th\:if*="userDetails"] {
 
 /* === Stile Bottone Logout */
 header a[href="/logout"] {
+	font-family: 'Cinzel Decorative', serif;
     font-weight: 700;
-    font-size: 0.95rem;
-    padding: 5px 15px; 
+	padding: 8px 20px; 
+	    font-size: 0.95rem;
     text-decoration: none;
     border-radius: 15px; 
     
@@ -147,7 +186,7 @@ header a[href="/logout"] {
     border: none;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     transition: background-color 0.2s;
-	margin-right: -250px;
+	margin-right: 0;
 }
 
 header a[href="/logout"]:hover {
@@ -163,283 +202,246 @@ body > div:first-of-type {
     margin: 20px auto 10px !important;
     text-align: center;
 }
+/* Sposta la sezione utente verso sinistra staccandola dal bordo */
+.header-user-section {
+    margin-right: 50px; /* Puoi aumentare questo numero per spostarlo più a sinistra */
+    
+    /* Opzionale: se vuoi essere sicuro che le scritte restino allineate bene */
+    display: flex; 
+    align-items: center;
+}
 
 /* ========================================================== */
-/* NUOVA BARRA AZIONI/RICERCA (FILTRO E PULSANTE ADMIN) */
+/* 4. TITOLI */
+/* ========================================================== */
+.title-section { text-align: center; margin-bottom: 40px; margin-top: 20px; }
+
+h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4.5rem;
+    color: #8B4513;
+    margin: 0;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+    line-height: 1.2;
+}
+
+.subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.5rem;
+    color: #A67B5B;
+    margin-top: 5px;
+}
+
+.main-title::after {
+    content: '';
+    display: block;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #D4AF37, transparent);
+    width: 60%;
+    margin: 10px auto 0 auto;
+}
+
+/* ========================================================== */
+/* 5. BARRA DI RICERCA E AZIONI (LAYOUT AGGIORNATO) */
 /* ========================================================== */
 
 .action-bar-wrapper {
-    max-width: var(--max-content-width); 
-    margin: 0 auto 15px auto; /* Margin ridotto per alzarla */
-    padding: 0 50px; 
-    
-    display: flex; /* FONDAMENTALE */
+    display: flex;
+    /* Separa i due blocchi: Cerca a sinistra, Aggiungi a destra */
     justify-content: space-between; 
-    align-items: center;
-    gap: 30px; 
+    align-items: center;     
+    
+    /* Spaziatura verticale aumentata */
+    margin-top: 60px;       
+    margin-bottom: 50px;
+    padding: 0 20px;
+    
+    width: 100%;
+    max-width: 1200px; 
+    margin-left: auto; 
+    margin-right: auto;
 }
 
-/* 1. Area di Ricerca/Filtro (Occupa la maggior parte dello spazio) */
+/* --- Blocco Sinistro: Ricerca --- */
 .search-container {
-    text-align: left; 
-    margin: 0; 
-    flex-grow: 1; /* Si espande per prendere tutto lo spazio a sinistra */
-    flex-shrink: 1;
-    max-width: 600px; /* Limite generico */
-	
-	background-color: transparent !important;
-	    box-shadow: none !important;
-	    border: none !important;
-	    padding: 0 !important;
-		
-		margin-left: -250px; 
+    display: flex;
+    justify-content: center;
 }
 
 .elegant-search-form {
-    background-color: transparent; 
-    padding: 0; 
-    border: none; 
-    box-shadow: none;
-    
-    max-width: 100%; 
-    margin: 0;
-    display: flex; 
-    gap: 10px;
+    display: flex;
     align-items: center;
-}
-/* Contenitore che definisce il riquadro Oro intorno all'input */
-.search-field {
-    flex: 1; 
-    display: block;
-    border: 1px solid var(--accent-color); 
-    border-radius: 20px; 
-    padding: 10px 15px;
-    background-color: white ; 
+    gap: 15px;
 }
 
-/* Stile per l'input interno */
-.elegant-search-form input[type="text"] {
-    border: none; 
-    padding: 0;
-    font-size: 1.1rem;
-    background-color: #FFFFFF;
+.search-field {
+    width: 350px;
+    border: none;
+    border-bottom: 2px solid rgba(212, 175, 55, 0.4);
+    padding: 5px 0;
+    display: flex;
+    align-items: center;
+    position: relative;
+    transition: all 0.4s ease;
+    margin-left: 10px;
+}
+
+.search-field:focus-within {
+    border-bottom: 2px solid #D4AF37; 
+    box-shadow: 0 4px 8px -2px rgba(212, 175, 55, 0.4);
+}
+
+.search-field input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    color: #5D4037;
+    font-style: italic;
     width: 100%;
 }
-.elegant-search-form input[type="text"]:focus {
-    border-color: transparent; 
-    box-shadow: none; 
+
+.search-field::before {
+    content: '✦';
+    color: #D4AF37;
+    font-size: 1.2rem;
+    margin-right: 12px;
 }
 
-/* Nascondiamo la label che non è presente nel mockup */
-.elegant-search-form label {
-    display: none; 
-}
-
-/* ==== Bottoni Ricerca ==== */
-.search-container .search-button {
-    background-color: goldenrod; 
-    color: white; 
-    padding: 10px 15px;
-    border: none; 
-    border-radius: 5px;
-    box-shadow: 0 2px 5px var(--box-shadow-color);
-    margin-top: 0; 
-    width: auto;
-    font-family: 'Quicksand', sans-serif;
-}
-.search-container .search-button:hover {
-    background-color: var(--primary-color);
-    color: white;
-}
-
-
-/* Nuovo Contenitore Azioni Admin */
-.admin-actions-top {
-    display: block; 
-    margin: 0; 
-    padding: 0; 
-    flex-shrink: 0; /* IMPEDISCE DI RESTRINGERSI */
-    flex-grow: 0; /* IMPEDISCE DI ESPANDERSI */
-    text-align: right; 
-}
-
-.admin-actions-top a {
-    padding: 10px 15px;
-    border-radius: 5px;
-    font-weight: 700;
-    text-decoration: none;
-    transition: all 0.2s;
-    display: inline-block;
-}
-
+/* --- Stile Bottoni (Cerca e Aggiungi) --- */
+.search-container .search-button,
 .action-add-new {
-    background-color: var(--secondary-color) !important;
-    border: 1px solid var(--primary-color) !important;
-    box-shadow: 0 4px 8px var(--box-shadow-color) !important;
-    color: white !important;
-	
-	margin-right: -250px; 
+    display: inline-block;
+    padding: 10px 25px;
+    text-decoration: none !important;
+    font-family: 'Cinzel Decorative', serif;
+    font-weight: bold;
+    color: #5a3e1b !important;
+    border: 1px solid #B8860B !important;
+    border-radius: 25px;
+    background-color: rgba(255, 255, 255, 0.6) !important;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin: 0; 
+    cursor: pointer;
+    font-size: 1rem;
+    white-space: nowrap;
 }
 
+.search-container .search-button:hover,
 .action-add-new:hover {
-    background-color: var(--button-shadow) !important;
-}
-
-.action-manage {
-    background-color: var(--secondary-color) !important;
-    border: 1px solid var(--primary-color) !important;
+    background-color: #B8860B !important;
     color: white !important;
-}
-.action-manage:hover {
-    background-color: var(--primary-color) !important;
-    color: white !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(184, 134, 11, 0.3);
 }
 
+/* Posizionamento specifico tasto Cerca */
+.search-container .search-button {
+    margin-left: 15px; /* Stacca il tasto dalla riga di input */
+}
 
-/* === 2. LISTA CARD (Layout Orizzontale Migliorato) === */
+/* ========================================================== */
+/* 6. LISTA RICETTE (Senza tasto Scopri) */
+/* ========================================================== */
 .recipe-cards-list {
     list-style: none;
-    padding: 0 50px;
+    padding: 0;
     display: flex;
     flex-direction: column; 
-    gap: 15px; 
-    max-width: 100%;
-    margin-bottom: 3rem;
+    gap: 0;
+    width: 100%;
+    max-width: 1200px; /* Allinea la lista alla larghezza dei bottoni */
 }
 
 .recipe-card {
-    /* STILE CARD: Contorno Dorato Rettangolare */
-    background-color: floralwhite !important; 
-    border: 1px solid var(--accent-color) !important; 
-    box-shadow: 0 6px 12px var(--box-shadow-color) !important;
-    border-radius: 10px; 
+    background-color: transparent !important; 
+    border: none !important; 
+    box-shadow: none !important;
+    border-radius: 0; 
+    padding: 30px 10px;
+    border-bottom: 1px dashed rgba(212, 175, 55, 0.4) !important;
     
-    padding: 20px 30px; 
-   
-    /* LAYOUT: Griglia Orizzontale 3 colonne */
+    /* --- GRIGLIA MODIFICATA: 2 COLONNE --- */
     display: grid;
-    grid-template-columns: 100px 1fr 150px; 
-    gap: 25px; 
+    grid-template-columns: 120px 1fr !important; /* Img | Testo (tutto il resto) */
+    /* ------------------------------------- */
+    
+    gap: 30px; 
     align-items: center; 
+    transition: transform 0.3s;
 }
 
+.recipe-card:last-child {
+    border-bottom: none !important;
+}
 
-/* Immagine: Rettangolare con angoli arrotondati */
+.recipe-card:hover {
+    transform: translateX(10px);
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    border-radius: 10px;
+}
+
+/* Immagine Tonda */
 .card-image {
-    width: 100px; 
-    height: 100px;
-    border-radius: 8px; /* Bordi leggermente arrotondati per il contenitore */
-    border: 1px solid var(--primary-color); 
+    width: 120px; 
+    height: 120px;
+    border-radius: 50%; 
+    border: none;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
     overflow: hidden;
-    flex-shrink: 0;
 }
 .card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 8px; /* Bordi leggermente arrotondati anche per l'immagine */
-    margin: 0;
-    padding: 0;
-    box-shadow: none;
+    width: 100%; height: 100%; object-fit: cover;
 }
 
-
-/* Contenuto Principale: Titolo e Descrizione (Colonna Centrale) */
+/* Contenuto Testuale */
 .card-content {
-    padding-right: 0;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-	
-	background-color: transparent !important;
-	border: none !important;
-	box-shadow: none !important;
-	border-radius: 0 !important;
-	padding: 0 !important; 
 }
 
-/* 1. STILE TITOLO (Rimosso border-bottom) */
 .recipe-title {
-    font-family: 'Cormorant Unicase', serif; 
-    font-size: 1.8rem; 
-    color: var(--primary-color);
+    font-family: 'Cinzel Decorative', serif; 
+    font-size: 2rem; 
+    color: #8B4513; 
     font-weight: 700;
-    margin-bottom: 5px; 
-    
-    border-bottom: none; /* RIMOSSA LINEA TRATTEGGIATA */
-    
-    padding-bottom: 5px;
+    text-decoration: none;
+    margin-bottom: 5px;
+    line-height: 1.2;
 }
 
-/* 2. STILE DESCRIZIONE/SOTTOTITOLO */
 .recipe-description {
-    font-size: 1rem; 
-    color: #4a4a4a; 
-    margin: 5px 0 10px 0; 
-    line-height: 1.5;
-    max-width: 500px; 
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; 
+    color: #5D4037; 
+    font-style: italic;
+    margin: 0 0 10px 0;
 }
 
-
-/* === BLOCCO METADATI IN LINEA: Separatori Tratteggiati tra Metadati e Descrizione */
 .card-metadata-inline {
-    display: flex; 
-    flex-wrap: wrap; 
-    gap: 20px; 
-    margin-top: 10px;
-    font-size: 0.95rem; 
-    color: var(--primary-color); 
-    font-family: 'Quicksand', sans-serif;
-	
-	background: none !important;
-	   border: none !important;
-	   box-shadow: none !important;
-	   padding: 0 !important;
-	   margin: 0 !important;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
 }
-
-/* L'etichetta (es. Tempo:) è normale */
 .card-metadata-inline p {
     margin: 0;
-    font-weight: 400; 
-    white-space: nowrap; 
-    display: flex; 
+    font-size: 1.1rem;
+    color: #8B4513; 
+    display: flex;
     align-items: center;
 }
-
-/* Il VALORE (es. 23min, Dolce) è in grassetto (e dorato per evidenza) */
 .card-metadata-inline span {
-    font-weight: 700; 
-    color: var(--accent-color); 
+    color: #D4AF37; 
+    font-weight: bold;
+    font-family: 'Cinzel Decorative', serif;
     margin-left: 5px;
 }
 
-/* --- Colonna Azioni (solo pulsante) --- */
+/* --- RIMUOVE IL TASTO SCOPRI --- */
 .card-actions {
-    background: none !important;
-    border: none !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    text-align: center; 
-    align-self: center;
-}
-
-.card-actions .action-button {
-    background-color: var(--accent-color); 
-    color: white; 
-    padding: 10px 18px; 
-    border-radius: 20px; 
-    font-weight: 700;
-    text-transform: none;
-    font-size: 0.9rem; 
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin-top: 0;
-    display: inline-block;
-    white-space: nowrap;
-    border: none;
-}
-.card-actions .action-button:hover {
-    background-color: var(--primary-color); 
-    color: white; 
+    display: none !important;
 }
