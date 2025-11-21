@@ -1,50 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Siw-RecipeBook</title>
+    <title>Siw-RecipeBook - Accedi </title>
     <link rel="stylesheet" href="/css/formLogin.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
-    <header>
-        <div th:if="${userDetails}">
-            <span th:text="${userDetails.username}"></span>
-            <a href="/logout">Logout</a>
-        </div>
-        <div th:unless="${userDetails}">
+    <div class="page-frame">
+        <div class="corner top-left"></div>
+        <div class="corner top-right"></div>
+        <div class="corner bottom-left"></div>
+        <div class="corner bottom-right"></div>
+    </div>
+
+    <div class="login-container">
+        
+        <div class="scroll-header">
+            <div class="scroll-content">
+                <h1>LOGIN</h1>
             </div>
-    </header>
-
-    <div>
+            <div class="ribbon-left"></div>
+            <div class="ribbon-right"></div>
         </div>
 
-    <form th:action="@{/login}" method="POST" class="elegant-form">
-        
-        <h1>LOGIN</h1>
-        
-        <div>
-            <label>USERNAME</label>
-            <input type="text" placeholder="username" name="username" required />
-        </div>
-        <div>
-            <label>PASSWORD</label>
-            <input type="password" placeholder="password" name="password" required />
-        </div>
-        
-        <div class="center-button">
-            <button type="submit">ENTRA</button>
-        </div>
-        
-        <div class="extra-links">
-            <div th:if="${param.error}" style="text-align: center; margin-bottom: 10px;">
-                <span style="color:#E74C3C; font-weight: 500;">Username o password non corretti</span>
+       
+
+        <form th:action="@{/login}" method="POST" class="grimorio-frame">
+            
+            <div class="frame-decoration-top"></div>
+
+            <div class="input-group">
+                <label>Nome Utente</label>
+                <div class="input-wrapper">
+                    <input type="text" name="username" required />
+				<i class="fa-solid fa-user icon-gold"></i>
+                  
+            </div>
+
+            <div class="input-group">
+                <label>Password</label>
+                <div class="input-wrapper">
+                    <input type="password" name="password" required />
+                      <i class="fa-solid fa-key icon-gold"></i> </div>
             </div>
             
-            <a href="#">Password dimenticata?</a> • 
-            <a th:href="@{/register}">Crea un account</a>
-        </div>
-    </form>
-</body>
+            <div class="error-msg" th:if="${param.error}">
+                Username o password non corretti
+            </div>
+            
+            <div class="center-button">
+                <button type="submit">
+                    <i class="fa-solid fa-book-open"></i> Accedi
+                </button>
+            </div>
+            
+            <div class="extra-links">
+                Non hai un account? <a th:href="@{/register}">Registrati.</a>
+            </div>
 
+            <div class="frame-decoration-bottom"></div>
+        </form>
+    </div>
+
+</body>
 </html>

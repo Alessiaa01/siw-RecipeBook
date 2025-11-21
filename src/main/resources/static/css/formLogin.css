@@ -1,149 +1,250 @@
-/* Carica la palette Pastello Elegante */
-@import url('/css/stile.css');
+/* Importazione Font Magici (già usati nel tuo progetto) */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&display=swap');
 
 :root {
-    --error-color: #E74C3C; 
-    --parchment-bg: #FFFFFF; 
-    --parchment-border-color: var(--accent-color); 
-    --parchment-shadow: rgba(0, 0, 0, 0.3); 
-    --page-bg-color: #F7E9FF; 
+    --bg-sky: #CBEBF5;         /* Celeste Sfondo */
+    --gold-light: #F9E79F;     /* Oro Chiaro */
+    --gold-dark: #C5A059;      /* Oro Scuro */
+    --gold-border: #B8860B;    /* Bordo Oro */
+    --text-brown: #5D4037;     /* Marrone Scuro */
+    --parchment: #FFF8E1;      /* Crema/Pergamena */
 }
 
-/* === 0. STILE BODY (SFONDO CORNICE PAGINA) === */
 body {
-    background-color: var(--page-bg-color); 
-    
-    /* Usa la tua immagine della cornice esterna */
-    background-image: url('/images/sfondo1.jpeg'); 
-    background-size: cover;      
-    background-position: center; 
-    background-repeat: no-repeat; 
-    background-attachment: fixed;
-    
-    font-family: 'Quicksand', sans-serif; 
-    min-height: 100vh;
     margin: 0;
     padding: 0;
-    
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-/* === 1. Disabilita elementi esterni (invariato) === */
-header, body > div {
-    display: none !important; 
-}
-
-
-/* === 2. Contenitore Form: Riquadro Bianco con Decorazioni in PNG === */
-form {
-    background-color: var(--parchment-bg); 
-    padding: 35px 50px; 
-    border-radius: 10px;
+    font-family: 'Cormorant Garamond', serif;
     
-    /* ***** MODIFICATO QUI: Dimensioni fisse per 1920x1080 ***** */
-	width: 650px; /* Larghezza ridotta */
-	    max-width: 650px; 
-	    min-height:500px; /* Altezza significativamente aumentata */
-    
-    box-sizing: border-box;
-    margin: 0; /* Il body flexbox gestisce la centratura */
-    
-    /* Cornice: 3px dorato e 5px di ombra dorata */
-    border: 3px solid var(--parchment-border-color); 
-    box-shadow: 
-        0 0 0 5px var(--parchment-border-color), 
-        0 20px 30px -10px var(--parchment-shadow); 
-        
-    /* DECORAZIONI ANGOLARI CON PNG TRASPARENTE */
-    background-image: url('/images/rr.jpeg');
-    background-repeat: no-repeat;
-    background-size: 100% 100%; 
-    background-position: center;
-
-    /* Questi due non sono più necessari poiché la centratura è gestita dal body */
-    transition: none;
-    transform: none; 
+    /* Sfondo Celeste con texture polvere di stelle e pattern floreale leggero */
+    background-color: var(--bg-sky);
+    background-image: url('https://www.transparenttextures.com/patterns/stardust.png'),
+                      radial-gradient(circle at center, transparent 0%, rgba(255,255,255,0.2) 100%);
+    overflow: hidden; /* Evita scrollbar per la cornice */
 }
 
-/* === 3. Titolo Principale (ACCEDI AL REGNO) === */
-h1 {
-    font-family: 'Cormorant Unicase', serif; 
-    font-weight: 700; 
-    text-align: center;
-    color: var(--parchment-border-color); 
-    font-size: 2.5rem; 
-    text-shadow: 0 0 1px var(--parchment-border-color); /* EFFETTO SPESSORE */
-    margin-top: 0;
-    margin-bottom: 45px; 
-}
+/* === CORNICE BORDI ESTERNI (Decorativa) === */
 
-/* === 4. Campi Input e Label (USERNAME, PASSWORD) === */
-label {
-    font-family: 'Cormorant Unicase', serif; 
-    font-weight: 700; 
-    color: var(--primary-color); 
-    display: block;
-    margin-top: 20px; 
-    margin-bottom: 5px;
-    font-size: 1.0em; /* Aumentato leggermente */
-    letter-spacing: 2px;
-    text-shadow: 0 0 1px var(--primary-color); /* EFFETTO SPESSORE */
-}
-input[type="text"], input[type="password"] {
-    border: 1px solid var(--parchment-border-color); 
-    border-radius: 5px;
-    padding: 10px; 
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); 
+/* === CONTENITORE CENTRALE === */
+.login-container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
-    box-sizing: border-box; 
-    font-family: 'Quicksand', sans-serif; 
-    font-weight: 500;
+    max-width: 550px;
 }
 
-/* === 5. Bottone ENTRA (Ovale Dorato) === */
+/* === IL NASTRO/SCROLL (HEADER) === */
+.scroll-header {
+    position: relative;
+    width: 110%; /* Più largo del form */
+    margin-bottom: 10px;
+    filter: drop-shadow(0 10px 5px rgba(0,0,0,0.1));
+}
+
+.scroll-content {
+    background: linear-gradient(to bottom, #FDEBD0 0%, #D4AF37 15%, #FDEBD0 50%, #D4AF37 100%);
+    padding: 15px 40px;
+    text-align: center;
+    border-radius: 5px 5px 50% 50% / 5px 5px 15px 15px; /* Curva leggera */
+    border: 1px solid #8B4513;
+    position: relative;
+    z-index: 2;
+}
+
+.scroll-content h1 {
+    font-family: 'Cinzel Decorative', serif;
+    color: #4E342E;
+    font-size: 2rem;
+    margin: 0;
+    text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+}
+
+/* Effetto Pieghe del Nastro (CSS Puro) */
+.ribbon-left, .ribbon-right {
+    position: absolute;
+    top: 15px;
+    width: 40px; height: 60px;
+    background: linear-gradient(to right, #8B4513, #D4AF37);
+    z-index: 1;
+    border: 1px solid #5D4037;
+    border-radius: 0 0 10px 10px;
+}
+.ribbon-left { left: 10px; transform: skewY(20deg); box-shadow: inset 5px 5px 10px rgba(0,0,0,0.3); }
+.ribbon-right { right: 10px; transform: skewY(-20deg); box-shadow: inset -5px 5px 10px rgba(0,0,0,0.3); }
+
+/* Sottotitolo */
+.magic-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: #5D4037;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+/* === IL FORM (Cornice Centrale) === */
+.grimorio-frame {
+    background-color: var(--parchment);
+    background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+    padding: 40px 50px;
+    border-radius: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    
+	/* Aumentiamo il border-radius per una forma ottagonale morbida */
+	    border-radius: 30px; 
+
+	    /* Effetto 3D e Dorato tramite strati di box-shadow */
+	    box-shadow: 
+	        /* 1. Ombra esterna (Bronzo Profondo) */
+	        0 20px 40px rgba(139, 69, 19, 0.4),
+	        
+	        /* 2. Bordo principale del sigillo (Oro Brillante) */
+	        0 0 0 6px var(--gold-light),
+	        
+	        /* 3. Bordo interno scuro e incassato (il sigillo) */
+	        inset 0 0 10px 4px var(--gold-dark), 
+	        
+	        /* 4. Linea sottile riflettente subito dentro (Rilievo) */
+	        inset 0 0 0 5px var(--gold-light),
+	        
+	        /* 5. Ombra finale morbida sul centro della pagina */
+	        inset 0 0 15px 10px rgba(0, 0, 0, 0.05); 
+	        
+	    /* Dettaglio: Bordo a filo fine per la finitura */
+	    outline: 1px dashed var(--gold-dark);
+	    outline-offset: -12px;
+	}
+
+	/* Decorazioni angolari interne: Simbolo di unione */
+	.grimorio-frame::before {
+	   
+	    position: absolute;
+	    top: 50%;
+	    left: 50%;
+	    transform: translate(-50%, -50%);
+	    font-size: 8rem;
+	    color: rgba(184, 134, 11, 0.1); /* Grande e sbiadito al centro */
+	    pointer-events: none;
+	    z-index: 1; 
+	}
+	
+/* INPUT FIELDS */
+.input-group {
+    margin-bottom: 25px;
+}
+
+.input-group label {
+    display: block;
+    font-family: 'Cinzel Decorative', serif;
+    color: #8B4513;
+    font-size: 1rem;
+    margin-bottom: 5px;
+	font-weight: 700; /*grassetto*/
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 248, 225, 0.7);
+    border: 1px solid #D7CCC8;
+    border-bottom: 2px solid var(--gold-dark); /* Linea sotto marcata come nell'img */
+    border-radius: 5px;
+    padding: 5px 10px;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.input-wrapper input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    color: var(--text-brown);
+    outline: none;
+    padding: 5px;
+}
+
+/* Icone Oro */
+.icon-gold {
+    color: var(--gold-dark);
+    font-size: 1.2rem;
+    margin-left: 10px;
+    text-shadow: 0 1px 0 #FFF;
+}
+
+/* MESSAGGIO ERRORE */
+.error-msg {
+    color: #C62828;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 15px;
+    font-size: 0.95rem;
+    background: rgba(255,0,0,0.1);
+    padding: 5px;
+    border-radius: 5px;
+}
+
+/* BOTTONE ACCEDI (Ovale 3D) */
 .center-button {
     text-align: center;
-    margin: 40px 0 15px; 
+    margin-top: 30px;
 }
 
 button[type="submit"] {
-    background: linear-gradient(to top, var(--accent-color) 0%, #F8E3B6 100%); 
-    color: var(--primary-color); 
-    border: 1px solid var(--primary-color);
-    padding: 12px 50px; 
-    font-size: 1.1rem;
-    font-weight: 700;
-    width: auto;
+    background: linear-gradient(to bottom, #F9E79F 0%, #D4AF37 50%, #B8860B 100%);
+    border: 2px solid #8B4513;
+    border-radius: 50px; /* Ovale */
+    padding: 12px 50px;
     
-    border-radius: 50px; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-    font-family: 'Cormorant Unicase', serif; 
-    text-shadow: 0 0 1px var(--primary-color); /* EFFETTO SPESSORE */
-    transition: all 0.2s ease;
+    color: #FFF;
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.4rem;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+    
     cursor: pointer;
-}
-button[type="submit"]:hover {
-    background: linear-gradient(to top, #F8E3B6 0%, var(--accent-color) 100%); 
-    color: var(--primary-color);
-}
-button[type="submit"]:active {
-    transform: translateY(2px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 
+        inset 0 2px 0 rgba(255,255,255,0.5),
+        0 5px 10px rgba(139, 69, 19, 0.3);
+    transition: transform 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
 }
 
-/* === 6. Link Extra (Password dimenticata? • Crea un account) === */
+button[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(139, 69, 19, 0.4);
+    background: linear-gradient(to bottom, #FFF8E1 0%, #D4AF37 60%, #B8860B 100%);
+}
+
+button[type="submit"]:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 5px rgba(139, 69, 19, 0.3);
+}
+
+/* LINK REGISTRAZIONE */
 .extra-links {
     text-align: center;
-    font-size: 0.9em;
-    margin-top: 10px; 
+    margin-top: 20px;
+    font-size: 1rem;
+    color: var(--text-brown);
 }
+
 .extra-links a {
-    color: var(--primary-color); 
-    font-weight: 700; 
+    color: #8B4513;
+    font-weight: bold;
     text-decoration: none;
-    transition: color 0.2s;
-    font-family: 'Cormorant Unicase', serif; 
-    text-shadow: 0 0 1px var(--primary-color); /* EFFETTO SPESSORE */
+    border-bottom: 1px dashed #8B4513;
+}
+.extra-links a:hover {
+    color: #D4AF37;
+    border-bottom-style: solid;
 }
