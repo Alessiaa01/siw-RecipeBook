@@ -91,17 +91,22 @@
                             <strong>Cottura:</strong> 
                             <span th:text="${recipe.cookingTime != null} ? ${recipe.cookingTime} + ' minuti' : '-'">-</span>
                         </li>
+
+                        <li>
+                            <strong>Porzioni:</strong> 
+                            <span th:text="${recipe.servings} != null ? ${recipe.servings} : '-'">4</span>
+                        </li>
                         
                         <li>
                             <strong>Categoria:</strong> 
                             <span th:text="${recipe.category}">Categoria</span>
                         </li>
                         
-                        <li th:if="${!recipe.tags.empty}">
-                            <strong>Tag:</strong>
-                            <span th:each="tag, iterStat : ${recipe.tags}" 
-                                  th:text="${tag} + ${!iterStat.last ? ', ' : ''}">Tag</span>
-                        </li>
+						<li th:if="${!recipe.tags.empty}">
+						                            <strong>Tag:</strong>
+						                            <span th:each="tag, iterStat : ${recipe.tags}" 
+						                                  th:text="${tag} + ${!iterStat.last ? ', ' : ''}">Tag</span>
+						                        </li>
                     </ul>
                 </div>
 

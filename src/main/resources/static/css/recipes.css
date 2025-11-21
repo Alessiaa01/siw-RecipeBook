@@ -215,6 +215,11 @@ body > div:first-of-type {
     align-items: center;
 }
 
+/* Forza questo blocco a spingersi tutto a destra */
+.user-actions-right {
+    margin-left: auto;
+}
+
 /* ========================================================== */
 /* 4. TITOLI */
 /* ========================================================== */
@@ -244,6 +249,14 @@ h1 {
     background: linear-gradient(to right, transparent, #D4AF37, transparent);
     width: 60%;
     margin: 10px auto 0 auto;
+}
+
+/* Icone Dorate */
+.icon-gold {
+    color: #D4AF37 !important; /* !important forza il colore se c'è qualche conflitto */
+    margin-right: 6px;
+    font-size: 1.1rem;
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,0.1));
 }
 
 /* ========================================================== */

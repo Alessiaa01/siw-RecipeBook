@@ -41,7 +41,6 @@ public class RecipeService {
 		return recipeRepository.existsByTitle(title);
 	}
 	
-	
 
 	@Transactional 
 	public void deleteById(Long id) {

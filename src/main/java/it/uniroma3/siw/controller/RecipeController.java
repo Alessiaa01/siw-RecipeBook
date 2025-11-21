@@ -257,15 +257,16 @@ public class RecipeController {
     
     @PostMapping("/admin/recipe/{recipeId}/ingredient/{ingredientId}/remove")
     public String removeIngredient(@PathVariable Long recipeId, @PathVariable Long ingredientId) {
+        // 1. Carica la ricetta
         Recipe recipe = recipeService.findById(recipeId);
-        Ingredient ingredient = ingredientService.findById(ingredientId);
 
-        if (recipe != null && ingredient != null) {
-            recipe.getIngredients().remove(ingredient); // rimuove dalla lista
-            recipeService.save(recipe); // salva la ricetta aggiornata
-        }
+        // 2. Rimuovi l'ingrediente cercando SPECIFICATAMENTE il suo ID
+        // Questo comando dice: "Togli dalla lista l'elemento che ha questo ID esatto"
+        recipe.getIngredients().removeIf(ing -> ing.getId().equals(ingredientId));
 
-        // orphanRemoval farà eliminare automaticamente l’ingrediente dal DB
+        // 3. Salva (l'ingrediente sparirà dal DB grazie a orphanRemoval=true)
+        recipeService.save(recipe);
+
         return "redirect:/admin/recipe/" + recipeId + "/edit";
     }
     

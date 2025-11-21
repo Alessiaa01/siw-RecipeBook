@@ -1,68 +1,188 @@
-/* Importa lo stile base elegante */
-@import url('/css/stile.css');
+/* ========================================================== */
+/* STILE "REGISTRAZIONE COMPLETATA" - Versione Grande & Centrata */
+/* ========================================================== */
 
-/* ==== Titolo H1 (Cormorant Unicase - Elegante) ==== */
-h1 {
-    font-family: 'Cormorant Unicase', serif;
-    color: var(--secondary-color); 
-    font-size: 3.5rem; 
-    text-shadow: none; 
-    margin-top: 3rem; 
-    margin-bottom: 2rem;
-    text-align: center;
-    font-weight: 700;
-    
-    border-bottom: 1px solid var(--accent-color); /* Linea Dorata */
-    padding-bottom: 15px;
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&display=swap');
+
+:root {
+    --bg-sky: #E0F7FA;         
+    --bg-sky-dark: #B2EBF2;    
+    --gold-dark: #8B4513;      
+    --gold-light: #D4AF37;     
+    --parchment: #FDF5E6;      
 }
 
-/* ==== Paragrafi di Messaggio ==== */
-p {
-    font-size: 1.2rem; 
-    color: var(--text-color); 
-    margin: 1.5rem auto;
-    text-align: center;
-    max-width: 600px;
-    font-weight: 400; 
-    font-family: 'Quicksand', sans-serif; 
+body {
+    margin: 0;
+    padding: 0;
+    background: radial-gradient(circle at center, var(--bg-sky) 0%, var(--bg-sky-dark) 100%);
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--gold-dark);
+    min-height: 100vh; /* Occupa tutta l'altezza dello schermo */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-p span {
-    font-weight: 700;
-    color: var(--primary-color); 
+/* Sfondo "Polvere di Stelle" */
+.magic-background {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+    opacity: 0.6; pointer-events: none; z-index: -1;
 }
 
-/* ==== Pulsante Accedi (CTA Principale - Dorato) ==== */
-a[href="/login"] {
-    display: block;
-    width: 350px; 
-    text-align: center;
-    margin: 3rem auto; 
-    padding: 15px 25px;
-    
-    color: var(--primary-color); 
-    font-weight: 700;
-    font-size: 1.3rem; 
-    
-    /* Colore e ombra Dorata */
-    background-color: var(--accent-color); /* Sfondo Dorato */
-    border-radius: 8px; 
+/* === HEADER === */
+header {
+    width: 100%;
+    padding: 15px 30px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-bottom: 1px solid var(--gold-light);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: flex-end;
+    box-sizing: border-box;
+    /* Il flex-shrink impedisce all'header di schiacciarsi */
+    flex-shrink: 0; 
+}
+
+header div {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.1rem; /* Testo header leggermente più grande */
+}
+
+.user-label { color: var(--gold-light); font-weight: bold; }
+.user-name { font-weight: bold; margin-right: 10px; color: var(--gold-dark); }
+
+.header-link {
     text-decoration: none;
-    border: 1px solid var(--primary-color);
+    color: var(--gold-dark);
+    padding: 8px 20px;
+    border: 1px solid transparent;
+    border-radius: 20px;
+    transition: all 0.3s;
+}
+.header-link:hover {
+    border-color: var(--gold-light);
+    background-color: #FFF;
+    color: #B8860B;
+}
+
+/* === LOGO === */
+.logo-container {
+    margin-top: 20px;
+    margin-bottom: 10px; /* Riduciamo margine sotto il logo */
+    text-align: center;
+    width: 100%;
+    flex-shrink: 0; /* Impedisce al logo di schiacciarsi */
+}
+.logo-container img {
+    max-width: 350px; /* Logo leggermente più grande */
+    width: 60%; 
+    height: auto;
+    filter: drop-shadow(0 5px 5px rgba(0,0,0,0.2));
+    transition: transform 0.3s;
+}
+.logo-container img:hover { transform: scale(1.05); }
+
+/* === CARD GRIMORIO CENTRALE (MODIFICATA) === */
+.grimorio-card {
+    background-color: var(--parchment);
+    background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
     
-    box-shadow: 0 4px 10px var(--accent-color); /* Ombra Dorata */
-    transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+    /* DIMENSIONI AUMENTATE */
+    width: 90%;
+    max-width: 850px; /* Molto più larga (era 600px) */
+    padding: 60px 50px; /* Più spazio interno */
+    
+    border-radius: 20px;
+    text-align: center;
+    
+    /* Decorazioni Bordo */
+    box-shadow: 
+        inset 0 0 60px rgba(139, 69, 19, 0.15), /* Ombra interna più profonda */
+        0 0 0 10px #FFF, 
+        0 0 0 13px var(--gold-light), 
+        0 25px 60px rgba(0,0,0,0.35); /* Ombra esterna più marcata */
+    
+    position: relative;
+    
+    /* CENTRATURA MAGICA */
+    /* Impostando margin: auto in un flex-column, l'elemento si piazza 
+       automaticamente al centro dello spazio verticale disponibile */
+    margin: auto; 
+    
+    /* Un po' di margine extra sotto per non toccare il bordo se lo schermo è basso */
+    margin-bottom: 50px; 
 }
 
-a[href="/login"]:hover {
-    color: var(--primary-color);
-    background-color: #F8E3B6; /* Oro leggermente più chiaro su hover */
-    box-shadow: 0 6px 15px var(--accent-color);
+/* Titolo */
+.decorative-header h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 5rem; /* Titolo ENORME */
+    color: #8B4513;
+    margin: 0 0 30px 0;
+    text-shadow: 2px 2px 0px rgba(255,255,255,0.6);
+    border-bottom: 3px solid rgba(212, 175, 55, 0.3);
+    padding-bottom: 20px;
+    line-height: 1.1;
+}
+
+/* Testo */
+.content-body p {
+    font-size: 1.6rem; /* Testo più grande e leggibile */
+    margin: 30px 0;
+    line-height: 1.6;
+}
+
+.highlight-name {
+    color: #D4AF37;
+    font-weight: bold;
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 2rem; /* Nome utente in evidenza */
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.1);
+}
+
+/* Icona decorativa centrale */
+.seal-icon {
+    font-size: 5rem; /* Icona gigante */
+    color: rgba(212, 175, 55, 0.4);
+    margin: 20px 0;
+    animation: float 3s ease-in-out infinite; /* Piccolo effetto fluttuante */
+}
+
+/* Animazione opzionale per l'icona */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Bottone Link */
+.btn-magic-login {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 18px 60px; /* Bottone più grande */
+    
+    background: linear-gradient(to bottom, #FFF8E1, #F3E5AB);
+    border: 3px solid #8B4513;
+    border-radius: 50px;
+    color: #5D4037;
+    
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.4rem; /* Testo bottone più grande */
+    font-weight: bold;
     text-decoration: none;
-    cursor: pointer;
+    
+    box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+    transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
 }
 
-a[href="/login"]:active {
-    transform: translateY(1px); 
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+.btn-magic-login:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 25px rgba(139, 69, 19, 0.3);
+    background: #FFF;
+    color: #8B4513;
 }
