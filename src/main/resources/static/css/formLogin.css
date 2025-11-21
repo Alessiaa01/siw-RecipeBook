@@ -90,37 +90,27 @@ body {
 
 /* === IL FORM (Cornice Centrale) === */
 .grimorio-frame {
+    /* Sfondo a pergamena */
     background-color: var(--parchment);
     background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
-    padding: 40px 50px;
-    border-radius: 15px;
-    width: 100%;
+    
+    /* MODIFICA: Dimensioni più armoniose e bilanciate */
+    padding: 60px 80px; /* Padding: 60px in alto/basso, 80px a sinistra/destra */
+    border-radius: 30px;
+    width: 90%; 
+    max-width: 950px; /* Larghezza massima più contenuta per armonia (era 900px) */
     box-sizing: border-box;
     
-	/* Aumentiamo il border-radius per una forma ottagonale morbida */
-	    border-radius: 30px; 
-
-	    /* Effetto 3D e Dorato tramite strati di box-shadow */
-	    box-shadow: 
-	        /* 1. Ombra esterna (Bronzo Profondo) */
-	        0 20px 40px rgba(139, 69, 19, 0.4),
-	        
-	        /* 2. Bordo principale del sigillo (Oro Brillante) */
-	        0 0 0 6px var(--gold-light),
-	        
-	        /* 3. Bordo interno scuro e incassato (il sigillo) */
-	        inset 0 0 10px 4px var(--gold-dark), 
-	        
-	        /* 4. Linea sottile riflettente subito dentro (Rilievo) */
-	        inset 0 0 0 5px var(--gold-light),
-	        
-	        /* 5. Ombra finale morbida sul centro della pagina */
-	        inset 0 0 15px 10px rgba(0, 0, 0, 0.05); 
-	        
-	    /* Dettaglio: Bordo a filo fine per la finitura */
-	    outline: 1px dashed var(--gold-dark);
-	    outline-offset: -12px;
-	}
+    /* Bordo 3D e Dorato */
+    box-shadow: 
+        0 20px 40px rgba(139, 69, 19, 0.4),
+        0 0 0 6px var(--gold-light),
+        inset 0 0 10px 4px var(--gold-dark), 
+        inset 0 0 0 5px var(--gold-light),
+        inset 0 0 15px 10px rgba(0, 0, 0, 0.05); 
+    outline: 1px dashed var(--gold-dark);
+    outline-offset: -12px;
+}
 
 	/* Decorazioni angolari interne: Simbolo di unione */
 	.grimorio-frame::before {
