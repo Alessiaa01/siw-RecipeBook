@@ -1,230 +1,208 @@
-/* Carica la palette Pastello Elegante */
-@import url('/css/stile.css');
+/* ======================================= */
+/* 1. VARIABILI E FONDAMENTALI (BODY) */
+/* ======================================= */
 
 :root {
-    --page-bg-color: #E0F7FA; 
-    --parchment-bg: #FCFBF7; 
-    --parchment-border-color: #C5A059; 
-    --accent-color: #DAA520; 
-    --primary-color: #7D5A8C; 
-    --primary-text-color: #5D4037; 
-    --button-text-color: #FFFFFF; 
-    --parchment-shadow: rgba(0, 0, 0, 0.2); 
+    /* Palette Colori */
+    --color-primary-gold: #D4AF37;       /* Oro elegante (Bordi, Bottone) */
+    --gold-dark: #A0835D;                /* Oro scuro / Tonalità marrone dorata (Accenti Input, Icone) */
+    --color-secondary-blue: #E0FFFF;     /* Celeste chiaro (Sfondo della pagina) */
+    --text-brown: #3E2723;               /* Marrone scuro (Testo Input) */
+    --color-text-dark: #333333;          /* Grigio scuro (Testo principale) */
+    --parchment: #f8f0e3;                /* Colore base della pergamena */
+    --color-error: #CC0000;              /* Rosso (Messaggi di errore) */
 }
 
-/* === 0. STILE BODY === */
+/* Stile base della pagina: sfondo celeste chiaro e font elegante */
 body {
-    background-color: var(--page-bg-color); 
-    background-image: url('/images/sfondo.jpeg'); 
-    background-size: cover;      
-    background-position: center; 
-    background-repeat: no-repeat; 
-    background-attachment: fixed;
-    
-    font-family: 'Quicksand', sans-serif; 
-    min-height: 100vh;
+    background-color: var(--color-secondary-blue);
+    font-family: 'Georgia', serif; 
+    color: var(--color-text-dark);
     margin: 0;
-    padding: 15px; /* Aggiunto padding per evitare che il form tocchi i bordi su schermi piccoli */
-    
+    padding: 20px;
+    min-height: 100vh;
     display: flex;
-    flex-direction: column; 
     justify-content: center;
     align-items: center;
 }
 
-/* === 1. Disabilita elementi esterni === */
-header, body > div:not(.elegant-form) {
-    display: none !important; 
-}
+/* ======================================= */
+/* 2. STILE DEL FORM (GRIMORIO FRAME - Rettangolo Largo) */
+/* ======================================= */
 
-/* === 2. Contenitore Form (PERGAMENA) === */
-.elegant-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.grimorio-frame {
+    /* Sfondo a pergamena */
+    background-color: var(--parchment);
+    background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
     
-    padding: 20px 60px; 
-    border-radius: 12px;
-    
-    /* MIGLIORAMENTO: Max-width per evitare problemi su schermi medi */
-    width: 850px; 
-    max-width: 100%; 
-    
+    /* DIMENSIONI: Più largo e basso */
+    padding: 25px 50px; /* Riduci il padding verticale (alto/basso) */
+	
+    border-radius: 15px;
+    width: 90%; 
+    max-width: 800px; /* Aumenta la larghezza massima */
     box-sizing: border-box;
-    background-color: var(--parchment-bg); 
     
-    border: 2px solid var(--parchment-border-color); 
-    box-shadow: 
-        0 0 0 4px var(--parchment-border-color), 
-        0 10px 20px -5px var(--parchment-shadow); 
-        
-    background-image: url('/images/rr.jpeg');
-    background-repeat: no-repeat;
-    background-size: 100% 100%; 
-    background-position: center;
-    
-    /* Posizionamento relativo per gestire z-index interni se necessario */
-    position: relative; 
+    /* Dettagli eleganti */
+	box-shadow: 
+	        0 0 0 4px #FFF8E1, /* Sottile strato bianco tra frame e ombra */
+	        0 10px 30px rgba(0, 0, 0, 0.25); /* Ombra scura e lunga */
+			
+   border: 4px solid var(--color-primary-gold);
 }
 
-/* === 3. Titolo Principale === */
-h1 {
-	font-family: 'Cormorant Unicase', serif; 
-	font-weight: 800; 
-	text-align: center;
-	color: var(--parchment-border-color); 
-    font-size: 1.9rem; 
-    text-shadow: none; 
-    margin-top: 0;
-    margin-bottom: 15px; 
-    width: 100%;
-    line-height: 1.2; /* Migliora la leggibilità se va a capo */
+/* STILE TITOLO DECORATIVO */
+.grimorio-frame h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.5em; /* Titolo più grande */
+    font-weight: 700; 
+    font-family: 'Cinzel Decorative', serif; /* Font decorativo */
+    color: #8B4513;
+    letter-spacing: 2px; 
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2); 
+    padding-bottom: 0;
+    border-bottom: none; 
 }
 
-/* === 4. Campi Input e Label (Compatti e Vicini) === */
+/* Griglia per disporre gli input su due colonne */
 .input-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px 30px; 
-    margin-bottom: 15px; 
-    width: 100%;
-    justify-content: center;
+    grid-template-columns: 1fr 1fr; 
+    gap: 20px;
+    margin-bottom: 20px;
 }
 
-.input-field {
-    display: flex;
-    align-items: center; 
-    justify-content: center; /* Centra tutto il blocco */
-    
-    /* === MODIFICA QUI: Spazio minimo tra etichetta e input === */
-    gap: 5px; /* Solo 5px di distanza: li tiene vicini come nella foto */
-    
-    height: 34px; 
-    background-color: white; 
-    padding: 0 10px; 
-    border-radius: 6px; 
-    border: 1.5px solid var(--accent-color); 
-    box-shadow: 0 0 5px rgba(184, 134, 11, 0.15); 
-    transition: border-color 0.3s, box-shadow 0.3s; 
+/* ======================================= */
+/* 3. STILE INPUT (Input Group) */
+/* ======================================= */
+
+.input-group {
+    margin-bottom: 25px;
 }
 
-.input-field:focus-within {
-    border-color: var(--primary-color); 
-    box-shadow: 0 0 8px rgba(125, 90, 140, 0.4); 
+.input-group label {
+    display: block;
+    font-family: 'EB Garamond', serif;
+    color: #8B4513; 
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+	font-weight: 700; 
 }
 
-.input-field label {
-    flex-shrink: 0; 
-    width: auto;
-    font-family: 'Cormorant Unicase', serif; 
-    font-weight: 500;
-    font-size: 0.85rem; 
-    color: var(--primary-color); 
-    
-    /* === MODIFICA QUI: Rimuovi margini extra === */
-    margin-right: 0 !important; /* Toglie lo spazio a destra dell'etichetta */
-    margin-bottom: 0 !important; 
-    cursor: pointer;
-    
-    /* Opzionale: se l'etichetta include un'icona, assicurati che siano allineate */
+.input-wrapper {
+    position: relative;
     display: flex;
     align-items: center;
+    background: rgba(255, 248, 225, 0.7); 
+    border: 1px solid #D7CCC8;
+    border-bottom: 2px solid var(--gold-dark); 
+    border-radius: 5px;
+    padding: 5px 10px;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
 }
 
-/* Se c'è un'icona <i> dentro la label, avvicinala al testo */
-.input-field label i {
-    margin-right: 4px; /* Spazio minimo tra icona e testo "Nome" */
-}
-
-input[type="text"],
-input[type="password"],
-input[type="email"] {
-    flex-grow: 1; 
-    background: transparent;
+.input-wrapper input {
+    width: 100%;
     border: none;
-    box-shadow: none;
-    outline: none; 
-    color: var(--primary-text-color); 
-    padding: 0; 
-    font-size: 0.85rem; 
-    font-family: 'Quicksand', sans-serif;
-    
-    /* Importante: Allinea a sinistra o centro? 
-       Nella foto sembrano un blocco unico centrale. 
-       Se scrivi "Center" potrebbe allontanarsi dall'etichetta.
-       Prova "left" se vuoi che stia attaccato all'etichetta, 
-       o "center" se vuoi che il cursore stia in mezzo al campo vuoto. */
-    text-align: left; 
-}
-/* === 5. Footer (Bottone e Link) === */
-.form-footer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;     /* Centra il bottone */
-    justify-content: center; 
-    width: 100%;             /* Occupa tutto lo spazio orizzontale */
-    margin-top: 10px;
+    background: transparent;
+    font-family: 'Cormorant Garamond', serif; 
+    font-size: 1.2rem;
+    color: var(--text-brown);
+    outline: none;
+    padding: 5px;
 }
 
-.center-button { 
-    text-align: center; 
-    width: 100%; 
+/* Icone Dorate */
+.icon-gold {
+    color: var(--gold-dark);
+    font-size: 1.2rem;
+    margin-right: 10px; 
+    text-shadow: 0 1px 0 #FFF;
+}
+
+
+/* Effetto Focus più marcato */
+.input-wrapper:has(input:focus) {
+    border-color: var(--color-primary-gold);
+    /* Rendo l'ombra più intensa e evidente */
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.9); 
+}
+/* ======================================= */
+/* 4. BOTTONE REGISTRATI (Ovale 3D Dorato) */
+/* ======================================= */
+
+.center-button {
+    text-align: center; /* CENTRA IL BOTTONE */
+    margin-top: 40px; 
+    margin-bottom: 20px; 
 }
 
 button[type="submit"] {
-    display: inline-block;   /* Fondamentale per la centratura */
-    background: linear-gradient(to bottom, #F9E79F 0%, #D4AF37 100%);
-    color: #FFFFFF; 
-    border: 1px solid #B8860B;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem; 
-    padding: 6px 50px; 
-    font-weight: 600; 
+    /* Stile 3D e gradiente metallico */
+    background: linear-gradient(to bottom, #F9E79F 0%, #D4AF37 50%, #B8860B 100%);
+    border: 2px solid #8B4513; 
+    border-radius: 50px; /* Forma Ovale */
+    padding: 12px 70px; /* Aumento il padding orizzontale per farlo sembrare più largo */
+    
+    color: #FFF;
+    font-family: 'Cinzel Decorative', serif; 
+    font-size: 1.4rem; 
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
     text-transform: uppercase; 
-    letter-spacing: 1px;       
-    border-radius: 50px; 
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15); 
+    
     cursor: pointer;
-    transition: transform 0.1s, box-shadow 0.1s;
-    user-select: none; 
+    box-shadow: 
+        inset 0 2px 0 rgba(255,255,255,0.5), 
+        0 5px 10px rgba(139, 69, 19, 0.3);
+        
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
 }
 
 button[type="submit"]:hover {
     transform: translateY(-2px);
-    background: linear-gradient(to bottom, #FFFBEA 0%, #DAA520 100%);
-    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 15px rgba(139, 69, 19, 0.4);
+    background: linear-gradient(to bottom, #FFF8E1 0%, #D4AF37 60%, #B8860B 100%);
 }
 
 button[type="submit"]:active {
-    transform: translateY(1px); 
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1); 
+    transform: translateY(1px);
+    box-shadow: 0 2px 5px rgba(139, 69, 19, 0.3);
 }
 
-/* === CORREZIONE DEFINITIVA LINK === */
+/* LINK REGISTRAZIONE */
 .extra-links {
-    /* Cambiamo strategia: niente flexbox qui, usiamo Block standard */
-    display: block;          
-    width: 100%;             
-    text-align: center !important; /* Forza bruta per centrare il testo */
-    
-    margin-top: 15px;        /* Spazio tra bottone e scritta */
-    font-family: 'Quicksand', sans-serif;
-    font-size: 0.85rem; 
-    color: #4E342E; 
-    font-weight: 400;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1rem;
+    color: var(--text-brown);
 }
 
 .extra-links a {
-    display: inline-block;   /* Tratta il link come testo in linea */
-    margin-left: 5px;
-    font-family: 'Cormorant Unicase', serif; 
-    font-size: 1.1rem; 
-    color: #DAA520; 
-    font-weight: 700;
-    text-transform: uppercase;
+    color: #8B4513;
+    font-weight: bold;
     text-decoration: none;
-    transition: color 0.2s;
+    border-bottom: 1px dashed #8B4513;
+}
+.extra-links a:hover {
+    color: #D4AF37;
+    border-bottom-style: solid;
 }
 
-.extra-links a:hover { color: #B8860B; 
+/* ======================================= */
+/* 5. MESSAGGI DI ERRORE */
+/* ======================================= */
+
+span[style="color:red"] {
+    display: block;
+    font-size: 0.8em;
+    color: var(--color-error) !important;
+    margin-top: 5px;
+    font-style: italic;
 }
+
+

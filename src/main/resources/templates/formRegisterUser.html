@@ -5,58 +5,81 @@
     <meta charset="UTF-8">
     <title>SiwRecipe - Registrazione</title>
     <link rel="stylesheet" href="/css/formRegisterUser.css" />
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-    <form th:action="@{/register}" method="POST" class="elegant-form">
+
+<body>
+    <form th:action="@{/register}" method="POST" class="grimorio-frame">
         
         <h1>REGISTRAZIONE NUOVO UTENTE </h1>
         
-		<div class="input-grid">
-		    
-		    <div class="input-field field-gold">
-		        <label for="name" class="styled-label">👤Nome</label>
-		        <input id="name" type="text" required th:field="${user.name}" placeholder=" "/>
-		        <span th:if="${#fields.hasErrors('user.name')}" th:errors="*{user.name}" style="color:red"></span>
-		    </div>
-		    
-		    <div class="input-field field-gold">
-		        <label for="surname" class="styled-label">👤 Cognome</label>
-		        <input id="surname" type="text" required th:field="${user.surname}" placeholder=" "/>
-		        <span th:if="${#fields.hasErrors('user.surname')}" th:errors="*{user.surname}" style="color:red"></span>
-		    </div>
+        <div class="input-grid">
+            
+            <div class="input-group">
+                <label for="name">Nome</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-user icon-gold"></i>
+                    <input id="name" type="text" required th:field="${user.name}" placeholder=" "/>
+                </div>
+                <span th:if="${#fields.hasErrors('user.name')}" th:errors="*{user.name}" style="color:red"></span>
+            </div>
+            
+            <div class="input-group">
+                <label for="surname">Cognome</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-user icon-gold"></i>
+                    <input id="surname" type="text" required th:field="${user.surname}" placeholder=" "/>
+                </div>
+                <span th:if="${#fields.hasErrors('user.surname')}" th:errors="*{user.surname}" style="color:red"></span>
+            </div>
 
-		    <div class="input-field field-purple">
-		        <label for="email" class="styled-label">✉️ Email</label>
-		        <input id="email" type="email" required th:field="${user.email}" placeholder=" "/>
-		        <span th:if="${#fields.hasErrors('user.email')}" th:errors="*{user.email}" style="color:red"></span>
-		    </div>
-		    
-		    <div class="input-field field-gold">
-		        <label for="username" class="styled-label">👑 Username</label>
-		        <input id="username" type="text" required th:field="${credentials.username}" placeholder=" "/>
-		        <span th:if="${#fields.hasErrors('credentials.username')}" th:errors="*{credentials.username}" style="color:red"></span>
-		    </div>
-		    
-		    <div class="input-field field-purple">
-		        <label for="password" class="styled-label">🔑 Password</label>
-		        <input id="password" type="password" required th:field="${credentials.password}" placeholder=" "/>
-		        <span th:if="${#fields.hasErrors('credentials.password')}" th:errors="*{credentials.password}" style="color:red"></span>
-		    </div>
-		    
-		    <div class="input-field field-purple">
-		        <label for="confirm-password" class="styled-label">🔑 Conferma Password</label>
-		        <input id="confirm-password" type="password" required name="confirmPassword" placeholder=" "/>
-		    </div>
+            <div class="input-group">
+                <label for="email">Email</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-envelope icon-gold"></i>
+                    <input id="email" type="email" required th:field="${user.email}" placeholder=" "/>
+                </div>
+                <span th:if="${#fields.hasErrors('user.email')}" th:errors="*{user.email}" style="color:red"></span>
+            </div>
+            
+            <div class="input-group">
+                <label for="username">Username</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-crown icon-gold"></i>
+                    <input id="username" type="text" required th:field="${credentials.username}" placeholder=" "/>
+                </div>
+                <span th:if="${#fields.hasErrors('credentials.username')}" th:errors="*{credentials.username}" style="color:red"></span>
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Password</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-key icon-gold"></i>
+                    <input id="password" type="password" required th:field="${credentials.password}" placeholder=" "/>
+                </div>
+                <span th:if="${#fields.hasErrors('credentials.password')}" th:errors="*{credentials.password}" style="color:red"></span>
+            </div>
+            
+            <div class="input-group">
+                <label for="confirm-password">Conferma Password</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-lock icon-gold"></i>
+                    <input id="confirm-password" type="password" required name="confirmPassword" placeholder=" "/>
+                </div>
+            </div>
 
-		</div>
+        </div>
         
 		<div class="center-button">
-		            <button type="submit">REGISTRATI </button>
-		        </div>
+		    <button type="submit">REGISTRATI </button>
+		</div>
 		        
-				<div class="extra-links">
-				        Hai già un account? <a th:href="@{/login}">Accedi</a>
-				    </div>
-		    </form>
+        <div class="extra-links">
+            Hai già un account? <a th:href="@{/login}">Accedi</a>
+        </div>
+        
+    </form>
 </body>
 
 </html>
