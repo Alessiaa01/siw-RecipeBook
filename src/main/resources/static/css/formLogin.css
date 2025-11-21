@@ -36,23 +36,23 @@ body {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    max-width: 550px;
+    max-width: 550px; 
 }
 
-/* === IL NASTRO/SCROLL (HEADER) === */
+/* === IL NASTRO/SCROLL (HEADER) - RIPRISTINO STILE ORIGINALE === */
 .scroll-header {
     position: relative;
-    width: 110%; /* Più largo del form */
-    margin-bottom: 10px;
+    width: 110%; /* RIPRISTINATO: Più largo del form per l'effetto nastro */
+    margin-bottom: 10px; /* RIPRISTINATO */
     filter: drop-shadow(0 10px 5px rgba(0,0,0,0.1));
 }
 
 .scroll-content {
-    background: linear-gradient(to bottom, #FDEBD0 0%, #D4AF37 15%, #FDEBD0 50%, #D4AF37 100%);
-    padding: 15px 40px;
+    background: linear-gradient(to bottom, #FDEBD0 0%, #D4AF37 15%, #FDEBD0 50%, #D4AF37 100%); /* RIPRISTINATO: Gradiente originale a pergamena */
+    padding: 15px 40px; 
     text-align: center;
-    border-radius: 5px 5px 50% 50% / 5px 5px 15px 15px; /* Curva leggera */
-    border: 1px solid #8B4513;
+    border-radius: 5px 5px 50% 50% / 5px 5px 15px 15px; /* RIPRISTINATO: Curva originale */
+    border: 1px solid #8B4513; /* RIPRISTINATO */
     position: relative;
     z-index: 2;
 }
@@ -60,30 +60,32 @@ body {
 .scroll-content h1 {
     font-family: 'Cinzel Decorative', serif;
     color: #4E342E;
-    font-size: 2rem;
+    font-size: 2.5rem; 
     margin: 0;
     text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
 }
 
 /* Effetto Pieghe del Nastro (CSS Puro) */
 .ribbon-left, .ribbon-right {
+    display: block; /* RIPRISTINATO: Resi visibili gli elementi piega */
     position: absolute;
-    top: 15px;
-    width: 40px; height: 60px;
+    top: 15px; /* RIPRISTINATO */
+    width: 40px; 
+    height: 60px; 
     background: linear-gradient(to right, #8B4513, #D4AF37);
     z-index: 1;
     border: 1px solid #5D4037;
     border-radius: 0 0 10px 10px;
 }
-.ribbon-left { left: 10px; transform: skewY(20deg); box-shadow: inset 5px 5px 10px rgba(0,0,0,0.3); }
-.ribbon-right { right: 10px; transform: skewY(-20deg); box-shadow: inset -5px 5px 10px rgba(0,0,0,0.3); }
+.ribbon-left { left: 10px; transform: skewY(20deg); box-shadow: inset 5px 5px 10px rgba(0,0,0,0.3); } /* RIPRISTINATO */
+.ribbon-right { right: 10px; transform: skewY(-20deg); box-shadow: inset -5px 5px 10px rgba(0,0,0,0.3); } /* RIPRISTINATO */
 
 /* Sottotitolo */
 .magic-subtitle {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
     color: #5D4037;
-    margin-bottom: 20px;
+    margin-bottom: 25px; 
     font-size: 1.1rem;
     text-align: center;
 }
@@ -94,11 +96,11 @@ body {
     background-color: var(--parchment);
     background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
     
-    /* MODIFICA: Dimensioni più armoniose e bilanciate */
-    padding: 60px 80px; /* Padding: 60px in alto/basso, 80px a sinistra/destra */
+    /* Mantenute le dimensioni uniformi */
+    padding: 60px 80px; 
     border-radius: 30px;
     width: 90%; 
-    max-width: 950px; /* Larghezza massima più contenuta per armonia (era 900px) */
+    max-width: 950px; 
     box-sizing: border-box;
     
     /* Bordo 3D e Dorato */
@@ -120,23 +122,23 @@ body {
 	    left: 50%;
 	    transform: translate(-50%, -50%);
 	    font-size: 8rem;
-	    color: rgba(184, 134, 11, 0.1); /* Grande e sbiadito al centro */
+	    color: rgba(184, 134, 11, 0.1); 
 	    pointer-events: none;
 	    z-index: 1; 
 	}
 	
 /* INPUT FIELDS */
 .input-group {
-    margin-bottom: 25px;
+    margin-bottom: 40px; /* Mantenuto 40px per separare i campi */
 }
 
 .input-group label {
     display: block;
     font-family: 'Cinzel Decorative', serif;
     color: #8B4513;
-    font-size: 1rem;
-    margin-bottom: 5px;
-	font-weight: 700; /*grassetto*/
+    font-size: 1rem; 
+    margin-bottom: 3px; 
+	font-weight: 700;
 }
 
 .input-wrapper {
@@ -145,9 +147,9 @@ body {
     align-items: center;
     background: rgba(255, 248, 225, 0.7);
     border: 1px solid #D7CCC8;
-    border-bottom: 2px solid var(--gold-dark); /* Linea sotto marcata come nell'img */
+    border-bottom: 2px solid var(--gold-dark); 
     border-radius: 5px;
-    padding: 5px 10px;
+    padding: 8px 10px; 
     box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
 }
 
@@ -156,7 +158,7 @@ body {
     border: none;
     background: transparent;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.2rem;
+    font-size: 1.2rem; 
     color: var(--text-brown);
     outline: none;
     padding: 5px;
@@ -165,7 +167,7 @@ body {
 /* Icone Oro */
 .icon-gold {
     color: var(--gold-dark);
-    font-size: 1.2rem;
+    font-size: 1.2rem; 
     margin-left: 10px;
     text-shadow: 0 1px 0 #FFF;
 }
@@ -175,28 +177,28 @@ body {
     color: #C62828;
     text-align: center;
     font-weight: bold;
-    margin-bottom: 15px;
-    font-size: 0.95rem;
+    margin-bottom: 25px; 
+    font-size: 0.95rem; 
     background: rgba(255,0,0,0.1);
-    padding: 5px;
+    padding: 8px; 
     border-radius: 5px;
 }
 
 /* BOTTONE ACCEDI (Ovale 3D) */
 .center-button {
     text-align: center;
-    margin-top: 30px;
+    margin-top: 40px; 
 }
 
 button[type="submit"] {
     background: linear-gradient(to bottom, #F9E79F 0%, #D4AF37 50%, #B8860B 100%);
     border: 2px solid #8B4513;
     border-radius: 50px; /* Ovale */
-    padding: 12px 50px;
+    padding: 12px 50px; 
     
     color: #FFF;
     font-family: 'Cinzel Decorative', serif;
-    font-size: 1.4rem;
+    font-size: 1.4rem; 
     text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
     
     cursor: pointer;
@@ -223,8 +225,8 @@ button[type="submit"]:active {
 /* LINK REGISTRAZIONE */
 .extra-links {
     text-align: center;
-    margin-top: 20px;
-    font-size: 1rem;
+    margin-top: 20px; 
+    font-size: 1rem; 
     color: var(--text-brown);
 }
 
