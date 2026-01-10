@@ -52,20 +52,21 @@ public class RecipeController {
     private CredentialsService credentialsService;
 
     
+
     
     //----------UTENTI---------
-    // Mostra i dati della ricetta con gli ingredienti
+    // Mostra i dati della ricetta con gli ingredienti e recensioni
     @GetMapping("/recipe/{id}")
     public String getRecipe(@PathVariable("id") Long id, Model model) {
         Recipe recipe = recipeService.findById(id);
         model.addAttribute("recipe", recipe);
-        model.addAttribute("ingredient", new Ingredient()); // necessario per il form
-        model.addAttribute("review", new Review()); //aggiunta
+        model.addAttribute("ingredient", new Ingredient()); // necessario per il form admin 
+        model.addAttribute("review", new Review()); //aggiunta per la recensione 
         return "recipe.html";
     }
 
-    // Lista tutte le ricette
-    @GetMapping("/recipes")
+    //Home page e lista di tutte le ricette
+    @GetMapping(value = {"/", "/recipes"})
     public String getRecipes(Model model) {		
         model.addAttribute("recipes", this.recipeService.findAll());
         return "recipes.html";
@@ -77,7 +78,7 @@ public class RecipeController {
         return "formSearchRecipes.html";
     }
     
-     // MODIFICATO: Gestisce il submit del form e mostra i risultati per titolo o ingrediente
+     // Gestisce la ricerca per titolo o ingrediente
      @GetMapping("/searchRecipes")
      public String searchRecipes(Model model, 
                                  @RequestParam(value = "title", required = false) String title, 
@@ -101,17 +102,52 @@ public class RecipeController {
          model.addAttribute("recipes", foundRecipes);
          return "foundRecipes.html"; // Ritorna la pagina dei risultati
      }
-/*
-    // Gestisce il submit del form e mostra i risultati
-    @GetMapping("/searchRecipes")
-    public String searchRecipes(Model model, @RequestParam String title) {
-    	 List<Recipe> foundRecipes = recipeService.findByTitleContainingIgnoreCase(title);
-        model.addAttribute("recipes", foundRecipes);
-        return "foundRecipes.html";
+
+   //----------RECENSIONI(SOLO LOGGATI)-----------
+
+@PostMapping("/recipe/{recipeId}/review")
+public String addReview(@PathVariable("recipeId") Long recipeId, // Cambia anche qui il nome della variabile
+                        @Valid @ModelAttribute("review") Review review,
+                        BindingResult bindingResult, 
+                        Model model) {
+    
+    // Usa la nuova variabile recipeId per cercare la ricetta
+    Recipe recipe = recipeService.findById(recipeId);
+
+    if (bindingResult.hasErrors()) {
+        model.addAttribute("recipe", recipe);
+        model.addAttribute("ingredient", new Ingredient()); 
+        return "recipe.html"; 
     }
 
-  */  
+    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    
+    if (principal instanceof UserDetails) {
+        UserDetails userDetails = (UserDetails) principal;
+        Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
+        
+        if (credentials != null && credentials.getUser() != null) {
+            review.setUser(credentials.getUser());
+            review.setRecipe(recipe);
+            reviewService.save(review); 
+        }
+    }
+    
+    // Usa recipeId anche per il redirect
+    return "redirect:/recipe/" + recipeId;
+}
+
+   
+
+
     //----------ADMIN----------
+
+@GetMapping("/admin/manageRecipes")
+public String manageRecipes(Model model) {
+    model.addAttribute("recipes", recipeService.findAll());
+    return "admin/manageRecipes.html"; 
+}
+
     // Form per inserire una nuova ricetta
     @GetMapping("/admin/formNewRecipe")
     public String formNewRecipe(Model model) {
@@ -119,7 +155,6 @@ public class RecipeController {
         return "admin/formNewRecipe.html";
     }
     
- // Nel file it.uniroma3.siw.controller.RecipeController.java
 
     @PostMapping("/admin/formNewRecipe")
     public String newRecipe(@Valid @ModelAttribute("recipe") Recipe recipe,
@@ -161,62 +196,6 @@ public class RecipeController {
 
     
     
-    // Salvataggio nuova ricetta
-   
-  /*
-    @PostMapping("/admin/formNewRecipe")
-    public String newRecipe(@Valid @ModelAttribute("recipe") Recipe recipe,
-                            BindingResult bindingResult, Model model) {
-        
-        // ... (Validazione e gestione errori standard) ...
-        
-        List<Ingredient> validIngredients = new ArrayList<>();
-        
-        // ITERAZIONE CRUCIALE: Controlla gli ingredienti che Spring ha mappato dal form
-        for (Ingredient ingredient : recipe.getIngredients()) {
-            
-            // Filtra: Salviamo solo se il campo Nome non è vuoto
-            if (ingredient.getName() != null && !ingredient.getName().trim().isEmpty()) {
-                
-                // ASSOCIAZIONE ESSENZIALE: Imposta il riferimento bidirezionale a Recipe
-                ingredient.setRecipe(recipe); 
-                
-                validIngredients.add(ingredient);
-            }
-        }
-        
-        // Sostituisce la lista originale con solo gli elementi validi
-        recipe.setIngredients(validIngredients); 
-        
-        // Salvataggio (JPA salva anche gli ingredienti validi grazie a CascadeType.ALL)
-        recipeService.save(recipe);
-        
-        // Reindirizza alla pagina di visualizzazione pubblica della ricetta appena creata
-        return "redirect:/recipe/" + recipe.getId(); 
-    }
-    
- 
-
-    @PostMapping("/admin/formNewRecipe")
-    public String newRecipe(@Valid @ModelAttribute("recipe") Recipe recipe,
-                            BindingResult bindingResult, Model model) {
-        
-        // ... (Validazione e gestione errori restano invariati) ...
-        
-        recipeValidator.validate(recipe, bindingResult);
-        if (bindingResult.hasErrors()) {
-            return "admin/formNewRecipe"; 
-        }
-        
-        // 1. Salvataggio della ricetta base
-        recipeService.save(recipe);
-        
-        // 2. NUOVO REINDIRIZZAMENTO: Vai alla pagina di visualizzazione pubblica singola.
-        // L'Admin vedrà la ricetta finita e, se necessario, potrà cliccare sul link "Modifica" 
-        // che porta a /admin/recipe/{id}/edit.
-        return "redirect:/recipe/" + recipe.getId(); 
-    }
-  */  
     @GetMapping("/admin/recipe/{id}/edit")
     public String editRecipe(@PathVariable("id") Long id, Model model) {
         Recipe recipe = recipeService.findById(id);
@@ -328,72 +307,6 @@ public class RecipeController {
         // 2. Reindirizza l'amministratore alla lista di gestione aggiornata
         // (Assumendo che la tua pagina di gestione sia mappata a /admin)
         return "redirect:/admin/manageRecipes";
-    }
-  /*  
-    @PostMapping("/recipe/{recipeId}/ingredient/{ingredientId}/delete")
-    public String deleteIngredient(@PathVariable("recipeId") Long recipeId,
-                                   @PathVariable("ingredientId") Long ingredientId) {
-        Recipe recipe = recipeService.findById(recipeId);
-        Ingredient ingredient = ingredientService.findById(ingredientId);
-
-        if (recipe != null && ingredient != null) {
-            recipe.getIngredients().remove(ingredient); // rimuove dalla lista della ricetta
-            recipeService.save(recipe); // aggiorna la ricetta
-            ingredientService.delete(ingredient); // elimina l’ingrediente dal DB
-        }
-
-        return "redirect:/recipe/" + recipeId;
-    }
-    
-    */
-    // AGGIUNGI QUESTO (NECESSARIO PER LA LISTA ADMIN CON I BOTTONI DELETE)
-@GetMapping("/admin/manageRecipes")
-public String manageRecipes(Model model) {
-    model.addAttribute("recipes", recipeService.findAll());
-    return "admin/manageRecipes.html"; 
-}
-
-
-//Modifica la stringa nel PostMapping per usare {recipeId} invece di {id}
-@PostMapping("/recipe/{recipeId}/review")
-public String addReview(@PathVariable("recipeId") Long recipeId, // Cambia anche qui il nome della variabile
-                        @Valid @ModelAttribute("review") Review review,
-                        BindingResult bindingResult, 
-                        Model model) {
-    
-    // Usa la nuova variabile recipeId per cercare la ricetta
-    Recipe recipe = recipeService.findById(recipeId);
-
-    if (bindingResult.hasErrors()) {
-        model.addAttribute("recipe", recipe);
-        model.addAttribute("ingredient", new Ingredient()); 
-        return "recipe.html"; 
-    }
-
-    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    
-    if (principal instanceof UserDetails) {
-        UserDetails userDetails = (UserDetails) principal;
-        Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-        
-        if (credentials != null && credentials.getUser() != null) {
-            review.setUser(credentials.getUser());
-            review.setRecipe(recipe);
-            reviewService.save(review); 
-        }
-    }
-    
-    // Usa recipeId anche per il redirect
-    return "redirect:/recipe/" + recipeId;
-}
-
-   
-
-   
-   
-
-   
-
-   
+    }  
     
 }

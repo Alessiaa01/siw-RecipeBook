@@ -75,7 +75,7 @@ public class AuthenticationController {
 	// File: src/main/java/it/uniroma3/siw/controller/AuthenticationController.java
 
 	// ...
-
+/*
 		@GetMapping("/") 
 		public String index(Model model) {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -93,7 +93,7 @@ public class AuthenticationController {
 				}
 			}
 		}
-			
+	*/		
 	    @GetMapping("/success")
 	    public String defaultAfterLogin() {
 	    	UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

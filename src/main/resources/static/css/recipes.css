@@ -1,8 +1,8 @@
 /* ========================================================== */
-/* STILE "FIABA DISNEY" - VERSIONE FINALE */
+/* STILE "FIABA DISNEY" - VERSIONE ESTETICA ORIGINALE */
 /* ========================================================== */
 
-/* 0. VARIABILI COLORI (Fondamentali per far funzionare tutto) */
+/* 0. VARIABILI COLORI */
 :root {
     --primary-color: #8B4513;   /* Marrone Bronzo */
     --secondary-color: #D4AF37; /* Oro */
@@ -11,256 +11,211 @@
     --max-content-width: 1200px;
 }
 
-
-/* 1. IMPORTAZIONE FONT MAGICI */
+/* 1. FONT MAGICI */
 @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Cormorant+Unicase:wght@400;600;700&family=Great+Vibes&display=swap');
 
-/* 2. SFONDO PAGINA */
+/* 2. SFONDO E BODY */
 body {
     margin: 0 !important;
     padding: 0 !important;
     background: radial-gradient(circle at center, #E0F7FA 0%, #B2EBF2 100%);
-	background-attachment: fixed;
+    background-attachment: fixed;
     min-height: 100vh;
     font-family: 'Cormorant Garamond', serif;
     color: #5D4037;
     display: flex;
     flex-direction: column;
     align-items: center;
-	box-sizing: border-box;
+    box-sizing: border-box;
 }
 
+/* Link generici */
+a { text-decoration: none; color: inherit; }
 
+/* ========================================================== */
+/* 3. HEADER & BARRA NAVIGAZIONE */
+/* ===========================/* ========================================================== */
+/* STILE "FIABA DISNEY" - VERSIONE ESTETICA ORIGINALE */
+/* ========================================================== */
 
-.fairy-card {
-    position: relative;
-    z-index: 1;
-    width: 90%;
-    max-width: 1100px;
-    margin: 20px auto 50px auto;
-    padding: 60px 50px;
-	
-	background-color: rgba(255, 255, 255, 0.2); /* Trasparenza vetrosa */
-	    box-shadow: 0 0 30px rgba(212, 175, 55, 0.2); /* Alone dorato */
-	}
+/* 0. VARIABILI COLORI */
+:root {
+    --primary-color: #8B4513;   /* Marrone Bronzo */
+    --secondary-color: #D4AF37; /* Oro */
+    --accent-color: #B2EBF2;    /* Celeste chiaro */
+    --box-shadow-color: rgba(0,0,0,0.1);
+    --max-content-width: 1200px;
+}
 
+/* 1. FONT MAGICI */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Cormorant+Unicase:wght@400;600;700&family=Great+Vibes&display=swap');
 
-/* === Header Bar === */
+/* 2. SFONDO E BODY */
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: radial-gradient(circle at center, #E0F7FA 0%, #B2EBF2 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    font-family: 'Cormorant Garamond', serif;
+    color: #5D4037;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+/* Link generici */
+a { text-decoration: none; color: inherit; }
+
+/* ========================================================== */
+/* 3. HEADER & BARRA NAVIGAZIONE */
+/* ========================================================== */
 header {
     background-color: #F8F4E8; 
-    
-    border-bottom: 1px solid var(--secondary-color);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-bottom: 2px solid var(--secondary-color); /* Bordo Oro più visibile */
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2); /* Ombra dorata */
     width: 100%; 
     margin: 0 !important; 
-	margin-top: 0 !important;
-    display: block; 
-	
-	box-sizing: border-box;
-	padding: 10px 60px 10px 0 !important; 
-	
-	
-
+    padding: 10px 0 !important;
+    position: relative;
+    z-index: 100;
 }
 
-/* Contenitore per allineare Admin (sinistra) e Utente (destra) */
 .header-content-wrapper {
     display: flex;
     justify-content: space-between; 
     align-items: center;
-    max-width: var(--max-content-width); 
+	width:100%;
+    max-width: 98%; 
     margin: 0 auto; 
-    padding: 0 !important; 
+    padding: 0 20px !important; 
 }
 
-/* ========================================================== */
-/* TASTO GESTIONE ADMIN (Lato Sinistro) */
-/* ========================================================== */
-
-.admin-link-header-left {
-    /* Assicura che stia a sinistra */
-    margin-right: auto; 
-}
-
+/* --- LATO SINISTRO (Admin) --- */
 .admin-link-header-left a {
     display: flex;
     align-items: center;
-    gap: 8px; /* Spazio tra corona e testo */
-    
-    font-family: 'Cormorant Unicase', serif; /* Font regale */
+    gap: 8px;
+    font-family: 'Cormorant Unicase', serif;
     font-weight: 700;
-    font-size: 0.9rem;
-    text-decoration: none;
-    
-    /* Colori invertiti rispetto al logout per distinguerlo */
-    background-color: #D3B88C; 
-    color: #8B4513; /* Marrone */
-    border: 1px solid #B8860B; /* Bordo Oro Scuro */
-    
-	
     font-size: 0.95rem;
     padding: 8px 20px;
-    border-radius: 25px; /* Arrotondato */
+    border-radius: 25px;
+    background-color: #D3B88C; 
+    color: #8B4513; 
+    border: 1px solid #B8860B; 
     transition: all 0.3s ease;
 }
 
-/* Effetto Hover: Diventa Oro */
 .admin-link-header-left a:hover {
-	background-color: var(--primary-color);
-	   color: white;
-   
+    background-color: var(--primary-color);
+    color: white;
     transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.6); /* Glow magico */
+}
+
+/* --- LATO DESTRO (Utente e Bottoni) --- */
+.user-actions-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Testi Benvenuto */
+.welcome-text, .chef-name {
+    font-family: 'Cinzel Decorative', serif; /* Font Magico ripristinato */
+    font-weight: 700;
+    color: #8B4513;
+    font-size: 1.1rem;
+    margin-right: 5px;
+}
+
+/* --- STILE BOTTONI LOGIN/REGISTER/LOGOUT (Uniformati al tema) --- */
+
+/* Stile Base */
+.btn-auth {
+    display: inline-block;
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-family: 'Cinzel Decorative', serif;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
     cursor: pointer;
 }
 
-/* Opzionale: Se vuoi l'icona della corona un po' più grande */
-.admin-link-header-left a::before {
-    /* Se non hai messo l'icona ♕ nell'HTML, puoi usarla qui */
-    /* content: '♕'; */ 
-    font-size: 1.2rem;
+/* Bottone ACCEDI (Trasparente con bordo Bronzo) */
+.btn-login {
+	background-color: #D3B88C;  /* Sfondo Sabbia */
+	    border: 1px solid #B8860B;  /* Bordo Oro Scuro */
+	    color: #8B4513;
+}
+.btn-login:hover {
+	background-color: #8B4513;  /* Sfondo Marrone */
+	    color: white;               /* Testo Bianco */
+	    border-color: #8B4513;
+	    transform: translateY(-2px);
+	    box-shadow: 0 0 15px rgba(212, 175, 55, 0.6); /* Glow magico */
 }
 
-/* Contenitore interno delle azioni (Chef/Logout) */
-header div {
-    background-color: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
-    padding: 0; 
-    margin: 0; 
-    
-    display: flex;
-    justify-content: flex-end; 
-    align-items: center;
+/* Bottone REGISTRATI (Oro pieno) */
+.btn-register {
+	background-color: #D3B88C;  /* Sfondo Sabbia */
+	    border: 1px solid #B8860B;  /* Bordo Oro Scuro */
+	    color: #8B4513;
+}
+.btn-register:hover {
+	background-color: #8B4513;  /* Sfondo Marrone */
+	    color: white;               /* Testo Bianco */
+	    border-color: #8B4513;
+	    transform: translateY(-2px);
+	    box-shadow: 0 0 15px rgba(212, 175, 55, 0.6); /* Glow magico */
 }
 
-/* Sezione Utente Loggato */
-header div[th\:if*="userDetails"] {
-    background-color: #FFFFFF !important;
-    border: 1px solid var(--secondary-color) !important;
-    border-radius: 15px !important; 
-    box-shadow: 0 2px 5px var(--box-shadow-color) !important;
-    
-    width: auto; 
-    padding: 8px 15px !important; 
-    margin: 0 !important; 
-
-    justify-content: center; 
-    gap: 10px;
-    flex-shrink: 0;
+/* Bottone LOGOUT (Rosso scuro elegante) */
+.btn-logout {
+    background-color: #D3B88C; /* Sfondo sabbia come Admin */
+    color: #4a4a4a;
+    border: 1px solid transparent;
+}
+.btn-logout:hover {
+    background-color: #A52A2A; /* Diventa rosso al passaggio */
+    color: white;
+    transform: scale(1.05);
 }
 
-/* Stili del testo interno (Chef Name) */
-.chef-name {
-    /* FONT E COLORI IDENTICI ALL'HEADER DI RECIPE.CSS */
-    font-family: 'Cinzel Decorative', serif !important; /* Il font magico */
-    font-weight: 700; /* Grassetto per renderlo leggibile come i link */
-    color: #8B4513;   /* Marrone Bronzo (lo stesso dei titoli e link) */
-    
-    font-size: 1.1rem; 
-    margin-right: 15px; 
-    
-    /* Layout */
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-/* Gestione del testo "Utente" o parti aggiuntive dentro lo span */
-.chef-name span {
-    font-family: 'Cinzel Decorative', serif !important; /* Assicura che anche il cognome/ruolo sia uguale */
-    color: #D4AF37; /* Mantiene l'oro per il contrasto, o metti #8B4513 se lo vuoi tutto marrone */
-    font-weight: bold;
-}
-
-/* Icona Placeholder (Pallino) - Rimane uguale */
-.chef-name::before {
-    content: '';
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: #D4AF37; /* Oro */
-    border: 1px solid #8B4513; /* Bordo Marrone */
-}
-
-
-
-/* === Stile Bottone Logout === */
-header a[href="/logout"] {
-    /* 1. TIPOGRAFIA */
-    font-family: 'Cinzel Decorative', serif !important; /* Forza il font decorativo */
-    font-weight: 700;
-    font-size: 0.95rem;
-    text-decoration: none;
-    line-height: 1.2; /* Assicura l'altezza corretta del testo */
-    
-    /* 2. DIMENSIONI E POSIZIONE */
-    display: inline-flex;       /* Fondamentale per centrare il testo nel bottone */
-    align-items: center;        /* Centra verticalmente */
-    justify-content: center;    /* Centra orizzontalmente */
-    padding: 5px 15px;          /* Padding identico all'originale */
-    margin-right: 0;
-    
-    /* 3. COLORI E BORDI */
-    background-color: #D3B88C; 
-    color: #4a4a4a;             /* Grigio scuro (Nota: non è marrone!) */
-    border: none;
-    border-radius: 15px; 
-    
-    /* 4. EFFETTI */
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.2s, color 0.2s;
-}
-
-header a[href="/logout"]:hover {
-    background-color: #8B4513 !important; /* Usa il codice esadecimale diretto per sicurezza */
-    color: white !important;
-    text-decoration: none;
-}
-
-/* Neutralizza il div che contiene il logo */
-body > div:first-of-type {
-    max-width: 100% !important;
-    padding: 0 !important;
-    margin: 20px auto 10px !important;
+/* ========================================================== */
+/* 4. LOGO FLUTTUANTE E TITOLI */
+/* ========================================================== */
+.logo-container {
     text-align: center;
-}
-/* Sposta la sezione utente verso sinistra staccandola dal bordo */
-.header-user-section {
-    margin-right: 50px; /* Puoi aumentare questo numero per spostarlo più a sinistra */
-    
-    /* Opzionale: se vuoi essere sicuro che le scritte restino allineate bene */
-    display: flex; 
-    align-items: center;
+    margin: 30px 0 10px 0;
 }
 
-/* Forza questo blocco a spingersi tutto a destra */
-.user-actions-right {
-    margin-left: auto;
+.main-logo {
+    width: 200px; 
+    height: auto;
+    filter: drop-shadow(0 5px 15px rgba(212, 175, 55, 0.4)); /* Ombra dorata */
+    animation: floatLogo 6s ease-in-out infinite; /* RIPRISTINATA ANIMAZIONE */
 }
 
+/* Animazione galleggiamento */
+@keyframes floatLogo {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
 
-
-/* ========================================================== */
-/* 4. TITOLI */
-/* ========================================================== */
-.title-section { text-align: center; margin-bottom: 40px; margin-top: 20px; }
-
-h1 {
+.main-title {
     font-family: 'Cormorant Garamond', serif;
     font-size: 4.5rem;
     color: #8B4513;
-    margin: 0;
-    text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
-    line-height: 1.2;
-}
-
-.subtitle {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 1.5rem;
-    color: #A67B5B;
-    margin-top: 5px;
+    text-align: center;
+    margin: 10px 0 40px 0;
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+    line-height: 1.1;
 }
 
 .main-title::after {
@@ -268,44 +223,30 @@ h1 {
     display: block;
     height: 2px;
     background: linear-gradient(to right, transparent, #D4AF37, transparent);
-    width: 60%;
-    margin: 10px auto 0 auto;
-}
-
-/* Icone Dorate per i metadati */
-/* Icone Dorate */
-.icon-gold {
-    color: #D4AF37 !important; /* !important forza il colore se c'è qualche conflitto */
-    margin-right: 6px;
-    font-size: 1.1rem;
-    filter: drop-shadow(0 1px 1px rgba(0,0,0,0.1));
+    width: 50%;
+    margin: 15px auto 0 auto;
 }
 
 /* ========================================================== */
-/* 5. BARRA DI RICERCA E AZIONI (LAYOUT AGGIORNATO) */
+/* 5. BARRA DI RICERCA (Stile Pergamena/Vetro) */
 /* ========================================================== */
-
 .action-bar-wrapper {
     display: flex;
-    /* Separa i due blocchi: Cerca a sinistra, Aggiungi a destra */
-    justify-content: space-between; 
-    align-items: center;     
-    
-    /* Spaziatura verticale aumentata */
-    margin-top: 60px;       
-    margin-bottom: 50px;
+    justify-content: space-between;
+    align-items: center;
+    max-width: var(--max-content-width);
+    margin: 0 auto 50px auto;
     padding: 0 20px;
-    
-    width: 100%;
-    max-width: 1200px; 
-    margin-left: auto; 
-    margin-right: auto;
+    position: relative;
 }
 
-/* --- Blocco Sinistro: Ricerca --- */
+/* Contenitore Cerca */
 .search-container {
-    display: flex;
-    justify-content: center;
+    background: rgba(255, 255, 255, 0.6); /* Effetto Vetro */
+    padding: 15px 30px;
+    border-radius: 50px;
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.2); /* Alone magico */
+    border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
 .elegant-search-form {
@@ -315,258 +256,495 @@ h1 {
 }
 
 .search-field {
-    width: 350px;
-    border: none;
     border-bottom: 2px solid rgba(212, 175, 55, 0.4);
-    padding: 5px 0;
-    display: flex;
-    align-items: center;
-    position: relative;
-    transition: all 0.4s ease;
-    margin-left: 10px;
+    transition: all 0.3s;
 }
-
 .search-field:focus-within {
-    border-bottom: 2px solid #D4AF37; 
-    box-shadow: 0 4px 8px -2px rgba(212, 175, 55, 0.4);
+    border-bottom: 2px solid #D4AF37;
 }
 
 .search-field input {
     border: none;
-    outline: none;
     background: transparent;
+    padding: 5px;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.4rem;
-    color: #5D4037;
+    font-size: 1.3rem;
     font-style: italic;
-    width: 100%;
+    color: #5D4037;
+    outline: none;
+    width: 220px;
 }
 
-.search-field::before {
-    content: '✦';
-    color: #D4AF37;
-    font-size: 1.2rem;
-    margin-right: 12px;
+.search-button {
+    background-color: white;
+    color: #8B4513;
+    border: 1px solid #D4AF37;
+    padding: 8px 25px;
+    border-radius: 25px;
+    font-family: 'Cinzel Decorative', serif;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.search-button:hover {
+    background-color: #D4AF37;
+    color: white;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
 }
 
-/* --- Stile Bottoni (Cerca e Aggiungi) --- */
-.search-container .search-button,
+/* Tasto AGGIUNGI NUOVA RICETTA */
+.action-bar-wrapper {
+    position: relative; /* FONDAMENTALE: fa da punto di riferimento */
+    display: flex;
+    justify-content: center; /* Mantiene la ricerca al centro */
+    align-items: center;
+    max-width: 98%; /* Occupa quasi tutta la larghezza */
+    margin: 0 auto 50px auto;
+    padding: 0 20px;
+}
+
+/* 2. Il contenitore del bottone (Modifica questo per spostarlo a destra) */
+.admin-actions-top {
+    position: absolute; /* Lo sgancia dal flusso normale */
+    right: 30px;        /* Lo piazza a 10px dal bordo destro */
+    top: 50%;           /* Lo centra verticalmente */
+    transform: translateY(-50%); /* Corregge la centratura verticale */
+}
+
+/* 3. Lo stile del bottone (questo rimane uguale al tuo) */
 .action-add-new {
     display: inline-block;
     padding: 10px 25px;
-    text-decoration: none !important;
+    text-decoration: none;
     font-family: 'Cinzel Decorative', serif;
     font-weight: bold;
-    color: #5a3e1b !important;
-    border: 1px solid #B8860B !important;
+    color: #5a3e1b;
+    border: 1px solid #B8860B;
     border-radius: 25px;
-    background-color: rgba(255, 255, 255, 0.6) !important;
+    background-color: rgba(255, 255, 255, 0.8);
     transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    margin: 0; 
-    cursor: pointer;
-    font-size: 1rem;
-    white-space: nowrap;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    white-space: nowrap; /* Evita che il testo vada a capo */
 }
 
-.search-container .search-button:hover,
 .action-add-new:hover {
-    background-color: #B8860B !important;
-    color: white !important;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(184, 134, 11, 0.3);
-}
-
-/* Posizionamento specifico tasto Cerca */
-.search-container .search-button {
-    margin-left: 15px; /* Stacca il tasto dalla riga di input */
+    background-color: #B8860B;
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 0 15px rgba(184, 134, 11, 0.5);
 }
 
 /* ========================================================== */
-/* 6. LISTA RICETTE (Senza tasto Scopri) */
+/* 6. LISTA RICETTE (CARD FIABESCHE) */
 /* ========================================================== */
 .recipe-cards-list {
     list-style: none;
     padding: 0;
+    margin: 0 auto 60px auto;
+    max-width: 1000px;
     display: flex;
-    flex-direction: column; 
-    gap: 0;
-    width: 100%;
-    max-width: 1200px; /* Allinea la lista alla larghezza dei bottoni */
+    flex-direction: column;
+    gap: 0; /* Unite come nel tuo originale */
 }
 
 .recipe-card {
-    background-color: transparent !important; 
-    border: none !important; 
-    box-shadow: none !important;
-    border-radius: 0; 
-    padding: 30px 10px;
+    background-color: rgba(255, 255, 255, 0.3) !important; /* Molto trasparente */
     border-bottom: 1px dashed rgba(212, 175, 55, 0.4) !important;
+    padding: 30px 40px;
     
-    /* --- GRIGLIA MODIFICATA: 2 COLONNE --- */
     display: grid;
-    grid-template-columns: 120px 1fr !important; /* Img | Testo (tutto il resto) */
-    /* ------------------------------------- */
+    grid-template-columns: 130px 1fr; /* Img | Testo */
+    gap: 30px;
+    align-items: center;
     
-    gap: 30px; 
-    align-items: center; 
-    transition: transform 0.3s;
-}
-
-.recipe-card:last-child {
-    border-bottom: none !important;
+    transition: all 0.3s ease;
 }
 
 .recipe-card:hover {
-    transform: translateX(10px);
-    background-color: rgba(255, 255, 255, 0.2) !important;
-    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.6) !important;
+    transform: scale(1.02); /* Leggero zoom */
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+    border-radius: 15px; /* Arrotonda quando passi sopra */
+    border-bottom: 1px solid transparent !important;
 }
 
-/* Immagine Tonda */
+/* Immagine Tonda con bordo oro */
 .card-image {
-    width: 120px; 
-    height: 120px;
-    border-radius: 50%; 
-    border: none;
-    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
     overflow: hidden;
+    border: 2px solid var(--secondary-color);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
 }
 .card-image img {
     width: 100%; height: 100%; object-fit: cover;
 }
 
-/* Contenuto Testuale */
-.card-content {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
+/* Testi e Icone */
 .recipe-title {
-    font-family: 'Cinzel Decorative', serif; 
-    font-size: 2rem; 
-    color: #8B4513; 
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 2rem;
+    color: #8B4513;
     font-weight: 700;
-    text-decoration: none;
     margin-bottom: 5px;
     line-height: 1.2;
+    display: block;
 }
 
 .recipe-description {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.2rem; 
-    color: #5D4037; 
+    font-size: 1.2rem;
+    color: #5D4037;
     font-style: italic;
-    margin: 0 0 10px 0;
+    margin-bottom: 15px;
 }
 
-.card-metadata-inline {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-.card-metadata-inline p {
-    margin: 0;
+.card-metadata-inline i {
+    color: #D4AF37; /* Icone Oro */
     font-size: 1.1rem;
-    color: #8B4513; 
-    display: flex;
-    align-items: center;
+    margin-right: 5px;
 }
 .card-metadata-inline span {
-    color: #D4AF37; 
     font-weight: bold;
     font-family: 'Cinzel Decorative', serif;
-    margin-left: 5px;
-}
-
-/* --- RIMUOVE IL TASTO SCOPRI --- */
-.card-actions {
-    display: none !important;
-}
-
-/* ========================================================== */
-/* NUOVI STILI MAGICI (Logo & Effetto Luce) */
-/* ========================================================== */
-
-/* 1. STILE PER IL LOGO GRANDE (Sopra il titolo) */
-.big-page-logo {
-    display: block;
-    width: 160px; /* Grandezza del logo */
-    height: auto;
-    margin: 0 auto 15px auto; /* Centrato con spazio sotto */
-    
-    /* Ombra dorata morbida per staccarlo dallo sfondo */
-    filter: drop-shadow(0 5px 15px rgba(212, 175, 55, 0.5));
-    
-    /* Animazione di galleggiamento lento (opzionale, molto Disney) */
-    animation: floatLogo 6s ease-in-out infinite;
-}
-
-@keyframes floatLogo {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-8px); } /* Sale piano piano */
-    100% { transform: translateY(0px); }
-}
-
-/* 2. EFFETTO "INCANTESIMO DI LUCE" (Magic Hover) */
-/* Questa classe aggiunge il fascio di luce al passaggio del mouse */
-.magic-hover {
+    color: #8B4513;
+}=============================== */
+header {
+    background-color: #F8F4E8; 
+    border-bottom: 2px solid var(--secondary-color); /* Bordo Oro più visibile */
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2); /* Ombra dorata */
+    width: 100%; 
+    margin: 0 !important; 
+    padding: 10px 0 !important;
     position: relative;
-    overflow: hidden; /* Tiene la luce dentro i bordi */
-    transition: transform 0.3s ease;
+    z-index: 100;
 }
 
-/* Al passaggio del mouse si alza e brilla */
-.magic-hover:hover {
-    transform: translateY(-5px); 
-    filter: drop-shadow(0 10px 20px rgba(212, 175, 55, 0.4));
+.header-content-wrapper {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+	width:100%;
+    max-width: 98%; 
+    margin: 0 auto; 
+    padding: 0 20px !important; 
+}
+
+/* --- LATO SINISTRO (Admin) --- */
+.admin-link-header-left a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Cormorant Unicase', serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 8px 20px;
+    border-radius: 25px;
+    background-color: #D3B88C; 
+    color: #8B4513; 
+    border: 1px solid #B8860B; 
+    transition: all 0.3s ease;
+}
+
+.admin-link-header-left a:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.6); /* Glow magico */
+}
+
+/* --- LATO DESTRO (Utente e Bottoni) --- */
+.user-actions-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Testi Benvenuto */
+.welcome-text, .chef-name {
+    font-family: 'Cinzel Decorative', serif; /* Font Magico ripristinato */
+    font-weight: 700;
+    color: #8B4513;
+    font-size: 1.1rem;
+    margin-right: 5px;
+}
+
+/* --- STILE BOTTONI LOGIN/REGISTER/LOGOUT (Uniformati al tema) --- */
+
+/* Stile Base */
+.btn-auth {
+    display: inline-block;
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-family: 'Cinzel Decorative', serif;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
     cursor: pointer;
 }
 
-/* Il fascio di luce bianco */
-.magic-hover::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%; /* Parte nascosto a sinistra */
-    width: 50%;
-    height: 100%;
-    
-    background: linear-gradient(
-        to right,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.8) 50%,
-        rgba(255, 255, 255, 0) 100%
-    );
-    
-    transform: skewX(-25deg); /* Inclinato */
-    z-index: 2;
-    pointer-events: none;
+/* Bottone ACCEDI (Trasparente con bordo Bronzo) */
+.btn-login {
+	background-color: #D3B88C;  /* Sfondo Sabbia */
+	    border: 1px solid #B8860B;  /* Bordo Oro Scuro */
+	    color: #8B4513;
+}
+.btn-login:hover {
+	background-color: #8B4513;  /* Sfondo Marrone */
+	    color: white;               /* Testo Bianco */
+	    border-color: #8B4513;
+	    transform: translateY(-2px);
+	    box-shadow: 0 0 15px rgba(212, 175, 55, 0.6); /* Glow magico */
 }
 
-/* L'animazione parte solo all'hover */
-.magic-hover:hover::after {
-    animation: shine-pass 0.75s ease-in-out;
+/* Bottone REGISTRATI (Oro pieno) */
+.btn-register {
+	background-color: #D3B88C;  /* Sfondo Sabbia */
+	    border: 1px solid #B8860B;  /* Bordo Oro Scuro */
+	    color: #8B4513;
+}
+.btn-register:hover {
+	background-color: #8B4513;  /* Sfondo Marrone */
+	    color: white;               /* Testo Bianco */
+	    border-color: #8B4513;
+	    transform: translateY(-2px);
+	    box-shadow: 0 0 15px rgba(212, 175, 55, 0.6); /* Glow magico */
 }
 
-@keyframes shine-pass {
-    100% { left: 200%; } /* Attraversa tutto l'elemento */
+/* Bottone LOGOUT (Rosso scuro elegante) */
+.btn-logout {
+    background-color: #D3B88C; /* Sfondo sabbia come Admin */
+    color: #4a4a4a;
+    border: 1px solid transparent;
+}
+.btn-logout:hover {
+    background-color: #A52A2A; /* Diventa rosso al passaggio */
+    color: white;
+    transform: scale(1.05);
 }
 
-
+/* ========================================================== */
+/* 4. LOGO FLUTTUANTE E TITOLI */
+/* ========================================================== */
 .logo-container {
     text-align: center;
-    margin: 20px 0;
+    margin: 30px 0 10px 0;
 }
 
 .main-logo {
-    width: 250px; /* Imposta una grandezza fissa o usa i pixel per maggior controllo */
+    width: 200px; 
     height: auto;
-    transition: transform 0.3s ease;
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2)); /* Aggiunge un'ombra per lo stile "fiaba" */
+    filter: drop-shadow(0 5px 15px rgba(212, 175, 55, 0.4)); /* Ombra dorata */
+    animation: floatLogo 6s ease-in-out infinite; /* RIPRISTINATA ANIMAZIONE */
 }
 
-.main-logo:hover {
-    transform: scale(1.05); /* Effetto ingrandimento al passaggio del mouse */
+/* Animazione galleggiamento */
+@keyframes floatLogo {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+.main-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4.5rem;
+    color: #8B4513;
+    text-align: center;
+    margin: 10px 0 40px 0;
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+    line-height: 1.1;
+}
+
+.main-title::after {
+    content: '';
+    display: block;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #D4AF37, transparent);
+    width: 50%;
+    margin: 15px auto 0 auto;
+}
+
+/* ========================================================== */
+/* 5. BARRA DI RICERCA E AZIONI (LAYOUT A GRIGLIA) */
+/* ========================================================== */
+
+/* Il contenitore diventa una griglia a 3 colonne */
+.action-bar-wrapper {
+    display: grid;
+    /* 1fr (spazio vuoto) | auto (barra ricerca) | 1fr (spazio vuoto + bottone) */
+    grid-template-columns: 1fr auto 1fr; 
+    
+    align-items: center;
+    width: 100%;
+    max-width: 98%; /* Occupa quasi tutto lo schermo */
+    margin: 0 auto 50px auto;
+    padding: 0 30px; /* Distanza dai bordi laterali */
+    box-sizing: border-box;
+}
+
+/* --- ELEMENTO CENTRALE: Barra di Ricerca --- */
+.search-container {
+    grid-column: 2; /* Forza la posizione nella colonna centrale */
+    justify-self: center; /* Si centra perfettamente */
+    
+    background: rgba(255, 255, 255, 0.6);
+    padding: 15px 30px;
+    border-radius: 50px;
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.elegant-search-form {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.search-field {
+    border-bottom: 2px solid rgba(212, 175, 55, 0.4);
+    transition: all 0.3s;
+}
+.search-field:focus-within {
+    border-bottom: 2px solid #D4AF37;
+}
+
+.search-field input {
+    border: none;
+    background: transparent;
+    padding: 5px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-style: italic;
+    color: #5D4037;
+    outline: none;
+    width: 220px;
+}
+
+.search-button {
+    background-color: white;
+    color: #8B4513;
+    border: 1px solid #D4AF37;
+    padding: 8px 25px;
+    border-radius: 25px;
+    font-family: 'Cinzel Decorative', serif;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.search-button:hover {
+    background-color: #D4AF37;
+    color: white;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
+}
+
+/* --- ELEMENTO DESTRO: Bottone Aggiungi --- */
+.admin-actions-top {
+    grid-column: 3; /* Forza la posizione nella colonna di destra */
+    justify-self: end; /* Spinge il bottone alla fine (bordo destro) */
+    
+    /* Rimuoviamo il posizionamento assoluto che causava problemi */
+    position: static; 
+    transform: none;
+    margin: 0;
+}
+
+.action-add-new {
+    display: inline-block;
+    padding: 10px 25px;
+    text-decoration: none;
+    font-family: 'Cinzel Decorative', serif;
+    font-weight: bold;
+    color: #5a3e1b;
+    border: 1px solid #B8860B;
+    border-radius: 25px;
+    background-color: rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    white-space: nowrap; /* Evita che il testo vada a capo */
+}
+
+.action-add-new:hover {
+    background-color: #B8860B;
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 0 15px rgba(184, 134, 11, 0.5);
+}
+
+/* ========================================================== */
+/* 6. LISTA RICETTE (CARD FIABESCHE) */
+/* ========================================================== */
+.recipe-cards-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto 60px auto;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    gap: 0; /* Unite come nel tuo originale */
+}
+
+.recipe-card {
+    background-color: rgba(255, 255, 255, 0.3) !important; /* Molto trasparente */
+    border-bottom: 1px dashed rgba(212, 175, 55, 0.4) !important;
+    padding: 30px 40px;
+    
+    display: grid;
+    grid-template-columns: 130px 1fr; /* Img | Testo */
+    gap: 30px;
+    align-items: center;
+    
+    transition: all 0.3s ease;
+}
+
+.recipe-card:hover {
+    background-color: rgba(255, 255, 255, 0.6) !important;
+    transform: scale(1.02); /* Leggero zoom */
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+    border-radius: 15px; /* Arrotonda quando passi sopra */
+    border-bottom: 1px solid transparent !important;
+}
+
+/* Immagine Tonda con bordo oro */
+.card-image {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--secondary-color);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+}
+.card-image img {
+    width: 100%; height: 100%; object-fit: cover;
+}
+
+/* Testi e Icone */
+.recipe-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 2rem;
+    color: #8B4513;
+    font-weight: 700;
+    margin-bottom: 5px;
+    line-height: 1.2;
+    display: block;
+}
+
+.recipe-description {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    color: #5D4037;
+    font-style: italic;
+    margin-bottom: 15px;
+}
+
+.card-metadata-inline i {
+    color: #D4AF37; /* Icone Oro */
+    font-size: 1.1rem;
+    margin-right: 5px;
+}
+.card-metadata-inline span {
+    font-weight: bold;
+    font-family: 'Cinzel Decorative', serif;
+    color: #8B4513;
 }

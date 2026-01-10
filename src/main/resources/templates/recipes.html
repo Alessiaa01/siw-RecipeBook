@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <title>Elenco ricette</title>
     <link rel="stylesheet" href="/css/recipes.css" />
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
@@ -13,31 +12,40 @@
     <div class="magic-background"></div>
 
     <header>
-        <div class="header-content-wrapper">
+        <div class="header-content-wrapper" style="display: flex; justify-content: space-between; align-items: center;">
         
             <div sec:authorize="hasAuthority('ADMIN')" class="admin-link-header-left">
-                <a th:href="@{/admin/manageRecipes}" class="action-manage">
+                <a th:href="@{/admin/manageRecipes}" class="action-manage" style="color: white; text-decoration: none;">
                     <i class="fa-solid fa-crown"></i> Gestione Admin
                 </a>
             </div>
             
+            <div sec:authorize="!hasAuthority('ADMIN')"></div>
+            
             <div class="user-actions-right">
-                <div th:if="${userDetails}">
-                    <span class="chef-name">✨ Chef <span th:text="${userDetails.username}"></span></span>
-                    <a href="/logout">Logout</a>
+                
+                <div sec:authorize="isAuthenticated()">
+                    <span class="chef-name">
+                        ✨ Chef <span sec:authentication="name">NomeUtente</span>
+                    </span>
+                    <a th:href="@{/logout}" class="btn-auth btn-logout">Logout</a>
                 </div>
-                <div th:unless="${userDetails}">
-                    <a href="/login">Login</a>
+
+                <div sec:authorize="!isAuthenticated()">
+                    <span class="welcome-text">Benvenuto!</span>
+                    <a th:href="@{/login}" class="btn-auth btn-login">Accedi</a>
+                    <a th:href="@{/register}" class="btn-auth btn-register">Registrati</a>
                 </div>
+                
             </div>
         </div>
     </header>
 
-	<div class="logo-container">
-	    <a href="/">
-	        <img src="/images/logo2.png" class="main-logo" alt="Logo"/>
-	    </a>  
-	</div>
+    <div class="logo-container">
+        <a th:href="@{/}">
+            <img src="/images/logo2.png" class="main-logo" alt="Logo" onerror="this.style.display='none'"/>
+        </a>  
+    </div>
 
     <h1 class="main-title">ELENCO RICETTE</h1>
     
@@ -58,64 +66,49 @@
             </form>
         </div>
         
-        <div sec:authorize="hasAuthority('ADMIN')" class="admin-actions-top">
+        <div sec:authorize="isAuthenticated()" class="admin-actions-top">
             <a th:href="@{/admin/formNewRecipe}" class="action-add-new">➕ Aggiungi una nuova Ricetta</a>
         </div>
     
     </div>
 
     <div th:if="${#lists.isEmpty(recipes)}">
-        <p style="text-align: center;">Nessuna ricetta è stata ancora trovata.</p>
+        <p style="text-align: center; color: white; font-size: 1.2rem;">Nessuna ricetta trovata.</p>
     </div>
 
     <ul class="recipe-cards-list">
-		
         <li th:each="recipe : ${recipes}" class="recipe-card">
             
             <div class="card-image">
                 <img th:src="${recipe.imageUrl} ? ${recipe.imageUrl} : '/images/placeholder-piatto.jpg'" 
-                     th:alt="'Immagine di ' + ${recipe.title}"/>
+                     th:alt="'Immagine di ' + ${recipe.title}"
+                     style="width: 100%; height: 200px; object-fit: cover;"/>
             </div>
             
             <div class="card-content">
-                <a th:href="@{/recipe/{id}(id=${recipe.id})}" th:text="${recipe.title}" class="recipe-title">Titolo Ricetta</a>
+                <a th:href="@{'/recipe/' + ${recipe.id}}" th:text="${recipe.title}" class="recipe-title">Titolo Ricetta</a>
                 
-                <p class="recipe-description" th:text="${recipe.description}">Breve descrizione della ricetta...</p>
+                <p class="recipe-description" th:text="${recipe.description}">Descrizione...</p>
 
                 <div class="card-metadata-inline">
                     <p>
                         <i class="fa-regular fa-clock icon-gold"></i> 
-                        Tempo: <span th:text="${recipe.preparationTime}">0</span> min
+                        <span th:text="${recipe.preparationTime}">0</span> min
                     </p>
                     
                     <p>
                         <i class="fa-solid fa-fire-burner icon-gold"></i> 
-                        Cottura: <span th:text="${recipe.cookingTime}">0</span> min
+                        <span th:text="${recipe.cookingTime}">0</span> min
                     </p>
                     
                     <p>
                         <i class="fa-solid fa-star icon-gold"></i> 
-                        Difficoltà: <span th:text="${recipe.difficulty}">Facile</span>
-                    </p>
-                    
-                    <p>
-                        <i class="fa-solid fa-utensils icon-gold"></i> 
-                        Porzioni: <span th:text="${recipe.servings}">0</span>
-                    </p>
-                    
-                    <p>
-                        <i class="fa-solid fa-bookmark icon-gold"></i> 
-                        Categoria: <span th:text="${recipe.category}">Categoria</span>
-                    </p>
-                    
-                    <p>
-                        <i class="fa-solid fa-tags icon-gold"></i> 
-                        Tag: <span th:text="${recipe.tags}">Tag</span>
+                        <span th:text="${recipe.difficulty}">Facile</span>
                     </p>
                 </div>
             </div>
-            
         </li>
     </ul>
+
 </body>
 </html>
