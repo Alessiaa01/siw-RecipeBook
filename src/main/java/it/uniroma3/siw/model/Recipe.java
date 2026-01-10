@@ -15,6 +15,7 @@ import java.util.HashSet;
 import jakarta.persistence.CascadeType;
 
 
+
 // Non sono necessari altri import per gli attributi semplici richiesti
 
 @Entity
@@ -39,7 +40,7 @@ public class Recipe {
     
     private Integer servings; // Numero di porzioni
     
-    @Column(length = 5000) 
+    @Column(length = 2000)
     private String procedure; //procedimento
     
     private String category; //categoria es antipasto, primo, secondo , dolce
@@ -52,7 +53,8 @@ public class Recipe {
     @ElementCollection
     private Set<String> tags = new HashSet<>();
 
-   
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
+    private List<Review> reviews = new ArrayList<>();
     
 
     // ---------------------------------------------------------------------------------
@@ -173,6 +175,15 @@ public class Recipe {
 
     public void setCategory(String category) {
         this.category =  category;
+    }
+    
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+  
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
     // --- Metodi equals e hashCode (importanti per la persistenza e il confronto) ---
     // Due oggetti Recipe sono considerati uguali se hanno lo stesso titolo.

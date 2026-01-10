@@ -77,38 +77,43 @@
 
             <div class="columns-container">
                 
-                <div class="ingredients-box">
-                    <h3>Ingredienti</h3>
-                    
-                    <div class="ing-list-scroll">
-                        <div th:each="ing, stat : ${recipe.ingredients}" class="ing-row">
-                            <i class="fa-solid fa-star star-icon"></i>
-                            <span th:text="${ing.name} + ' (' + ${ing.quantity} + ' ' + ${ing.unit} + ')'">Ingrediente</span>
-                            
-                            <button type="submit" 
-                                    th:formaction="@{'/admin/recipe/' + ${recipe.id} + '/ingredient/' + ${ing.id} + '/remove'}" 
-                                    class="mini-del-btn"
-                                    formnovalidate
-                                    title="Rimuovi Ingrediente">
-                                ×
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="add-ing-mini" style="margin-top: 10px; display: flex; gap: 5px;">
-                        <input type="text" name="name" placeholder="Nome" class="magic-input" style="flex: 2;" required/>
-                        <input type="text" name="quantity" placeholder="Qt." class="magic-input" style="flex: 1;"/>
-                        <input type="text" name="unit" placeholder="Unità" class="magic-input" style="flex: 1;"/>
-                        
-                        <button type="submit" 
-                                th:formaction="@{'/admin/recipe/' + ${recipe.id} + '/ingredient/add'}" 
-                                class="btn-add-ing" 
-                                style="cursor: pointer; background: #F3E5AB; border: 1px solid #8B4513; border-radius: 5px; font-weight: bold;"
-                                title="Aggiungi alla lista">
-                            +
-                        </button>
-                    </div>
-                </div>
+				<div class="ingredients-box">
+				    <h3>Ingredienti</h3>
+				    
+				    <div class="ing-list-scroll">
+				        <div th:each="ing, stat : ${recipe.ingredients}" class="ing-row">
+				            <input type="hidden" th:field="*{ingredients[__${stat.index}__].id}" />
+				            <input type="hidden" th:field="*{ingredients[__${stat.index}__].name}" />
+				            <input type="hidden" th:field="*{ingredients[__${stat.index}__].quantity}" />
+				            <input type="hidden" th:field="*{ingredients[__${stat.index}__].unit}" />
+
+				            <i class="fa-solid fa-star star-icon"></i>
+				            <span th:text="${ing.name} + ' (' + ${ing.quantity} + ' ' + ${ing.unit} + ')'">Ingrediente</span>
+				            
+				            <button type="submit" 
+				                    th:formaction="@{'/admin/recipe/' + ${recipe.id} + '/ingredient/' + ${ing.id} + '/remove'}" 
+				                    class="mini-del-btn"
+				                    formnovalidate
+				                    title="Rimuovi Ingrediente">
+				                ×
+				            </button>
+				        </div>
+				    </div>
+				    
+				    <div class="add-ing-mini" style="margin-top: 10px; display: flex; gap: 5px;">
+				        <input type="text" name="name" placeholder="Nome" class="magic-input" style="flex: 2;"/>
+				        <input type="text" name="quantity" placeholder="Qt." class="magic-input" style="flex: 1;"/>
+				        <input type="text" name="unit" placeholder="Unità" class="magic-input" style="flex: 1;"/>
+				        
+				        <button type="submit" 
+				                th:formaction="@{'/admin/recipe/' + ${recipe.id} + '/ingredient/add'}" 
+				                class="btn-add-ing" 
+				                style="cursor: pointer; background: #F3E5AB; border: 1px solid #8B4513; border-radius: 5px; font-weight: bold;"
+				                title="Aggiungi alla lista">
+				            +
+				        </button>
+				    </div>
+				</div>
 
                 <div class="procedure-box">
                     <h3>Tag </h3>
@@ -135,10 +140,10 @@
 
         </form>
 
-        <div class="footer-buttons">
-            <button type="submit" form="editForm" class="btn-oval gold">Salva Modifiche</button>
-            <a th:href="@{/admin/manageRecipes}" class="btn-oval beige">Annulla</a>
-        </div>
+		<div class="footer-buttons">
+		    <button type="submit" form="editForm" class="btn-oval gold" formnovalidate>Salva Modifiche</button>
+		    <a th:href="@{/admin/manageRecipes}" class="btn-oval beige">Annulla</a>
+		</div>
 
     </div>
 

@@ -11,20 +11,27 @@
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Cormorant Garamond', serif;
-    
-    /* Sfondo Celeste con texture polvere di stelle e pattern floreale leggero */
-    background-color: var(--bg-sky);
-    background-image: url('https://www.transparenttextures.com/patterns/stardust.png'),
-                      radial-gradient(circle at center, transparent 0%, rgba(255,255,255,0.2) 100%);
-    overflow: hidden; /* Evita scrollbar per la cornice */
-}
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden; /* Evita barre di scorrimento */
+
+            /* --- CAMBIA QUI IL NOME DEL FILE --- */
+            /* Assicurati che il percorso inizi con /images/ se la cartella si chiama così */
+            background-image: url('/images/sfondoLogin.jpg'); 
+            /* ----------------------------------- */
+
+            background-size: cover;   /* Copre tutto lo schermo */
+            background-position: center;
+            background-repeat: no-repeat;
+            
+            /* Centra il modulo login */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cormorant Garamond', serif;
+        }
 
 /* === CORNICE BORDI ESTERNI (Decorativa) === */
 
@@ -40,46 +47,74 @@ body {
 }
 
 /* === IL NASTRO/SCROLL (HEADER) - RIPRISTINO STILE ORIGINALE === */
+/* ========================================== */
+/* HEADER CON IMMAGINE NASTRO */
+/* ========================================== */
+
 .scroll-header {
     position: relative;
-    width: 110%; /* RIPRISTINATO: Più largo del form per l'effetto nastro */
-    margin-bottom: 10px; /* RIPRISTINATO */
-    filter: drop-shadow(0 10px 5px rgba(0,0,0,0.1));
+    
+    /* --- FORMULA PERFETTA PER CENTRARE --- */
+    width: 120%;        /* Il nastro è il 20% più largo del form */
+    margin-left: 0;  /* Lo sposto a sinistra esattamente della metà dell'eccedenza (10%) */
+    /* ------------------------------------- */
+    
+    /* Altezza del contenitore (regolala in base alla tua immagine) */
+    height: 140px; 
+    
+    /* Centra il contenuto (testo) all'interno del div */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    margin-bottom: 10px;
+    z-index: 10;
+	
+	transform: translateX(0px);
 }
 
 .scroll-content {
-    background: linear-gradient(to bottom, #FDEBD0 0%, #D4AF37 15%, #FDEBD0 50%, #D4AF37 100%); /* RIPRISTINATO: Gradiente originale a pergamena */
-    padding: 15px 40px; 
-    text-align: center;
-    border-radius: 5px 5px 50% 50% / 5px 5px 15px 15px; /* RIPRISTINATO: Curva originale */
-    border: 1px solid #8B4513; /* RIPRISTINATO */
-    position: relative;
-    z-index: 2;
+    /* 1. Rimuoviamo i vecchi gradienti e bordi CSS */
+    background: transparent; 
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0;
+    
+    /* 2. Inserisci qui la tua immagine */
+    background-image: url('/images/nastro.png'); 
+    
+    /* 3. Adattamento immagine */
+    background-size: contain; /* Mostra l'immagine intera senza tagliarla */
+    background-repeat: no-repeat;
+    background-position: center;
+    
+    width: 100%;
+    height: 100%;
+    
+    /* 4. Centratura del testo H1 sopra l'immagine */
+    display: flex;
+    align-items: center; /* Centra verticalmente */
+    justify-content: center; /* Centra orizzontalmente */
+    
+    /* Opzionale: sposta il testo un po' su o giù se il nastro è curvo */
+    padding-bottom: 10px; 
 }
 
+/* Stile del Testo sopra il nastro */
 .scroll-content h1 {
     font-family: 'Cinzel Decorative', serif;
-    color: #4E342E;
-    font-size: 2.5rem; 
+    color:#8B4513; /* Marrone scuro */
+    font-size: 3.5rem; /* Riduci leggermente se il nastro è stretto */
     margin: 0;
-    text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.6);
+    line-height: 1;
 }
 
-/* Effetto Pieghe del Nastro (CSS Puro) */
+/* NASCONDIAMO le vecchie code fatte in CSS perché l'immagine le ha già */
 .ribbon-left, .ribbon-right {
-    display: block; /* RIPRISTINATO: Resi visibili gli elementi piega */
-    position: absolute;
-    top: 15px; /* RIPRISTINATO */
-    width: 40px; 
-    height: 60px; 
-    background: linear-gradient(to right, #8B4513, #D4AF37);
-    z-index: 1;
-    border: 1px solid #5D4037;
-    border-radius: 0 0 10px 10px;
+    display: none !important;
 }
-.ribbon-left { left: 10px; transform: skewY(20deg); box-shadow: inset 5px 5px 10px rgba(0,0,0,0.3); } /* RIPRISTINATO */
-.ribbon-right { right: 10px; transform: skewY(-20deg); box-shadow: inset -5px 5px 10px rgba(0,0,0,0.3); } /* RIPRISTINATO */
-
 /* Sottotitolo */
 .magic-subtitle {
     font-family: 'Cormorant Garamond', serif;
@@ -239,4 +274,63 @@ button[type="submit"]:active {
 .extra-links a:hover {
     color: #D4AF37;
     border-bottom-style: solid;
+}
+
+/* ========================================================== */
+/* EFFETTO "POLVERE DI FATA" (CORRETTO E VISIBILE) */
+/* ========================================================== */
+
+.fairy-dust-container {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; /* FONDAMENTALE: permette di cliccare sotto */
+    z-index: 9999; /* CORREZIONE: Ora sta sopra a tutto! */
+    overflow: hidden;
+}
+
+/* Definizione base */
+.dust-layer-1, .dust-layer-2, .dust-layer-3 {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: transparent;
+    border-radius: 50%;
+}
+
+/* Animazione */
+@keyframes sparkle-move {
+    0% { transform: translateY(0); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateY(-100px); opacity: 0; }
+}
+
+/* --- STRATO 1: Oro (Più grandi) --- */
+.dust-layer-1 {
+    width: 4px; height: 4px; /* Aumentato da 2px a 4px */
+    box-shadow: 
+        10vw 20vh #D4AF37, 30vw 10vh #D4AF37, 50vw 30vh #D4AF37, 70vw 80vh #D4AF37, 
+        90vw 10vh #D4AF37, 20vw 90vh #D4AF37, 40vw 50vh #D4AF37, 60vw 20vh #D4AF37;
+    animation: sparkle-move 10s linear infinite;
+    opacity: 0.8; /* Più visibile */
+}
+
+/* --- STRATO 2: Bianchi (Medi) --- */
+.dust-layer-2 {
+    width: 3px; height: 3px; /* Aumentato da 3px a 3px visibili */
+    box-shadow: 
+        15vw 25vh #FFF, 35vw 15vh #FFF, 55vw 35vh #FFF, 75vw 85vh #FFF, 
+        95vw 15vh #FFF, 25vw 95vh #FFF, 45vw 55vh #FFF, 65vw 25vh #FFF;
+    animation: sparkle-move 15s linear infinite;
+    animation-delay: 1s;
+    opacity: 0.7;
+}
+
+/* --- STRATO 3: Polvere Sottile --- */
+.dust-layer-3 {
+    width: 2px; height: 2px; /* Aumentato da 1px a 2px */
+    box-shadow: 
+        5vw 15vh #FFF, 25vw 35vh #D4AF37, 45vw 55vh #FFF, 65vw 75vh #D4AF37, 
+        85vw 95vh #FFF, 12vw 42vh #D4AF37;
+    animation: sparkle-move 20s linear infinite;
+    animation-delay: 3s;
+    opacity: 0.6;
 }

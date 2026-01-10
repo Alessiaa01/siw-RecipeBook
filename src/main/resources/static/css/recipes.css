@@ -11,32 +11,26 @@
     --max-content-width: 1200px;
 }
 
-/* 1. IMPORTAZIONE FONT MAGICI */
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap');
 
+/* 1. IMPORTAZIONE FONT MAGICI */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Cormorant+Unicase:wght@400;600;700&family=Great+Vibes&display=swap');
 
 /* 2. SFONDO PAGINA */
 body {
-    margin: 0;
-    padding: 0;
+    margin: 0 !important;
+    padding: 0 !important;
     background: radial-gradient(circle at center, #E0F7FA 0%, #B2EBF2 100%);
+	background-attachment: fixed;
     min-height: 100vh;
     font-family: 'Cormorant Garamond', serif;
     color: #5D4037;
     display: flex;
     flex-direction: column;
     align-items: center;
+	box-sizing: border-box;
 }
 
-/* Texture "Polvere di Stelle" */
-.magic-background {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
-    opacity: 0.5;
-    pointer-events: none;
-    z-index: 0;
-}
+
 
 .fairy-card {
     position: relative;
@@ -54,12 +48,19 @@ body {
 /* === Header Bar === */
 header {
     background-color: #F8F4E8; 
-    padding: 10px 0;
+    
     border-bottom: 1px solid var(--secondary-color);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     width: 100%; 
-    margin: 0; 
+    margin: 0 !important; 
+	margin-top: 0 !important;
     display: block; 
+	
+	box-sizing: border-box;
+	padding: 10px 60px 10px 0 !important; 
+	
+	
+
 }
 
 /* Contenitore per allineare Admin (sinistra) e Utente (destra) */
@@ -148,54 +149,72 @@ header div[th\:if*="userDetails"] {
     flex-shrink: 0;
 }
 
-
-/* Stili del testo interno */
+/* Stili del testo interno (Chef Name) */
 .chef-name {
-    color: var(--primary-color); 
-    font-weight: 600;
-    font-family: 'Cormorant Unicase', serif; 
+    /* FONT E COLORI IDENTICI ALL'HEADER DI RECIPE.CSS */
+    font-family: 'Cinzel Decorative', serif !important; /* Il font magico */
+    font-weight: 700; /* Grassetto per renderlo leggibile come i link */
+    color: #8B4513;   /* Marrone Bronzo (lo stesso dei titoli e link) */
+    
     font-size: 1.1rem; 
     margin-right: 15px; 
     
+    /* Layout */
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-/* Icona Placeholder */
+/* Gestione del testo "Utente" o parti aggiuntive dentro lo span */
+.chef-name span {
+    font-family: 'Cinzel Decorative', serif !important; /* Assicura che anche il cognome/ruolo sia uguale */
+    color: #D4AF37; /* Mantiene l'oro per il contrasto, o metti #8B4513 se lo vuoi tutto marrone */
+    font-weight: bold;
+}
+
+/* Icona Placeholder (Pallino) - Rimane uguale */
 .chef-name::before {
     content: '';
     display: inline-block;
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background-color: var(--secondary-color); 
-    border: 1px solid var(--primary-color);
-}
-.chef-name span {
-    color: var(--accent-color);
+    background-color: #D4AF37; /* Oro */
+    border: 1px solid #8B4513; /* Bordo Marrone */
 }
 
-/* === Stile Bottone Logout */
+
+
+/* === Stile Bottone Logout === */
 header a[href="/logout"] {
- font-family: 'Cormorant Unicase', serif; 
+    /* 1. TIPOGRAFIA */
+    font-family: 'Cinzel Decorative', serif !important; /* Forza il font decorativo */
     font-weight: 700;
-	padding: 8px 20px; 
-	    font-size: 0.95rem;
+    font-size: 0.95rem;
     text-decoration: none;
+    line-height: 1.2; /* Assicura l'altezza corretta del testo */
+    
+    /* 2. DIMENSIONI E POSIZIONE */
+    display: inline-flex;       /* Fondamentale per centrare il testo nel bottone */
+    align-items: center;        /* Centra verticalmente */
+    justify-content: center;    /* Centra orizzontalmente */
+    padding: 5px 15px;          /* Padding identico all'originale */
+    margin-right: 0;
+    
+    /* 3. COLORI E BORDI */
+    background-color: #D3B88C; 
+    color: #4a4a4a;             /* Grigio scuro (Nota: non è marrone!) */
+    border: none;
     border-radius: 15px; 
     
-    background-color: #D3B88C; 
-    color: #4a4a4a; 
-    border: none;
+    /* 4. EFFETTI */
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.2s;
-	margin-right: 0;
+    transition: background-color 0.2s, color 0.2s;
 }
 
 header a[href="/logout"]:hover {
-    background-color: var(--primary-color);
-    color: white;
+    background-color: #8B4513 !important; /* Usa il codice esadecimale diretto per sicurezza */
+    color: white !important;
     text-decoration: none;
 }
 
@@ -219,6 +238,8 @@ body > div:first-of-type {
 .user-actions-right {
     margin-left: auto;
 }
+
+
 
 /* ========================================================== */
 /* 4. TITOLI */
@@ -251,6 +272,7 @@ h1 {
     margin: 10px auto 0 auto;
 }
 
+/* Icone Dorate per i metadati */
 /* Icone Dorate */
 .icon-gold {
     color: #D4AF37 !important; /* !important forza il colore se c'è qualche conflitto */
@@ -461,4 +483,90 @@ h1 {
 /* --- RIMUOVE IL TASTO SCOPRI --- */
 .card-actions {
     display: none !important;
+}
+
+/* ========================================================== */
+/* NUOVI STILI MAGICI (Logo & Effetto Luce) */
+/* ========================================================== */
+
+/* 1. STILE PER IL LOGO GRANDE (Sopra il titolo) */
+.big-page-logo {
+    display: block;
+    width: 160px; /* Grandezza del logo */
+    height: auto;
+    margin: 0 auto 15px auto; /* Centrato con spazio sotto */
+    
+    /* Ombra dorata morbida per staccarlo dallo sfondo */
+    filter: drop-shadow(0 5px 15px rgba(212, 175, 55, 0.5));
+    
+    /* Animazione di galleggiamento lento (opzionale, molto Disney) */
+    animation: floatLogo 6s ease-in-out infinite;
+}
+
+@keyframes floatLogo {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); } /* Sale piano piano */
+    100% { transform: translateY(0px); }
+}
+
+/* 2. EFFETTO "INCANTESIMO DI LUCE" (Magic Hover) */
+/* Questa classe aggiunge il fascio di luce al passaggio del mouse */
+.magic-hover {
+    position: relative;
+    overflow: hidden; /* Tiene la luce dentro i bordi */
+    transition: transform 0.3s ease;
+}
+
+/* Al passaggio del mouse si alza e brilla */
+.magic-hover:hover {
+    transform: translateY(-5px); 
+    filter: drop-shadow(0 10px 20px rgba(212, 175, 55, 0.4));
+    cursor: pointer;
+}
+
+/* Il fascio di luce bianco */
+.magic-hover::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%; /* Parte nascosto a sinistra */
+    width: 50%;
+    height: 100%;
+    
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.8) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    
+    transform: skewX(-25deg); /* Inclinato */
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* L'animazione parte solo all'hover */
+.magic-hover:hover::after {
+    animation: shine-pass 0.75s ease-in-out;
+}
+
+@keyframes shine-pass {
+    100% { left: 200%; } /* Attraversa tutto l'elemento */
+}
+
+
+.logo-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.main-logo {
+    width: 250px; /* Imposta una grandezza fissa o usa i pixel per maggior controllo */
+    height: auto;
+    transition: transform 0.3s ease;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2)); /* Aggiunge un'ombra per lo stile "fiaba" */
+}
+
+.main-logo:hover {
+    transform: scale(1.05); /* Effetto ingrandimento al passaggio del mouse */
 }

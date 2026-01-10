@@ -33,9 +33,11 @@
         </div>
     </header>
 
-    <div>
-        <a href="/"><img src="/images/logo-siw.png" width="50%" alt="Logo"/></a>  
-    </div>
+	<div class="logo-container">
+	    <a href="/">
+	        <img src="/images/logo2.png" class="main-logo" alt="Logo"/>
+	    </a>  
+	</div>
 
     <h1 class="main-title">ELENCO RICETTE</h1>
     
@@ -67,6 +69,7 @@
     </div>
 
     <ul class="recipe-cards-list">
+		
         <li th:each="recipe : ${recipes}" class="recipe-card">
             
             <div class="card-image">

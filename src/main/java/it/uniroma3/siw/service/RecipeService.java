@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.uniroma3.siw.model.Recipe;
+
 import it.uniroma3.siw.repository.RecipeRepository;
 
 import java.util.List;
@@ -51,5 +52,10 @@ public class RecipeService {
     @Transactional(readOnly = true)
     public List<Recipe> findByIngredientNameContainingIgnoreCase(String ingredientName) {
         return recipeRepository.findByIngredientsNameContainingIgnoreCase(ingredientName);
+    }
+    
+
+    public boolean existsByTitleAndIdNot(String title, Long id) {
+        return recipeRepository.existsByTitleAndIdNot(title, id);
     }
 }
