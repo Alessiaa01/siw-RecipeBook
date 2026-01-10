@@ -51,50 +51,48 @@ import javax.sql.DataSource;
                 .csrf().and().cors().disable()
                 .authorizeHttpRequests()
                 
-//                .requestMatchers("/**").permitAll()
-                // chiunque (autenticato o no) può accedere alle pagine index, login, register, ai css e alle immagini
+                // --- 1. PAGINE APERTE A TUTTI (Pubbliche) ---
                 .requestMatchers(HttpMethod.GET,
-                	    "/",
-                	    "/index",        // Aggiungere o assicurarsi che abbia il slash
-                	    "/register",     // Aggiungere o assicurarsi che abbia il slash
-                	    "/css/**", 
-                	    "/images/**", 
-                	    "/favicon.ico",  // Aggiungere il slash
-                	    "/recipes",       // <--- Elenco ricette visibile a tutti
-                	    "/recipe/**",     // <--- Dettaglio ricetta (e recensioni) visibile a tutti
-                	    "/cooks",         // <--- (Opzionale) Elenco cuochi visibile a tutti
-                	    "/cook/**",
-                	    "/error"
-                	).permitAll()
+                        "/", "/index", 
+                        "/register", "/login", 
+                        "/css/**", "/images/**", "favicon.ico", 
+                        "/recipes",       // Elenco ricette visibile a tutti
+                        "/recipe/**",     // Dettaglio ricetta visibile a tutti
+                        "/cooks", "/cook/**" // Se hai i cuochi
+                ).permitAll()
                 
-              //  .requestMatchers(HttpMethod.GET,"/","/index","/register","/css/**", "/images/**", "favicon.ico").permitAll()
-        		// chiunque (autenticato o no) può mandare richieste POST al punto di accesso per login e register 
+                // Login e Register (Invio dati) sono pubblici
+                .requestMatchers(HttpMethod.POST, "/register", "/login").permitAll()
                 
-                .requestMatchers(HttpMethod.POST,"/register", "/login").permitAll()
+                // --- 2. PAGINE SOLO PER L'AMMINISTRATORE ---
+                // Qualsiasi URL che inizia con /admin/ richiede il ruolo ADMIN
+                .requestMatchers(HttpMethod.GET, "/admin/**").hasAnyAuthority(ADMIN_ROLE)
+                .requestMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority(ADMIN_ROLE)
                 
-           //     .requestMatchers(HttpMethod.GET,"/recipes","/recipe/**").authenticated() // utenti normali
-                .requestMatchers(HttpMethod.GET,"/admin/**").hasAnyAuthority(ADMIN_ROLE)
-                .requestMatchers(HttpMethod.POST,"/admin/**").hasAnyAuthority(ADMIN_ROLE)
-        		// tutti gli utenti autenticati possono accere alle pagine rimanenti 
-                
+                // --- 3. PAGINE PER GLI UTENTI LOGGATI ---
+                // Qui ricadono AUTOMATICAMENTE:
+                // - /formNewRecipe (perché non è pubblica e non è admin)
+                // - /myRecipes
+                // - Salvare una ricetta
                 .anyRequest().authenticated()
-                // LOGIN: qui definiamo il login
+                
+                // --- CONFIGURAZIONE LOGIN ---
                 .and().formLogin()
                 .loginPage("/login")
                 .permitAll()
                 .defaultSuccessUrl("/success", true)
                 .failureUrl("/login?error=true")
-                // LOGOUT: qui definiamo il logout
+                
+                // --- CONFIGURAZIONE LOGOUT ---
                 .and()
                 .logout()
-                // il logout è attivato con una richiesta GET a "/logout"
                 .logoutUrl("/logout")
-                // in caso di successo, si viene reindirizzati alla home
                 .logoutSuccessUrl("/")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .clearAuthentication(true).permitAll();
+        
         return httpSecurity.build();
     }
 }

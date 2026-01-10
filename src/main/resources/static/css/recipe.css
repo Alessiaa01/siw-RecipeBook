@@ -531,3 +531,13 @@ body > div:first-of-type {
     font-style: italic;
     display: block;
 }
+
+.author-info {
+    font-family: 'Great Vibes'; /* Font stile firma */
+    color: #B8860B;                      /* Color Oro scuro (Goldenrod) */
+    font-size: 2.2em;                    /* Molto grande per essere leggibile */
+    margin-top: 5px;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.2); /* Leggera ombra per staccarlo dallo sfondo */
+    letter-spacing: 1px;                 /* Leggero spazio tra le lettere */
+}

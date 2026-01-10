@@ -27,7 +27,7 @@
             </div>
         </div>
 
-        <form th:action="@{/admin/formNewRecipe}" th:object="${recipe}" method="POST" class="scroll-parchment" id="newRecipeForm">
+        <form th:action="@{/formNewRecipe}" th:object="${recipe}" method="POST" class="scroll-parchment" id="newRecipeForm">
             
             <div th:if="${#fields.hasGlobalErrors()}" class="error-banner">
                 <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">Errore</p>

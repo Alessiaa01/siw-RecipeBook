@@ -228,380 +228,67 @@ header {
 }
 
 /* ========================================================== */
-/* 5. BARRA DI RICERCA (Stile Pergamena/Vetro) */
-/* ========================================================== */
-.action-bar-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: var(--max-content-width);
-    margin: 0 auto 50px auto;
-    padding: 0 20px;
-    position: relative;
-}
-
-/* Contenitore Cerca */
-.search-container {
-    background: rgba(255, 255, 255, 0.6); /* Effetto Vetro */
-    padding: 15px 30px;
-    border-radius: 50px;
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.2); /* Alone magico */
-    border: 1px solid rgba(255, 255, 255, 0.8);
-}
-
-.elegant-search-form {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.search-field {
-    border-bottom: 2px solid rgba(212, 175, 55, 0.4);
-    transition: all 0.3s;
-}
-.search-field:focus-within {
-    border-bottom: 2px solid #D4AF37;
-}
-
-.search-field input {
-    border: none;
-    background: transparent;
-    padding: 5px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.3rem;
-    font-style: italic;
-    color: #5D4037;
-    outline: none;
-    width: 220px;
-}
-
-.search-button {
-    background-color: white;
-    color: #8B4513;
-    border: 1px solid #D4AF37;
-    padding: 8px 25px;
-    border-radius: 25px;
-    font-family: 'Cinzel Decorative', serif;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-.search-button:hover {
-    background-color: #D4AF37;
-    color: white;
-    box-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
-}
-
-/* Tasto AGGIUNGI NUOVA RICETTA */
-.action-bar-wrapper {
-    position: relative; /* FONDAMENTALE: fa da punto di riferimento */
-    display: flex;
-    justify-content: center; /* Mantiene la ricerca al centro */
-    align-items: center;
-    max-width: 98%; /* Occupa quasi tutta la larghezza */
-    margin: 0 auto 50px auto;
-    padding: 0 20px;
-}
-
-/* 2. Il contenitore del bottone (Modifica questo per spostarlo a destra) */
-.admin-actions-top {
-    position: absolute; /* Lo sgancia dal flusso normale */
-    right: 30px;        /* Lo piazza a 10px dal bordo destro */
-    top: 50%;           /* Lo centra verticalmente */
-    transform: translateY(-50%); /* Corregge la centratura verticale */
-}
-
-/* 3. Lo stile del bottone (questo rimane uguale al tuo) */
-.action-add-new {
-    display: inline-block;
-    padding: 10px 25px;
-    text-decoration: none;
-    font-family: 'Cinzel Decorative', serif;
-    font-weight: bold;
-    color: #5a3e1b;
-    border: 1px solid #B8860B;
-    border-radius: 25px;
-    background-color: rgba(255, 255, 255, 0.8);
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    white-space: nowrap; /* Evita che il testo vada a capo */
-}
-
-.action-add-new:hover {
-    background-color: #B8860B;
-    color: white;
-    transform: translateY(-3px);
-    box-shadow: 0 0 15px rgba(184, 134, 11, 0.5);
-}
-
-/* ========================================================== */
-/* 6. LISTA RICETTE (CARD FIABESCHE) */
-/* ========================================================== */
-.recipe-cards-list {
-    list-style: none;
-    padding: 0;
-    margin: 0 auto 60px auto;
-    max-width: 1000px;
-    display: flex;
-    flex-direction: column;
-    gap: 0; /* Unite come nel tuo originale */
-}
-
-.recipe-card {
-    background-color: rgba(255, 255, 255, 0.3) !important; /* Molto trasparente */
-    border-bottom: 1px dashed rgba(212, 175, 55, 0.4) !important;
-    padding: 30px 40px;
-    
-    display: grid;
-    grid-template-columns: 130px 1fr; /* Img | Testo */
-    gap: 30px;
-    align-items: center;
-    
-    transition: all 0.3s ease;
-}
-
-.recipe-card:hover {
-    background-color: rgba(255, 255, 255, 0.6) !important;
-    transform: scale(1.02); /* Leggero zoom */
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
-    border-radius: 15px; /* Arrotonda quando passi sopra */
-    border-bottom: 1px solid transparent !important;
-}
-
-/* Immagine Tonda con bordo oro */
-.card-image {
-    width: 130px;
-    height: 130px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 2px solid var(--secondary-color);
-    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
-}
-.card-image img {
-    width: 100%; height: 100%; object-fit: cover;
-}
-
-/* Testi e Icone */
-.recipe-title {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 2rem;
-    color: #8B4513;
-    font-weight: 700;
-    margin-bottom: 5px;
-    line-height: 1.2;
-    display: block;
-}
-
-.recipe-description {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.2rem;
-    color: #5D4037;
-    font-style: italic;
-    margin-bottom: 15px;
-}
-
-.card-metadata-inline i {
-    color: #D4AF37; /* Icone Oro */
-    font-size: 1.1rem;
-    margin-right: 5px;
-}
-.card-metadata-inline span {
-    font-weight: bold;
-    font-family: 'Cinzel Decorative', serif;
-    color: #8B4513;
-}=============================== */
-header {
-    background-color: #F8F4E8; 
-    border-bottom: 2px solid var(--secondary-color); /* Bordo Oro più visibile */
-    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2); /* Ombra dorata */
-    width: 100%; 
-    margin: 0 !important; 
-    padding: 10px 0 !important;
-    position: relative;
-    z-index: 100;
-}
-
-.header-content-wrapper {
-    display: flex;
-    justify-content: space-between; 
-    align-items: center;
-	width:100%;
-    max-width: 98%; 
-    margin: 0 auto; 
-    padding: 0 20px !important; 
-}
-
-/* --- LATO SINISTRO (Admin) --- */
-.admin-link-header-left a {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-family: 'Cormorant Unicase', serif;
-    font-weight: 700;
-    font-size: 0.95rem;
-    padding: 8px 20px;
-    border-radius: 25px;
-    background-color: #D3B88C; 
-    color: #8B4513; 
-    border: 1px solid #B8860B; 
-    transition: all 0.3s ease;
-}
-
-.admin-link-header-left a:hover {
-    background-color: var(--primary-color);
-    color: white;
-    transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(212, 175, 55, 0.6); /* Glow magico */
-}
-
-/* --- LATO DESTRO (Utente e Bottoni) --- */
-.user-actions-right {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-/* Testi Benvenuto */
-.welcome-text, .chef-name {
-    font-family: 'Cinzel Decorative', serif; /* Font Magico ripristinato */
-    font-weight: 700;
-    color: #8B4513;
-    font-size: 1.1rem;
-    margin-right: 5px;
-}
-
-/* --- STILE BOTTONI LOGIN/REGISTER/LOGOUT (Uniformati al tema) --- */
-
-/* Stile Base */
-.btn-auth {
-    display: inline-block;
-    padding: 6px 18px;
-    border-radius: 20px;
-    font-family: 'Cinzel Decorative', serif;
-    font-weight: bold;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-    border: 1px solid transparent;
-    cursor: pointer;
-}
-
-/* Bottone ACCEDI (Trasparente con bordo Bronzo) */
-.btn-login {
-	background-color: #D3B88C;  /* Sfondo Sabbia */
-	    border: 1px solid #B8860B;  /* Bordo Oro Scuro */
-	    color: #8B4513;
-}
-.btn-login:hover {
-	background-color: #8B4513;  /* Sfondo Marrone */
-	    color: white;               /* Testo Bianco */
-	    border-color: #8B4513;
-	    transform: translateY(-2px);
-	    box-shadow: 0 0 15px rgba(212, 175, 55, 0.6); /* Glow magico */
-}
-
-/* Bottone REGISTRATI (Oro pieno) */
-.btn-register {
-	background-color: #D3B88C;  /* Sfondo Sabbia */
-	    border: 1px solid #B8860B;  /* Bordo Oro Scuro */
-	    color: #8B4513;
-}
-.btn-register:hover {
-	background-color: #8B4513;  /* Sfondo Marrone */
-	    color: white;               /* Testo Bianco */
-	    border-color: #8B4513;
-	    transform: translateY(-2px);
-	    box-shadow: 0 0 15px rgba(212, 175, 55, 0.6); /* Glow magico */
-}
-
-/* Bottone LOGOUT (Rosso scuro elegante) */
-.btn-logout {
-    background-color: #D3B88C; /* Sfondo sabbia come Admin */
-    color: #4a4a4a;
-    border: 1px solid transparent;
-}
-.btn-logout:hover {
-    background-color: #A52A2A; /* Diventa rosso al passaggio */
-    color: white;
-    transform: scale(1.05);
-}
-
-/* ========================================================== */
-/* 4. LOGO FLUTTUANTE E TITOLI */
-/* ========================================================== */
-.logo-container {
-    text-align: center;
-    margin: 30px 0 10px 0;
-}
-
-.main-logo {
-    width: 200px; 
-    height: auto;
-    filter: drop-shadow(0 5px 15px rgba(212, 175, 55, 0.4)); /* Ombra dorata */
-    animation: floatLogo 6s ease-in-out infinite; /* RIPRISTINATA ANIMAZIONE */
-}
-
-/* Animazione galleggiamento */
-@keyframes floatLogo {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0px); }
-}
-
-.main-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 4.5rem;
-    color: #8B4513;
-    text-align: center;
-    margin: 10px 0 40px 0;
-    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
-    line-height: 1.1;
-}
-
-.main-title::after {
-    content: '';
-    display: block;
-    height: 2px;
-    background: linear-gradient(to right, transparent, #D4AF37, transparent);
-    width: 50%;
-    margin: 15px auto 0 auto;
-}
-
-/* ========================================================== */
-/* 5. BARRA DI RICERCA E AZIONI (LAYOUT A GRIGLIA) */
+/* 5. BARRA DI RICERCA (CORREZIONE SOVRAPPOSIZIONE) */
 /* ========================================================== */
 
-/* Il contenitore diventa una griglia a 3 colonne */
 .action-bar-wrapper {
     display: grid;
-    /* 1fr (spazio vuoto) | auto (barra ricerca) | 1fr (spazio vuoto + bottone) */
-    grid-template-columns: 1fr auto 1fr; 
+    /* La magia è qui: 
+       - 1fr: spazio vuoto a sinistra
+       - minmax(auto, 650px): la ricerca sta al centro ma non supera i 650px
+       - 1fr: spazio a destra dove sta il bottone */
+    grid-template-columns: 1fr minmax(auto, 650px) 1fr; 
     
     align-items: center;
     width: 100%;
-    max-width: 98%; /* Occupa quasi tutto lo schermo */
+    max-width: 98%;
     margin: 0 auto 50px auto;
-    padding: 0 30px; /* Distanza dai bordi laterali */
+    padding: 0 30px;
     box-sizing: border-box;
+    
+    /* Questa riga impedisce fisicamente che si tocchino */
+    gap: 30px; 
 }
 
-/* --- ELEMENTO CENTRALE: Barra di Ricerca --- */
+/* Barra di Ricerca (CENTRO) */
 .search-container {
-    grid-column: 2; /* Forza la posizione nella colonna centrale */
-    justify-self: center; /* Si centra perfettamente */
+    grid-column: 2; 
+    justify-self: center;
     
     background: rgba(255, 255, 255, 0.6);
-    padding: 15px 30px;
+    padding: 15px 25px; /* Leggermente ridotto per guadagnare spazio */
     border-radius: 50px;
     box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.8);
+    
+    /* Assicuriamo che non esploda in larghezza */
+    width: 100%; 
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .elegant-search-form {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 15px;
+    flex-wrap: wrap; /* Se lo schermo è piccolo, gli input vanno a capo invece di sovrapporsi! */
 }
 
+/* Campi di input */
+.search-field input {
+    border: none;
+    background: transparent;
+    padding: 5px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; /* Font leggermente più piccolo per stare meglio */
+    font-style: italic;
+    color: #5D4037;
+    outline: none;
+    width: 180px; /* Ridotto da 220px a 180px per evitare contatti */
+}
+
+/* Il resto rimane uguale */
 .search-field {
     border-bottom: 2px solid rgba(212, 175, 55, 0.4);
     transition: all 0.3s;
@@ -610,23 +297,11 @@ header {
     border-bottom: 2px solid #D4AF37;
 }
 
-.search-field input {
-    border: none;
-    background: transparent;
-    padding: 5px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.3rem;
-    font-style: italic;
-    color: #5D4037;
-    outline: none;
-    width: 220px;
-}
-
 .search-button {
     background-color: white;
     color: #8B4513;
     border: 1px solid #D4AF37;
-    padding: 8px 25px;
+    padding: 8px 20px;
     border-radius: 25px;
     font-family: 'Cinzel Decorative', serif;
     font-weight: bold;
@@ -639,30 +314,31 @@ header {
     box-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
 }
 
-/* --- ELEMENTO DESTRO: Bottone Aggiungi --- */
+/* Bottone Aggiungi Ricetta (DESTRA) */
 .admin-actions-top {
-    grid-column: 3; /* Forza la posizione nella colonna di destra */
-    justify-self: end; /* Spinge il bottone alla fine (bordo destro) */
-    
-    /* Rimuoviamo il posizionamento assoluto che causava problemi */
+    grid-column: 3; 
+    justify-self: end;
     position: static; 
-    transform: none;
     margin: 0;
+    
+    /* Assicura che stia sempre sopra e non sotto */
+    z-index: 10; 
 }
 
 .action-add-new {
     display: inline-block;
-    padding: 10px 25px;
+    padding: 10px 20px; /* Padding leggermente ridotto */
     text-decoration: none;
     font-family: 'Cinzel Decorative', serif;
     font-weight: bold;
     color: #5a3e1b;
     border: 1px solid #B8860B;
     border-radius: 25px;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.9); /* Più opaco per coprire eventuali linee */
     transition: all 0.3s ease;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    white-space: nowrap; /* Evita che il testo vada a capo */
+    white-space: nowrap;
+    font-size: 0.9rem;
 }
 
 .action-add-new:hover {

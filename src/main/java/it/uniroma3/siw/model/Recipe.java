@@ -8,6 +8,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 import java.util.List;
 import java.util.Set;
 import java.util.ArrayList;
@@ -20,6 +21,9 @@ import jakarta.persistence.CascadeType;
 
 @Entity
 public class Recipe {
+	
+	@ManyToOne  
+    private User author;  
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -185,6 +189,15 @@ public class Recipe {
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
     }
+    
+    public User getAuthor() { 
+        return author; 
+    }
+
+    public void setAuthor(User author) { 
+        this.author = author; 
+    }
+    
     // --- Metodi equals e hashCode (importanti per la persistenza e il confronto) ---
     // Due oggetti Recipe sono considerati uguali se hanno lo stesso titolo.
     // In un sistema reale, dovresti considerare anche l'Utente che l'ha creata

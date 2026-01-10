@@ -35,10 +35,20 @@
         <div class="corner bottom-left"></div>
         <div class="corner bottom-right"></div>
 
-        <div class="title-section">
-            <h1 th:text="${recipe.title}">Titolo Ricetta</h1>
-            <p class="subtitle" th:text="${recipe.description}">Descrizione...</p>
-        </div>
+		<div class="title-section">
+		    <h1 th:text="${recipe.title}">Titolo Ricetta</h1>
+
+		    <div class="author-info">
+		        <span th:if="${recipe.author != null}">
+		            Chef: <strong th:text="${recipe.author.name} + ' ' + ${recipe.author.surname}">Nome Cognome</strong>
+		        </span>
+		        <span th:unless="${recipe.author != null}">
+		            Chef Anonimo
+		        </span>
+		    </div>
+
+		    <p class="subtitle" th:text="${recipe.description}">Descrizione...</p>
+		</div>
 
         <div class="content-grid">
             

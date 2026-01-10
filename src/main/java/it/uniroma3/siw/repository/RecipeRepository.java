@@ -3,6 +3,7 @@ package it.uniroma3.siw.repository;
 import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import it.uniroma3.siw.model.Recipe;
+import it.uniroma3.siw.model.User;
 
 public interface RecipeRepository extends CrudRepository<Recipe, Long> {
 	
@@ -15,4 +16,6 @@ public interface RecipeRepository extends CrudRepository<Recipe, Long> {
     
 
     public boolean existsByTitleAndIdNot(String title, Long id);
+    
+    public List<Recipe> findByAuthor(User author);
 }

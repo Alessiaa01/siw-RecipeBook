@@ -22,6 +22,7 @@ import it.uniroma3.siw.service.CredentialsService;
 
 import it.uniroma3.siw.controller.validator.RecipeValidator;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -137,26 +138,15 @@ public String addReview(@PathVariable("recipeId") Long recipeId, // Cambia anche
     return "redirect:/recipe/" + recipeId;
 }
 
-   
-
-
-    //----------ADMIN----------
-
-@GetMapping("/admin/manageRecipes")
-public String manageRecipes(Model model) {
-    model.addAttribute("recipes", recipeService.findAll());
-    return "admin/manageRecipes.html"; 
+// Form per inserire una nuova ricetta
+@GetMapping("/formNewRecipe")
+public String formNewRecipe(Model model) {
+    model.addAttribute("recipe", new Recipe());
+    return "formNewRecipe.html";
 }
 
-    // Form per inserire una nuova ricetta
-    @GetMapping("/admin/formNewRecipe")
-    public String formNewRecipe(Model model) {
-        model.addAttribute("recipe", new Recipe());
-        return "admin/formNewRecipe.html";
-    }
-    
 
-    @PostMapping("/admin/formNewRecipe")
+    @PostMapping("/formNewRecipe")
     public String newRecipe(@Valid @ModelAttribute("recipe") Recipe recipe,
                             BindingResult bindingResult, Model model) {
         
@@ -187,6 +177,18 @@ public String manageRecipes(Model model) {
         // Sostituisce la lista originale con solo gli elementi validi
         recipe.setIngredients(validIngredients); 
         
+     // --- INIZIO MODIFICA: ASSEGNAZIONE AUTORE ---
+        
+        // Recupera l'utente corrente dalla sessione di sicurezza
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+        
+        // Recupera le credenziali (e quindi l'User) dal database
+        // NOTA: Assicurati di avere credentialsService iniettato nel controller
+        Credentials credentials = credentialsService.getCredentials(currentUsername);
+        
+        // Imposta l'autore della ricetta
+        recipe.setAuthor(credentials.getUser());
         // 3. Salvataggio
         recipeService.save(recipe);
         
@@ -194,7 +196,13 @@ public String manageRecipes(Model model) {
         return "redirect:/recipe/" + recipe.getId(); 
     }
 
-    
+  //----------ADMIN----------
+
+    @GetMapping("/admin/manageRecipes")
+    public String manageRecipes(Model model) {
+        model.addAttribute("recipes", recipeService.findAll());
+        return "admin/manageRecipes.html"; 
+    }   
     
     @GetMapping("/admin/recipe/{id}/edit")
     public String editRecipe(@PathVariable("id") Long id, Model model) {
