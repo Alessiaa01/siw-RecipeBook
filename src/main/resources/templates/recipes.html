@@ -11,35 +11,43 @@
 <body>
     <div class="magic-background"></div>
 
-    <header>
-        <div class="header-content-wrapper" style="display: flex; justify-content: space-between; align-items: center;">
-        
-            <div sec:authorize="hasAuthority('ADMIN')" class="admin-link-header-left">
-                <a th:href="@{/admin/manageRecipes}" class="action-manage" style="color: white; text-decoration: none;">
-                    <i class="fa-solid fa-crown"></i> Gestione Admin
-                </a>
-            </div>
-            
-            <div sec:authorize="!hasAuthority('ADMIN')"></div>
-            
-            <div class="user-actions-right">
-                
-                <div sec:authorize="isAuthenticated()">
-                    <span class="chef-name">
-                        ✨ Chef <span sec:authentication="name">NomeUtente</span>
-                    </span>
-                    <a th:href="@{/logout}" class="btn-auth btn-logout">Logout</a>
-                </div>
+	<header>
+	    <div class="header-content-wrapper" style="display: flex; justify-content: space-between; align-items: center;">
+	    
+	        <div class="left-actions">
+	            
+	            <div sec:authorize="hasAuthority('ADMIN')" class="admin-link-header-left">
+	                <a th:href="@{/admin/manageRecipes}" class="action-manage" style="color: white; text-decoration: none; font-weight: bold;">
+	                    <i class="fa-solid fa-crown"></i> Gestione Admin
+	                </a>
+	            </div>
+	            
+	            <div sec:authorize="isAuthenticated() && !hasAuthority('ADMIN')">
+	                <a th:href="@{/myRecipes}" class="action-manage" style="color: #B8860B; text-decoration: none; font-weight: bold; font-family: 'Cinzel Decorative', serif;">
+	                    <i class="fa-solid fa-scroll"></i> Le mie ricette
+	                </a>
+	            </div>
 
-                <div sec:authorize="!isAuthenticated()">
-                    <span class="welcome-text">Benvenuto!</span>
-                    <a th:href="@{/login}" class="btn-auth btn-login">Accedi</a>
-                    <a th:href="@{/register}" class="btn-auth btn-register">Registrati</a>
-                </div>
-                
-            </div>
-        </div>
-    </header>
+	        </div>
+	        
+	        <div class="user-actions-right">
+	            
+	            <div sec:authorize="isAuthenticated()">
+	                <span class="chef-name">
+	                    ✨ Chef <span sec:authentication="name">NomeUtente</span>
+	                </span>
+	                <a th:href="@{/logout}" class="btn-auth btn-logout">Logout</a>
+	            </div>
+
+	            <div sec:authorize="!isAuthenticated()">
+	                <span class="welcome-text">Benvenuto!</span>
+	                <a th:href="@{/login}" class="btn-auth btn-login">Accedi</a>
+	                <a th:href="@{/register}" class="btn-auth btn-register">Registrati</a>
+	            </div>
+	            
+	        </div>
+	    </div>
+	</header>
 
     <div class="logo-container">
         <a th:href="@{/}">
@@ -65,11 +73,6 @@
                 <button type="submit" class="search-button">CERCA</button>
             </form>
         </div>
-        
-        <div sec:authorize="isAuthenticated()" class="admin-actions-top">
-            <a th:href="@{/formNewRecipe}" class="action-add-new">➕ Aggiungi una nuova Ricetta</a>
-        </div>
-    
     </div>
 
     <div th:if="${#lists.isEmpty(recipes)}">

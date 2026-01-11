@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.uniroma3.siw.model.Recipe;
+import it.uniroma3.siw.model.User;
 
 import it.uniroma3.siw.repository.RecipeRepository;
 
@@ -57,5 +58,10 @@ public class RecipeService {
 
     public boolean existsByTitleAndIdNot(String title, Long id) {
         return recipeRepository.existsByTitleAndIdNot(title, id);
+    }
+    
+ // Aggiungi questo metodo nella classe RecipeService
+    public List<Recipe> getRecipesByAuthor(User author) {
+        return recipeRepository.findByAuthor(author);
     }
 }

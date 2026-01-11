@@ -14,6 +14,7 @@ import it.uniroma3.siw.model.Recipe;
 import it.uniroma3.siw.model.Ingredient;
 import it.uniroma3.siw.model.Review;
 import it.uniroma3.siw.model.Credentials;
+import it.uniroma3.siw.model.User;
 
 import it.uniroma3.siw.service.RecipeService;
 import it.uniroma3.siw.service.IngredientService;
@@ -195,24 +196,102 @@ public String formNewRecipe(Model model) {
         // Reindirizza alla pagina di visualizzazione pubblica della ricetta appena creata
         return "redirect:/recipe/" + recipe.getId(); 
     }
-
-  //----------ADMIN----------
-
-    @GetMapping("/admin/manageRecipes")
-    public String manageRecipes(Model model) {
-        model.addAttribute("recipes", recipeService.findAll());
-        return "admin/manageRecipes.html"; 
-    }   
     
-    @GetMapping("/admin/recipe/{id}/edit")
+    @GetMapping("/myRecipes")
+    public String myRecipes(Model model) {
+        // 1. Recupera l'utente loggato
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+        
+        // 2. Recupera l'oggetto User corrispondente
+        Credentials credentials = credentialsService.getCredentials(currentUsername);
+        User currentUser = credentials.getUser();
+        
+        // 3. Chiede al service le ricette di QUEL l'utente
+        List<Recipe> recipes = recipeService.getRecipesByAuthor(currentUser);
+        
+        // 4. Le mette nel modello per la pagina HTML
+        model.addAttribute("recipes", recipes);
+        
+        return "myRecipes";
+    }
+
+   /* 
+    @GetMapping("/recipe/{id}/edit")
     public String editRecipe(@PathVariable("id") Long id, Model model) {
         Recipe recipe = recipeService.findById(id);
         model.addAttribute("recipe", recipe);
         model.addAttribute("ingredient", new Ingredient());
-        return "admin/editRecipe.html";
+        return "editRecipe.html";
     }
+    */
+    
+    
+    @GetMapping("/recipe/edit/{id}")
+    public String editRecipe(@PathVariable("id") Long id, Model model) {
+        Recipe recipe = recipeService.findById(id);
+        
+        // CONTROLLO PERMESSI: Solo l'autore o l'admin possono entrare
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+        Credentials credentials = credentialsService.getCredentials(currentUsername);
 
-    @PostMapping("/admin/recipe/{id}/update")
+        if (!recipe.getAuthor().equals(credentials.getUser()) && 
+            !credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
+            return "redirect:/recipes?error=notAuthorized";
+        }
+
+        model.addAttribute("recipe", recipe);
+        model.addAttribute("ingredient", new Ingredient());
+        return "editRecipe.html"; 
+    }
+    
+    @PostMapping("/recipe/update/{id}")
+    public String updateRecipe(@PathVariable("id") Long id, 
+                               @ModelAttribute("recipe") Recipe updatedRecipe, 
+                               BindingResult bindingResult, 
+                               Model model) {
+        
+        Recipe recipeInDb = recipeService.findById(id);
+        
+        // CONTROLLO PERMESSI
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Credentials credentials = credentialsService.getCredentials(authentication.getName());
+
+        if (!recipeInDb.getAuthor().equals(credentials.getUser()) && 
+            !credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
+            return "redirect:/recipes?error=notAuthorized";
+        }
+
+        // Recupero ingredienti vecchi per evitare problemi di validazione
+        updatedRecipe.setIngredients(recipeInDb.getIngredients());
+
+        // Validazione
+        this.recipeValidator.validate(updatedRecipe, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("recipe", updatedRecipe);
+            model.addAttribute("ingredient", new Ingredient());
+            return "editRecipe"; // Torna al form se c'è errore
+        }
+
+        // Aggiornamento campi manuale
+        recipeInDb.setTitle(updatedRecipe.getTitle());
+        recipeInDb.setDescription(updatedRecipe.getDescription());
+        recipeInDb.setProcedure(updatedRecipe.getProcedure());
+        recipeInDb.setPreparationTime(updatedRecipe.getPreparationTime());
+        recipeInDb.setCookingTime(updatedRecipe.getCookingTime());
+        recipeInDb.setDifficulty(updatedRecipe.getDifficulty());
+        recipeInDb.setServings(updatedRecipe.getServings());
+        recipeInDb.setCategory(updatedRecipe.getCategory());
+        recipeInDb.setImageUrl(updatedRecipe.getImageUrl());
+        
+        recipeService.save(recipeInDb);
+
+        return "redirect:/recipe/" + id; // Torna alla pagina della ricetta aggiornata
+    }
+    /*
+    @PostMapping("/recipe/{id}/update")
     public String updateRecipe(@PathVariable("id") Long id, 
                                @ModelAttribute("recipe") Recipe updatedRecipe, 
                                BindingResult bindingResult, 
@@ -265,10 +344,31 @@ public String formNewRecipe(Model model) {
         // OPPURE: Se preferisci tornare all'elenco pubblico usa questa riga invece di quella sopra:
          return "redirect:/recipes";
     }
+    */
     
+    @PostMapping("/recipe/{recipeId}/ingredient/add")
+    public String addIngredientToRecipe(@PathVariable("recipeId") Long recipeId,
+                                        @ModelAttribute("ingredient") Ingredient ingredient) {
+        
+        Recipe recipe = recipeService.findById(recipeId);
+        
+        // (Qui potresti aggiungere lo stesso controllo permessi se vuoi essere sicurissima)
 
+        Ingredient newIngredient = new Ingredient();
+        newIngredient.setName(ingredient.getName());
+        newIngredient.setQuantity(ingredient.getQuantity());
+        newIngredient.setUnit(ingredient.getUnit());
+        newIngredient.setRecipe(recipe);
+
+        ingredientService.save(newIngredient);
+        recipe.getIngredients().add(newIngredient);
+        recipeService.save(recipe);
+
+        return "redirect:/recipe/edit/" + recipeId; // Ricarica la pagina di modifica
+    }
+  /*
     // Aggiunge un ingrediente direttamente alla ricetta e rimane sulla stessa pagina
-    @PostMapping("/admin/recipe/{recipeId}/ingredient/add")
+    @PostMapping("/recipe/{recipeId}/ingredient/add")
     public String addIngredientToRecipe(@PathVariable("recipeId") Long recipeId,
                                         @ModelAttribute("ingredient") Ingredient ingredient) {
         
@@ -290,8 +390,21 @@ public String formNewRecipe(Model model) {
 
         return "redirect:/admin/recipe/" + recipeId + "/edit";
     }
+    */
     
-    @PostMapping("/admin/recipe/{recipeId}/ingredient/{ingredientId}/remove")
+    @GetMapping("/recipe/{recipeId}/ingredient/{ingredientId}/remove") // Cambiato in GET per comodità nei link
+    public String removeIngredient(@PathVariable Long recipeId, @PathVariable Long ingredientId) {
+        Recipe recipe = recipeService.findById(recipeId);
+        
+        // Rimuovi l'ingrediente
+        recipe.getIngredients().removeIf(ing -> ing.getId().equals(ingredientId));
+        
+        recipeService.save(recipe);
+
+        return "redirect:/recipe/edit/" + recipeId;
+    }
+    /*
+    @PostMapping("/recipe/{recipeId}/ingredient/{ingredientId}/remove")
     public String removeIngredient(@PathVariable Long recipeId, @PathVariable Long ingredientId) {
         // 1. Carica la ricetta
         Recipe recipe = recipeService.findById(recipeId);
@@ -305,8 +418,33 @@ public String formNewRecipe(Model model) {
 
         return "redirect:/admin/recipe/" + recipeId + "/edit";
     }
+    */
     
-    @PostMapping("/admin/recipe/{id}/delete") // Mappa l'URL e il metodo POST corretto
+ // --- CANCELLA RICETTA (POST) ---
+  
+    @PostMapping("/recipe/delete/{id}") 
+    public String deleteRecipe(@PathVariable("id") Long id) {
+        
+        Recipe recipe = recipeService.findById(id);
+        
+        // RECUPERO UTENTE CORRENTE
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Credentials credentials = credentialsService.getCredentials(authentication.getName());
+
+        // CONTROLLO DI SICUREZZA
+        if (recipe != null && (recipe.getAuthor().equals(credentials.getUser()) || 
+            credentials.getRole().equals(Credentials.ADMIN_ROLE))) {
+            
+            recipeService.deleteById(id);
+            return "redirect:/myRecipes"; 
+            
+        } else {
+            return "redirect:/recipe/" + id + "?error=notAuthorized";
+        }
+    }
+    
+    /*
+    @PostMapping("/recipe/{id}/delete") // Mappa l'URL e il metodo POST corretto
     public String deleteRecipe(@PathVariable("id") Long id) {
         
         // 1. Esegue la cancellazione del record
@@ -316,5 +454,13 @@ public String formNewRecipe(Model model) {
         // (Assumendo che la tua pagina di gestione sia mappata a /admin)
         return "redirect:/admin/manageRecipes";
     }  
+    */
+  //----------ADMIN----------
+
+    @GetMapping("/admin/manageRecipes")
+    public String manageRecipes(Model model) {
+        model.addAttribute("recipes", recipeService.findAll());
+        return "admin/manageRecipes.html"; 
+    }   
     
 }

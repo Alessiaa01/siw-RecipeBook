@@ -1,0 +1,216 @@
+/* --- STILI MIGLIORATI PER LA PAGINA "LE MIE RICETTE" --- */
+
+/* 1. Contenitore principale: Effetto "Carta Magica" */
+.my-recipes-container {
+    max-width: 950px;
+    margin: 40px auto;
+    /* Sfondo bianco ma leggermente trasparente per vedere l'atmosfera sotto */
+    background: rgba(255, 255, 255, 0.92);
+    /* Effetto sfocatura dietro il pannello (Glassmorphism) */
+    backdrop-filter: blur(10px); 
+    padding: 40px;
+    border-radius: 20px;
+    /* Ombra dorata diffusa e bordo sottile */
+    box-shadow: 0 10px 30px rgba(184, 134, 11, 0.2); 
+    border: 1px solid rgba(184, 134, 11, 0.3);
+    position: relative;
+}
+
+/* 2. Intestazione */
+.header-row {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.page-title {
+    font-family: 'Great Vibes', cursive; 
+    font-size: 3.5em; /* Un po' più grande */
+    color: #B8860B; 
+    margin: 0;
+    /* Ombra leggera per staccare il testo */
+    text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.8), 
+                 3px 3px 5px rgba(0,0,0,0.1);
+}
+
+.gold-divider {
+    border: 0;
+    height: 1px;
+    /* Gradiente invece di linea solida: sfuma ai lati */
+    background: linear-gradient(90deg, transparent, #B8860B, transparent);
+    margin: 20px 0 30px 0;
+}
+
+/* 3. Stato vuoto (nessuna ricetta) */
+.empty-state {
+    text-align: center; 
+    padding: 60px 20px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 15px;
+    border: 2px dashed #e0a96d; /* Bordo tratteggiato simpatico */
+}
+
+.empty-state p {
+    font-size: 1.3em; 
+    font-family: 'Cinzel Decorative', serif;
+    color: #8b4513;
+    margin-bottom: 25px;
+}
+
+/* 4. Tabella Magica */
+.magic-table {
+    width: 100%;
+    border-collapse: separate; /* Necessario per il border-radius sulle righe */
+    border-spacing: 0 10px; /* Spazio tra le righe */
+    margin-top: 10px;
+}
+
+.magic-table th {
+    text-align: left;
+    padding: 15px 20px;
+    font-family: 'Cinzel Decorative', serif;
+    color: #8b4513;
+    font-size: 1.2em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid #B8860B;
+}
+
+/* Stile delle righe (le card della tabella) */
+.magic-table tbody tr {
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+/* Effetto Hover sulla riga intera: Molto importante per UX! */
+.magic-table tbody tr:hover {
+    transform: translateY(-3px); /* Si alza leggermente */
+    box-shadow: 0 5px 15px rgba(184, 134, 11, 0.2); /* L'ombra diventa dorata */
+    background-color: #fffaf0; /* Colore "FloralWhite" chiarissimo */
+}
+
+.magic-table td {
+    padding: 20px;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+
+/* Arrotondiamo gli angoli della prima e ultima cella per fare l'effetto card */
+.magic-table td:first-child {
+    border-left: 1px solid #eee;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.magic-table td:last-child {
+    border-right: 1px solid #eee;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+/* Link del titolo */
+.recipe-link {
+    color: #8b4513; 
+    font-weight: bold; 
+    text-decoration: none; 
+    font-size: 1.3em;
+    font-family: 'Cinzel Decorative', serif;
+    display: block; /* Occupa lo spazio */
+    transition: color 0.3s;
+}
+
+.recipe-link:hover {
+    color: #B8860B; 
+    text-shadow: 0 0 1px #B8860B;
+}
+
+.desc-text {
+    font-style: italic; 
+    color: #666;
+    font-size: 0.95em;
+    line-height: 1.4;
+    max-width: 300px; /* Evita che il testo si allarghi troppo */
+}
+
+/* 5. Bottoni Azione */
+.actions-col {
+    width: 180px; 
+    text-align: right;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 8px; /* Spazio tra i bottoni */
+    justify-content: flex-end;
+}
+
+.action-btn {
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.9em;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Bottone Modifica */
+.btn-edit { 
+    background: linear-gradient(135deg, #e0a96d, #d28c45);
+    color: white; 
+    border: 1px solid #d28c45;
+}
+.btn-edit:hover { 
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(210, 140, 69, 0.4);
+}
+
+
+
+.btn-delete { 
+    background-color: #cd5c5c; 
+    color: white; 
+    /* Queste righe servono per far sembrare il bottone un link */
+    border: none;           /* Toglie il bordo grigio standard */
+    cursor: pointer;        /* Fa apparire la manina del mouse */
+    font-family: inherit;   /* Usa lo stesso font della pagina */
+    font-size: 0.9em;       /* Stessa dimensione di prima */
+    padding: 8px 12px;      /* Stesso padding */
+    border-radius: 8px;     /* Stesso arrotondamento */
+}
+
+.btn-delete:hover { 
+    background-color: #b22222; 
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(205, 92, 92, 0.4);
+}
+
+/* Bottone grande in basso */
+.bottom-action {
+    margin-top: 40px; 
+    text-align: center;
+}
+
+/* Media query per schermi piccoli (Tablet/Mobile) */
+@media (max-width: 768px) {
+    .my-recipes-container {
+        padding: 15px;
+        margin: 20px;
+    }
+    
+    .page-title {
+        font-size: 2.2em;
+    }
+    
+    /* Rende la tabella scrollabile orizzontalmente su mobile */
+    .magic-table {
+        display: block;
+        overflow-x: auto;
+    }
+}

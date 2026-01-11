@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Le mie Ricette </title>
+    
+    <link rel="stylesheet" href="/css/recipe.css" />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative&family=Great+Vibes&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="magic-background"></div>
+
+    <div class="my-recipes-container">
+        
+        <div class="header-row">
+            <h1 class="page-title">
+                ✨ Le mie Ricette
+            </h1>
+            <a href="/" class="magic-btn">Home</a>
+        </div>
+
+        <hr class="gold-divider">
+
+        <div th:if="${recipes.empty}" class="empty-state">
+            <p>Non hai ancora aggiunto nessuna ricetta </p>
+            <a href="/formNewRecipe" class="magic-btn">➕ Aggiungi Nuova Ricetta</a>
+        </div>
+
+        <table th:if="${!recipes.empty}" class="magic-table">
+            <thead>
+                <tr>
+                    <th>Ricetta</th>
+                    <th>Descrizione</th>
+                    <th class="actions-col">Azioni</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="recipe : ${recipes}">
+                    <td>
+                        <a th:href="@{'/recipe/' + ${recipe.id}}" class="recipe-link">
+                           <span th:text="${recipe.title}">Titolo</span>
+                        </a>
+                    </td>
+                    <td th:text="${recipe.description}" class="desc-text">
+                        Descrizione breve...
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <a th:href="@{'/recipe/edit/' + ${recipe.id}}" class="action-btn btn-edit">✏️ Modifica</a>
+							
+							<form th:action="@{'/recipe/delete/' + ${recipe.id}}" method="POST" style="display: inline;">
+							    
+							    <button type="submit" class="action-btn btn-delete" 
+							            onclick="return confirm('Sei sicuro di voler cancellare questa magia?');">
+							        ❌ Elimina
+							    </button>
+							    
+							</form>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</body>
+</html>
