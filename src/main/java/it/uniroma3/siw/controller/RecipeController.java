@@ -64,6 +64,14 @@ public class RecipeController {
         model.addAttribute("recipe", recipe);
         model.addAttribute("ingredient", new Ingredient()); // necessario per il form admin 
         model.addAttribute("review", new Review()); //aggiunta per la recensione 
+        
+     // Recuperiamo l'utente loggato se esiste
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) principal;
+            Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
+            model.addAttribute("currentUser", credentials.getUser()); // Passiamo l'utente alla vista
+        }
         return "recipe.html";
     }
 

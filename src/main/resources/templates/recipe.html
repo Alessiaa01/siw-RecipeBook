@@ -119,86 +119,109 @@
             </div>
         </div>
 
-        <div class="reviews-container">
-            <h2 style="font-family: 'Cinzel Decorative', serif; color: #8B0000; text-align: center;">
-                ✨ I Commenti 
-            </h2>
+		<div class="reviews-container">
+		    <h2 class="section-title">
+		        ✨ I Commenti 
+		    </h2>
 
-            <div th:if="${!recipe.reviews.empty}">
-                <div th:each="review : ${recipe.reviews}" class="review-card">
-                    <div class="review-header">
-                        <span class="review-author">🧙‍♂️ Chef <span th:text="${review.user.name}">Nome</span></span>
-                        <span class="stars">
-                            <span th:if="${review.rating >= 1}">★</span>
-                            <span th:if="${review.rating >= 2}">★</span>
-                            <span th:if="${review.rating >= 3}">★</span>
-                            <span th:if="${review.rating >= 4}">★</span>
-                            <span th:if="${review.rating == 5}">★</span>
-                        </span>
-                    </div>
-                    <strong th:text="${review.title}" style="display:block; margin-bottom:5px;">Titolo</strong>
-                    <p th:text="${review.text}" style="margin: 0; font-style: italic;">Testo recensione...</p>
-                </div>
-            </div>
+		    <div th:if="${!recipe.reviews.empty}">
+		        <div th:each="review : ${recipe.reviews}" class="review-card">
+		            <div class="review-header">
+		                <span class="review-author">🧙‍♂️ Chef <span th:text="${review.user.name}">Nome</span></span>
+		                <span class="stars">
+		                    <span th:if="${review.rating >= 1}">★</span>
+		                    <span th:if="${review.rating >= 2}">★</span>
+		                    <span th:if="${review.rating >= 3}">★</span>
+		                    <span th:if="${review.rating >= 4}">★</span>
+		                    <span th:if="${review.rating == 5}">★</span>
+		                </span>
+		            </div>
+		            
+		            <strong th:text="${review.title}" class="review-title">Titolo</strong>
+		            <p th:text="${review.text}" class="review-text">Testo recensione...</p>
 
-            <div th:if="${recipe.reviews.empty}" style="text-align: center; font-style: italic; color: #666;">
-                <p>Nessuna ricetta!</p>
-            </div>
+					<div class="review-actions" 
+					     th:if="${currentUser != null} and (${review.user.id} == ${currentUser.id} or ${#authorization.expression('hasAuthority(''ADMIN'')')})">
+					     
+					    <a th:if="${review.user.id} == ${currentUser.id}"
+					       th:href="@{'/review/edit/' + ${review.id}}" 
+					       class="btn-edit">Modifica</a>
+					    
+					    <a th:href="@{'/review/delete/' + ${review.id}}" 
+					       onclick="return confirm('Sei sicuro di voler cancellare questa recensione?');"
+					       class="btn-delete">Cancella</a>
+					</div>
+		        </div>
+		    </div>
 
-            <div sec:authorize="isAuthenticated()" class="review-form">
-                <h3 style="font-family: 'Great Vibes', cursive; font-size: 1.8em; color: #8b4513;">
-                    Lascia la tua opinione 
-                </h3>
-                
-                <form th:action="@{'/recipe/' + ${recipe.id} + '/review'}" method="POST" th:object="${review}">
-                    
-                    <div th:if="${#fields.hasGlobalErrors()}" class="error-msg">
-                        <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
-                    </div>
+		    <div th:if="${recipe.reviews.empty}" class="no-reviews">
+		        <p>Nessuna recensione presente!</p>
+		    </div>
 
-                    <div class="form-group">
-                        <label>Titolo:</label>
-                        <input type="text" th:field="*{title}" placeholder="Es: Deliziosa!" required />
-                        <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="error-msg"></span>
-                    </div>
+		    <div sec:authorize="isAuthenticated()" class="review-form">
+		        <h3 class="form-title">
+		            Lascia la tua opinione 
+		        </h3>
+		        
+		        <form th:action="@{'/recipe/' + ${recipe.id} + '/review'}" method="POST" th:object="${review}">
+		            
+		            <div th:if="${#fields.hasGlobalErrors()}" class="error-msg">
+		                <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+		            </div>
 
-                    <div class="form-group">
-                        <label>Voto magico (1-5):</label>
-                        <select th:field="*{rating}" required>
-                            <option value="5">5 - Magico! ★★★★★</option>
-                            <option value="4">4 - Ottimo ★★★★</option>
-                            <option value="3">3 - Buono ★★★</option>
-                            <option value="2">2 - Così così ★★</option>
-                            <option value="1">1 - Disastroso ★</option>
-                        </select>
-                        <span th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}" class="error-msg"></span>
-                    </div>
+		            <div class="form-group">
+		                <label>Titolo:</label>
+		                <input type="text" th:field="*{title}" placeholder="Es: Deliziosa!" required />
+		                <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="error-msg"></span>
+		            </div>
 
-                    <div class="form-group">
-                        <label>La tua esperienza:</label>
-                        <textarea th:field="*{text}" rows="3" placeholder="Scrivi qui..." required></textarea>
-                        <span th:if="${#fields.hasErrors('text')}" th:errors="*{text}" class="error-msg"></span>
-                    </div>
+		            <div class="form-group">
+		                <label>Voto (1-5):</label>
+		                <select th:field="*{rating}" required>
+		                    <option value="5">5 - Magico! ★★★★★</option>
+		                    <option value="4">4 - Ottimo ★★★★</option>
+		                    <option value="3">3 - Buono ★★★</option>
+		                    <option value="2">2 - Così così ★★</option>
+		                    <option value="1">1 - Disastroso ★</option>
+		                </select>
+		                <span th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}" class="error-msg"></span>
+		            </div>
 
-                    <button type="submit" class="magic-btn">Pubblica </button>
-                </form>
-            </div>
+		            <div class="form-group">
+		                <label>La tua esperienza:</label>
+		                <textarea th:field="*{text}" rows="3" placeholder="Scrivi qui..." required></textarea>
+		                <span th:if="${#fields.hasErrors('text')}" th:errors="*{text}" class="error-msg"></span>
+		            </div>
 
-            <div sec:authorize="!isAuthenticated()" style="text-align: center; margin-top: 20px;">
-                <p><em><a href="/login" style="color: #B8860B; font-weight: bold;">Accedi</a> per lasciare una recensione.</em></p>
-            </div>
-        </div>
-        <div class="action-buttons-container">
-            <a href="/recipes" class="magic-btn">
-                ← Torna all'elenco
-            </a>
-            
-            <span sec:authorize="hasAuthority('ADMIN')">
-                <a th:href="@{'/admin/recipe/' + ${recipe.id} + '/edit'}" class="magic-btn edit-btn">
-                    ✏️ Modifica ricetta
-                </a>
-            </span>
-        </div>
+		            <button type="submit" class="magic-btn">Pubblica</button>
+		        </form>
+		    </div>
+
+		    <div sec:authorize="!isAuthenticated()" class="login-prompt">
+		        <p><em><a href="/login" class="login-link">Accedi</a> per lasciare una recensione.</em></p>
+		    </div>
+		</div>
+       
+		<div class="action-buttons-container">
+		    <a href="/recipes" class="magic-btn">
+		        ← Torna all'elenco
+		    </a>
+		    
+		    <span th:if="${currentUser != null} and (${recipe.author.id} == ${currentUser.id} or ${#authorization.expression('hasAuthority(''ADMIN'')')})">
+		        <a th:href="@{'/recipe/edit/' + ${recipe.id}}" class="magic-btn edit-btn">
+		            ✏️ Modifica ricetta
+		        </a>
+		    </span>
+		    
+		    <span th:if="${currentUser != null} and (${recipe.author.id} == ${currentUser.id} or ${#authorization.expression('hasAuthority(''ADMIN'')')})">
+		         <form th:action="@{'/recipe/delete/' + ${recipe.id}}" method="POST" style="display:inline;">
+		            <button type="submit" class="magic-btn btn-delete" style="margin-left: 10px; border-color: #D32F2F; color: #D32F2F;"
+		                    onclick="return confirm('Sei sicuro di voler eliminare questa ricetta?');">
+		                🗑️ Elimina
+		            </button>
+		         </form>
+		    </span>
+		</div>
 
         <div class="bottom-scroll-footer">
             <span>Una ricetta...</span>

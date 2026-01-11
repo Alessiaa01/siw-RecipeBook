@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifica Recensione</title>
+    <link rel="stylesheet" href="/css/recipe.css" />
+</head>
+<body>
+    <div class="magic-background"></div>
+
+    <main class="fairy-card" style="max-width: 800px;">
+        
+        <div class="corner top-left"></div>
+        <div class="corner top-right"></div>
+        <div class="corner bottom-left"></div>
+        <div class="corner bottom-right"></div>
+
+        <div class="title-section">
+            <h1 style="font-size: 3rem;">Modifica la tua Recensione</h1>
+        </div>
+
+        <div class="review-form" style="border-top: none; margin-top: 0; padding-top: 0;">
+            
+            <form th:action="@{'/review/update/' + ${review.id}}" method="POST" th:object="${review}">
+                
+                <div th:if="${#fields.hasGlobalErrors()}" class="error-msg">
+                    <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+                </div>
+
+                <div class="form-group">
+                    <label>Titolo:</label>
+                    <input type="text" th:field="*{title}" required />
+                    <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="error-msg"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>Voto (1-5):</label>
+                    <select th:field="*{rating}" required>
+                        <option value="5">5 - Magico! ★★★★★</option>
+                        <option value="4">4 - Ottimo ★★★★</option>
+                        <option value="3">3 - Buono ★★★</option>
+                        <option value="2">2 - Così così ★★</option>
+                        <option value="1">1 - Disastroso ★</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Testo:</label>
+                    <textarea th:field="*{text}" rows="6" required></textarea>
+                    <span th:if="${#fields.hasErrors('text')}" th:errors="*{text}" class="error-msg"></span>
+                </div>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <button type="submit" class="magic-btn">Salva Modifiche</button>
+                    
+                    <a th:href="@{'/recipe/' + ${review.recipe.id}}" class="magic-btn btn-cancel">
+                        Annulla
+                    </a>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

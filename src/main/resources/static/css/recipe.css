@@ -541,3 +541,94 @@ body > div:first-of-type {
     text-shadow: 1px 1px 1px rgba(0,0,0,0.2); /* Leggera ombra per staccarlo dallo sfondo */
     letter-spacing: 1px;                 /* Leggero spazio tra le lettere */
 }
+
+/* ========================================================== */
+/* 8. NUOVI STILI AGGIUNTI (TITOLI E PULSANTI) */
+/* ========================================================== */
+
+/* Titoli delle sezioni (Sostituisce lo stile inline rosso scuro) */
+.section-title {
+    font-family: 'Cinzel Decorative', serif;
+    color: #8B0000;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Titolo e Testo dentro la card della recensione */
+.review-title {
+    display: block; 
+    margin-bottom: 5px;
+    font-size: 1.1rem;
+    color: #5D4037;
+}
+
+.review-text {
+    margin: 0; 
+    font-style: italic;
+    color: #4a4a4a;
+    line-height: 1.4;
+}
+
+/* Contenitore dei pulsanti Modifica/Cancella */
+.review-actions {
+    margin-top: 15px;
+    text-align: right; /* Sposta i bottoni a destra */
+    border-top: 1px dotted #D4AF37; /* Separatore leggero */
+    padding-top: 10px;
+}
+
+/* Bottone Modifica (Testo semplice ma elegante) */
+.btn-edit {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.9em; 
+    color: #1976D2; /* Blu elegante */
+    text-decoration: none;
+    margin-right: 15px;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.btn-edit:hover {
+    color: #0D47A1;
+    text-decoration: underline;
+}
+
+/* Bottone Cancella */
+.btn-delete {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.9em; 
+    color: #D32F2F; /* Rosso */
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.btn-delete:hover {
+    color: #B71C1C;
+    text-decoration: underline;
+}
+
+/* Messaggi di stato (Nessuna recensione, Login) */
+.no-reviews, .login-prompt {
+    text-align: center;
+    font-style: italic;
+    color: #666;
+    margin: 20px 0;
+}
+
+.login-link {
+    color: #B8860B;
+    font-weight: bold;
+    text-decoration: none;
+}
+.login-link:hover {
+    text-decoration: underline;
+}
+
+/* Titolo specifico del form */
+.form-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.8em;
+    color: #8b4513;
+    margin-bottom: 15px;
+}

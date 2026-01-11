@@ -1,216 +1,198 @@
-/* --- STILI MIGLIORATI PER LA PAGINA "LE MIE RICETTE" --- */
+/* ========================================================== */
+/* STILE "GRIMORIO" - Aggiornato per Lista (No Tabella)       */
+/* ========================================================== */
 
-/* 1. Contenitore principale: Effetto "Carta Magica" */
-.my-recipes-container {
-    max-width: 950px;
-    margin: 40px auto;
-    /* Sfondo bianco ma leggermente trasparente per vedere l'atmosfera sotto */
-    background: rgba(255, 255, 255, 0.92);
-    /* Effetto sfocatura dietro il pannello (Glassmorphism) */
-    backdrop-filter: blur(10px); 
-    padding: 40px;
-    border-radius: 20px;
-    /* Ombra dorata diffusa e bordo sottile */
-    box-shadow: 0 10px 30px rgba(184, 134, 11, 0.2); 
-    border: 1px solid rgba(184, 134, 11, 0.3);
-    position: relative;
+/* 1. FONT E SFONDO */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:wght@600;700&family=Great+Vibes&display=swap');
+
+:root {
+    --gold-border: #C5A059;
+    --blue-bg: #DDF4F8;
+    --parchment: #FDF6E3;
+    --text-color: #4E342E;
 }
 
-/* 2. Intestazione */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--blue-bg);
+    background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+    background-attachment: fixed;
+    min-height: 100vh;
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--text-color);
+}
+
+/* 2. CONTENITORE PRINCIPALE */
+.my-recipes-container {
+    width: 90%;
+    max-width: 900px; /* Larghezza simile al libro Admin */
+    margin: 40px auto;
+    
+    background-color: var(--parchment);
+    background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+    border: 3px solid var(--gold-border);
+    border-radius: 20px;
+    padding: 40px;
+    
+    box-shadow: 
+        inset 0 0 40px rgba(139, 90, 43, 0.2), 
+        0 10px 20px rgba(0,0,0,0.2), 
+        0 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+/* 3. HEADER E TITOLO */
 .header-row {
-    display: flex; 
-    justify-content: space-between; 
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid var(--gold-border);
+    padding-bottom: 15px;
 }
 
 .page-title {
-    font-family: 'Great Vibes', cursive; 
-    font-size: 3.5em; /* Un po' più grande */
-    color: #B8860B; 
+    font-family: 'Great Vibes', cursive;
+    font-size: 3.5rem;
+    color: #8B4513;
     margin: 0;
-    /* Ombra leggera per staccare il testo */
-    text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.8), 
-                 3px 3px 5px rgba(0,0,0,0.1);
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
 }
 
-.gold-divider {
-    border: 0;
-    height: 1px;
-    /* Gradiente invece di linea solida: sfuma ai lati */
-    background: linear-gradient(90deg, transparent, #B8860B, transparent);
-    margin: 20px 0 30px 0;
+/* 4. BOTTONI ALTO */
+.top-buttons {
+    display: flex;
+    gap: 15px;
 }
 
-/* 3. Stato vuoto (nessuna ricetta) */
-.empty-state {
-    text-align: center; 
-    padding: 60px 20px;
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 15px;
-    border: 2px dashed #e0a96d; /* Bordo tratteggiato simpatico */
-}
-
-.empty-state p {
-    font-size: 1.3em; 
+.magic-btn {
+    display: inline-block;
+    padding: 8px 20px;
+    text-decoration: none;
     font-family: 'Cinzel Decorative', serif;
-    color: #8b4513;
-    margin-bottom: 25px;
-}
-
-/* 4. Tabella Magica */
-.magic-table {
-    width: 100%;
-    border-collapse: separate; /* Necessario per il border-radius sulle righe */
-    border-spacing: 0 10px; /* Spazio tra le righe */
-    margin-top: 10px;
-}
-
-.magic-table th {
-    text-align: left;
-    padding: 15px 20px;
-    font-family: 'Cinzel Decorative', serif;
-    color: #8b4513;
-    font-size: 1.2em;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border-bottom: 2px solid #B8860B;
-}
-
-/* Stile delle righe (le card della tabella) */
-.magic-table tbody tr {
-    background-color: #fff;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    font-weight: bold;
+    color: #5a3e1b;
+    border: 1px solid #B8860B;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.6);
     transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* Effetto Hover sulla riga intera: Molto importante per UX! */
-.magic-table tbody tr:hover {
-    transform: translateY(-3px); /* Si alza leggermente */
-    box-shadow: 0 5px 15px rgba(184, 134, 11, 0.2); /* L'ombra diventa dorata */
-    background-color: #fffaf0; /* Colore "FloralWhite" chiarissimo */
+.magic-btn:hover {
+    background-color: #B8860B;
+    color: white;
+    transform: translateY(-2px);
 }
 
-.magic-table td {
-    padding: 20px;
-    border-top: 1px solid #eee;
-    border-bottom: 1px solid #eee;
-    vertical-align: middle;
+/* ========================================================== */
+/* 5. NUOVA LISTA DI SCHEDE (Sostituisce la Tabella)          */
+/* ========================================================== */
+.recipe-list {
+    list-style: none; /* Toglie i pallini */
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Spazio tra le schede */
 }
 
-/* Arrotondiamo gli angoli della prima e ultima cella per fare l'effetto card */
-.magic-table td:first-child {
-    border-left: 1px solid #eee;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-}
-.magic-table td:last-child {
-    border-right: 1px solid #eee;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+/* La singola scheda (Card) */
+.recipe-card {
+    display: flex;
+    justify-content: space-between; /* Spinge Info a sinistra e Bottoni a destra */
+    align-items: center;
+    
+    background-color: #FFFBF0; /* Colore chiaro */
+    border: 2px solid var(--gold-border);
+    border-radius: 50px; /* Pillola allungata */
+    padding: 15px 30px;
+    
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-/* Link del titolo */
+.recipe-card:hover {
+    transform: scale(1.02); /* Leggero zoom */
+    box-shadow: 0 5px 15px rgba(184, 134, 11, 0.2);
+    background-color: #fff;
+}
+
+/* Info Testuali (Sinistra) */
+.card-info {
+    display: flex;
+    flex-direction: column; /* Titolo sopra, Descrizione sotto */
+}
+
 .recipe-link {
-    color: #8b4513; 
-    font-weight: bold; 
-    text-decoration: none; 
-    font-size: 1.3em;
-    font-family: 'Cinzel Decorative', serif;
-    display: block; /* Occupa lo spazio */
-    transition: color 0.3s;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-color);
+    text-decoration: none;
+    line-height: 1.2;
 }
 
 .recipe-link:hover {
-    color: #B8860B; 
-    text-shadow: 0 0 1px #B8860B;
+    color: #B8860B;
+    text-decoration: none;
 }
 
 .desc-text {
-    font-style: italic; 
-    color: #666;
-    font-size: 0.95em;
-    line-height: 1.4;
-    max-width: 300px; /* Evita che il testo si allarghi troppo */
+    font-size: 1rem;
+    color: #8D6E63;
+    font-style: italic;
+    margin-top: 4px;
+    max-width: 450px; /* Evita che il testo diventi lunghissimo */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Mette i puntini ... se troppo lungo */
 }
 
-/* 5. Bottoni Azione */
-.actions-col {
-    width: 180px; 
-    text-align: right;
-}
-
-.action-buttons {
+/* Azioni (Destra) */
+.card-actions {
     display: flex;
-    gap: 8px; /* Spazio tra i bottoni */
-    justify-content: flex-end;
-}
-
-.action-btn {
-    text-decoration: none;
-    padding: 8px 12px;
-    border-radius: 8px;
-    font-size: 0.9em;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    display: inline-flex;
+    gap: 10px;
     align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* Bottone Modifica */
-.btn-edit { 
-    background: linear-gradient(135deg, #e0a96d, #d28c45);
-    color: white; 
-    border: 1px solid #d28c45;
+/* Stile Bottoni Interni */
+.action-btn {
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 20px;
+    padding: 8px 18px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    font-family: inherit;
+    transition: transform 0.1s;
+    box-shadow: 0 2px 0 rgba(0,0,0,0.1);
 }
-.btn-edit:hover { 
-    filter: brightness(1.1);
+
+.action-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(210, 140, 69, 0.4);
+    filter: brightness(0.95);
 }
 
-
-
-.btn-delete { 
-    background-color: #cd5c5c; 
-    color: white; 
-    /* Queste righe servono per far sembrare il bottone un link */
-    border: none;           /* Toglie il bordo grigio standard */
-    cursor: pointer;        /* Fa apparire la manina del mouse */
-    font-family: inherit;   /* Usa lo stesso font della pagina */
-    font-size: 0.9em;       /* Stessa dimensione di prima */
-    padding: 8px 12px;      /* Stesso padding */
-    border-radius: 8px;     /* Stesso arrotondamento */
+.btn-edit {
+    background-color: #B2EBF2; /* Celeste */
+    color: #006064;
 }
 
-.btn-delete:hover { 
-    background-color: #b22222; 
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(205, 92, 92, 0.4);
+.btn-delete {
+    background-color: #FFCDD2; /* Rosso chiaro */
+    color: #B71C1C;
 }
 
-/* Bottone grande in basso */
-.bottom-action {
-    margin-top: 40px; 
+/* Stato Vuoto */
+.empty-state {
     text-align: center;
-}
-
-/* Media query per schermi piccoli (Tablet/Mobile) */
-@media (max-width: 768px) {
-    .my-recipes-container {
-        padding: 15px;
-        margin: 20px;
-    }
-    
-    .page-title {
-        font-size: 2.2em;
-    }
-    
-    /* Rende la tabella scrollabile orizzontalmente su mobile */
-    .magic-table {
-        display: block;
-        overflow-x: auto;
-    }
+    padding: 50px;
+    font-family: 'Cinzel Decorative', serif;
+    color: #8b4513;
+    font-size: 1.4rem;
+    border: 2px dashed var(--gold-border);
+    border-radius: 15px;
+    background: rgba(255,255,255,0.4);
 }

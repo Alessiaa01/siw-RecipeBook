@@ -17,7 +17,7 @@
     <h1 class="elegant-title">GESTIONE RICETTE</h1>
 
     <div class="add-button-container">
-      <a th:href="@{/admin/formNewRecipe}" class="btn-golden-oval">
+      <a th:href="@{/formNewRecipe}" class="btn-golden-oval">
              Aggiungi Nuova Ricetta
         </a>
     </div>
@@ -28,17 +28,17 @@
             <span th:text="${recipe.title}" class="recipe-title-display"></span>
             
             <div class="card-actions">
-                <a th:href="@{'/admin/recipe/' + ${recipe.id} + '/edit'}" class="action-button edit-button">
+                <a th:href="@{'/recipe/edit/' + ${recipe.id}}" class="action-button edit-button">
                     ✏️ Modifica
                 </a>
                 
-                <form th:action="@{'/admin/recipe/' + ${recipe.id} + '/delete'}" method="post" class="delete-form">
+                <form th:action="@{'/recipe/delete/' + ${recipe.id}}" method="post" class="delete-form">
                     <button type="submit" onclick="return confirm('Eliminare questa ricetta?')">
                         🗑️ Elimina
                     </button>
                 </form>
             </div>
-        </li>
+        </li>  
     </ul>
 
     <a th:href="@{/recipes}" class="back-to-list-link">
