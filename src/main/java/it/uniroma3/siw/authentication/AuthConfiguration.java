@@ -57,7 +57,8 @@ import javax.sql.DataSource;
                         "/register", "/login", 
                         "/css/**", "/images/**", "favicon.ico", 
                         "/recipes",       // Elenco ricette visibile a tutti
-                        "/recipe/**",     // Dettaglio ricetta visibile a tutti
+                        "/recipe/**", 
+                        "/searchRecipes",// Dettaglio ricetta visibile a tutti
                         "/cooks", "/cook/**" // Se hai i cuochi
                 ).permitAll()
                 

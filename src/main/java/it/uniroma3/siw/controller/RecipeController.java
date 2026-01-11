@@ -80,30 +80,33 @@ public class RecipeController {
         return "formSearchRecipes.html";
     }
     
-     // Gestisce la ricerca per titolo o ingrediente
-     @GetMapping("/searchRecipes")
-     public String searchRecipes(Model model, 
-                                 @RequestParam(value = "title", required = false) String title, 
-                                 @RequestParam(value = "ingredient", required = false) String ingredientName) {
-     	
-     	 List<Recipe> foundRecipes = new ArrayList<>();
+    @GetMapping("/searchRecipes")
+    public String searchRecipes(@RequestParam(value = "title", required = false) String title, 
+                                @RequestParam(value = "ingredient", required = false) String ingredient, 
+                                Model model) {
+        
+        List<Recipe> foundRecipes = new ArrayList<>();
 
-         if (title != null && !title.trim().isEmpty()) {
-             // Ricerca per Titolo
-             foundRecipes = recipeService.findByTitleContainingIgnoreCase(title);
-             model.addAttribute("searchTerm", title);
-             model.addAttribute("searchType", "Titolo");
-         } else if (ingredientName != null && !ingredientName.trim().isEmpty()) {
-              // NUOVA Ricerca per Ingrediente
-             foundRecipes = recipeService.findByIngredientNameContainingIgnoreCase(ingredientName);
-             model.addAttribute("searchTerm", ingredientName);
-             model.addAttribute("searchType", "Ingrediente");
-         }
-         // Se entrambi sono vuoti, foundRecipes è vuoto.
+        // LOGICA DI RICERCA:
+        // 1. Se l'utente ha scritto qualcosa nel campo TITOLO
+        if (title != null && !title.trim().isEmpty()) {
+            foundRecipes = recipeService.findByTitle(title);
+        }
+        // 2. Altrimenti, se ha scritto qualcosa nel campo INGREDIENTE
+        else if (ingredient != null && !ingredient.trim().isEmpty()) {
+            foundRecipes = recipeService.findByIngredient(ingredient);
+        }
+        // 3. Se non ha scritto nulla (ha premuto Cerca a vuoto), mostra TUTTO
+        else {
+            foundRecipes = recipeService.findAll();
+        }
 
-         model.addAttribute("recipes", foundRecipes);
-         return "foundRecipes.html"; // Ritorna la pagina dei risultati
-     }
+        // Passa la lista filtrata alla pagina
+        model.addAttribute("recipes", foundRecipes);
+        
+        // Riutilizziamo la stessa pagina "recipes.html" per mostrare i risultati
+        return "foundRecipes";
+    }
 
    //----------RECENSIONI(SOLO LOGGATI)-----------
 

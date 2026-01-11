@@ -26,13 +26,12 @@ public class RecipeService {
 	
 	//tutte le ricette 
 	@Transactional(readOnly = true)
-	public Iterable<Recipe> findAll() {
-		return recipeRepository.findAll();
+	public List<Recipe> findAll() {
+	    // Il cast (List<Recipe>) trasforma l'Iterable del database in una Lista vera e propria
+	    return (List<Recipe>) recipeRepository.findAll();
 	}
 	
-	public List<Recipe> findByTitleContainingIgnoreCase(String title) {
-        return recipeRepository.findByTitleContainingIgnoreCase(title);
-    }
+	
 	
 	@Transactional
 	public void save(Recipe recipe) {
@@ -42,7 +41,14 @@ public class RecipeService {
 	public boolean existsByTitle(String title) {
 		return recipeRepository.existsByTitle(title);
 	}
-	
+	// METODI PER LA RICERCA
+    public List<Recipe> findByTitle(String title) {
+        return recipeRepository.findByTitleContainingIgnoreCase(title);
+    }
+
+    public List<Recipe> findByIngredient(String ingredientName) {
+        return recipeRepository.findByIngredientsNameContainingIgnoreCase(ingredientName);
+    }
 
 	@Transactional 
 	public void deleteById(Long id) {

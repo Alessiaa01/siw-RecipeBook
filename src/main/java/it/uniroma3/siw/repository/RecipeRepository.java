@@ -14,6 +14,7 @@ public interface RecipeRepository extends CrudRepository<Recipe, Long> {
 	// NUOVO METODO: Trova ricette dove l'ingrediente contiene la stringa (case-insensitive)
     List<Recipe> findByIngredientsNameContainingIgnoreCase(String ingredientName);
     
+    
 
     public boolean existsByTitleAndIdNot(String title, Long id);
     
