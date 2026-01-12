@@ -1,22 +1,37 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <title>SiwRecipe - Dashboard Admin</title>
+    <title>SiwRecipe - Admin</title>
     <link rel="stylesheet" href="/css/stile.css" />
     <link rel="stylesheet" href="/css/indexAdmin.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
+    
     <header>
-        <div>
-            <span>Benvenuto Admin!</span>
-            <a href="/logout">Logout</a>
+        <div class="header-content-wrapper">
+            
+            <div class="admin-link-header-left">
+                <a href="/">
+                    <i class="fa-solid fa-house-chimney"></i> Home
+                </a>
+            </div>
+
+            <div class="user-actions-right">
+                <span class="chef-name">
+                    Benvenuto <span sec:authentication="name">Admin</span>
+                </span>
+                
+                <a th:href="@{/logout}" class="btn-logout">Logout</a>
+            </div>
+
         </div>
     </header>
 
-    <div style="text-align: center; margin-top: 20px;">
-        <a href="/"><img src="/images/logo-siw.png" width="200" /></a>
-        <h1>Pannello di Controllo</h1>
+    <div class="logo-container">
+        <a href="/"><img src="/images/logo2.png" class="main-logo" /></a>
+        <h1 class="main-title">Pannello di Controllo</h1>
     </div>
 
     <div class="dashboard-container">
@@ -24,15 +39,15 @@
         <div class="dashboard-card">
             <span class="icon">🍲</span>
             <h2>Ricette</h2>
-            <p>Aggiungi, modifica o cancella le ricette del sito.</p>
-            <a href="/admin/manageRecipes" class="dashboard-btn">Gestisci Ricette</a>
+            <p>Aggiungi, modifica o cancella le ricette del sito</p>
+            <a href="/admin/manageRecipes" class="dashboard-btn">Gestisci ricette</a>
         </div>
 
         <div class="dashboard-card">
             <span class="icon">👥</span>
             <h2>Utenti</h2>
-            <p>Visualizza gli iscritti e gestisci i ban.</p>
-            <a href="/admin/users" class="dashboard-btn">Gestisci Utenti</a>
+            <p>Visualizza gli iscritti e gestisci i ban</p>
+            <a href="/admin/users" class="dashboard-btn">Gestisci utenti</a>
         </div>
 
     </div>
