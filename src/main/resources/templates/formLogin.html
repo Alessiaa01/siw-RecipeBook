@@ -52,9 +52,16 @@
                       <i class="fa-solid fa-key icon-gold"></i> </div>
             </div>
             
-            <div class="error-msg" th:if="${param.error}">
-                Username o password non corretti
-            </div>
+			<div th:if="${param.error}" style="color: red;">
+			    <div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION'].message == 'User is disabled'}">
+			        <h3>Sei stato bannato!</h3>
+			        <p>Il tuo account è stato sospeso. Contatta l'amministratore.</p>
+			    </div>
+
+			    <div th:unless="${session['SPRING_SECURITY_LAST_EXCEPTION'].message == 'User is disabled'}">
+			        Username o password errati.
+			    </div>
+			</div>
             
             <div class="center-button">
                 <button type="submit">
