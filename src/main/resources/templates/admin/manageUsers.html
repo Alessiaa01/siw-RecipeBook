@@ -11,9 +11,10 @@
     
     <header>
         <div class="header-content-wrapper">
+             
              <div class="admin-link-header-left">
-                <a href="/admin">
-                    <i class="fa-solid fa-arrow-left"></i> 
+                <a href="/">
+                    <i class="fa-solid fa-house"></i> Home 
                 </a>
              </div>
              
@@ -26,18 +27,15 @@
         </div>
     </header>
 
-	<div class="hero-section">
-	        <div class="logo-container">
-	            <a href="/"><img src="/images/logo2.png" class="hero-logo" /></a>
-	        </div>
-	        
-	        <h1 class="hero-title">Registro degli Iscritti</h1>
-	        
-	        
-	    </div>
+    <div class="hero-section">
+        <div class="logo-container">
+            <a href="/"><img src="/images/logo2.png" class="hero-logo" /></a>
+        </div>
+        
+        <h1 class="hero-title">Registro degli Iscritti</h1>
+        </div>
 
     <div class="users-container">
-        
         <table class="users-table">
             <thead>
                 <tr>
@@ -59,7 +57,8 @@
 
                     <td>
                         <span th:text="${cred.role}" 
-                              th:style="${cred.role == 'ADMIN' ? 'color: #B8860B; font-weight:bold;' : ''}">
+                              class="role-badge"
+                              th:classappend="${cred.role == 'ADMIN' ? 'role-admin' : 'role-user'}">
                             DEFAULT
                         </span>
                     </td>
@@ -74,18 +73,22 @@
                             <form th:if="${cred.enabled}" 
                                   th:action="@{'/admin/users/' + ${cred.username} + '/ban'}" 
                                   method="POST" style="display:inline;">
-                                <button type="submit" class="action-btn btn-ban">Banna</button>
+                                <button type="submit" class="action-btn btn-ban" title="Banna Utente">
+                                    <i class="fa-solid fa-user-lock"></i>
+                                </button>
                             </form>
                             
                             <form th:unless="${cred.enabled}" 
                                   th:action="@{'/admin/users/' + ${cred.username} + '/unban'}" 
                                   method="POST" style="display:inline;">
-                                <button type="submit" class="action-btn btn-unban">Riattiva</button>
+                                <button type="submit" class="action-btn btn-unban" title="Riattiva Utente">
+                                    <i class="fa-solid fa-unlock"></i>
+                                </button>
                             </form>
                         </div>
                         
                         <span th:if="${cred.role == 'ADMIN'}" class="no-action-text">
-                            Intoccabile
+                            <i class="fa-solid fa-crown" style="color: #D4AF37;"></i>
                         </span>
                     </td>
                 </tr>
@@ -95,6 +98,12 @@
         <div th:if="${credentialsList.isEmpty()}" style="text-align: center; padding: 30px; font-style: italic; color: #888;">
             Nessun iscritto presente nel registro.
         </div>
+    </div>
+
+    <div style="text-align: center; margin-bottom: 60px;">
+        <a href="/admin" class="back-link">
+            <i class="fa-solid fa-arrow-left"></i> Torna indietro
+        </a>
     </div>
 
 </body>

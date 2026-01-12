@@ -19,7 +19,7 @@ body {
     padding: 0; /* Spazio per la cornice */
     background-color: var(--blue-bg);
     /* Immagine texture polvere di stelle */
-    background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+   
     background-attachment: fixed;
     min-height: 100vh; /* Assicura che copra tutto lo schermo */
     box-sizing: border-box;

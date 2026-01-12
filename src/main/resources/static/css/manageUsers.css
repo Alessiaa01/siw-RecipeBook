@@ -153,7 +153,7 @@ header {
 /* Bottone 'Torna al Pannello' (Stile uguale a Dashboard) */
 .back-link {
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-    font-family: 'Cormorant Unicase', serif; font-weight: 700; font-size: 0.95rem;
+    font-family:'Cormorant Unicase', serif;font-weight: 700; font-size: 0.95rem;
     padding: 8px 20px; border-radius: 25px; 
     background-color: #D3B88C; color: #8B4513; border: 1px solid #B8860B; 
     transition: all 0.3s ease; text-decoration: none;
@@ -231,3 +231,62 @@ header {
 .btn-unban:hover { background-color: #A5D6A7; }
 
 .no-action-text { font-style: italic; color: #aaa; font-size: 0.9rem; }
+
+
+/* ========================================================== */
+/* CONSIGLI EXTRA: BADGE RUOLI E ICONE AZIONI */
+/* ========================================================== */
+
+/* Stile per il "Timbro" del Ruolo */
+.role-badge {
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    font-family: 'Cormorant Unicase', serif; 
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+/* Colori specifici per i ruoli */
+.role-admin {
+    background-color: rgba(212, 175, 55, 0.2); /* Oro tenue */
+    color: #8B4513;
+    border: 1px solid #D4AF37;
+}
+
+.role-user {
+    background-color: rgba(139, 69, 19, 0.1); /* Marrone tenue */
+    color: #5D4037;
+    border: 1px solid rgba(139, 69, 19, 0.3);
+}
+
+/* Modifica ai Bottoni per farli rotondi (Icone) */
+.action-btn {
+    width: 38px;       /* Larghezza fissa */
+    height: 38px;      /* Altezza fissa */
+    border-radius: 50%; /* Cerchio perfetto */
+    padding: 0;        /* Rimuovi padding testo */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    margin-left: 5px;
+}
+
+/* ========================================================== */
+/* FIX FINALE: Rimuove i riquadri bianchi dai pulsanti (Form) */
+/* ========================================================== */
+
+/* Rende trasparenti i contenitori dei bottoni */
+.users-table td form,
+.users-table td div {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: inline-block; /* Mantiene i bottoni allineati */
+}
+
+
