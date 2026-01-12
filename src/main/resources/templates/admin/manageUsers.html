@@ -8,11 +8,12 @@
 </head>
 
 <body>
+    
     <header>
         <div class="header-content-wrapper">
              <div class="admin-link-header-left">
                 <a href="/admin">
-                    <i class="fa-solid fa-arrow-left"></i> Pannello di Controllo
+                    <i class="fa-solid fa-arrow-left"></i> 
                 </a>
              </div>
              
@@ -25,16 +26,18 @@
         </div>
     </header>
 
-	<div class="logo-container">
-	        <a href="/"><img src="/images/logo2.png" width="250" /></a>
+	<div class="hero-section">
+	        <div class="logo-container">
+	            <a href="/"><img src="/images/logo2.png" class="hero-logo" /></a>
+	        </div>
+	        
+	        <h1 class="hero-title">Registro degli Iscritti</h1>
+	        
+	        
 	    </div>
 
     <div class="users-container">
         
-        <div class="users-header">
-            <h1>Registro degli Iscritti</h1>
-        </div>
-
         <table class="users-table">
             <thead>
                 <tr>
@@ -42,17 +45,17 @@
                     <th>Nome e Cognome</th>
                     <th>Ruolo</th>
                     <th>Stato</th>
-                    <th>Azioni</th>
+                    <th style="text-align: right;">Azioni</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="cred : ${credentialsList}">
                     
-                    <td th:text="${cred.username}" style="font-weight: bold;">user123</td>
-                    
-                    <td>
-                        <span th:text="${cred.user.name} + ' ' + ${cred.user.surname}">Mario Rossi</span>
+                    <td style="font-weight: bold;">
+                        <span th:text="${cred.username}">user123</span>
                     </td>
+                    
+                    <td th:text="${cred.user.name} + ' ' + ${cred.user.surname}">Mario Rossi</td>
 
                     <td>
                         <span th:text="${cred.role}" 
@@ -66,8 +69,8 @@
                         <span th:unless="${cred.enabled}" class="status-banned">Bannato</span>
                     </td>
 
-                    <td>
-                        <div th:if="${cred.role != 'ADMIN'}">
+                    <td style="text-align: right;">
+                        <div th:if="${cred.role != 'ADMIN'}" style="display:inline-block;">
                             <form th:if="${cred.enabled}" 
                                   th:action="@{'/admin/users/' + ${cred.username} + '/ban'}" 
                                   method="POST" style="display:inline;">
@@ -89,8 +92,8 @@
             </tbody>
         </table>
 
-        <div th:if="${credentialsList.isEmpty()}" style="text-align: center; padding: 40px; font-style: italic; color: #8B5A2B;">
-            Il registro è ancora vuoto...
+        <div th:if="${credentialsList.isEmpty()}" style="text-align: center; padding: 30px; font-style: italic; color: #888;">
+            Nessun iscritto presente nel registro.
         </div>
     </div>
 

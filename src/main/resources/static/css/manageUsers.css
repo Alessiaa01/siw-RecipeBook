@@ -1,36 +1,33 @@
 /* File: src/main/resources/static/css/manageUsers.css */
 
-/* 0. VARIABILI COLORI */
+/* 0. IMPORTAZIONI E VARIABILI */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:wght@600;700&family=Cormorant+Unicase:wght@400;600;700&family=Great+Vibes&display=swap');
+
 :root {
+    /* Variabili colori (uguali a indexAdmin) */
     --primary-color: #8B4513;   /* Marrone Bronzo */
     --secondary-color: #D4AF37; /* Oro */
-    --accent-color: #B2EBF2;    /* Celeste chiaro */
-    --box-shadow-color: rgba(0,0,0,0.1);
+    --text-color: #4E342E;      /* Marrone scuro */
+    
+    /* Variabili azioni (Tuoi colori originali) */
+    --red-ink: #B71C1C;         
+    --green-ink: #2E7D32;       
+    --ban-bg: #FFCDD2;          
+    --ban-border: #E57373;      
+    --unban-bg: #C8E6C9;        
+    --unban-border: #81C784;    
 }
 
-/* 1. FONT MAGICI */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Cormorant+Unicase:wght@400;600;700&family=Great+Vibes&display=swap');
-
-/* 2. SFONDO E BODY */
 body {
-    margin: 0 !important;
-    padding: 0 !important;
     background: radial-gradient(circle at center, #E0F7FA 0%, #B2EBF2 100%);
     background-attachment: fixed;
-    min-height: 100vh;
     font-family: 'Cormorant Garamond', serif;
-    color: #5D4037;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-sizing: border-box;
+    margin: 0;
+    color: var(--text-color);
 }
 
-/* Link generici */
-a { text-decoration: none; color: inherit; }
-
 /* ========================================================== */
-/* HEADER & BARRA NAVIGAZIONE (Copiato da indexAdmin) */
+/* HEADER & BARRA NAVIGAZIONE (Stile indexAdmin) */
 /* ========================================================== */
 header {
     background-color: #F8F4E8; 
@@ -52,175 +49,135 @@ header {
     margin: 0 auto; 
     padding: 0 20px !important; 
     
-    /* FIX: Rimuove il box bianco ereditato da stile.css */
+    /* FIX: Rimuove il box bianco */
     background: transparent !important;
     box-shadow: none !important;
     border: none !important;
 }
 
-/* --- LATO SINISTRO (Admin Link style) --- */
-
-/* NUOVA REGOLA per il contenitore del bottone Home */
-.admin-link-header-left {
-    background: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
-}
-
-.admin-link-header-left a {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-family: 'Cormorant Unicase', serif;
-    font-weight: 700;
-    font-size: 0.95rem;
-    padding: 8px 20px;
-    border-radius: 25px;
-    background-color: #D3B88C; 
-    color: #8B4513; 
-    border: 1px solid #B8860B; 
-    transition: all 0.3s ease;
-}
-
-.admin-link-header-left a:hover {
-    background-color: var(--primary-color);
-    color: white;
-    transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
-}
-
-/* --- LATO DESTRO (Utente e Bottoni) --- */
+/* ELEMENTI INTERNI HEADER */
+.admin-link-header-left, 
 .user-actions-right {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    
-    /* FIX: Rimuove il box bianco ereditato da stile.css */
     background: transparent !important;
     box-shadow: none !important;
     border: none !important;
     padding: 0 !important;
     margin: 0 !important;
+    display: flex;
+    align-items: center;
 }
-/* Testo Benvenuto */
+
+.user-actions-right { gap: 15px; }
+
+/* Bottone Dashboard (Sinistra) */
+.admin-link-header-left a {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'Cormorant Unicase', serif; font-weight: 700; font-size: 0.95rem;
+    padding: 8px 20px; border-radius: 25px;
+    background-color: #D3B88C; color: #8B4513; border: 1px solid #B8860B; 
+    transition: all 0.3s ease; text-decoration: none;
+}
+.admin-link-header-left a:hover {
+    background-color: var(--primary-color); color: white;
+    transform: scale(1.05); box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+}
+
+/* Nome Utente */
 .chef-name {
-    font-family: 'Cinzel Decorative', serif;
-    font-weight: 700;
-    color: #8B4513;
-    font-size: 1.1rem;
-    margin-right: 5px;
+    font-family: 'Cinzel Decorative', serif; font-weight: 700; color: #8B4513; font-size: 1.1rem; margin-right: 5px;
 }
-.chef-name span {
-    color: var(--secondary-color);
-    margin-left: 5px;
-    text-transform: uppercase;
-}
+.chef-name span { color: var(--secondary-color); margin-left: 5px; text-transform: uppercase; }
 
-/* STILE DEL BOTTONE LOGOUT */
-/* Questo stile assicura che appaia come un bottone e non solo testo */
+/* Bottone Logout */
 .btn-logout {
-    display: inline-block;
-    padding: 6px 18px;
-    border-radius: 20px;
-    font-family: 'Cinzel Decorative', serif;
-    font-weight: bold;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    
-    /* Colori del bottone */
-    background-color: #D3B88C; 
-    color: #4a4a4a;
-    border: 1px solid #B8860B; /* Aggiunto bordo per definirlo meglio */
-    text-decoration: none; /* Rimuove sottolineatura tipica dei link */
+    display: inline-block; padding: 6px 18px; border-radius: 20px;
+    font-family: 'Cinzel Decorative', serif; font-weight: bold; font-size: 0.9rem;
+    transition: all 0.3s ease; cursor: pointer;
+    background-color: #D3B88C; color: #4a4a4a; border: 1px solid #B8860B; text-decoration: none;
 }
-
 .btn-logout:hover {
-    background-color: #A52A2A; /* Diventa rosso scuro al passaggio */
-    color: white;
-    transform: scale(1.05);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    background-color: #A52A2A; color: white; transform: scale(1.05);
 }
 
 /* ========================================================== */
-/* 2. IL REGISTRO (Contenitore Pergamena) */
+/* HERO SECTION (Logo e Titolo - NO RIQUADRI) */
 /* ========================================================== */
-.users-container {
-    background-color: var(--parchment);
-    background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
-    
-    max-width: 1000px;
-    
-    /* Ridotto margine superiore per alzare il box */
-    margin: 10px auto 40px auto; 
-    
-    /* Ridotto padding superiore per alzare il titolo interno */
-    padding: 15px 50px 50px 50px; 
-    
-    border-radius: 20px;
-    border: 3px solid var(--gold-border);
-    
-    /* Ombre e Bagliori magici */
-    box-shadow: 
-        inset 0 0 60px rgba(139, 90, 43, 0.15), 
-        0 10px 20px rgba(0,0,0,0.2), 
-        0 0 0 8px rgba(255, 255, 255, 0.3); 
-}
-
-/* ========================================================== */
-/* 3. TITOLI E INTESTAZIONE (Modificati per trasparenza) */
-/* ========================================================== */
-.users-header {
+.hero-section {
     text-align: center;
+    margin-top: 30px;
     margin-bottom: 40px;
-    padding-bottom: 20px;
-
-    /* Trasparenza per evitare box bianchi */
+    
+    /* TRASPARENZA TOTALE */
     background: transparent !important;
     box-shadow: none !important;
-    border: none !important; 
+    border: none !important;
+    padding: 0 !important;
 }
 
-.users-header h1 {
-    font-family: 'Great Vibes', cursive;
-    font-size: 3.5rem;
-    color: #8B4513;
-    margin: 0;
-    text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+/* Rimuove riquadri dai div interni */
+.hero-section div {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+}
+
+.hero-logo {
+    width: 140px;
+    filter: drop-shadow(0 5px 10px rgba(212, 175, 55, 0.3));
+    transition: transform 0.5s ease;
+}
+.hero-logo:hover { transform: rotate(5deg) scale(1.1); }
+
+/* TITOLO CON LINEA SOTTSTANTE */
+.hero-title {
+   font-family: 'Cormorant Garamond', serif;
+    font-size: 4.5rem;
+    color: var(--primary-color);
+    margin: 10px 0;
+    text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.6);
     position: relative;
 }
 
-/* Linea sfumata sotto il titolo (come indexAdmin) */
-.users-header h1::after {
+/* NUOVA REGOLA: La linea sfumata sotto il titolo */
+.hero-title::after {
     content: '';
     display: block;
     height: 2px;
+    /* Sfumatura: trasparente -> oro -> trasparente */
     background: linear-gradient(to right, transparent, #D4AF37, transparent);
     width: 50%;
     margin: 15px auto 0 auto;
 }
 
-/* Link "Torna Indietro" in stile magico */
+/* Bottone 'Torna al Pannello' (Stile uguale a Dashboard) */
 .back-link {
-    display: inline-block;
-    margin-top: 10px;
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 1rem;
-    color: #5D4037;
-    text-decoration: none;
-    border-bottom: 1px dashed #C5A059;
-    transition: all 0.3s;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    font-family: 'Cormorant Unicase', serif; font-weight: 700; font-size: 0.95rem;
+    padding: 8px 20px; border-radius: 25px; 
+    background-color: #D3B88C; color: #8B4513; border: 1px solid #B8860B; 
+    transition: all 0.3s ease; text-decoration: none;
 }
-
 .back-link:hover {
-    color: #B8860B;
-    border-bottom-style: solid;
+    background-color: var(--primary-color); color: white; transform: scale(1.05); box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
 }
 
 /* ========================================================== */
-/* 4. LA TABELLA (Stile Manoscritto) */
+/* UNICO CONTENITORE (Trasparente - Senza Riquadro) */
+/* ========================================================== */
+.users-container {
+    max-width: 1000px;
+    margin: 0 auto 50px auto; 
+    
+    background: transparent !important;
+    background-image: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 10px 0 !important;       
+}
+
+/* ========================================================== */
+/* TABELLA PULITA (Direttamente sullo sfondo) */
 /* ========================================================== */
 .users-table {
     width: 100%;
@@ -229,44 +186,30 @@ header {
 
 .users-table th {
     font-family: 'Cinzel Decorative', serif;
-    color: #8B5A2B;
-    font-size: 1.1rem;
+    color: #8B4513; 
+    font-size: 1.2rem;
     text-align: left;
     padding: 15px;
-    border-bottom: 2px solid var(--gold-border);
+    border-bottom: 3px solid #D4AF37; 
 }
 
 .users-table td {
     padding: 15px;
-    border-bottom: 1px solid rgba(197, 160, 89, 0.2);
-    font-size: 1.2rem; /* Testo leggibile */
+    border-bottom: 1px solid rgba(139, 69, 19, 0.2); 
+    font-size: 1.15rem;
     color: var(--text-color);
 }
 
-.users-table tr:last-child td {
-    border-bottom: none;
-}
-
 .users-table tr:hover td {
-    background-color: rgba(184, 134, 11, 0.05); /* Oro chiarissimo */
+    background-color: rgba(255, 255, 255, 0.4); 
+    border-radius: 10px;
 }
 
 /* ========================================================== */
-/* 5. STATI E BOTTONI (Inchiostro e Sigilli) */
+/* STATI E BOTTONI (I tuoi originali) */
 /* ========================================================== */
-
-.status-active {
-    color: var(--green-ink);
-    font-weight: 700;
-    font-style: italic;
-}
-
-.status-banned {
-    color: var(--red-ink);
-    font-weight: 700;
-    text-decoration: line-through;
-    opacity: 0.8;
-}
+.status-active { color: var(--green-ink); font-weight: 700; font-style: italic; }
+.status-banned { color: var(--red-ink); font-weight: 700; text-decoration: line-through; opacity: 0.8; }
 
 .action-btn {
     border: none;
@@ -279,45 +222,12 @@ header {
     transition: transform 0.2s, box-shadow 0.2s;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+.action-btn:active { transform: scale(0.95); }
 
-.action-btn:active {
-    transform: scale(0.95);
-}
+.btn-ban { background-color: var(--ban-bg); color: var(--red-ink); border: 1px solid var(--ban-border); }
+.btn-ban:hover { background-color: #EF9A9A; }
 
-.btn-ban {
-    background-color: #FFCDD2;
-    color: #B71C1C;
-    border: 1px solid #E57373;
-}
+.btn-unban { background-color: var(--unban-bg); color: #1B5E20; border: 1px solid var(--unban-border); }
+.btn-unban:hover { background-color: #A5D6A7; }
 
-.btn-ban:hover {
-    background-color: #EF9A9A;
-}
-
-.btn-unban {
-    background-color: #C8E6C9;
-    color: #1B5E20;
-    border: 1px solid #81C784;
-}
-
-.btn-unban:hover {
-    background-color: #A5D6A7;
-}
-
-.no-action-text {
-    font-style: italic;
-    color: #aaa;
-    font-size: 0.9rem;
-}
-
-/* ========================================================== */
-/* 7. LOGO FIX (Rimuove il riquadro bianco) */
-/* ========================================================== */
-.logo-container {
-    text-align: center;
-    margin-top: 20px;
-    background: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
-    padding: 0 !important;
-}
+.no-action-text { font-style: italic; color: #aaa; font-size: 0.9rem; }
