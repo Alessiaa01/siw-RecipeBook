@@ -1,0 +1,179 @@
+/* File: src/main/resources/static/css/manageUsers.css */
+
+/* ========================================================== */
+/* STILE "ANTICO REGISTRO DEGLI ISCRITTI" */
+/* ========================================================== */
+
+/* 1. FONT E IMPORTAZIONI UGUALI A MANAGE RECIPES */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:wght@600;700&family=Great+Vibes&display=swap');
+
+:root {
+    --gold-border: #C5A059;      /* Oro Cornice */
+    --parchment: #FDF6E3;        /* Carta Pergamena */
+    --text-color: #4E342E;       /* Marrone scuro */
+    --blue-bg: #DDF4F8;          /* Celeste sfondo */
+    --red-ink: #B71C1C;          /* Inchiostro Rosso (Ban) */
+    --green-ink: #2E7D32;        /* Inchiostro Verde (Attivo) */
+}
+
+/* Sfondo Magico (Uguale a manageRecipes) */
+body {
+    background-color: var(--blue-bg);
+    background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+    background-attachment: fixed;
+    font-family: 'Cormorant Garamond', serif;
+}
+
+/* ========================================================== */
+/* 2. IL REGISTRO (Contenitore Pergamena) */
+/* ========================================================== */
+.users-container {
+    background-color: var(--parchment);
+    background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+    
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 50px; /* Spazio interno ampio */
+    
+    border-radius: 20px;
+    border: 3px solid var(--gold-border);
+    
+    /* Ombre e Bagliori magici */
+    box-shadow: 
+        inset 0 0 60px rgba(139, 90, 43, 0.15), 
+        0 10px 20px rgba(0,0,0,0.2), 
+        0 0 0 8px rgba(255, 255, 255, 0.3); /* Doppio bordo esterno */
+}
+
+/* ========================================================== */
+/* 3. TITOLI E INTESTAZIONE */
+/* ========================================================== */
+.users-header {
+    text-align: center;
+    margin-bottom: 40px;
+    border-bottom: 2px solid rgba(197, 160, 89, 0.3); /* Linea oro sottile */
+    padding-bottom: 20px;
+}
+
+.users-header h1 {
+    font-family: 'Great Vibes', cursive; /* Font Corsivo Magico */
+    font-size: 3.5rem;
+    color: #8B4513;
+    margin: 0;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+}
+
+/* Link "Torna Indietro" in stile magico */
+.back-link {
+    display: inline-block;
+    margin-top: 10px;
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1rem;
+    color: #5D4037;
+    text-decoration: none;
+    border-bottom: 1px dashed #C5A059;
+    transition: all 0.3s;
+}
+
+.back-link:hover {
+    color: #B8860B;
+    border-bottom-style: solid;
+}
+
+/* ========================================================== */
+/* 4. LA TABELLA (Stile Manoscritto) */
+/* ========================================================== */
+.users-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.users-table th {
+    font-family: 'Cinzel Decorative', serif;
+    color: #8B5A2B;
+    font-size: 1.1rem;
+    text-align: left;
+    padding: 15px;
+    border-bottom: 2px solid var(--gold-border);
+}
+
+.users-table td {
+    padding: 15px;
+    border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+    font-size: 1.2rem; /* Testo leggibile */
+    color: var(--text-color);
+}
+
+.users-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Hover sulla riga come se stessimo leggendo */
+.users-table tr:hover td {
+    background-color: rgba(184, 134, 11, 0.05); /* Oro chiarissimo */
+}
+
+/* ========================================================== */
+/* 5. STATI E BOTTONI (Inchiostro e Sigilli) */
+/* ========================================================== */
+
+/* Stato Attivo (Verde Inchiostro) */
+.status-active {
+    color: var(--green-ink);
+    font-weight: 700;
+    font-style: italic;
+}
+
+/* Stato Bannato (Rosso Sangue/Inchiostro) */
+.status-banned {
+    color: var(--red-ink);
+    font-weight: 700;
+    text-decoration: line-through; /* Sbarrato come nei registri antichi */
+    opacity: 0.8;
+}
+
+/* Bottoni Azione (Piccoli sigilli) */
+.action-btn {
+    border: none;
+    padding: 6px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.action-btn:active {
+    transform: scale(0.95);
+}
+
+/* Bottone Ban (Rosso Antico) */
+.btn-ban {
+    background-color: #FFCDD2;
+    color: #B71C1C;
+    border: 1px solid #E57373;
+}
+
+.btn-ban:hover {
+    background-color: #EF9A9A;
+}
+
+/* Bottone Riattiva (Verde Salvia) */
+.btn-unban {
+    background-color: #C8E6C9;
+    color: #1B5E20;
+    border: 1px solid #81C784;
+}
+
+.btn-unban:hover {
+    background-color: #A5D6A7;
+}
+
+/* Testo "Nessuna azione" per Admin */
+.no-action-text {
+    font-style: italic;
+    color: #aaa;
+    font-size: 0.9rem;
+}

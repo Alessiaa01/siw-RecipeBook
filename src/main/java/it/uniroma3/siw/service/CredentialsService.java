@@ -37,4 +37,28 @@ public class CredentialsService {
         credentials.setPassword(this.passwordEncoder.encode(credentials.getPassword()));
         return this.credentialsRepository.save(credentials);
     }
+
+    //Metodo per prendere tutte le credenziali
+    @Transactional
+    public Iterable<Credentials> getAllCredentials() {
+        return this.credentialsRepository.findAll();
+    }
+    
+    //Metodo per bannare
+    public void lockCredentials(String username) {
+        Credentials credentials = this.credentialsRepository.findByUsername(username).orElse(null);
+        if (credentials != null) {
+            credentials.setEnabled(false); // BANNA L'UTENTE
+            this.credentialsRepository.save(credentials);
+        }
+    }
+
+    //Metodo per riabilitare 
+    public void unlockCredentials(String username) {
+        Credentials credentials = this.credentialsRepository.findByUsername(username).orElse(null);
+        if (credentials != null) {
+            credentials.setEnabled(true); // RIAMMETTI L'UTENTE
+            this.credentialsRepository.save(credentials);
+        }
+    }
 }

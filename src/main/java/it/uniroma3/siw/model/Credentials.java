@@ -31,6 +31,9 @@ public class Credentials {
 	@OneToOne(cascade = CascadeType.ALL)
 	private User user;
 	
+	// true = attivo, false = bannato
+    private boolean enabled = true;
+	
 	public String getUsername() {
 		return username;
 	}
@@ -70,5 +73,13 @@ public class Credentials {
 	public void setRole(String role) {
 		this.role = role;
 	}
+	
+	public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 
 }

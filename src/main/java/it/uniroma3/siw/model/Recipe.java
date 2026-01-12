@@ -31,6 +31,7 @@ public class Recipe {
 
     private String title; // Titolo della ricetta
     
+    @Column(length = 2000)
     private String description; // Descrizione e/o procedimento
     
     private Integer preparationTime; // Tempo di preparazione (in minuti)
@@ -40,6 +41,7 @@ public class Recipe {
     // Difficoltà potrebbe essere una stringa (es. "Facile", "Medio") o un Integer (es. da 1 a 5)
     private String difficulty; 
 
+    @Column(length = 2000)
     private String imageUrl; // URL per l'immagine della ricetta
     
     private Integer servings; // Numero di porzioni

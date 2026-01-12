@@ -1,6 +1,7 @@
 package it.uniroma3.siw.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +18,7 @@ import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.UserService;
 import jakarta.validation.Valid;
+
 
 @Controller
 public class AuthenticationController {
@@ -93,7 +95,21 @@ public class AuthenticationController {
 				}
 			}
 		}
-	*/		
+	*/	
+	
+	@GetMapping("/success")
+	public String defaultAfterLogin() {
+	    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
+	    if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
+	        // PRIMA ERA: return "redirect:/admin/manageRecipes";
+	        // ORA DEVE ESSERE:
+	        return "redirect:/admin"; // Va alla dashboard generale
+	    }
+	    return "redirect:/recipes";
+	}
+	
+	/*
 	    @GetMapping("/success")
 	    public String defaultAfterLogin() {
 	    	UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -104,7 +120,8 @@ public class AuthenticationController {
 	        } 
 	    	return "redirect:/recipes"; // lista ricette per utenti normali
 	    }
-	    
+	    */
+	
 	// ...
 	// Registrazione utente
 	@PostMapping("/register")
@@ -123,5 +140,31 @@ public class AuthenticationController {
             return "registrationSuccessful"; // pagina conferma registrazione
         }
         return "formRegisterUser"; // ritorna al form se ci sono errori
+    }
+	
+	@GetMapping("/admin")
+	public String adminDashboard() {
+	    return "admin/indexAdmin";
+	}
+	
+	//Pagina per gestire gli utenti(solo Admin)
+	@GetMapping("/admin/users")
+    public String manageUsers(Model model) {
+        model.addAttribute("credentialsList", this.credentialsService.getAllCredentials());
+        return "admin/manageUsers"; // Nome del template HTML che creeremo
+    }
+	
+	//Azione per bannare un utente 
+	@PostMapping("/admin/users/{username}/ban")
+    public String banUser(@PathVariable("username") String username) {
+        this.credentialsService.lockCredentials(username);
+        return "redirect:/admin/users";
+    }
+	
+	//Azione per riabilitare un utente 
+	@PostMapping("/admin/users/{username}/unban")
+    public String unbanUser(@PathVariable("username") String username) {
+        this.credentialsService.unlockCredentials(username);
+        return "redirect:/admin/users";
     }
 }

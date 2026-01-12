@@ -1,33 +1,40 @@
 <!DOCTYPE html>
-<html>
-
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>SiwRecipe - Admin</title>
+    <title>SiwRecipe - Dashboard Admin</title>
     <link rel="stylesheet" href="/css/stile.css" />
+    <link rel="stylesheet" href="/css/indexAdmin.css" />
 </head>
 
 <body>
     <header>
-        <div th:if="${userDetails}">
-            <span th:text="${userDetails.username}"></span>
+        <div>
+            <span>Benvenuto Admin!</span>
             <a href="/logout">Logout</a>
-        </div>
-        <div th:unless="${userDetails}">
-            <a href="/login">Login</a>
-            <a href="/register">Registrati</a>
         </div>
     </header>
 
-    <div>
-        <a href="/"><img src="/images/logo-siw.png" width="50%" /></a>
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="/"><img src="/images/logo-siw.png" width="200" /></a>
+        <h1>Pannello di Controllo</h1>
     </div>
 
-    <h1>Dashboard Admin</h1>
-    <ul>
-        <li><a href="/admin/formNewRecipe">Aggiungi nuova ricetta</a></li>
-        <li><a href="/recipes">Visualizza tutte le ricette</a></li>
+    <div class="dashboard-container">
         
-    </ul>
-</body>
+        <div class="dashboard-card">
+            <span class="icon">🍲</span>
+            <h2>Ricette</h2>
+            <p>Aggiungi, modifica o cancella le ricette del sito.</p>
+            <a href="/admin/manageRecipes" class="dashboard-btn">Gestisci Ricette</a>
+        </div>
 
+        <div class="dashboard-card">
+            <span class="icon">👥</span>
+            <h2>Utenti</h2>
+            <p>Visualizza gli iscritti e gestisci i ban.</p>
+            <a href="/admin/users" class="dashboard-btn">Gestisci Utenti</a>
+        </div>
+
+    </div>
+</body>
 </html>

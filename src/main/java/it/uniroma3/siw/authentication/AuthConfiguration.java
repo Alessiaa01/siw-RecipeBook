@@ -32,7 +32,7 @@ import javax.sql.DataSource;
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .authoritiesByUsernameQuery("SELECT username, role from credentials WHERE username=?")
-                .usersByUsernameQuery("SELECT username, password, 1 as enabled FROM credentials WHERE username=?");
+                .usersByUsernameQuery("SELECT username, password, enabled FROM credentials WHERE username=?");
     }
     
     @Bean

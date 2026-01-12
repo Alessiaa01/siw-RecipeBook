@@ -1,0 +1,78 @@
+/* File: src/main/resources/static/css/indexAdmin.css */
+
+/* Contenitore principale flessibile */
+.dashboard-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;            /* Spazio tra le card */
+    margin-top: 50px;
+    padding: 20px;
+    flex-wrap: wrap;      /* Va a capo su schermi piccoli */
+}
+
+/* Stile delle Card (i riquadri) */
+.dashboard-card {
+    background-color: #ffffff; /* Bianco puro per massima leggibilità */
+    /* Se vuoi un effetto vedo-non-vedo con lo sfondo, usa: rgba(255, 255, 255, 0.9); */
+    
+    border: 1px solid #e0e0e0; /* Bordo sottile grigio chiaro */
+    border-radius: 15px;       /* Angoli arrotondati coerenti col sito */
+    padding: 40px 30px;
+    width: 300px;              /* Larghezza fissa per uniformità */
+    text-align: center;
+    
+    /* Ombreggiatura elegante */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    
+    /* Animazione fluida */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Effetto al passaggio del mouse sulla Card */
+.dashboard-card:hover {
+    transform: translateY(-5px); /* Si alza leggermente */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15); /* L'ombra diventa più marcata */
+    border-color: #b0b0b0;
+}
+
+/* Icone (Emoji o FontAwesome) */
+.icon { 
+    font-size: 4rem;       /* Molto grandi */
+    display: block; 
+    margin-bottom: 20px;
+}
+
+/* Titoli dentro le card */
+.dashboard-card h2 {
+    color: #333;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    font-family: sans-serif;
+}
+
+/* Testo descrittivo */
+.dashboard-card p {
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+/* Bottoni dentro le card */
+.dashboard-btn {
+    display: inline-block;
+    padding: 10px 25px;
+    background-color: #1abc9c; /* Verde acqua (o usa il colore principale del tuo sito) */
+    color: white;
+    text-decoration: none;
+    border-radius: 25px; /* Bottone a pillola */
+    font-weight: bold;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+/* Hover sui bottoni */
+.dashboard-btn:hover {
+    background-color: #16a085; /* Verde un po' più scuro */
+    transform: scale(1.05);    /* Leggero zoom */
+}

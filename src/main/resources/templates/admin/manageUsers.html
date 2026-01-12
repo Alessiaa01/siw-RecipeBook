@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>SiwRecipe - Registro Iscritti</title>
+    <link rel="stylesheet" href="/css/stile.css" />
+    <link rel="stylesheet" href="/css/manageUsers.css" />
+</head>
+
+<body>
+    <header>
+        <div class="header-content-wrapper">
+             <div class="admin-link-header-left">
+                <a href="/admin">Dashboard</a>
+             </div>
+             
+             <div th:if="${userDetails}">
+                <span class="chef-name" th:text="${userDetails.username}">Admin</span>
+                <a href="/logout">Esci</a>
+            </div>
+        </div>
+    </header>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="/"><img src="/images/logo-siw.png" width="150" /></a>
+    </div>
+
+    <div class="users-container">
+        
+        <div class="users-header">
+            <h1>Registro degli Iscritti</h1>
+            <a href="/admin" class="back-link">✨ Torna al Pannello di Controllo ✨</a>
+        </div>
+
+        <table class="users-table">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Nome e Cognome</th>
+                    <th>Ruolo</th>
+                    <th>Stato</th>
+                    <th>Azioni</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="cred : ${credentialsList}">
+                    
+                    <td th:text="${cred.username}" style="font-weight: bold;">user123</td>
+                    
+                    <td>
+                        <span th:text="${cred.user.name} + ' ' + ${cred.user.surname}">Mario Rossi</span>
+                    </td>
+
+                    <td>
+                        <span th:text="${cred.role}" 
+                              th:style="${cred.role == 'ADMIN' ? 'color: #B8860B; font-weight:bold;' : ''}">
+                            DEFAULT
+                        </span>
+                    </td>
+                    
+                    <td>
+                        <span th:if="${cred.enabled}" class="status-active">Attivo</span>
+                        <span th:unless="${cred.enabled}" class="status-banned">Bannato</span>
+                    </td>
+
+                    <td>
+                        <div th:if="${cred.role != 'ADMIN'}">
+                            <form th:if="${cred.enabled}" 
+                                  th:action="@{'/admin/users/' + ${cred.username} + '/ban'}" 
+                                  method="POST" style="display:inline;">
+                                <button type="submit" class="action-btn btn-ban">Banna</button>
+                            </form>
+                            
+                            <form th:unless="${cred.enabled}" 
+                                  th:action="@{'/admin/users/' + ${cred.username} + '/unban'}" 
+                                  method="POST" style="display:inline;">
+                                <button type="submit" class="action-btn btn-unban">Riattiva</button>
+                            </form>
+                        </div>
+                        
+                        <span th:if="${cred.role == 'ADMIN'}" class="no-action-text">
+                            Intoccabile
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div th:if="${credentialsList.isEmpty()}" style="text-align: center; padding: 40px; font-style: italic; color: #8B5A2B;">
+            Il registro è ancora vuoto...
+        </div>
+    </div>
+
+</body>
+</html>
