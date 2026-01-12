@@ -1,27 +1,147 @@
 /* File: src/main/resources/static/css/manageUsers.css */
 
-/* ========================================================== */
-/* STILE "ANTICO REGISTRO DEGLI ISCRITTI" */
-/* ========================================================== */
-
-/* 1. FONT E IMPORTAZIONI UGUALI A MANAGE RECIPES */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:wght@600;700&family=Great+Vibes&display=swap');
-
+/* 0. VARIABILI COLORI */
 :root {
-    --gold-border: #C5A059;      /* Oro Cornice */
-    --parchment: #FDF6E3;        /* Carta Pergamena */
-    --text-color: #4E342E;       /* Marrone scuro */
-    --blue-bg: #DDF4F8;          /* Celeste sfondo */
-    --red-ink: #B71C1C;          /* Inchiostro Rosso (Ban) */
-    --green-ink: #2E7D32;        /* Inchiostro Verde (Attivo) */
+    --primary-color: #8B4513;   /* Marrone Bronzo */
+    --secondary-color: #D4AF37; /* Oro */
+    --accent-color: #B2EBF2;    /* Celeste chiaro */
+    --box-shadow-color: rgba(0,0,0,0.1);
 }
 
-/* Sfondo Magico (Uguale a manageRecipes) */
+/* 1. FONT MAGICI */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Cormorant+Unicase:wght@400;600;700&family=Great+Vibes&display=swap');
+
+/* 2. SFONDO E BODY */
 body {
-    background-color: var(--blue-bg);
-    background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+    margin: 0 !important;
+    padding: 0 !important;
+    background: radial-gradient(circle at center, #E0F7FA 0%, #B2EBF2 100%);
     background-attachment: fixed;
+    min-height: 100vh;
     font-family: 'Cormorant Garamond', serif;
+    color: #5D4037;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+/* Link generici */
+a { text-decoration: none; color: inherit; }
+
+/* ========================================================== */
+/* HEADER & BARRA NAVIGAZIONE (Copiato da indexAdmin) */
+/* ========================================================== */
+header {
+    background-color: #F8F4E8; 
+    border-bottom: 2px solid var(--secondary-color);
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+    width: 100%; 
+    margin: 0 !important; 
+    padding: 10px 0 !important;
+    position: relative;
+    z-index: 100;
+}
+
+.header-content-wrapper {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    width: 100%;
+    max-width: 98%; 
+    margin: 0 auto; 
+    padding: 0 20px !important; 
+    
+    /* FIX: Rimuove il box bianco ereditato da stile.css */
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+/* --- LATO SINISTRO (Admin Link style) --- */
+
+/* NUOVA REGOLA per il contenitore del bottone Home */
+.admin-link-header-left {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.admin-link-header-left a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Cormorant Unicase', serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 8px 20px;
+    border-radius: 25px;
+    background-color: #D3B88C; 
+    color: #8B4513; 
+    border: 1px solid #B8860B; 
+    transition: all 0.3s ease;
+}
+
+.admin-link-header-left a:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+}
+
+/* --- LATO DESTRO (Utente e Bottoni) --- */
+.user-actions-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    
+    /* FIX: Rimuove il box bianco ereditato da stile.css */
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+/* Testo Benvenuto */
+.chef-name {
+    font-family: 'Cinzel Decorative', serif;
+    font-weight: 700;
+    color: #8B4513;
+    font-size: 1.1rem;
+    margin-right: 5px;
+}
+.chef-name span {
+    color: var(--secondary-color);
+    margin-left: 5px;
+    text-transform: uppercase;
+}
+
+/* STILE DEL BOTTONE LOGOUT */
+/* Questo stile assicura che appaia come un bottone e non solo testo */
+.btn-logout {
+    display: inline-block;
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-family: 'Cinzel Decorative', serif;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    
+    /* Colori del bottone */
+    background-color: #D3B88C; 
+    color: #4a4a4a;
+    border: 1px solid #B8860B; /* Aggiunto bordo per definirlo meglio */
+    text-decoration: none; /* Rimuove sottolineatura tipica dei link */
+}
+
+.btn-logout:hover {
+    background-color: #A52A2A; /* Diventa rosso scuro al passaggio */
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 /* ========================================================== */
@@ -32,8 +152,12 @@ body {
     background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
     
     max-width: 1000px;
-    margin: 40px auto;
-    padding: 50px; /* Spazio interno ampio */
+    
+    /* Ridotto margine superiore per alzare il box */
+    margin: 10px auto 40px auto; 
+    
+    /* Ridotto padding superiore per alzare il titolo interno */
+    padding: 15px 50px 50px 50px; 
     
     border-radius: 20px;
     border: 3px solid var(--gold-border);
@@ -42,25 +166,40 @@ body {
     box-shadow: 
         inset 0 0 60px rgba(139, 90, 43, 0.15), 
         0 10px 20px rgba(0,0,0,0.2), 
-        0 0 0 8px rgba(255, 255, 255, 0.3); /* Doppio bordo esterno */
+        0 0 0 8px rgba(255, 255, 255, 0.3); 
 }
 
 /* ========================================================== */
-/* 3. TITOLI E INTESTAZIONE */
+/* 3. TITOLI E INTESTAZIONE (Modificati per trasparenza) */
 /* ========================================================== */
 .users-header {
     text-align: center;
     margin-bottom: 40px;
-    border-bottom: 2px solid rgba(197, 160, 89, 0.3); /* Linea oro sottile */
     padding-bottom: 20px;
+
+    /* Trasparenza per evitare box bianchi */
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important; 
 }
 
 .users-header h1 {
-    font-family: 'Great Vibes', cursive; /* Font Corsivo Magico */
+    font-family: 'Great Vibes', cursive;
     font-size: 3.5rem;
     color: #8B4513;
     margin: 0;
     text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+    position: relative;
+}
+
+/* Linea sfumata sotto il titolo (come indexAdmin) */
+.users-header h1::after {
+    content: '';
+    display: block;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #D4AF37, transparent);
+    width: 50%;
+    margin: 15px auto 0 auto;
 }
 
 /* Link "Torna Indietro" in stile magico */
@@ -108,7 +247,6 @@ body {
     border-bottom: none;
 }
 
-/* Hover sulla riga come se stessimo leggendo */
 .users-table tr:hover td {
     background-color: rgba(184, 134, 11, 0.05); /* Oro chiarissimo */
 }
@@ -117,22 +255,19 @@ body {
 /* 5. STATI E BOTTONI (Inchiostro e Sigilli) */
 /* ========================================================== */
 
-/* Stato Attivo (Verde Inchiostro) */
 .status-active {
     color: var(--green-ink);
     font-weight: 700;
     font-style: italic;
 }
 
-/* Stato Bannato (Rosso Sangue/Inchiostro) */
 .status-banned {
     color: var(--red-ink);
     font-weight: 700;
-    text-decoration: line-through; /* Sbarrato come nei registri antichi */
+    text-decoration: line-through;
     opacity: 0.8;
 }
 
-/* Bottoni Azione (Piccoli sigilli) */
 .action-btn {
     border: none;
     padding: 6px 15px;
@@ -149,7 +284,6 @@ body {
     transform: scale(0.95);
 }
 
-/* Bottone Ban (Rosso Antico) */
 .btn-ban {
     background-color: #FFCDD2;
     color: #B71C1C;
@@ -160,7 +294,6 @@ body {
     background-color: #EF9A9A;
 }
 
-/* Bottone Riattiva (Verde Salvia) */
 .btn-unban {
     background-color: #C8E6C9;
     color: #1B5E20;
@@ -171,9 +304,20 @@ body {
     background-color: #A5D6A7;
 }
 
-/* Testo "Nessuna azione" per Admin */
 .no-action-text {
     font-style: italic;
     color: #aaa;
     font-size: 0.9rem;
+}
+
+/* ========================================================== */
+/* 7. LOGO FIX (Rimuove il riquadro bianco) */
+/* ========================================================== */
+.logo-container {
+    text-align: center;
+    margin-top: 20px;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
 }

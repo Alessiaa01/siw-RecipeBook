@@ -4,31 +4,35 @@
     <title>SiwRecipe - Registro Iscritti</title>
     <link rel="stylesheet" href="/css/stile.css" />
     <link rel="stylesheet" href="/css/manageUsers.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
     <header>
         <div class="header-content-wrapper">
              <div class="admin-link-header-left">
-                <a href="/admin">Dashboard</a>
+                <a href="/admin">
+                    <i class="fa-solid fa-arrow-left"></i> Pannello di Controllo
+                </a>
              </div>
              
-             <div th:if="${userDetails}">
-                <span class="chef-name" th:text="${userDetails.username}">Admin</span>
-                <a href="/logout">Esci</a>
+             <div class="user-actions-right" th:if="${userDetails}">
+                <span class="chef-name">
+                    Admin: <span th:text="${userDetails.username}">User</span>
+                </span>
+                <a href="/logout" class="btn-logout">Logout</a>
             </div>
         </div>
     </header>
 
-    <div style="text-align: center; margin-top: 20px;">
-        <a href="/"><img src="/images/logo-siw.png" width="150" /></a>
-    </div>
+	<div class="logo-container">
+	        <a href="/"><img src="/images/logo2.png" width="250" /></a>
+	    </div>
 
     <div class="users-container">
         
         <div class="users-header">
             <h1>Registro degli Iscritti</h1>
-            <a href="/admin" class="back-link">✨ Torna al Pannello di Controllo ✨</a>
         </div>
 
         <table class="users-table">
