@@ -19,6 +19,9 @@ import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.UserService;
 import jakarta.validation.Valid;
 
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import java.util.UUID;
+
 
 @Controller
 public class AuthenticationController {
@@ -98,16 +101,48 @@ public class AuthenticationController {
 	*/	
 	
 	@GetMapping("/success")
-	public String defaultAfterLogin() {
-	    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	    Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-	    if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
-	        // PRIMA ERA: return "redirect:/admin/manageRecipes";
-	        // ORA DEVE ESSERE:
-	        return "redirect:/admin"; // Va alla dashboard generale
-	    }
-	    return "redirect:/recipes";
-	}
+    public String defaultAfterLogin(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object principal = authentication.getPrincipal();
+        
+        Credentials credentials = null;
+
+        // Login con Google
+        if (principal instanceof OAuth2User) {
+            OAuth2User oauth2User = (OAuth2User) principal;
+            String email = oauth2User.getAttribute("email"); 
+            String name = oauth2User.getAttribute("name");
+            
+            try {
+                // Cerchiamo se esiste già un utente con questa mail
+                credentials = credentialsService.getCredentials(email);
+            } catch (Exception e) {
+                // Se non esiste, lo creiamo
+                User newUser = new User();
+                newUser.setName(name);
+                newUser.setSurname(""); // Google spesso non divide nome/cognome
+                newUser.setEmail(email);
+                userService.saveUser(newUser);
+
+                credentials = new Credentials();
+                credentials.setUsername(email); // Usiamo la mail come username
+                credentials.setPassword(UUID.randomUUID().toString()); // Password a caso
+                credentials.setRole(Credentials.DEFAULT_ROLE);
+                credentials.setUser(newUser);
+                credentialsService.saveCredentials(credentials);
+            }
+        } 
+        // Login normale (username/password)
+        else {
+            UserDetails userDetails = (UserDetails) principal;
+            credentials = credentialsService.getCredentials(userDetails.getUsername());
+        }
+
+        if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
+            return "redirect:/admin";
+        }
+        return "redirect:/recipes";
+    }
 	
 	/*
 	    @GetMapping("/success")

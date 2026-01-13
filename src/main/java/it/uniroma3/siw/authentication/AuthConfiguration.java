@@ -46,45 +46,32 @@ import javax.sql.DataSource;
     }
 
     @Bean
-    protected SecurityFilterChain configure(final HttpSecurity httpSecurity) throws Exception{
+    protected SecurityFilterChain configure(final HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf().and().cors().disable()
                 .authorizeHttpRequests()
-                
                 // --- 1. PAGINE APERTE A TUTTI (Pubbliche) ---
-                .requestMatchers(HttpMethod.GET,
-                        "/", "/index", 
-                        "/register", "/login", 
-                        "/css/**", "/images/**", "favicon.ico", 
-                        "/recipes",       // Elenco ricette visibile a tutti
-                        "/recipe/**", 
-                        "/searchRecipes",// Dettaglio ricetta visibile a tutti
-                        "/cooks", "/cook/**" // Se hai i cuochi
-                ).permitAll()
-                
+                .requestMatchers(HttpMethod.GET, "/", "/index", "/register", "/login", "/css/**", "/images/**", "favicon.ico", "/recipes", "/recipe/**", "/searchRecipes", "/cooks", "/cook/**").permitAll()
                 // Login e Register (Invio dati) sono pubblici
                 .requestMatchers(HttpMethod.POST, "/register", "/login").permitAll()
-                
                 // --- 2. PAGINE SOLO PER L'AMMINISTRATORE ---
-                // Qualsiasi URL che inizia con /admin/ richiede il ruolo ADMIN
                 .requestMatchers(HttpMethod.GET, "/admin/**").hasAnyAuthority(ADMIN_ROLE)
                 .requestMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority(ADMIN_ROLE)
-                
                 // --- 3. PAGINE PER GLI UTENTI LOGGATI ---
-                // Qui ricadono AUTOMATICAMENTE:
-                // - /formNewRecipe (perché non è pubblica e non è admin)
-                // - /myRecipes
-                // - Salvare una ricetta
                 .anyRequest().authenticated()
-                
-                // --- CONFIGURAZIONE LOGIN ---
+                // --- LOGIN FORM STANDARD ---
                 .and().formLogin()
                 .loginPage("/login")
                 .permitAll()
                 .defaultSuccessUrl("/success", true)
                 .failureUrl("/login?error=true")
                 
-                // --- CONFIGURAZIONE LOGOUT ---
+                // --- AGGIUNTA: LOGIN GOOGLE (OAUTH2) ---
+                .and().oauth2Login()
+                .loginPage("/login")
+                .defaultSuccessUrl("/success", true) // Se login Google ok -> va a /success
+                
+                // --- LOGOUT ---
                 .and()
                 .logout()
                 .logoutUrl("/logout")
@@ -93,7 +80,6 @@ import javax.sql.DataSource;
                 .deleteCookies("JSESSIONID")
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .clearAuthentication(true).permitAll();
-        
         return httpSecurity.build();
     }
 }
