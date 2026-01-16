@@ -26,6 +26,7 @@ import it.uniroma3.siw.controller.validator.RecipeValidator;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 
 
@@ -210,26 +211,26 @@ public String formNewRecipe(Model model) {
     
     @GetMapping("/myRecipes")
     public String myRecipes(Model model) {
-        // 1. Recupera l'utente loggato
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUsername = authentication.getName();
+        String currentUsername;
+
+        // CONTROLLO: Se l'utente è loggato con Google (OAuth2), prendiamo l'email
+        if (authentication.getPrincipal() instanceof OAuth2User) {
+            OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
+            currentUsername = oauth2User.getAttribute("email");
+        } else {
+            // Altrimenti login classico
+            currentUsername = authentication.getName();
+        }
         
-        // 2. Recupera l'oggetto User corrispondente
         Credentials credentials = credentialsService.getCredentials(currentUsername);
         
-        // --- AGGIUNGI QUESTO CONTROLLO ---
         if (credentials == null) {
-            // Se l'utente non viene trovato nel DB, forziamo il logout o lo mandiamo alla login
             return "redirect:/login?error=UserNotFound";
         }
-        // ---------------------------------
 
         User currentUser = credentials.getUser();
-        
-        // 3. Chiede al service le ricette di QUEL l'utente
         List<Recipe> recipes = recipeService.getRecipesByAuthor(currentUser);
-        
-        // 4. Le mette nel modello per la pagina HTML
         model.addAttribute("recipes", recipes);
         
         return "myRecipes";
@@ -480,5 +481,14 @@ public String formNewRecipe(Model model) {
         model.addAttribute("recipes", recipeService.findAll());
         return "admin/manageRecipes.html"; 
     }   
+ // Metodo di supporto per recuperare lo username corretto (Email o User classico)
+    private String getCurrentUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getPrincipal() instanceof OAuth2User) {
+            OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
+            return oauth2User.getAttribute("email");
+        }
+        return authentication.getName();
+    }
     
 }

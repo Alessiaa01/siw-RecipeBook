@@ -34,7 +34,13 @@ public class CredentialsService {
     @Transactional
     public Credentials saveCredentials(Credentials credentials) {
         credentials.setRole(Credentials.DEFAULT_ROLE);
-        credentials.setPassword(this.passwordEncoder.encode(credentials.getPassword()));
+        
+        // Se la password è NULL (es. utente Google), NON proviamo a criptarla.
+        // Altrimenti il sistema va in crash come vedi nel log.
+        if (credentials.getPassword() != null) {
+            credentials.setPassword(this.passwordEncoder.encode(credentials.getPassword()));
+        }
+        
         return this.credentialsRepository.save(credentials);
     }
 
@@ -47,11 +53,12 @@ public class CredentialsService {
     //Metodo per bannare
     public void lockCredentials(String username) {
         Credentials credentials = this.credentialsRepository.findByUsername(username).orElse(null);
-        if (credentials != null) {
-            credentials.setEnabled(false); // BANNA L'UTENTE
+        if (credentials.getPassword() != null) {
+            credentials.setPassword(this.passwordEncoder.encode(credentials.getPassword()));
+        }
             this.credentialsRepository.save(credentials);
         }
-    }
+    
 
     //Metodo per riabilitare 
     public void unlockCredentials(String username) {
