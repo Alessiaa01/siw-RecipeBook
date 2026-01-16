@@ -14,15 +14,15 @@
         <div class="corner bottom-left"></div>
         <div class="corner bottom-right"></div>
     </div>
-	
-	<div class="fairy-dust-container">
-	    <div class="dust-layer-1"></div>
-	    <div class="dust-layer-2"></div>
-	    <div class="dust-layer-3"></div>
-	</div>
+
+    <div class="fairy-dust-container">
+        <div class="dust-layer-1"></div>
+        <div class="dust-layer-2"></div>
+        <div class="dust-layer-3"></div>
+    </div>
 
     <div class="login-container">
-        
+
         <div class="scroll-header">
             <div class="scroll-content">
                 <h1>LOGIN</h1>
@@ -31,73 +31,74 @@
             <div class="ribbon-right"></div>
         </div>
 
-       
-
         <form th:action="@{/login}" method="POST" class="grimorio-frame">
-            
+
             <div class="frame-decoration-top"></div>
 
             <div class="input-group">
                 <label>Nome Utente</label>
                 <div class="input-wrapper">
                     <input type="text" name="username" required />
-				<i class="fa-solid fa-user icon-gold"></i>
-                  
-            </div>
-
-            <div class="input-group">
+                    <i class="fa-solid fa-user icon-gold"></i>
+                </div>
+            </div> <div class="input-group">
                 <label>Password</label>
                 <div class="input-wrapper">
                     <input type="password" name="password" required />
-                      <i class="fa-solid fa-key icon-gold"></i> </div>
+                    <i class="fa-solid fa-key icon-gold"></i>
+                </div>
             </div>
-            
-			<div th:if="${param.error}" style="color: red;">
-			    <div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION'].message == 'User is disabled'}">
-			        <h3>Sei stato bannato!</h3>
-			        <p>Il tuo account è stato sospeso. Contatta l'amministratore.</p>
-			    </div>
 
-			    <div th:unless="${session['SPRING_SECURITY_LAST_EXCEPTION'].message == 'User is disabled'}">
-			        Username o password errati.
-			    </div>
-			</div>
-            
-			<div class="center-button">
-			                <button type="submit">
-			                    <i class="fa-solid fa-book-open"></i> Accedi
-			                </button>
-			            </div>
-			            
-			            <div style="text-align: center; margin-top: 15px; margin-bottom: 15px;">
-			                <span style="color: #5c4033; font-weight: bold;">oppure</span>
-			                <br><br>
-			                <a href="/oauth2/authorization/google" style="
-			                    display: inline-flex;
-			                    align-items: center;
-			                    justify-content: center;
-			                    background-color: white;
-			                    color: #757575;
-			                    border: 1px solid #ddd;
-			                    padding: 8px 16px;
-			                    border-radius: 4px;
-			                    text-decoration: none;
-			                    font-family: Roboto, sans-serif;
-			                    font-weight: 500;
-			                    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
-			                    transition: background-color 0.3s;
-			                ">
-			                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="G" style="width: 18px; height: 18px; margin-right: 8px;">
-			                    Accedi con Google
-			                </a>
-			            </div>
-			            <div class="extra-links">
-			                Non hai un account? <a th:href="@{/register}">Registrati.</a>
-			            </div>
+            <div th:if="${param.error}" style="color: red; margin-bottom: 15px;">
+                <div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION'] != null 
+                              and session['SPRING_SECURITY_LAST_EXCEPTION'].message == 'User is disabled'}">
+                    <h3>Sei stato bannato!</h3>
+                    <p>Il tuo account è stato sospeso. Contatta l'amministratore.</p>
+                </div>
+
+                <div th:unless="${session['SPRING_SECURITY_LAST_EXCEPTION'] != null 
+                                and session['SPRING_SECURITY_LAST_EXCEPTION'].message == 'User is disabled'}">
+                    Username o password errati.
+                </div>
+            </div>
+
+            <div class="center-button">
+                <button type="submit">
+                    <i class="fa-solid fa-book-open"></i> Accedi
+                </button>
+            </div>
+
+            <div style="text-align: center; margin-top: 15px; margin-bottom: 15px;">
+                <span style="color: #5c4033; font-weight: bold;">oppure</span>
+                <br><br>
+                <a href="/oauth2/authorization/google" style="
+                                display: inline-flex;
+                                align-items: center;
+                                justify-content: center;
+                                background-color: white;
+                                color: #757575;
+                                border: 1px solid #ddd;
+                                padding: 8px 16px;
+                                border-radius: 4px;
+                                text-decoration: none;
+                                font-family: Roboto, sans-serif;
+                                font-weight: 500;
+                                box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+                                transition: background-color 0.3s;
+                            ">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="G"
+                        style="width: 18px; height: 18px; margin-right: 8px;">
+                    Accedi con Google
+                </a>
+            </div>
+            <div class="extra-links">
+                Non hai un account? <a th:href="@{/register}">Registrati.</a>
+            </div>
 
             <div class="frame-decoration-bottom"></div>
         </form>
     </div>
 
 </body>
+
 </html>

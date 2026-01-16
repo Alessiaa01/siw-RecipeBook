@@ -216,6 +216,14 @@ public String formNewRecipe(Model model) {
         
         // 2. Recupera l'oggetto User corrispondente
         Credentials credentials = credentialsService.getCredentials(currentUsername);
+        
+        // --- AGGIUNGI QUESTO CONTROLLO ---
+        if (credentials == null) {
+            // Se l'utente non viene trovato nel DB, forziamo il logout o lo mandiamo alla login
+            return "redirect:/login?error=UserNotFound";
+        }
+        // ---------------------------------
+
         User currentUser = credentials.getUser();
         
         // 3. Chiede al service le ricette di QUEL l'utente
@@ -226,7 +234,6 @@ public String formNewRecipe(Model model) {
         
         return "myRecipes";
     }
-
    /* 
     @GetMapping("/recipe/{id}/edit")
     public String editRecipe(@PathVariable("id") Long id, Model model) {
