@@ -34,7 +34,14 @@
 	            
 	            <div sec:authorize="isAuthenticated()">
 	                <span class="chef-name">
-	                    ✨ Chef <span sec:authentication="name">NomeUtente</span>
+	                    ✨ Chef 
+                        <span th:if="${#authentication.principal instanceof T(org.springframework.security.oauth2.core.user.OAuth2User)}"
+                              th:text="${#authentication.principal.attributes['given_name']}">
+                        </span>
+
+                        <span th:unless="${#authentication.principal instanceof T(org.springframework.security.oauth2.core.user.OAuth2User)}"
+                              sec:authentication="name">
+                        </span>
 	                </span>
 	                <a th:href="@{/logout}" class="btn-auth btn-logout">Logout</a>
 	            </div>

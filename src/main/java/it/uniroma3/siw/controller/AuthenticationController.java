@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+
 import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.service.CredentialsService;
@@ -100,49 +102,53 @@ public class AuthenticationController {
 		}
 	*/	
 	
-	@GetMapping("/success")
-    public String defaultAfterLogin(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Object principal = authentication.getPrincipal();
-        
-        Credentials credentials = null;
 
-        // Login con Google
-        if (principal instanceof OAuth2User) {
-            OAuth2User oauth2User = (OAuth2User) principal;
-            String email = oauth2User.getAttribute("email"); 
-            String name = oauth2User.getAttribute("name");
-            
-            try {
-                // Cerchiamo se esiste già un utente con questa mail
-                credentials = credentialsService.getCredentials(email);
-            } catch (Exception e) {
-                // Se non esiste, lo creiamo
-                User newUser = new User();
-                newUser.setName(name);
-                newUser.setSurname(""); // Google spesso non divide nome/cognome
-                newUser.setEmail(email);
-                userService.saveUser(newUser);
+	@GetMapping(value = "/success")
+	public String defaultAfterLogin(Model model) {
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-                credentials = new Credentials();
-                credentials.setUsername(email); // Usiamo la mail come username
-                credentials.setPassword(UUID.randomUUID().toString()); // Password a caso
-                credentials.setRole(Credentials.DEFAULT_ROLE);
-                credentials.setUser(newUser);
-                credentialsService.saveCredentials(credentials);
-            }
-        } 
-        // Login normale (username/password)
-        else {
-            UserDetails userDetails = (UserDetails) principal;
-            credentials = credentialsService.getCredentials(userDetails.getUsername());
-        }
+	    // CASO 1: Login con GOOGLE (OAuth2)
+	    if (authentication instanceof OAuth2AuthenticationToken) {
+	        OAuth2User oauth2User = ((OAuth2AuthenticationToken) authentication).getPrincipal();
+	        String email = oauth2User.getAttribute("email");
+	        String name = oauth2User.getAttribute("given_name");
+	        String surname = oauth2User.getAttribute("family_name");
 
-        if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
-            return "redirect:/admin";
-        }
-        return "redirect:/recipes";
-    }
+	        // Cerchiamo se esiste già un utente con questa email (usiamo l'email come username per Google)
+	        Credentials credentials = credentialsService.getCredentials(email);
+
+	        if (credentials == null) {
+	            // L'utente non esiste: Lo registriamo al volo nel nostro DB
+	            User newUser = new User();
+	            newUser.setEmail(email);
+	            newUser.setName(name);
+	            newUser.setSurname(surname);
+	            this.userService.saveUser(newUser);
+
+	            credentials = new Credentials();
+	            credentials.setUsername(email); // Usiamo l'email come username
+	            credentials.setPassword(null); // Nessuna password per utenti OAuth
+	            credentials.setRole(Credentials.DEFAULT_ROLE); // Ruolo base
+	            credentials.setUser(newUser);
+	            this.credentialsService.saveCredentials(credentials);
+	        }
+
+	        // L'utente Google è sempre un utente base, quindi redirect a /pcs
+	        return "redirect:/recipes";
+	    }
+
+	    // CASO 2: Login CLASSICO (Username/Password)
+	    else {
+	        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+	        Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
+	        
+	        if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
+	            return "redirect:/admin";
+	        }
+	        return "redirect:/recipes";
+	    }
+	}
+	    
 	
 	/*
 	    @GetMapping("/success")
