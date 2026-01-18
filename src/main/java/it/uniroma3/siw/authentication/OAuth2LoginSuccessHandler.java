@@ -1,0 +1,40 @@
+package it.uniroma3.siw.authentication;
+
+import java.io.IOException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
+
+import it.uniroma3.siw.service.UserService;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+@Component
+public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
+
+    @Autowired
+    private UserService userService;
+
+    @Override
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+            Authentication authentication) throws ServletException, IOException {
+
+        OAuth2AuthenticationToken token = (OAuth2AuthenticationToken) authentication;
+        OAuth2User oauthUser = token.getPrincipal();
+        
+        String email = oauthUser.getAttribute("email");
+        String name = oauthUser.getAttribute("given_name");
+        String surname = oauthUser.getAttribute("family_name");
+        
+        // Logica intelligente: salva solo se non esiste
+        userService.processOAuthPostLogin(email, name, surname);
+
+        // Reindirizza alla pagina di successo (o dove vuoi tu)
+        this.setDefaultTargetUrl("/success");
+        super.onAuthenticationSuccess(request, response, authentication);
+    }
+}

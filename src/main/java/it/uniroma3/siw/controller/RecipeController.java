@@ -124,32 +124,27 @@ public class RecipeController {
     public String addReview(@PathVariable("recipeId") Long recipeId,
                             @Valid @ModelAttribute("review") Review review,
                             BindingResult bindingResult, 
-                            Model model,
-                            @ModelAttribute("currentUser") User currentUser) {
+                            Model model) { // <--- RIMOSSO currentUser dai parametri
         
-        // 1. Recuperiamo la ricetta (serve sia per salvarla che per ricaricare la pagina in caso di errore)
+        // 1. Recupero Utente Sicuro
+        User currentUser = (User) model.getAttribute("currentUser");
+
         Recipe recipe = recipeService.findById(recipeId);
 
-        // 2. Controllo Errori di Validazione (es. recensione vuota)
         if (bindingResult.hasErrors()) {
             model.addAttribute("recipe", recipe);
-            model.addAttribute("ingredient", new Ingredient()); // Necessario perché la vista se lo aspetta
-            // Non serve aggiungere currentUser, lo fa il GlobalController
+            model.addAttribute("ingredient", new Ingredient()); 
             return "recipe.html"; 
         }
 
-        // 3. Salvataggio
-        // Controlliamo che l'utente esista (per sicurezza)
         if (currentUser != null) {
-            review.setUser(currentUser);  // Uso l'utente iniettato dal GlobalController!
+            review.setUser(currentUser); 
             review.setRecipe(recipe);
             reviewService.save(review); 
         }
         
-        // 4. Post-Redirect-Get Pattern
         return "redirect:/recipe/" + recipeId;
     }
-
 // Form per inserire una nuova ricetta
 @GetMapping("/formNewRecipe")
 public String formNewRecipe(Model model) {
@@ -246,15 +241,19 @@ public String editRecipe(@PathVariable("id") Long id,
 public String updateRecipe(@PathVariable("id") Long id,
                            @ModelAttribute("recipe") Recipe formRecipe,
                            BindingResult bindingResult,
-                           Model model,
-                           @ModelAttribute("currentUser") User currentUser) {
+                           Model model) { // <--- RIMOSSO @ModelAttribute("currentUser") User currentUser
 
-    // 1. Pulizia sicurezza: stacchiamo l'autore che arriva dal form
-    formRecipe.setAuthor(null);
+    // 1. Recuperiamo l'utente corrente in modo SICURO (senza data binding)
+    // Il GlobalController lo ha già messo nel model, lo prendiamo da lì senza che Spring provi a modificarlo.
+    User currentUser = (User) model.getAttribute("currentUser");
 
-    // 2. Carichiamo la ricetta originale
+    // 2. Recuperiamo la ricetta originale dal Database
     Recipe recipeInDb = recipeService.findById(id);
-    if (recipeInDb == null) return "redirect:/recipes";
+    
+    // Controllo esistenza
+    if (recipeInDb == null) {
+        return "redirect:/recipes";
+    }
 
     // 3. Controllo Permessi
     boolean isAuthor = currentUser != null && recipeInDb.getAuthor().getId().equals(currentUser.getId());
@@ -266,25 +265,33 @@ public String updateRecipe(@PathVariable("id") Long id,
         return "redirect:/recipes?error=notAuthorized";
     }
 
-    // 4. Prepariamo i dati per la validazione
-    formRecipe.setAuthor(recipeInDb.getAuthor());
+    // 4. Preparazione oggetto per la validazione
+    formRecipe.setId(id);
+    
+    // IMPORTANTE: NON settiamo l'autore "vero" (managed) qui per evitare conflitti.
+    // formRecipe.setAuthor(recipeInDb.getAuthor()); // <--- RIMOSSO
+    
     formRecipe.setIngredients(recipeInDb.getIngredients());
 
     // 5. Validazione
     this.recipeValidator.validate(formRecipe, bindingResult);
     
+    // 6. Gestione Errori
     if (bindingResult.hasErrors()) {
-        // *** FIX IMPORTANTE PER ERRORE 400 ***
-        // Reinseriamo l'ID nell'oggetto form, altrimenti i link nel template
-        // diventeranno "/recipe/null"
-        formRecipe.setId(id);
+        // Creiamo un autore "dummy" solo per la visualizzazione HTML
+        User dummyAuthor = new User();
+        dummyAuthor.setId(recipeInDb.getAuthor().getId());
+        dummyAuthor.setName(recipeInDb.getAuthor().getName());
+        dummyAuthor.setSurname(recipeInDb.getAuthor().getSurname());
         
-        model.addAttribute("recipe", formRecipe); 
-        model.addAttribute("ingredient", new Ingredient()); 
+        formRecipe.setAuthor(dummyAuthor);
+        
+        model.addAttribute("recipe", formRecipe);
+        model.addAttribute("ingredient", new Ingredient());
         return "editRecipe"; 
     }
 
-    // 6. Aggiornamento manuale dei campi
+    // 7. Aggiornamento manuale dei campi
     recipeInDb.setTitle(formRecipe.getTitle());
     recipeInDb.setDescription(formRecipe.getDescription());
     recipeInDb.setCategory(formRecipe.getCategory());
@@ -296,121 +303,129 @@ public String updateRecipe(@PathVariable("id") Long id,
     recipeInDb.setImageUrl(formRecipe.getImageUrl());
     recipeInDb.setTags(formRecipe.getTags());
 
-    // Salviamo (senza toccare l'autore)
+    // 8. Salvataggio
     recipeService.save(recipeInDb);
 
     return "redirect:/recipe/" + id;
 }
 
-    @PostMapping("/recipe/{recipeId}/ingredient/add")
-    public String addIngredientToRecipe(@PathVariable("recipeId") Long recipeId,
-                                        @ModelAttribute("ingredient") Ingredient ingredient) {
-        
-        Recipe recipe = recipeService.findById(recipeId);
-        
-        // (Qui potresti aggiungere lo stesso controllo permessi se vuoi essere sicurissima)
-
-        Ingredient newIngredient = new Ingredient();
-        newIngredient.setName(ingredient.getName());
-        newIngredient.setQuantity(ingredient.getQuantity());
-        newIngredient.setUnit(ingredient.getUnit());
-        newIngredient.setRecipe(recipe);
-
-        ingredientService.save(newIngredient);
-        recipe.getIngredients().add(newIngredient);
-        recipeService.save(recipe);
-
-        return "redirect:/recipe/edit/" + recipeId; // Ricarica la pagina di modifica
-    }
-  /*
-    // Aggiunge un ingrediente direttamente alla ricetta e rimane sulla stessa pagina
-    @PostMapping("/recipe/{recipeId}/ingredient/add")
-    public String addIngredientToRecipe(@PathVariable("recipeId") Long recipeId,
-                                        @ModelAttribute("ingredient") Ingredient ingredient) {
-        
-        Recipe recipe = recipeService.findById(recipeId);
-
-        // Creiamo un NUOVO ingrediente pulito
-        Ingredient newIngredient = new Ingredient();
-        newIngredient.setName(ingredient.getName());
-        newIngredient.setQuantity(ingredient.getQuantity());
-        newIngredient.setUnit(ingredient.getUnit());
-        newIngredient.setRecipe(recipe); // Colleghiamo alla ricetta
-
-        // Salviamo prima l'ingrediente
-        ingredientService.save(newIngredient);
-
-        // Aggiorniamo la ricetta e salviamo
-        recipe.getIngredients().add(newIngredient);
-        recipeService.save(recipe);
-
-        return "redirect:/admin/recipe/" + recipeId + "/edit";
-    }
-    */
+@PostMapping("/recipe/{recipeId}/ingredient/add")
+public String addIngredientToRecipe(@PathVariable("recipeId") Long recipeId,
+                                    @ModelAttribute("ingredient") Ingredient ingredient,
+                                    Model model) { // <--- 1. RIMOSSO currentUser dai parametri
     
-    @GetMapping("/recipe/{recipeId}/ingredient/{ingredientId}/remove") // Cambiato in GET per comodità nei link
-    public String removeIngredient(@PathVariable Long recipeId, @PathVariable Long ingredientId) {
-        Recipe recipe = recipeService.findById(recipeId);
-        
-        // Rimuovi l'ingrediente
-        recipe.getIngredients().removeIf(ing -> ing.getId().equals(ingredientId));
-        
-        recipeService.save(recipe);
+    // 2. Recuperiamo l'utente dal model in modo SICURO (niente data binding indesiderato)
+    User currentUser = (User) model.getAttribute("currentUser");
 
-        return "redirect:/recipe/edit/" + recipeId;
+    Recipe recipe = recipeService.findById(recipeId);
+    
+    // Controllo esistenza
+    if (recipe == null) {
+        return "redirect:/recipes";
     }
-    /*
-    @PostMapping("/recipe/{recipeId}/ingredient/{ingredientId}/remove")
-    public String removeIngredient(@PathVariable Long recipeId, @PathVariable Long ingredientId) {
-        // 1. Carica la ricetta
-        Recipe recipe = recipeService.findById(recipeId);
 
-        // 2. Rimuovi l'ingrediente cercando SPECIFICATAMENTE il suo ID
-        // Questo comando dice: "Togli dalla lista l'elemento che ha questo ID esatto"
-        recipe.getIngredients().removeIf(ing -> ing.getId().equals(ingredientId));
+    // Controllo Permessi
+    boolean isAuthor = currentUser != null && recipe.getAuthor().getId().equals(currentUser.getId());
+    
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    boolean isAdmin = authentication != null && authentication.getAuthorities().stream()
+            .anyMatch(a -> a.getAuthority().equals(Credentials.ADMIN_ROLE));
 
-        // 3. Salva (l'ingrediente sparirà dal DB grazie a orphanRemoval=true)
-        recipeService.save(recipe);
-
-        return "redirect:/admin/recipe/" + recipeId + "/edit";
+    if (!isAuthor && !isAdmin) {
+        return "redirect:/recipe/" + recipeId + "?error=notAuthorized";
     }
-    */
+
+    // Logica di aggiunta
+    Ingredient newIngredient = new Ingredient();
+    newIngredient.setName(ingredient.getName());
+    newIngredient.setQuantity(ingredient.getQuantity());
+    newIngredient.setUnit(ingredient.getUnit());
+    newIngredient.setRecipe(recipe);
+
+    this.ingredientService.save(newIngredient);
+    
+    recipe.getIngredients().add(newIngredient);
+    this.recipeService.save(recipe);
+
+    return "redirect:/recipe/edit/" + recipeId;
+}
+     
+@GetMapping("/recipe/{recipeId}/ingredient/{ingredientId}/remove")
+public String removeIngredient(@PathVariable Long recipeId, 
+                               @PathVariable Long ingredientId,
+                               Model model) { // 1. Passa il Model
+    
+    // 2. Recupera l'utente che il GlobalController ha messo nel modello
+    User currentUser = (User) model.getAttribute("currentUser");
+
+    Recipe recipe = recipeService.findById(recipeId);
+    
+    // Controllo esistenza
+    if (recipe == null) {
+        return "redirect:/recipes";
+    }
+
+    // 3. CONTROLLO DI SICUREZZA (Indispensabile!)
+    // Verifichiamo: L'utente esiste? La ricetta è sua? Oppure è un admin?
+    boolean isAuthor = currentUser != null && recipe.getAuthor().getId().equals(currentUser.getId());
+    
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    boolean isAdmin = authentication != null && authentication.getAuthorities().stream()
+            .anyMatch(a -> a.getAuthority().equals(Credentials.ADMIN_ROLE));
+
+    if (!isAuthor && !isAdmin) {
+        // Se Mario prova a toccare la ricetta di Luigi -> Calcio fuori!
+        return "redirect:/recipe/" + recipeId + "?error=notAuthorized";
+    }
+
+    // 4. Se siamo qui, il permesso c'è. Rimuoviamo.
+    recipe.getIngredients().removeIf(ing -> ing.getId().equals(ingredientId));
+    recipeService.save(recipe);
+
+    return "redirect:/recipe/edit/" + recipeId;
+}    
+    
     
  // --- CANCELLA RICETTA (POST) ---
   
-    @PostMapping("/recipe/delete/{id}") 
-    public String deleteRecipe(@PathVariable("id") Long id) {
-        
-        Recipe recipe = recipeService.findById(id);
-        
-        // RECUPERO UTENTE CORRENTE
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Credentials credentials = credentialsService.getCredentials(authentication.getName());
-
-        // CONTROLLO DI SICUREZZA
-        if (recipe != null && (recipe.getAuthor().equals(credentials.getUser()) || 
-            credentials.getRole().equals(Credentials.ADMIN_ROLE))) {
-            
-            recipeService.deleteById(id);
-            return "redirect:/myRecipes"; 
-            
-        } else {
-            return "redirect:/recipe/" + id + "?error=notAuthorized";
-        }
-    }
+@PostMapping("/recipe/delete/{id}") 
+public String deleteRecipe(@PathVariable("id") Long id, Model model) { // 1. Aggiungi Model
     
-    /*
-    @PostMapping("/recipe/{id}/delete") // Mappa l'URL e il metodo POST corretto
-    public String deleteRecipe(@PathVariable("id") Long id) {
-        
-        // 1. Esegue la cancellazione del record
+    Recipe recipe = recipeService.findById(id);
+    
+    // 2. Recupera l'utente corrente in modo "ibrido" (sicuro per Google e Password)
+    // Il GlobalController lo ha già preparato per noi.
+    User currentUser = (User) model.getAttribute("currentUser");
+
+    // Controllo che la ricetta esista
+    if (recipe == null) {
+        return "redirect:/recipes";
+    }
+
+    // 3. Controllo Permessi
+    // A. È l'autore? (Confronto sicuro tramite ID)
+    boolean isAuthor = currentUser != null && recipe.getAuthor().getId().equals(currentUser.getId());
+
+    // B. È Admin? (Chiediamo a Spring Security, funziona per tutti i tipi di login)
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    boolean isAdmin = authentication != null && authentication.getAuthorities().stream()
+            .anyMatch(a -> a.getAuthority().equals(Credentials.ADMIN_ROLE));
+
+    // 4. Azione
+    if (isAuthor || isAdmin) {
         recipeService.deleteById(id);
         
-        // 2. Reindirizza l'amministratore alla lista di gestione aggiornata
-        // (Assumendo che la tua pagina di gestione sia mappata a /admin)
-        return "redirect:/admin/manageRecipes";
-    }  
-    */
+        // Piccola finezza: se sono Admin forse voglio tornare alla lista generale, 
+        // se sono Autore ai miei. Per ora lasciamo myRecipes.
+        return "redirect:/myRecipes"; 
+        
+    } else {
+        return "redirect:/recipe/" + id + "?error=notAuthorized";
+    }
+}
+    
+    
+    
   //----------ADMIN----------
 
     @GetMapping("/admin/manageRecipes")

@@ -8,6 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.repository.UserRepository;
 
+import it.uniroma3.siw.model.Credentials;
+import it.uniroma3.siw.repository.CredentialsRepository;
+
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +24,9 @@ public class UserService {
 
     @Autowired
     protected UserRepository userRepository;
+    
+    @Autowired
+    protected CredentialsRepository credentialsRepository;
 
     /**
      * This method retrieves a User from the DB based on its ID.
@@ -43,6 +50,8 @@ public class UserService {
     public User saveUser(User user) {
         return this.userRepository.save(user);
     }
+    
+    
 
     /**
      * This method retrieves all Users from the DB.
@@ -56,4 +65,36 @@ public class UserService {
             result.add(user);
         return result;
     }
+    public User getUserByEmail(String email) {
+    	return userRepository.findByEmail(email).orElse(null);
+    }
+    
+ // Nel UserService.java
+
+    @Transactional
+    public void processOAuthPostLogin(String email, String name, String surname) {
+        
+        Optional<User> existUser = userRepository.findByEmail(email);
+
+        if (existUser.isEmpty()) {
+            // Creo Utente
+            User newUser = new User();
+            newUser.setEmail(email);
+            newUser.setName(name != null ? name : "Utente");
+            newUser.setSurname(surname != null ? surname : "Google");
+            userRepository.save(newUser);
+
+            // Creo Credenziali
+            Credentials credentials = new Credentials();
+            credentials.setUsername(email);
+            credentials.setPassword(null); // Importante: password null
+            credentials.setRole(Credentials.DEFAULT_ROLE);
+            credentials.setUser(newUser);
+            
+            credentialsRepository.save(credentials);
+        }
+    }
 }
+
+    
+

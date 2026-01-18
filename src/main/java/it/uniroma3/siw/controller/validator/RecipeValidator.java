@@ -19,22 +19,24 @@ public class RecipeValidator implements Validator {
         Recipe recipe = (Recipe) o;
         String title = recipe.getTitle();
 
-        // 1. Controllo che il titolo non sia nullo, vuoto o fatto solo di spazi
+        // 1. Controllo che il titolo non sia nullo o vuoto
         if (title != null && !title.trim().isEmpty()) {
 
-            // 2. SE LA RICETTA HA UN ID (Significa che è una MODIFICA)
+            // 2. CASO MODIFICA (La ricetta ha un ID)
             if (recipe.getId() != null) {
-                // Controlliamo se esiste un'ALTRA ricetta con lo stesso nome (ma ID diverso)
+                // Cerchiamo se c'è un'ALTRA ricetta con lo stesso nome ma ID diverso.
+                // Se c'è, è un duplicato illegale.
                 if (recipeService.existsByTitleAndIdNot(title, recipe.getId())) {
-                    errors.reject("recipe.duplicate", "Una ricetta con questo nome esiste già.");
+                    // USIAMO rejectValue("title", ...) per mostrare l'errore accanto al campo input
+                    errors.rejectValue("title", "duplicate", "Una ricetta con questo nome esiste già.");
                 }
             }
             
-            // 3. SE LA RICETTA NON HA ID (Significa che è NUOVA)
+            // 3. CASO NUOVA RICETTA (La ricetta non ha ID)
             else {
-                // Controlliamo semplicemente se il titolo esiste già
+                // Cerchiamo se esiste già una ricetta con questo nome
                 if (recipeService.existsByTitle(title)) {
-                    errors.reject("recipe.duplicate", "Una ricetta con questo nome esiste già.");
+                    errors.rejectValue("title", "duplicate", "Una ricetta con questo nome esiste già.");
                 }
             }
         }

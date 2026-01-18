@@ -109,31 +109,8 @@ public class AuthenticationController {
 
 	    // CASO 1: Login con GOOGLE (OAuth2)
 	    if (authentication instanceof OAuth2AuthenticationToken) {
-	        OAuth2User oauth2User = ((OAuth2AuthenticationToken) authentication).getPrincipal();
-	        String email = oauth2User.getAttribute("email");
-	        String name = oauth2User.getAttribute("given_name");
-	        String surname = oauth2User.getAttribute("family_name");
-
-	        // Cerchiamo se esiste già un utente con questa email (usiamo l'email come username per Google)
-	        Credentials credentials = credentialsService.getCredentials(email);
-
-	        if (credentials == null) {
-	            // L'utente non esiste: Lo registriamo al volo nel nostro DB
-	            User newUser = new User();
-	            newUser.setEmail(email);
-	            newUser.setName(name);
-	            newUser.setSurname(surname);
-	            this.userService.saveUser(newUser);
-
-	            credentials = new Credentials();
-	            credentials.setUsername(email); // Usiamo l'email come username
-	            credentials.setPassword(null); // Nessuna password per utenti OAuth
-	            credentials.setRole(Credentials.DEFAULT_ROLE); // Ruolo base
-	            credentials.setUser(newUser);
-	            this.credentialsService.saveCredentials(credentials);
-	        }
-
-	        // L'utente Google è sempre un utente base, quindi redirect a /pcs
+	        // NON FARE NULLA QUI! L'utente è già stato salvato dal SuccessHandler.
+	        // Devi solo reindirizzare.
 	        return "redirect:/recipes";
 	    }
 
@@ -143,28 +120,14 @@ public class AuthenticationController {
 	        Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
 	        
 	        if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
-	            return "redirect:/admin";
+	            return "redirect:/admin/manageRecipes"; // O ovunque vada l'admin
 	        }
 	        return "redirect:/recipes";
 	    }
 	}
 	    
 	
-	/*
-	    @GetMapping("/success")
-	    public String defaultAfterLogin() {
-	    	UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	    	Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-	    	if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
-	            // MODIFICA: Reindirizza direttamente a manageRecipes (saltando indexAdmin)
-	            return "redirect:/admin/manageRecipes";
-	        } 
-	    	return "redirect:/recipes"; // lista ricette per utenti normali
-	    }
-	    */
-	
-	// ...
-	// Registrazione utente
+		// Registrazione utente
 	@PostMapping("/register")
     public String registerUser(@Valid @ModelAttribute("user") User user,
                                BindingResult userBindingResult,

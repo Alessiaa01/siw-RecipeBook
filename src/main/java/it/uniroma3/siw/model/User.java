@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.persistence.Column;
 
 @Entity
 @Table(name = "users") // cambiamo nome perchè in postgres user e' una parola riservata
@@ -19,6 +20,7 @@ public class User {
 	@NotBlank
 	private String surname;
 	@NotBlank
+	@Column(nullable = false, unique = true)
 	private String email;
 
     public Long getId() {

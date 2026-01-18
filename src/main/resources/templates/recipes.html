@@ -13,27 +13,35 @@
 	<header>
 	    <div class="header-content-wrapper" style="display: flex; justify-content: space-between; align-items: center;">
 	    
-	        <div class="left-actions" style="display: flex; gap: 15px; align-items: center;">
-	            
-	            <div sec:authorize="hasAuthority('ADMIN')" class="admin-link-header-left">
-	                <a th:href="@{/admin}" class="action-manage" style="color: rgb(94, 54, 0); text-decoration: none; font-weight: bold;">
+            <div class="left-actions" style="display: flex; gap: 15px; align-items: center;">
+				
+                <div sec:authorize="hasAuthority('ADMIN')" class="admin-link-header-left">
+                    <a th:href="@{/admin}" class="action-manage" style="color: rgb(94, 54, 0); text-decoration: none; font-weight: bold;">
 	                    <i class="fa-solid fa-crown"></i> Gestione Admin
 	                </a>
 	            </div>
+
+                <div sec:authorize="isAuthenticated() and !hasAuthority('ADMIN')">
+	                <a th:href="@{/myRecipes}" class="btn-cream">
+	                    <i class="fa-solid fa-book-open"></i> Le mie ricette
+	                </a>
+	            </div>
+
 	        </div>
 	        
-	        <div class="user-actions-right">
+            <div class="user-actions-right">
 	            
-	            <div sec:authorize="isAuthenticated()">
-	                <span class="chef-name" style="color: rgb(80, 49, 33); margin-right: 10px;">
+                <div sec:authorize="isAuthenticated()" style="display: flex; align-items: center; gap: 15px;">
+                    
+                    <span class="chef-name" style="color: rgb(80, 49, 33); margin-left: 10px;">
 	                    ✨ Chef 
                         <span th:if="${currentUser != null}" th:text="${currentUser.name} + ' ' + ${currentUser.surname}">Nome Cognome</span>
                         <span th:if="${currentUser == null}" sec:authentication="name">User</span>
 	                </span>
-	                <a th:href="@{/logout}" class="btn-auth btn-logout">Logout</a>
+	                <a th:href="@{/logout}" class="btn-auth btn-logout" style="margin-left: 10px;">Logout</a>
 	            </div>
 
-	            <div sec:authorize="!isAuthenticated()">
+                <div sec:authorize="!isAuthenticated()">
 	                <span class="welcome-text">Benvenuto!</span>
 	                <a th:href="@{/login}" class="btn-auth btn-login">Accedi</a>
 	                <a th:href="@{/register}" class="btn-auth btn-register">Registrati</a>

@@ -14,17 +14,23 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+// Importa il tuo nuovo handler
+import it.uniroma3.siw.authentication.OAuth2LoginSuccessHandler;
+
 import static it.uniroma3.siw.model.Credentials.ADMIN_ROLE;
 
 import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
-//public  class WebSecurityConfig {
-	public class AuthConfiguration {
+public class AuthConfiguration {
 
     @Autowired
     private DataSource dataSource;
+
+    // INIETTIAMO L'HANDLER CHE HAI CREATO
+    @Autowired
+    private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth)
@@ -63,7 +69,8 @@ import javax.sql.DataSource;
                 )
                 .oauth2Login(oauth2 -> oauth2
                     .loginPage("/login")
-                    .defaultSuccessUrl("/success", true)
+                    // RIMUOVI defaultSuccessUrl da qui e usa successHandler
+                    .successHandler(oAuth2LoginSuccessHandler) 
                 )
                 .logout(logout -> logout
                     .logoutUrl("/logout")
