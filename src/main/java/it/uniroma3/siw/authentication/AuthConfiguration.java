@@ -64,7 +64,7 @@ public class AuthConfiguration {
                 )
                 .formLogin(form -> form
                     .loginPage("/login")
-                    .defaultSuccessUrl("/success", true)
+                    .defaultSuccessUrl("/recipes", true)
                     .failureUrl("/login?error=true")
                 )
                 .oauth2Login(oauth2 -> oauth2
