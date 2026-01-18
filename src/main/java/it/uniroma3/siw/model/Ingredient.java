@@ -20,8 +20,6 @@ public class Ingredient {
     private Integer quantity; // es. "100"
     private String unit;     // es. "g", "ml", "pz"
 
-   // private String quantity; // opzionale, se vuoi specificare quantità tipo "100g", "2 cucchiai", ecc.
-
     @ManyToOne
     //@JoinColumn(name = "recipe_id")
     private Recipe recipe;

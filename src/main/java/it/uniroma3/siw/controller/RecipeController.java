@@ -28,6 +28,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+
 
 
 import java.util.List;
@@ -44,35 +47,39 @@ public class RecipeController {
 
     @Autowired
     private IngredientService ingredientService;
+    
+    @Autowired
+    private ReviewService reviewService;
+
 
     @Autowired 
     private RecipeValidator recipeValidator;
     
-    @Autowired
-    private ReviewService reviewService;
-    
+       
     @Autowired
     private CredentialsService credentialsService;
 
-    
+    @InitBinder("recipe") // <--- Specifichiamo che vale solo per l'oggetto "recipe"
+    public void initBinder(WebDataBinder binder) {
+        // Blocca qualsiasi tentativo di passare l'autore o l'ID dal form
+        binder.setDisallowedFields("author", "author.id", "user", "user.id", "id");
+    }
 
     
-    //----------UTENTI---------
+    //----------UTENTI---------ù
+   
     // Mostra i dati della ricetta con gli ingredienti e recensioni
     @GetMapping("/recipe/{id}")
     public String getRecipe(@PathVariable("id") Long id, Model model) {
+    	//recuperi la ricetta
         Recipe recipe = recipeService.findById(id);
         model.addAttribute("recipe", recipe);
+        
+        //aggiungi la ricetta e i form vuoti
         model.addAttribute("ingredient", new Ingredient()); // necessario per il form admin 
         model.addAttribute("review", new Review()); //aggiunta per la recensione 
         
-     // Recuperiamo l'utente loggato se esiste
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) principal;
-            Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-            model.addAttribute("currentUser", credentials.getUser()); // Passiamo l'utente alla vista
-        }
+   
         return "recipe.html";
     }
 
@@ -83,7 +90,7 @@ public class RecipeController {
         return "recipes.html";
     }
     
-    // Mostra la pagina con il form di ricerca
+    // Mostra la pagina con il form di ricerca(TI DA SOLO IL FORM(FOGLIO BIANCO))
     @GetMapping("/formSearchRecipes")
     public String formSearchRecipes() {
         return "formSearchRecipes.html";
@@ -96,60 +103,52 @@ public class RecipeController {
         
         List<Recipe> foundRecipes = new ArrayList<>();
 
-        // LOGICA DI RICERCA:
-        // 1. Se l'utente ha scritto qualcosa nel campo TITOLO
         if (title != null && !title.trim().isEmpty()) {
             foundRecipes = recipeService.findByTitle(title);
         }
-        // 2. Altrimenti, se ha scritto qualcosa nel campo INGREDIENTE
         else if (ingredient != null && !ingredient.trim().isEmpty()) {
             foundRecipes = recipeService.findByIngredient(ingredient);
         }
-        // 3. Se non ha scritto nulla (ha premuto Cerca a vuoto), mostra TUTTO
         else {
             foundRecipes = recipeService.findAll();
         }
 
-        // Passa la lista filtrata alla pagina
         model.addAttribute("recipes", foundRecipes);
         
-        // Riutilizziamo la stessa pagina "recipes.html" per mostrare i risultati
-        return "foundRecipes";
+        return "recipes.html"; 
     }
 
-   //----------RECENSIONI(SOLO LOGGATI)-----------
+   //----------SOLO LOGGATI)-----------
 
-@PostMapping("/recipe/{recipeId}/review")
-public String addReview(@PathVariable("recipeId") Long recipeId, // Cambia anche qui il nome della variabile
-                        @Valid @ModelAttribute("review") Review review,
-                        BindingResult bindingResult, 
-                        Model model) {
-    
-    // Usa la nuova variabile recipeId per cercare la ricetta
-    Recipe recipe = recipeService.findById(recipeId);
-
-    if (bindingResult.hasErrors()) {
-        model.addAttribute("recipe", recipe);
-        model.addAttribute("ingredient", new Ingredient()); 
-        return "recipe.html"; 
-    }
-
-    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    
-    if (principal instanceof UserDetails) {
-        UserDetails userDetails = (UserDetails) principal;
-        Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
+    @PostMapping("/recipe/{recipeId}/review")
+    public String addReview(@PathVariable("recipeId") Long recipeId,
+                            @Valid @ModelAttribute("review") Review review,
+                            BindingResult bindingResult, 
+                            Model model,
+                            @ModelAttribute("currentUser") User currentUser) {
         
-        if (credentials != null && credentials.getUser() != null) {
-            review.setUser(credentials.getUser());
+        // 1. Recuperiamo la ricetta (serve sia per salvarla che per ricaricare la pagina in caso di errore)
+        Recipe recipe = recipeService.findById(recipeId);
+
+        // 2. Controllo Errori di Validazione (es. recensione vuota)
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("recipe", recipe);
+            model.addAttribute("ingredient", new Ingredient()); // Necessario perché la vista se lo aspetta
+            // Non serve aggiungere currentUser, lo fa il GlobalController
+            return "recipe.html"; 
+        }
+
+        // 3. Salvataggio
+        // Controlliamo che l'utente esista (per sicurezza)
+        if (currentUser != null) {
+            review.setUser(currentUser);  // Uso l'utente iniettato dal GlobalController!
             review.setRecipe(recipe);
             reviewService.save(review); 
         }
+        
+        // 4. Post-Redirect-Get Pattern
+        return "redirect:/recipe/" + recipeId;
     }
-    
-    // Usa recipeId anche per il redirect
-    return "redirect:/recipe/" + recipeId;
-}
 
 // Form per inserire una nuova ricetta
 @GetMapping("/formNewRecipe")
@@ -158,213 +157,151 @@ public String formNewRecipe(Model model) {
     return "formNewRecipe.html";
 }
 
-
-    @PostMapping("/formNewRecipe")
-    public String newRecipe(@Valid @ModelAttribute("recipe") Recipe recipe,
-                            BindingResult bindingResult, Model model) {
+@PostMapping("/formNewRecipe")
+public String newRecipe(@Valid @ModelAttribute("recipe") Recipe recipe,
+                        BindingResult bindingResult, 
+                        Model model,
+                        @ModelAttribute("currentUser") User currentUser) { // 1. Injection dell'Utente
+    
+    // 2. Validazione base
+    recipeValidator.validate(recipe, bindingResult);
+    
+    // Se ci sono errori, torniamo al form 
+    if (bindingResult.hasErrors()) {
         
-        // 1. Validazione base (Titolo, Descrizione, DDL Auto)
-        recipeValidator.validate(recipe, bindingResult);
-        
-        // CONTROLLO ESSENZIALE: Se ci sono errori, torna immediatamente al form!
-        if (bindingResult.hasErrors()) {
-            return "admin/formNewRecipe.html"; 
-        }
-        
-        // 2. LOGICA INGREDIENTI: Viene eseguita SOLO se la validazione base è OK.
-        List<Ingredient> validIngredients = new ArrayList<>();
-        
-        // ITERAZIONE CRUCIALE: Controlla gli ingredienti che Spring ha mappato dal form
-        for (Ingredient ingredient : recipe.getIngredients()) {
-            
-            // Filtra: Salviamo solo se il campo Nome non è vuoto
-            if (ingredient.getName() != null && !ingredient.getName().trim().isEmpty()) {
-                
-                // ASSOCIAZIONE ESSENZIALE: Imposta il riferimento bidirezionale
-                ingredient.setRecipe(recipe); 
-                
-                validIngredients.add(ingredient);
-            }
-        }
-        
-        // Sostituisce la lista originale con solo gli elementi validi
-        recipe.setIngredients(validIngredients); 
-        
-     // --- INIZIO MODIFICA: ASSEGNAZIONE AUTORE ---
-        
-        // Recupera l'utente corrente dalla sessione di sicurezza
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUsername = authentication.getName();
-        
-        // Recupera le credenziali (e quindi l'User) dal database
-        // NOTA: Assicurati di avere credentialsService iniettato nel controller
-        Credentials credentials = credentialsService.getCredentials(currentUsername);
-        
-        // Imposta l'autore della ricetta
-        recipe.setAuthor(credentials.getUser());
-        // 3. Salvataggio
-        recipeService.save(recipe);
-        
-        // Reindirizza alla pagina di visualizzazione pubblica della ricetta appena creata
-        return "redirect:/recipe/" + recipe.getId(); 
+        return "formNewRecipe.html"; 
     }
     
-    @GetMapping("/myRecipes")
-    public String myRecipes(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUsername;
-
-        // CONTROLLO: Se l'utente è loggato con Google (OAuth2), prendiamo l'email
-        if (authentication.getPrincipal() instanceof OAuth2User) {
-            OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
-            currentUsername = oauth2User.getAttribute("email");
-        } else {
-            // Altrimenti login classico
-            currentUsername = authentication.getName();
-        }
-        
-        Credentials credentials = credentialsService.getCredentials(currentUsername);
-        
-        if (credentials == null) {
-            return "redirect:/login?error=UserNotFound";
-        }
-
-        User currentUser = credentials.getUser();
-        List<Recipe> recipes = recipeService.getRecipesByAuthor(currentUser);
-        model.addAttribute("recipes", recipes);
-        
-        return "myRecipes";
-    }
-   /* 
-    @GetMapping("/recipe/{id}/edit")
-    public String editRecipe(@PathVariable("id") Long id, Model model) {
-        Recipe recipe = recipeService.findById(id);
-        model.addAttribute("recipe", recipe);
-        model.addAttribute("ingredient", new Ingredient());
-        return "editRecipe.html";
-    }
-    */
+    // 3. Gestione e Pulizia Ingredienti
+    //  serve a gestire la relazione bidirezionale)
+    List<Ingredient> validIngredients = new ArrayList<>();
     
-    
-    @GetMapping("/recipe/edit/{id}")
-    public String editRecipe(@PathVariable("id") Long id, Model model) {
-        Recipe recipe = recipeService.findById(id);
-        
-        // CONTROLLO PERMESSI: Solo l'autore o l'admin possono entrare
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUsername = authentication.getName();
-        Credentials credentials = credentialsService.getCredentials(currentUsername);
-
-        if (!recipe.getAuthor().equals(credentials.getUser()) && 
-            !credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
-            return "redirect:/recipes?error=notAuthorized";
+    for (Ingredient ingredient : recipe.getIngredients()) {
+        if (ingredient.getName() != null && !ingredient.getName().trim().isEmpty()) {
+            ingredient.setRecipe(recipe); // Fondamentale per le chiavi esterne!
+            validIngredients.add(ingredient);
         }
-
-        model.addAttribute("recipe", recipe);
-        model.addAttribute("ingredient", new Ingredient());
-        return "editRecipe.html"; 
     }
     
-    @PostMapping("/recipe/update/{id}")
-    public String updateRecipe(@PathVariable("id") Long id, 
-                               @ModelAttribute("recipe") Recipe updatedRecipe, 
-                               BindingResult bindingResult, 
-                               Model model) {
-        
-        Recipe recipeInDb = recipeService.findById(id);
-        
-        // CONTROLLO PERMESSI
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Credentials credentials = credentialsService.getCredentials(authentication.getName());
-
-        if (!recipeInDb.getAuthor().equals(credentials.getUser()) && 
-            !credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
-            return "redirect:/recipes?error=notAuthorized";
-        }
-
-        // Recupero ingredienti vecchi per evitare problemi di validazione
-        updatedRecipe.setIngredients(recipeInDb.getIngredients());
-
-        // Validazione
-        this.recipeValidator.validate(updatedRecipe, bindingResult);
-
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("recipe", updatedRecipe);
-            model.addAttribute("ingredient", new Ingredient());
-            return "editRecipe"; // Torna al form se c'è errore
-        }
-
-        // Aggiornamento campi manuale
-        recipeInDb.setTitle(updatedRecipe.getTitle());
-        recipeInDb.setDescription(updatedRecipe.getDescription());
-        recipeInDb.setProcedure(updatedRecipe.getProcedure());
-        recipeInDb.setPreparationTime(updatedRecipe.getPreparationTime());
-        recipeInDb.setCookingTime(updatedRecipe.getCookingTime());
-        recipeInDb.setDifficulty(updatedRecipe.getDifficulty());
-        recipeInDb.setServings(updatedRecipe.getServings());
-        recipeInDb.setCategory(updatedRecipe.getCategory());
-        recipeInDb.setImageUrl(updatedRecipe.getImageUrl());
-        
-        recipeService.save(recipeInDb);
-
-        return "redirect:/recipe/" + id; // Torna alla pagina della ricetta aggiornata
-    }
-    /*
-    @PostMapping("/recipe/{id}/update")
-    public String updateRecipe(@PathVariable("id") Long id, 
-                               @ModelAttribute("recipe") Recipe updatedRecipe, 
-                               BindingResult bindingResult, 
-                               Model model) {
-        
-        // 1. Recupera la ricetta originale dal DB
-        Recipe recipeInDb = recipeService.findById(id);
-        
-        if (recipeInDb == null) {
-            return "redirect:/recipes"; // Se l'ID non esiste, torna alla lista
-        }
-
-        // 2. TRUCCO: Inseriamo gli ingredienti vecchi nella ricetta che arriva dal form.
-        // Questo serve perché il form manda una lista vuota e il validatore potrebbe arrabbiarsi.
-        updatedRecipe.setIngredients(recipeInDb.getIngredients());
-
-        // 3. Validazione
-        this.recipeValidator.validate(updatedRecipe, bindingResult);
-
-        // 4. CONTROLLO ERRORI (con stampa in console per debug)
-        if (bindingResult.hasErrors()) {
-            System.out.println("--- ERRORE DI VALIDAZIONE RILEVATO ---");
-            bindingResult.getAllErrors().forEach(e -> System.out.println(e.toString()));
-            
-            // Ricarica la pagina di edit mostrando gli errori
-            model.addAttribute("recipe", updatedRecipe);
-            model.addAttribute("ingredient", new Ingredient());
-            return "admin/editRecipe.html";
-        }
-
-        // 5. Se tutto è OK, aggiorniamo i campi manualmente
-        recipeInDb.setTitle(updatedRecipe.getTitle());
-        recipeInDb.setDescription(updatedRecipe.getDescription());
-        recipeInDb.setProcedure(updatedRecipe.getProcedure());
-        recipeInDb.setPreparationTime(updatedRecipe.getPreparationTime());
-        recipeInDb.setCookingTime(updatedRecipe.getCookingTime());
-        recipeInDb.setDifficulty(updatedRecipe.getDifficulty());
-        recipeInDb.setServings(updatedRecipe.getServings());
-        recipeInDb.setCategory(updatedRecipe.getCategory());
-        recipeInDb.setImageUrl(updatedRecipe.getImageUrl());
-        
-        // Nota: Gli ingredienti NON li tocchiamo qui, perché li gestisci
-        // con i tasti "Aggiungi" e "Rimuovi" separati.
-        
-        // 6. Salvataggio finale nel DB
-        recipeService.save(recipeInDb);
-
-        
-        
-        // OPPURE: Se preferisci tornare all'elenco pubblico usa questa riga invece di quella sopra:
-         return "redirect:/recipes";
-    }
-    */
+    recipe.setIngredients(validIngredients); 
     
+    // 4. Assegnazione Autore (Semplificata grazie al GlobalController)
+    recipe.setAuthor(currentUser);
+    
+    // 5. Salvataggio
+    recipeService.save(recipe);
+    
+    // 6. Redirect alla pagina della ricetta creata
+    return "redirect:/recipe/" + recipe.getId(); 
+}
+    
+    
+@GetMapping("/myRecipes")
+public String myRecipes(Model model, @ModelAttribute("currentUser") User currentUser) {
+    
+    // Controllo di sicurezza (se per caso currentUser fosse null)
+    if (currentUser == null) {
+        // Se non sei loggato, non dovresti essere qui. Ti rimando al login.
+        return "redirect:/login";
+    }
+
+    // 1. Chiedi al service le ricette di QUESTO utente
+    List<Recipe> recipes = recipeService.getRecipesByAuthor(currentUser);
+    
+    // 2. Mettile nel model
+    model.addAttribute("recipes", recipes);
+    
+    return "myRecipes";
+}
+   
+   
+@GetMapping("/recipe/edit/{id}")
+public String editRecipe(@PathVariable("id") Long id, 
+                         Model model,
+                         @ModelAttribute("currentUser") User currentUser) { // 1. User già pronto
+    
+    Recipe recipe = recipeService.findById(id);
+    
+    // 2. Controllo Autore: Immediato grazie all'oggetto iniettato
+    // (Usa gli ID per sicurezza se non hai implementato equals() in User)
+    boolean isAuthor = currentUser != null && recipe.getAuthor().equals(currentUser);
+
+    // 3. Controllo Admin: Lo chiediamo a Spring Security (che lo ha in memoria)
+    // Senza fare query al database!
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    boolean isAdmin = authentication.getAuthorities().stream()
+            .anyMatch(a -> a.getAuthority().equals(Credentials.ADMIN_ROLE)); // o "ADMIN" o "DEFAULT"
+
+    // LOGICA FINALE: Se non sei l'autore E non sei admin -> Via!
+    if (!isAuthor && !isAdmin) {
+        return "redirect:/recipes?error=notAuthorized";
+    }
+
+    model.addAttribute("recipe", recipe);
+    model.addAttribute("ingredient", new Ingredient());
+    return "editRecipe.html"; 
+}
+    
+@PostMapping("/recipe/update/{id}")
+public String updateRecipe(@PathVariable("id") Long id,
+                           @ModelAttribute("recipe") Recipe formRecipe,
+                           BindingResult bindingResult,
+                           Model model,
+                           @ModelAttribute("currentUser") User currentUser) {
+
+    // 1. Pulizia sicurezza: stacchiamo l'autore che arriva dal form
+    formRecipe.setAuthor(null);
+
+    // 2. Carichiamo la ricetta originale
+    Recipe recipeInDb = recipeService.findById(id);
+    if (recipeInDb == null) return "redirect:/recipes";
+
+    // 3. Controllo Permessi
+    boolean isAuthor = currentUser != null && recipeInDb.getAuthor().getId().equals(currentUser.getId());
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    boolean isAdmin = authentication != null && authentication.getAuthorities().stream()
+            .anyMatch(a -> a.getAuthority().equals(Credentials.ADMIN_ROLE));
+
+    if (!isAuthor && !isAdmin) {
+        return "redirect:/recipes?error=notAuthorized";
+    }
+
+    // 4. Prepariamo i dati per la validazione
+    formRecipe.setAuthor(recipeInDb.getAuthor());
+    formRecipe.setIngredients(recipeInDb.getIngredients());
+
+    // 5. Validazione
+    this.recipeValidator.validate(formRecipe, bindingResult);
+    
+    if (bindingResult.hasErrors()) {
+        // *** FIX IMPORTANTE PER ERRORE 400 ***
+        // Reinseriamo l'ID nell'oggetto form, altrimenti i link nel template
+        // diventeranno "/recipe/null"
+        formRecipe.setId(id);
+        
+        model.addAttribute("recipe", formRecipe); 
+        model.addAttribute("ingredient", new Ingredient()); 
+        return "editRecipe"; 
+    }
+
+    // 6. Aggiornamento manuale dei campi
+    recipeInDb.setTitle(formRecipe.getTitle());
+    recipeInDb.setDescription(formRecipe.getDescription());
+    recipeInDb.setCategory(formRecipe.getCategory());
+    recipeInDb.setPreparationTime(formRecipe.getPreparationTime());
+    recipeInDb.setCookingTime(formRecipe.getCookingTime());
+    recipeInDb.setDifficulty(formRecipe.getDifficulty());
+    recipeInDb.setServings(formRecipe.getServings());
+    recipeInDb.setProcedure(formRecipe.getProcedure());
+    recipeInDb.setImageUrl(formRecipe.getImageUrl());
+    recipeInDb.setTags(formRecipe.getTags());
+
+    // Salviamo (senza toccare l'autore)
+    recipeService.save(recipeInDb);
+
+    return "redirect:/recipe/" + id;
+}
+
     @PostMapping("/recipe/{recipeId}/ingredient/add")
     public String addIngredientToRecipe(@PathVariable("recipeId") Long recipeId,
                                         @ModelAttribute("ingredient") Ingredient ingredient) {
@@ -490,5 +427,7 @@ public String formNewRecipe(Model model) {
         }
         return authentication.getName();
     }
+    
+    
     
 }

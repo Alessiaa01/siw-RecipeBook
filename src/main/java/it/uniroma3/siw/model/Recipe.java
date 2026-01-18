@@ -6,18 +6,17 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.ManyToOne;
+
 import java.util.List;
 import java.util.Set;
 import java.util.ArrayList;
 import java.util.HashSet;
-import jakarta.persistence.CascadeType;
 
 
 
-// Non sono necessari altri import per gli attributi semplici richiesti
 
 @Entity
 public class Recipe {
