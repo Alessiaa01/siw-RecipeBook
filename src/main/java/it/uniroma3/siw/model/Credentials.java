@@ -7,7 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 
-import jakarta.persistence.Column; // Importa @Column
+import jakarta.persistence.Column; 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.persistence.Table;
 

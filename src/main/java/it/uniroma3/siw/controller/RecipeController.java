@@ -2,6 +2,7 @@ package it.uniroma3.siw.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 
 import it.uniroma3.siw.controller.validator.RecipeValidator;
 import it.uniroma3.siw.model.Credentials;
@@ -127,6 +129,9 @@ public class RecipeController {
 
     @GetMapping("/formNewRecipe")
     public String formNewRecipe(Model model) {
+    	Recipe recipe = new Recipe();
+    	// IMPOSTO IL DEFAULT A OGGI
+    	recipe.setCreationDate(LocalDate.now());
         model.addAttribute("recipe", new Recipe());
         return "formNewRecipe.html";
     }
@@ -164,7 +169,7 @@ public class RecipeController {
         List<Recipe> recipes = recipeService.getRecipesByAuthor(currentUser);
         model.addAttribute("recipes", recipes);
         
-        return "myRecipes.html"; // Aggiunto .html per coerenza, verifica se il tuo template lo richiede
+        return "myRecipes.html"; 
     }
    
     // -------------------------------------------------------------------------
@@ -173,14 +178,14 @@ public class RecipeController {
 
     @GetMapping("/recipe/edit/{id}")
     public String editRecipe(@PathVariable("id") Long id, Model model) {
-        Recipe recipe = recipeService.findById(id);
+        Recipe recipe = recipeService.findById(id); //prende in archivio la ricetta
         User currentUser = (User) model.getAttribute("currentUser");
 
         if (!isAuthorized(recipe, currentUser)) {
             return "redirect:/recipes?error=notAuthorized";
         }
 
-        model.addAttribute("recipe", recipe);
+        model.addAttribute("recipe", recipe); //vecchia ricetta da modificare 
         model.addAttribute("ingredient", new Ingredient());
         return "editRecipe.html"; 
     }
@@ -192,30 +197,37 @@ public class RecipeController {
                                Model model) {
 
         User currentUser = (User) model.getAttribute("currentUser");
-        Recipe recipeInDb = recipeService.findById(id);
+        Recipe recipeInDb = recipeService.findById(id); //se siste, recuperi la ricetta originale dal database(recipeInDb)
         
-        if (recipeInDb == null) return "redirect:/recipes";
+        if (recipeInDb == null) 
+        	return "redirect:/recipes";
 
         if (!isAuthorized(recipeInDb, currentUser)) {
             return "redirect:/recipes?error=notAuthorized";
         }
 
         // Prepariamo l'oggetto per la validazione
+        //metto l'ID così capisce che è la ricetta vecchia, e non un duplicato
         formRecipe.setId(id);
+        //metto gli ingredienti vecchi
         formRecipe.setIngredients(recipeInDb.getIngredients()); // Manteniamo gli ingredienti esistenti
-
+        //controlla se ho fatto errori
         this.recipeValidator.validate(formRecipe, bindingResult);
         
         if (bindingResult.hasErrors()) {
             // Trick per visualizzare l'autore nel template anche in caso di errore
+        	//creo una copia temporanea dell autore 
             User dummyAuthor = new User();
+            
+            //copio i dati dall'autore vero che ho recuperato dal DB(recipeInDb)
             dummyAuthor.setId(recipeInDb.getAuthor().getId());
             dummyAuthor.setName(recipeInDb.getAuthor().getName());
             dummyAuthor.setSurname(recipeInDb.getAuthor().getSurname());
+            //assegni l'oggetto dummyAuthor al campo author dell'oggetto formRecipe
             formRecipe.setAuthor(dummyAuthor);
             
-            model.addAttribute("recipe", formRecipe);
-            model.addAttribute("ingredient", new Ingredient());
+            model.addAttribute("recipe", formRecipe); //contiene i dati che l'utente ha appena inserito nel form(anche quelli sbagliati)
+            model.addAttribute("ingredient", new Ingredient());//per non dare errore
             return "editRecipe.html"; 
         }
 
@@ -244,7 +256,8 @@ public class RecipeController {
         User currentUser = (User) model.getAttribute("currentUser");
         Recipe recipe = recipeService.findById(recipeId);
         
-        if (recipe == null) return "redirect:/recipes";
+        if (recipe == null) 
+        	return "redirect:/recipes";
 
         if (!isAuthorized(recipe, currentUser)) {
             return "redirect:/recipe/" + recipeId + "?error=notAuthorized";

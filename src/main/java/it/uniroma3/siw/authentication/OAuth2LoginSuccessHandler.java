@@ -19,6 +19,7 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
     @Autowired
     private UserService userService;
 
+    //questo metodo scatta immediatamente dopo che il login di Google si è chiusa con successo
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws ServletException, IOException {
@@ -30,11 +31,13 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
         String name = oauthUser.getAttribute("given_name");
         String surname = oauthUser.getAttribute("family_name");
         
-        // Logica intelligente: salva solo se non esiste
+        // salva solo se non esiste
         userService.processOAuthPostLogin(email, name, surname);
 
         // Reindirizza alla pagina di successo (o dove vuoi tu)
         this.setDefaultTargetUrl("/success");
+        //chiama il metodo della classe genitore (SavedRequest...), perchè se l'utente prima di loggarsi voleva andare in una
+        //determinata pagina, viene mandato direttamente lì. Ignora /success
         super.onAuthenticationSuccess(request, response, authentication);
     }
 }

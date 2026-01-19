@@ -54,9 +54,10 @@ public class CredentialsService {
     public void lockCredentials(String username) {
         Credentials credentials = this.credentialsRepository.findByUsername(username).orElse(null);
         if (credentials.getPassword() != null) {
-            credentials.setPassword(this.passwordEncoder.encode(credentials.getPassword()));
+        	credentials.setEnabled(false);
+        	this.credentialsRepository.save(credentials);
         }
-            this.credentialsRepository.save(credentials);
+            
         }
     
 

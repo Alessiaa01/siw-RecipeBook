@@ -14,7 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-// Importa il tuo nuovo handler
 import it.uniroma3.siw.authentication.OAuth2LoginSuccessHandler;
 
 import static it.uniroma3.siw.model.Credentials.ADMIN_ROLE;
@@ -25,61 +24,84 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class AuthConfiguration {
 
+	//dataSource collega l'applicazione java al database
     @Autowired
     private DataSource dataSource;
 
-    // INIETTIAMO L'HANDLER CHE HAI CREATO
+    //per gestire chi entra tramite google
     @Autowired
     private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
 
+    
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth)
             throws Exception {
+    	//Per capire chi è l'utente guarda il DB
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
+                //controllo ruolo
                 .authoritiesByUsernameQuery("SELECT username, role from credentials WHERE username=?")
+                //controllo identità
                 .usersByUsernameQuery("SELECT username, password, enabled FROM credentials WHERE username=?");
     }
     
+    //usa l'algoritmo BCrypt. Usalo sia per criptare le password nuove, 
+    //sia per controllare quelle di chi sta facendo il login
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
+    //in questo caso mi serve solo per fare il login automatico post-registrazione
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception{
         return authenticationConfiguration.getAuthenticationManager();
     }
 
+    //dove puoi andare una volta entrato 
     @Bean
     protected SecurityFilterChain configure(final HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+        //protezioni standard contro gli attacchi hacker(in questo caso non ci servono)
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.disable())
+                //ordine fondamentale!
+                //Decidi chi può vedere cosa 
                 .authorizeHttpRequests(auth -> auth
+                		//CHIUNQUE può vedere la pagina 
                     .requestMatchers(HttpMethod.GET, "/", "/index", "/register", "/login", "/css/**", "/images/**", "favicon.ico", "/recipes", "/recipe/**", "/searchRecipes", "/cooks", "/cook/**").permitAll()
+                    // CHIUNQUE deve poter inviare i dati per registrarsi o loggarsi
                     .requestMatchers(HttpMethod.POST, "/register", "/login").permitAll()
+                    //Se L'URL inizia con /admin/ puoi entrare 
                     .requestMatchers("/admin/**").hasAnyAuthority(ADMIN_ROLE)
+                    //per tutte le altre pagine non menzionate sopra l'utente deve essere per forza loggato per poterci andare
                     .anyRequest().authenticated()
                 )
+                
                 .formLogin(form -> form
-                    .loginPage("/login")
-                    .defaultSuccessUrl("/recipes", true)
-                    .failureUrl("/login?error=true")
+                    .loginPage("/login") //la pagina con il form
+                    .defaultSuccessUrl("/recipes", true) //se entra, vai qui 
+                    .failureUrl("/login?error=true") // se sbaglia, ricarica la pagina con un errore
                 )
+                //Login speciale con google
                 .oauth2Login(oauth2 -> oauth2
                     .loginPage("/login")
-                    // RIMUOVI defaultSuccessUrl da qui e usa successHandler
+                      //Quando google dice ok è Mario, dobbiamo intercettare qwuel momento per dalavre Mario anche nel nostro DB locale
                     .successHandler(oAuth2LoginSuccessHandler) 
                 )
+                
+                //serve per assicurarsi di non poter tornare indietro dopo aver fatto il logout
                 .logout(logout -> logout
-                    .logoutUrl("/logout")
-                    .logoutSuccessUrl("/")
-                    .invalidateHttpSession(true)
-                    .deleteCookies("JSESSIONID")
+                    .logoutUrl("/logout") //indirizzo per uscire 
+                    .logoutSuccessUrl("/") //dopo torna alla home
+                    .invalidateHttpSession(true) //cancella la memoria del server 
+                    .deleteCookies("JSESSIONID") //Quando fai il login, il server (Java) dà al tuo browser un Cookie con un codice lungo. 
+                    //Ogni volta che cambi pagina, il browser mostra questo codice al server per dire "Sono sempre io, Mario".
+                    //Conferma a Spring Security che l'azione di logout deve scattare esattamente quando viene chiamata l'URL /logout
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                    .clearAuthentication(true).permitAll()
+                    //assicura che quell'oggetto venga cancellato istantaneamente dalla memoria del server
+                    .clearAuthentication(true).permitAll() //chiunque può accedere alla funzione di logout 
                 );
-        return httpSecurity.build();
+        return httpSecurity.build(); //tutte le regole diventano un oggetto reale e funzionante 
     }
 }

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"> 
 <head>
@@ -90,21 +91,40 @@
                      style="width: 100%; height: 200px; object-fit: cover;"/>
             </div>
             
-            <div class="card-content">
-                <a th:href="@{'/recipe/' + ${recipe.id}}" th:text="${recipe.title}" class="recipe-title">Titolo Ricetta</a>
+            <div class="card-content" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
                 
-                <p class="recipe-description" th:text="${recipe.description}">Descrizione...</p>
+                <div>
+                    <a th:href="@{'/recipe/' + ${recipe.id}}" th:text="${recipe.title}" class="recipe-title">Titolo Ricetta</a>
+                    <p class="recipe-description" th:text="${recipe.description}">Descrizione...</p>
+                </div>
 
-                <div class="card-metadata-inline">
-                    <p>
-                        <i class="fa-regular fa-clock icon-gold"></i> 
-                        <span th:text="${recipe.preparationTime}">0</span> min
-                    </p>
+                <div class="card-bottom-info">
                     
-                    <p>
-                        <i class="fa-solid fa-star icon-gold"></i> 
-                        <span th:text="${recipe.difficulty}">Facile</span>
-                    </p>
+                    <div class="card-metadata-inline" style="margin-bottom: 8px;">
+                        <p>
+                            <i class="fa-regular fa-clock icon-gold"></i> 
+                            <span th:text="${recipe.preparationTime}">0</span> min
+                        </p>
+                        <p>
+                            <i class="fa-solid fa-star icon-gold"></i> 
+                            <span th:text="${recipe.difficulty}">Facile</span>
+                        </p>
+                    </div>
+
+                    <div class="card-attribution" style="border-top: 1px dashed #d7ccc8; margin-top: 8px; padding-top: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: #5d4037;">
+                        
+                        <span class="author" style="display: flex; align-items: center; gap: 5px;">
+                            <i class="fa-solid fa-user-pen" style="color: #8d6e63;"></i>
+                            <strong th:if="${recipe.author != null}" th:text="${recipe.author.name}">Chef</strong>
+                            <span th:unless="${recipe.author != null}">Anonimo</span>
+                        </span>
+
+                        <span class="date" th:if="${recipe.creationDate}" style="color: #8d6e63;">
+                            <span th:text="${#temporals.format(recipe.creationDate, 'dd/MM/yyyy')}">Data</span>
+                        </span>
+
+                    </div>
+
                 </div>
             </div>
         </li>

@@ -39,7 +39,7 @@ public class AuthenticationController {
 	public String showRegisterForm(Model model) {
 		model.addAttribute("user", new User());
 		model.addAttribute("credentials", new Credentials());
-		return "formRegisterUser"; // template Thymeleaf
+		return "formRegisterUser"; // 
 	}
 	
 	// Mostra il form di login
@@ -68,20 +68,7 @@ public class AuthenticationController {
 		}
 	}
 		
-	// Success post-login
-    @GetMapping("/success")
-    public String defaultAfterLogin() {
-    	UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-    	if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
-            return "admin/indexAdmin.html"; // dashboard admin
-        } 
-    	return "redirect:/recipes";// lista ricette per utenti normali
-    }
-*/
-	// File: src/main/java/it/uniroma3/siw/controller/AuthenticationController.java
-
-	// ...
+	
 /*
 		@GetMapping("/") 
 		public String index(Model model) {
@@ -102,9 +89,10 @@ public class AuthenticationController {
 		}
 	*/	
 	
-
+   //dove mandare l'utente 
 	@GetMapping(value = "/success")
 	public String defaultAfterLogin(Model model) {
+		//chi è l'utente connesso?
 	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 	    // CASO 1: Login con GOOGLE (OAuth2)
@@ -146,6 +134,7 @@ public class AuthenticationController {
         return "formRegisterUser"; // ritorna al form se ci sono errori
     }
 	
+	//Pannello di controllo, se arriva fino a qui vuol dire che è stato già controllato il ruolo dell'utente
 	@GetMapping("/admin")
 	public String adminDashboard() {
 	    return "admin/indexAdmin";

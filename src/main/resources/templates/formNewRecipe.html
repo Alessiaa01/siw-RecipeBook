@@ -46,35 +46,47 @@
                 <textarea th:field="*{description}" rows="3" class="magic-input" placeholder=""></textarea>
             </div>
 
-            <div class="scroll-grid">
-                <div>
-                    <label>Categoria</label>
-                    <select th:field="*{category}" class="magic-input">
-                        <option value="Antipasto">Antipasto</option>
-                        <option value="Primo">Primo</option>
-                        <option value="Secondo">Secondo</option>
-                        <option value="Dolce">Dolce</option>
-                        <option value="Altro">Altro</option>
-                    </select>
-                </div>
-                <div>
-                    <label>Tempo (min)</label>
-                    <input type="number" th:field="*{preparationTime}" class="magic-input" required/>
-                </div>
-                <div>
-                    <label>Cottura (min)</label>
-                    <input type="number" th:field="*{cookingTime}" class="magic-input"/>
-                </div>
-                <div>
-                    <label>Difficoltà</label>
-                    <input type="text" th:field="*{difficulty}" placeholder="Es. Facile" class="magic-input"/>
-                </div>
-            </div>
-			
-			<div>
-			                  <label>Porzioni </label>
-			                  <input type="number" th:field="*{servings}" class="magic-input"/>
-			              </div>
+			<div class="scroll-grid">
+			    <div>
+			        <label>Categoria</label>
+			        <select th:field="*{category}" class="magic-input">
+			            <option value="Antipasto">Antipasto</option>
+			            <option value="Primo">Primo</option>
+			            <option value="Secondo">Secondo</option>
+			            <option value="Dolce">Dolce</option>
+			            <option value="Altro">Altro</option>
+			        </select>
+			    </div>
+			    
+			    <div>
+			        <label>Tempo (min)</label>
+			        <input type="number" th:field="*{preparationTime}" class="magic-input" required/>
+			    </div>
+			    
+			    <div>
+			        <label>Cottura (min)</label>
+			        <input type="number" th:field="*{cookingTime}" class="magic-input"/>
+			    </div>
+			    
+			    <div>
+			        <label>Difficoltà</label>
+			        <input type="text" th:field="*{difficulty}" placeholder="Es. Facile" class="magic-input"/>
+			    </div>
+
+			    <div>
+			        <label>Porzioni</label>
+			        <input type="number" th:field="*{servings}" class="magic-input"/>
+			    </div>
+				
+				<div>
+				                    <label>Data Creazione</label>
+				                    <input type="date" th:field="*{creationDate}" class="magic-input" required/>
+				                    <span style="color: #B71C1C; font-size: 0.8rem;" 
+				                          th:if="${#fields.hasErrors('creationDate')}" 
+				                          th:errors="*{creationDate}"></span>
+				                </div>
+
+			</div> 
 
             <div class="spacer"></div>
 

@@ -10,6 +10,9 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.ManyToOne;
 
+import java.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.List;
 import java.util.Set;
 import java.util.ArrayList;
@@ -60,6 +63,9 @@ public class Recipe {
 
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
     private List<Review> reviews = new ArrayList<>();
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd") // 1. Spiega a Spring il formato del browser
+    private LocalDate creationDate; // 2. Usa LocalDate (solo giorno/mese/anno)
     
 
     // ---------------------------------------------------------------------------------
@@ -197,6 +203,14 @@ public class Recipe {
 
     public void setAuthor(User author) { 
         this.author = author; 
+    }
+    
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
     }
     
     // --- Metodi equals e hashCode (importanti per la persistenza e il confronto) ---
