@@ -9,6 +9,8 @@ import jakarta.persistence.Column;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.Objects;
 
 @Entity
@@ -18,13 +20,14 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "Il titolo è obbligatorio")
     private String title; // Titolo sintetico della recensione
 
     @Column(length = 1000)
     @NotBlank
     private String text; // Il contenuto testuale del commento
 
+    @NotNull(message = "Il voto è obbligatorio")
     @Min(1)
     @Max(5)
     private Integer rating; // Valutazione da 1 a 5 stelle

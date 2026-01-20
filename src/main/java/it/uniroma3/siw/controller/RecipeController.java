@@ -267,8 +267,12 @@ public class RecipeController {
         newIngredient.setName(ingredient.getName());
         newIngredient.setQuantity(ingredient.getQuantity());
         newIngredient.setUnit(ingredient.getUnit());
-        newIngredient.setRecipe(recipe);
+        
+        //collega l'ingrediente alla ricetta nel database: questo ingrediente appartiene a questa ricetta specifica
+         newIngredient.setRecipe(recipe);
 
+         //il salvataggio avviene in due step:
+         
         this.ingredientService.save(newIngredient);
         
         recipe.getIngredients().add(newIngredient);
@@ -304,7 +308,8 @@ public class RecipeController {
         Recipe recipe = recipeService.findById(id);
         User currentUser = (User) model.getAttribute("currentUser");
 
-        if (recipe == null) return "redirect:/recipes";
+        if (recipe == null) 
+        	return "redirect:/recipes";
 
         if (isAuthorized(recipe, currentUser)) {
             recipeService.deleteById(id);

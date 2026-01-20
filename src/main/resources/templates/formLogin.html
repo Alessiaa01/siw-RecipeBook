@@ -71,13 +71,22 @@
                     </div>
                 </div>
 
-                <div class="action-area text-center mt-5">
-                    <button type="submit" class="royal-btn w-100">
-                        <span>Accedi</span>
-                        
-                    </button>
-                </div>
-                
+				<div class="action-area text-center mt-4">
+				    <button type="submit" class="royal-btn w-100 mb-3">
+				        <span>Accedi</span>
+				    </button>
+
+				    <div class="d-flex align-items-center justify-content-center my-3">
+				        <hr class="flex-grow-1" style="border-color: #4A3B2A; opacity: 0.3;">
+				        <span class="mx-3" style="font-family: 'Cinzel', serif; color: #4A3B2A; font-size: 0.9rem;">OPPURE</span>
+				        <hr class="flex-grow-1" style="border-color: #4A3B2A; opacity: 0.3;">
+				    </div>
+
+				    <a href="/oauth2/authorization/google" class="google-magic-btn w-100">
+				        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google Logo">
+				        <span>Accedi con Google</span>
+				    </a>
+				</div>
                 <div class="scroll-link text-center mt-4">
                     Non hai ancora un account? <br>
                     <a th:href="@{/register}">Registrati</a>

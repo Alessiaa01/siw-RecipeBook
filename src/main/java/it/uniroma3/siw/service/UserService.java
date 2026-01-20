@@ -74,27 +74,54 @@ public class UserService {
     @Transactional
     public void processOAuthPostLogin(String email, String name, String surname) {
         
-        Optional<User> existUser = userRepository.findByEmail(email);
+        // 1. Controlliamo se esistono le CREDENZIALI (è questo che conta per il login e per l'admin)
+        Optional<Credentials> existCred = credentialsRepository.findByUsername(email);
 
-        if (existUser.isEmpty()) {
-            // Creo Utente
-            User newUser = new User();
-            newUser.setEmail(email);
-            newUser.setName(name != null ? name : "Utente");
-            newUser.setSurname(surname != null ? surname : "Google");
-            userRepository.save(newUser);
+        // Se le credenziali NON esistono, dobbiamo crearle
+        if (existCred.isEmpty()) {
+            System.out.println("DEBUG: Credenziali non trovate. Procedo alla creazione...");
 
-            // Creo Credenziali
+            // 2. Controlliamo se esiste già l'UTENTE (per evitare duplicati o errori di unique constraint)
+            Optional<User> existUser = userRepository.findByEmail(email);
+            User userToLink;
+
+            if (existUser.isPresent()) {
+                // Caso "Orfano": L'utente c'era già, usiamo quello esistente
+                System.out.println("DEBUG: Trovato Utente esistente senza credenziali. Lo riutilizzo.");
+                userToLink = existUser.get();
+                // Aggiorniamo i dati nel caso siano cambiati su Google
+                userToLink.setName(name);
+                userToLink.setSurname(surname);
+                userRepository.save(userToLink);
+            } else {
+                // Caso "Nuovo Totale": Creiamo un nuovo utente da zero
+                System.out.println("DEBUG: Creazione nuovo Utente.");
+                User newUser = new User();
+                newUser.setEmail(email);
+                newUser.setName(name != null ? name : "Utente");
+                newUser.setSurname(surname != null ? surname : "Google");
+                userToLink = userRepository.save(newUser);
+            }
+
+            // 3. Creiamo finalmente le Credenziali e le colleghiamo
             Credentials credentials = new Credentials();
             credentials.setUsername(email);
-            credentials.setPassword(null); // Importante: password null
+            credentials.setPassword(null);
             credentials.setRole(Credentials.DEFAULT_ROLE);
-            credentials.setUser(newUser);
+            credentials.setEnabled(true); // Fondamentale!
+            credentials.setUser(userToLink);
             
             credentialsRepository.save(credentials);
+            System.out.println("DEBUG: Credenziali salvate e collegate!");
+        } else {
+            System.out.println("DEBUG: L'utente è già registrato e completo. Login standard.");
         }
     }
+    
 }
+        
+    
+
 
     
 

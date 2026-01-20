@@ -33,10 +33,13 @@ public class CredentialsService {
 
     @Transactional
     public Credentials saveCredentials(Credentials credentials) {
-        credentials.setRole(Credentials.DEFAULT_ROLE);
+        // Imposta il ruolo di default (DEFAULT_ROLE) solo se non è già settato
+        // (Opzionale: dipende se vuoi permettere salvataggi di admin)
+        if (credentials.getRole() == null) {
+            credentials.setRole(Credentials.DEFAULT_ROLE);
+        }
         
-        // Se la password è NULL (es. utente Google), NON proviamo a criptarla.
-        // Altrimenti il sistema va in crash come vedi nel log.
+        // CORRETTO: Gestione utenti Google (password null)
         if (credentials.getPassword() != null) {
             credentials.setPassword(this.passwordEncoder.encode(credentials.getPassword()));
         }
@@ -44,28 +47,32 @@ public class CredentialsService {
         return this.credentialsRepository.save(credentials);
     }
 
-    //Metodo per prendere tutte le credenziali
     @Transactional
     public Iterable<Credentials> getAllCredentials() {
         return this.credentialsRepository.findAll();
     }
     
-    //Metodo per bannare
+    // --- METODO BAN CORRETTO ---
+    @Transactional
     public void lockCredentials(String username) {
         Credentials credentials = this.credentialsRepository.findByUsername(username).orElse(null);
-        if (credentials.getPassword() != null) {
-        	credentials.setEnabled(false);
-        	this.credentialsRepository.save(credentials);
+        
+        // Correggiamo la logica:
+        // 1. Controlliamo se l'utente esiste (credentials != null)
+        // 2. NON controlliamo la password, così possiamo bannare anche gli utenti Google
+        if (credentials != null) {
+            credentials.setEnabled(false); // Disabilita l'account
+            this.credentialsRepository.save(credentials);
         }
-            
-        }
-    
+    }
 
-    //Metodo per riabilitare 
+    // --- METODO UNBAN ---
+    @Transactional
     public void unlockCredentials(String username) {
         Credentials credentials = this.credentialsRepository.findByUsername(username).orElse(null);
+        
         if (credentials != null) {
-            credentials.setEnabled(true); // RIAMMETTI L'UTENTE
+            credentials.setEnabled(true); // Riabilita l'account
             this.credentialsRepository.save(credentials);
         }
     }
