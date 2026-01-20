@@ -3,132 +3,129 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"> 
 <head>
     <meta charset="UTF-8">
-    <title>Elenco ricette</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disney RecipeBook - Elenco Ricette</title>
+    
     <link rel="stylesheet" href="/css/recipes.css" />
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <div class="magic-background"></div>
 
-	<header>
-	    <div class="header-content-wrapper" style="display: flex; justify-content: space-between; align-items: center;">
-	    
-            <div class="left-actions" style="display: flex; gap: 15px; align-items: center;">
-				
-                <div sec:authorize="hasAuthority('ADMIN')" class="admin-link-header-left">
-                    <a th:href="@{/admin}" class="action-manage" style="color: rgb(94, 54, 0); text-decoration: none; font-weight: bold;">
-	                    <i class="fa-solid fa-crown"></i> Gestione Admin
-	                </a>
-	            </div>
+    <header class="main-header">
+        <div class="header-content-wrapper">
+            
+            <div class="header-left">
+                
+                <div sec:authorize="hasAuthority('ADMIN')" class="admin-badge">
+                    <a th:href="@{/admin}" class="btn-text">
+                        <i class="fa-solid fa-crown"></i> Gestione Admin
+                    </a>
+                </div>
 
                 <div sec:authorize="isAuthenticated() and !hasAuthority('ADMIN')">
-	                <a th:href="@{/myRecipes}" class="btn-cream">
-	                    <i class="fa-solid fa-book-open"></i> Le mie ricette
-	                </a>
-	            </div>
-
-	        </div>
-	        
-            <div class="user-actions-right">
-	            
-                <div sec:authorize="isAuthenticated()" style="display: flex; align-items: center; gap: 15px;">
-                    
-                    <span class="chef-name" style="color: rgb(80, 49, 33); margin-left: 10px;">
-	                    ✨ Chef 
+                    <a th:href="@{/myRecipes}" class="btn-gold-outline">
+                        <i class="fa-solid fa-book-open"></i> Le mie ricette
+                    </a>
+                </div>
+            </div>
+            
+            <div class="header-right">
+                
+                <div sec:authorize="isAuthenticated()" class="user-profile">
+                    <span class="chef-name">
+                        ✨ Chef 
                         <span th:if="${currentUser != null}" th:text="${currentUser.name} + ' ' + ${currentUser.surname}">Nome Cognome</span>
                         <span th:if="${currentUser == null}" sec:authentication="name">User</span>
-	                </span>
-	                <a th:href="@{/logout}" class="btn-auth btn-logout" style="margin-left: 10px;">Logout</a>
-	            </div>
-
-                <div sec:authorize="!isAuthenticated()">
-	                <span class="welcome-text">Benvenuto!</span>
-	                <a th:href="@{/login}" class="btn-auth btn-login">Accedi</a>
-	                <a th:href="@{/register}" class="btn-auth btn-register">Registrati</a>
-	            </div>
-	            
-	        </div>
-	    </div>
-	</header>
-
-    <div class="logo-container">
-        <a th:href="@{/}">
-            <img src="/images/logo2.png" class="main-logo" alt="Logo" onerror="this.style.display='none'"/>
-        </a>  
-    </div>
-
-    <h1 class="main-title">ELENCO RICETTE</h1>
-    
-    <div class="action-bar-wrapper">
-        
-        <div class="search-container">
-            <form th:action="@{/searchRecipes}" method="get" class="elegant-search-form">
-                
-                <div class="search-field">
-                    <input type="text" name="title" placeholder="🔍 Cerca per Titolo..." />
+                    </span>
+                    <a th:href="@{/logout}" class="btn-logout">Logout</a>
                 </div>
 
-                <div class="search-field" style="margin-left: 20px;">
-                   <input type="text" name="ingredient" placeholder="🌾 Cerca per Ingrediente..." />
+                <div sec:authorize="!isAuthenticated()" class="guest-actions">
+                    <span class="welcome-text">Benvenuto!</span>
+                    <a th:href="@{/login}" class="btn-gold">Accedi</a>
+                    <a th:href="@{/register}" class="btn-gold-outline">Registrati</a>
                 </div>
                 
-                <button type="submit" class="search-button">CERCA</button>
-            </form>
+            </div>
         </div>
-    </div>
+    </header>
 
-    <div th:if="${#lists.isEmpty(recipes)}">
-        <p style="text-align: center; color: #8B4513; font-size: 1.2rem;">Nessuna ricetta trovata</p>
+    <div class="hero-section">
+        <div class="logo-container">
+            <a th:href="@{/}">
+                <img src="/images/logo2.png" class="main-logo" alt="Disney Recipes" onerror="this.style.display='none'"/>
+            </a>  
+        </div>
+        <h1 class="main-title">Il Ricettario Incantato</h1>
     </div>
-
-    <ul class="recipe-cards-list">
-        <li th:each="recipe : ${recipes}" class="recipe-card">
+    
+    <div class="search-wrapper">
+        <form th:action="@{/searchRecipes}" method="get" class="magic-search-form">
             
-            <div class="card-image">
-                <img th:src="${recipe.imageUrl} ? ${recipe.imageUrl} : '/images/placeholder-piatto.jpg'" 
-                     th:alt="'Immagine di ' + ${recipe.title}"
-                     style="width: 100%; height: 200px; object-fit: cover;"/>
+            <div class="input-group">
+                <i class="fa-solid fa-magnifying-glass icon-input"></i>
+                <input type="text" name="title" placeholder="Cerca per Titolo..." />
+            </div>
+
+            <div class="input-group">
+                <i class="fa-solid fa-wheat-awn icon-input"></i>
+                <input type="text" name="ingredient" placeholder="Ingrediente..." />
             </div>
             
-            <div class="card-content" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+            <button type="submit" class="btn-search">Cerca Magia</button>
+        </form>
+    </div>
+
+    <div th:if="${#lists.isEmpty(recipes)}" class="empty-message">
+        <i class="fa-solid fa-cookie-bite"></i>
+        <p>Oh no! Nessuna ricetta trovata nel calderone.</p>
+    </div>
+
+    <div class="container">
+        <ul class="recipe-grid">
+            <li th:each="recipe : ${recipes}" class="recipe-card">
                 
-                <div>
-                    <a th:href="@{'/recipe/' + ${recipe.id}}" th:text="${recipe.title}" class="recipe-title">Titolo Ricetta</a>
-                    <p class="recipe-description" th:text="${recipe.description}">Descrizione...</p>
-                </div>
-
-                <div class="card-bottom-info">
+                <div class="card-image-wrapper">
+                    <img th:src="${recipe.imageUrl} ? ${recipe.imageUrl} : '/images/placeholder-piatto.jpg'" 
+                         th:alt="'Immagine di ' + ${recipe.title}" />
                     
-                    <div class="card-metadata-inline" style="margin-bottom: 8px;">
-                        <p>
-                            <i class="fa-regular fa-clock icon-gold"></i> 
-                            <span th:text="${recipe.preparationTime}">0</span> min
-                        </p>
-                        <p>
-                            <i class="fa-solid fa-star icon-gold"></i> 
-                            <span th:text="${recipe.difficulty}">Facile</span>
-                        </p>
-                    </div>
-
-                    <div class="card-attribution" style="border-top: 1px dashed #d7ccc8; margin-top: 8px; padding-top: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: #5d4037;">
-                        
-                        <span class="author" style="display: flex; align-items: center; gap: 5px;">
-                            <i class="fa-solid fa-user-pen" style="color: #8d6e63;"></i>
-                            <strong th:if="${recipe.author != null}" th:text="${recipe.author.name}">Chef</strong>
-                            <span th:unless="${recipe.author != null}">Anonimo</span>
-                        </span>
-
-                        <span class="date" th:if="${recipe.creationDate}" style="color: #8d6e63;">
-                            <span th:text="${#temporals.format(recipe.creationDate, 'dd/MM/yyyy')}">Data</span>
-                        </span>
-
-                    </div>
-
+                    <span class="difficulty-badge" th:text="${recipe.difficulty}">Facile</span>
                 </div>
-            </div>
-        </li>
-    </ul>
+                
+                <div class="card-content">
+                    <a th:href="@{'/recipe/' + ${recipe.id}}" class="recipe-title">
+                        <span th:text="${recipe.title}">Titolo Ricetta</span>
+                    </a>
+                    
+                    <p class="recipe-description" th:text="${recipe.description}">Descrizione...</p>
+
+                    <div class="card-divider"></div>
+
+                    <div class="card-footer">
+                        <div class="meta-info">
+                            <span class="meta-item"><i class="fa-regular fa-clock"></i> <span th:text="${recipe.preparationTime}">0</span>'</span>
+                            <span class="meta-item author">
+                                <i class="fa-solid fa-user-pen"></i>
+                                <span th:if="${recipe.author != null}" th:text="${recipe.author.name}">Chef</span>
+                                <span th:unless="${recipe.author != null}">Anonimo</span>
+                            </span>
+                        </div>
+                        
+                        <div class="date-info" th:if="${recipe.creationDate}">
+                            <span th:text="${#temporals.format(recipe.creationDate, 'dd/MM/yyyy')}"></span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
 
 </body>
 </html>
