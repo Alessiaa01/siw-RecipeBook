@@ -18,13 +18,13 @@ public class RecipeService {
 	@Autowired
 	private RecipeRepository recipeRepository;
 
-	//ricetta con id 
+	// RICERCA PER ID
 	@Transactional(readOnly = true)
 	public Recipe findById(Long id) {
-		return recipeRepository.findById(id).get();
+		return recipeRepository.findById(id).orElse(null);
 	}
 	
-	//tutte le ricette 
+	// TUTTE LE RICETTE
 	@Transactional(readOnly = true)
 	public List<Recipe> findAll() {
 	    // Il cast (List<Recipe>) trasforma l'Iterable del database in una Lista vera e propria
@@ -32,16 +32,20 @@ public class RecipeService {
 	}
 	
 	
-	
+	// SALVATAGGIO
 	@Transactional
 	public void save(Recipe recipe) {
 		recipeRepository.save(recipe);
 	}
-
-	public boolean existsByTitle(String title) {
-		return recipeRepository.existsByTitle(title);
+	
+	//CANCELLAZIONE
+	@Transactional 
+	public void deleteById(Long id) {
+	    recipeRepository.deleteById(id);
 	}
-	// METODI PER LA RICERCA
+
+	
+	// METODI PER LA RICERCA E VALIDAZIONE
     public List<Recipe> findByTitle(String title) {
         return recipeRepository.findByTitleContainingIgnoreCase(title);
     }
@@ -49,25 +53,23 @@ public class RecipeService {
     public List<Recipe> findByIngredient(String ingredientName) {
         return recipeRepository.findByIngredientsNameContainingIgnoreCase(ingredientName);
     }
-
-	@Transactional 
-	public void deleteById(Long id) {
-	    recipeRepository.deleteById(id);
-	}
 	
-	// NUOVO METODO: cerca ricette per nome ingrediente
-    @Transactional(readOnly = true)
-    public List<Recipe> findByIngredientNameContainingIgnoreCase(String ingredientName) {
-        return recipeRepository.findByIngredientsNameContainingIgnoreCase(ingredientName);
-    }
-    
+
+	public boolean existsByTitle(String title) {
+		return recipeRepository.existsByTitle(title);
+	}
 
     public boolean existsByTitleAndIdNot(String title, Long id) {
         return recipeRepository.existsByTitleAndIdNot(title, id);
     }
-    
- // Aggiungi questo metodo nella classe RecipeService
+
     public List<Recipe> getRecipesByAuthor(User author) {
         return recipeRepository.findByAuthor(author);
+    }
+    
+ // NUOVO METODO: cerca ricette per nome ingrediente
+    @Transactional(readOnly = true)
+    public List<Recipe> findByIngredientNameContainingIgnoreCase(String ingredientName) {
+        return recipeRepository.findByIngredientsNameContainingIgnoreCase(ingredientName);
     }
 }

@@ -16,9 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * The UserService handles logic for Users.
- */
 @Service
 public class UserService {
 
@@ -69,7 +66,6 @@ public class UserService {
     	return userRepository.findByEmail(email).orElse(null);
     }
     
- // Nel UserService.java
 
     @Transactional
     public void processOAuthPostLogin(String email, String name, String surname) {

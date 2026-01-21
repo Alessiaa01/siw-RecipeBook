@@ -1,163 +1,207 @@
-/* =========================================
-   1. STILI BASE
-   ========================================= */
+/* --- VARIABILI COLORI (Coerenti con recipes.css) --- */
 :root {
-    --bg-sky-light: #E0FFFF;
-    --bg-sky-dark: #87CEEB;
-    --gold: #D4AF37;
-    --gold-dark: #B8860B;
-    --ink: #8B4513;
-    --paper: #FFFAF0;
-    --error: #C0392B;
-    
-    --font-fancy: 'Great Vibes', cursive;
+    --celeste-bg: #E1F5FE;
+    --celeste-accent: #81D4FA;
+    --marrone-dark: #4E342E;
+    --marrone-text: #5D4037;
+    --oro: #C5A059;
+    --oro-hover: #D4AF37;
+    --bianco: #FFFFFF;
+    --shadow-soft: 0 10px 30px rgba(78, 52, 46, 0.15); /* Ombra marroncina */
     --font-title: 'Cinzel', serif;
-    --font-text: 'Quicksand', sans-serif;
+    --font-body: 'Quicksand', sans-serif; /* O 'Lato' se preferisci */
 }
 
+/* --- BODY PER PAGINA RICETTE (Scorrimento verticale) --- */
 body {
-    /* Sfondo Immagine o Gradiente */
-    background: radial-gradient(circle at center, var(--bg-sky-light), var(--bg-sky-dark));
-    /* Se usi l'immagine di sfondo, scommenta qui sotto: */
-    background-image: url('/images/sfondoLogin.jpg'); 
-    background-size: cover; 
+    font-family: var(--font-body);
+    min-height: 100vh;
     
-    font-family: var(--font-text);
-    margin: 0;
-}
-
-/* =========================================
-   2. CARD (LIBRO)
-   ========================================= */
-.recipe-book-card {
-    background-color: var(--paper);
-    border-radius: 20px;
-    border: 4px solid var(--gold);
-    outline: 5px solid var(--ink);
-    outline-offset: -10px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-    padding: 3rem;
-}
-
-/* Decorazioni angoli */
-.recipe-book-card::before, .recipe-book-card::after {
-    content: "❧";
-    position: absolute;
-    font-size: 30px;
-    color: var(--gold);
-}
-.recipe-book-card::before { top: 15px; left: 15px; }
-.recipe-book-card::after { bottom: 15px; right: 15px; transform: rotate(180deg); }
-
-/* =========================================
-   3. HEADER E NASTRO
-   ========================================= */
-.crown-icon {
-    color: var(--gold);
-    filter: drop-shadow(1px 1px 0 var(--ink));
-}
-
-.header-decoration h1 {
-    font-family: var(--font-fancy);
-    font-weight: normal;
-    color: var(--ink);
-    line-height: 1;
+    /* --- CORREZIONE FONDAMENTALE --- */
+    /* Rimuoviamo flex/center perché la pagina ricette deve scorrere dall'alto */
+    display: block; 
     position: relative;
-    z-index: 2; /* Sta sopra il nastro */
+    
+    /* --- SFONDO CASTELLO --- */
+    background-image: url('/images/sfondoLogin.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    /* Questo blocca lo sfondo mentre scorri le ricette (Effetto Parallasse) */
+    background-attachment: fixed; 
+    
+    z-index: 0;
 }
 
-/* STILE PER IL NASTRO (Fondamentale) */
-.ribbon-decoration {
-    display: block;
-    width: 550px;         /* Larghezza contenuta */
-    max-width: 90%;
-    height: auto;
-    margin: -65px auto 10px auto; /* Margine negativo sopra per avvicinarlo al titolo */
-    filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.2));
+
+/* --- CARD LOGIN (Il Libro/Specchio) --- */
+.recipe-book-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    
+    /* MODIFICA 1: Riduciamo lo spazio interno (era 3rem 2rem) */
+    padding: 1.5rem 2rem; 
+    
+    /* MODIFICA 2: Impostiamo una larghezza massima fissa più stretta */
+    max-width: 400px; 
+    width: 100%; /* Si adatta su schermi piccoli */
+    
+    box-shadow: var(--shadow-soft);
+    border: 1px solid var(--oro);
+    position: relative;
+    overflow: hidden;
+    margin: auto; /* Assicura la centratura */
 }
 
-.subtitle {
+/* Decorazione bordo superiore oro */
+.recipe-book-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, transparent, var(--oro), transparent);
+}
+
+/* --- HEADER --- */
+.header-decoration h1 {
     font-family: var(--font-title);
-    text-transform: uppercase;
-    color: var(--gold-dark);
-    font-weight: bold;
-    font-size: 0.85rem;
+    color: var(--marrone-dark);
+    font-weight: 700;
+    letter-spacing: 2px;
+    font-size: 2.5rem;
+    text-shadow: 1px 1px 0 rgba(197, 160, 89, 0.3);
 }
 
-/* =========================================
-   4. INPUT E FIELD
-   ========================================= */
+.icon-circle {
+    color: var(--oro);
+    margin-bottom: 1rem;
+    animation: floatIcon 3s ease-in-out infinite;
+}
+
+@keyframes floatIcon {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* --- INPUT FIELDS MAGICI --- */
+.magic-field label {
+    font-family: var(--font-title);
+    color: var(--marrone-text);
+    font-size: 0.9rem;
+    margin-left: 10px;
+}
+
 .field-wrapper {
     position: relative;
-    display: flex;
-    align-items: center;
 }
 
 .input-icon {
     position: absolute;
     left: 15px;
-    color: var(--gold-dark);
-    font-size: 1.1rem;
-    z-index: 5;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--oro);
+    z-index: 10;
 }
 
+/* Sovrascriviamo Bootstrap Form Control */
 .form-control {
-    padding: 12px 15px 12px 45px;
-    border: 2px solid #E0D6C8;
-    background-color: #FFF;
-    border-radius: 10px;
-    font-family: var(--font-text);
-    color: var(--ink);
-    box-shadow: none;
+    border-radius: 50px; /* Pillola */
+    padding: 12px 15px 12px 45px; /* Spazio per l'icona a sinistra */
+    border: 2px solid #EEE;
+    background-color: #FAFAFA;
+    font-size: 1rem;
+    color: var(--marrone-dark);
+    transition: all 0.3s;
 }
 
 .form-control:focus {
-    border-color: var(--gold);
-    box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+    box-shadow: 0 0 0 4px rgba(197, 160, 89, 0.2); /* Glow dorato */
+    border-color: var(--oro);
+    background-color: #fff;
 }
 
-/* =========================================
-   5. BOTTONE E ALERT
-   ========================================= */
-   .royal-btn {
-       background: linear-gradient(to right, var(--gold) 0%, var(--gold-dark) 100%);
-       border: none;
-       padding: 14px 60px;
-       border-radius: 50px;
-       color: #FFF;
-       font-family: var(--font-title);
-       font-size: 1.1rem;
-       letter-spacing: 1px;
-       text-transform: uppercase;
-       transition: all 0.3s ease;
-       box-shadow: 0 6px 15px rgba(184, 134, 11, 0.3);
-       
-       display: inline-flex;
-       align-items: center;
-       justify-content: center;
-   }
-
-   .royal-btn:hover {
-       transform: translateY(-3px) scale(1.02);
-       box-shadow: 0 10px 25px rgba(184, 134, 11, 0.5);
-       background: linear-gradient(to right, #F1C40F 0%, var(--gold) 100%);
-   }
-
-.magic-alert {
-    background-color: transparent;
-    border: 2px dashed var(--error);
-    color: var(--error);
+/* --- BOTTONI --- */
+.royal-btn {
+    background-image: linear-gradient(45deg, #C5A059 0%, #E6C676 50%, #C5A059 100%);
+    background-size: 200% auto;
+    border: none;
+    color: white;
+    font-family: var(--font-title);
     font-weight: bold;
-    border-radius: 10px;
-}
-.alert-success.magic-alert {
-    border-color: #27ae60;
-    color: #27ae60;
+    border-radius: 50px;
+    padding: 12px;
+    font-size: 1.1rem;
+    transition: 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
+.royal-btn:hover {
+    background-position: right center;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(197, 160, 89, 0.4);
+}
+
+/* --- GOOGLE BUTTON --- */
+.google-magic-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border: 2px solid #eee;
+    border-radius: 50px;
+    padding: 10px;
+    text-decoration: none;
+    color: #555;
+    font-weight: 600;
+    transition: all 0.3s;
+    gap: 10px;
+}
+
+.google-magic-btn img {
+    width: 20px;
+    height: 20px;
+}
+
+.google-magic-btn:hover {
+    background-color: #f8f9fa;
+    border-color: #ddd;
+    color: #333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* --- ERRORI / ALERTS --- */
+.magic-alert {
+    border-radius: 15px;
+    font-size: 0.9rem;
+    border: none;
+}
+.alert-danger {
+    background-color: #FFEBEE;
+    color: #C62828;
+}
+.alert-success {
+    background-color: #E8F5E9;
+    color: #2E7D32;
+}
+
+/* --- LINK REGISTRAZIONE --- */
+.scroll-link {
+    color: var(--marrone-text);
+    font-size: 0.9rem;
+}
 .scroll-link a {
-    color: var(--gold-dark);
+    color: var(--oro);
     font-weight: bold;
     text-decoration: none;
-    border-bottom: 2px dotted var(--gold);
+    font-family: var(--font-title);
+}
+.scroll-link a:hover {
+    text-decoration: underline;
+    color: var(--marrone-dark);
 }
