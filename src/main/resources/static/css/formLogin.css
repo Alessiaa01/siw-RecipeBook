@@ -1,207 +1,236 @@
-/* --- VARIABILI COLORI (Coerenti con recipes.css) --- */
+/* --- VARIABILI --- */
 :root {
-    --celeste-bg: #E1F5FE;
-    --celeste-accent: #81D4FA;
-    --marrone-dark: #4E342E;
-    --marrone-text: #5D4037;
-    --oro: #C5A059;
-    --oro-hover: #D4AF37;
-    --bianco: #FFFFFF;
-    --shadow-soft: 0 10px 30px rgba(78, 52, 46, 0.15); /* Ombra marroncina */
-    --font-title: 'Cinzel', serif;
-    --font-body: 'Quicksand', sans-serif; /* O 'Lato' se preferisci */
+    --disney-gold: #C5A059;
+    --disney-blue: #1C3F60;
+    --paper-bg: rgba(255, 255, 255, 0.94); /* Quasi opaco */
+    --font-title: 'Cinzel Decorative', serif;
+    --font-script: 'Rouge Script', cursive;
+    --font-body: 'Quicksand', sans-serif;
 }
 
-/* --- BODY PER PAGINA RICETTE (Scorrimento verticale) --- */
 body {
     font-family: var(--font-body);
     min-height: 100vh;
+    margin: 0;
     
-    /* --- CORREZIONE FONDAMENTALE --- */
-    /* Rimuoviamo flex/center perché la pagina ricette deve scorrere dall'alto */
-    display: block; 
-    position: relative;
+    /* CENTRATURA */
+    display: flex;
+    justify-content: center;
+    align-items: center;
     
-    /* --- SFONDO CASTELLO --- */
-    background-image: url('/images/sfondoLogin.jpg');
+    /* SFONDO */
+    background: url('/images/sfondoLogin.jpg') no-repeat center center fixed;
     background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    
-    /* Questo blocca lo sfondo mentre scorri le ricette (Effetto Parallasse) */
-    background-attachment: fixed; 
-    
-    z-index: 0;
-}
-
-
-/* --- CARD LOGIN (Il Libro/Specchio) --- */
-.recipe-book-card {
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 20px;
-    
-    /* MODIFICA 1: Riduciamo lo spazio interno (era 3rem 2rem) */
-    padding: 1.5rem 2rem; 
-    
-    /* MODIFICA 2: Impostiamo una larghezza massima fissa più stretta */
-    max-width: 400px; 
-    width: 100%; /* Si adatta su schermi piccoli */
-    
-    box-shadow: var(--shadow-soft);
-    border: 1px solid var(--oro);
     position: relative;
-    overflow: hidden;
-    margin: auto; /* Assicura la centratura */
 }
 
-/* Decorazione bordo superiore oro */
-.recipe-book-card::before {
+body::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 5px;
-    background: linear-gradient(90deg, transparent, var(--oro), transparent);
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.3); /* Leggera ombra per contrasto */
+    z-index: -1;
 }
 
-/* --- HEADER --- */
+/* --- CARD SINGOLA (Verticale) --- */
+.recipe-book-card {
+    background: var(--paper-bg);
+    border-radius: 20px;
+    
+    /* Dimensioni contenute */
+    width: 90%;
+    max-width: 450px; 
+    
+    /* Bordo stile libro antico */
+    border: 2px solid #fff;
+    outline: 4px double var(--disney-gold);
+    outline-offset: -8px;
+    
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    position: relative;
+    overflow: hidden;
+    animation: fadeInUp 0.8s ease-out;
+    padding-top: 2rem; /* Spazio in alto */
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- INTESTAZIONE --- */
+.header-decoration .icon-circle {
+    color: var(--disney-gold);
+    margin-bottom: 5px;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
 .header-decoration h1 {
     font-family: var(--font-title);
-    color: var(--marrone-dark);
-    font-weight: 700;
+    color: #8B4513;
+    
+    /* GRASSETTO AGGIUNTO */
+    font-weight: 700; 
+    
+    font-size: 2.8rem;
+    text-transform: uppercase;
     letter-spacing: 2px;
-    font-size: 2.5rem;
-    text-shadow: 1px 1px 0 rgba(197, 160, 89, 0.3);
-}
-
-.icon-circle {
-    color: var(--oro);
-    margin-bottom: 1rem;
-    animation: floatIcon 3s ease-in-out infinite;
-}
-
-@keyframes floatIcon {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
-
-/* --- INPUT FIELDS MAGICI --- */
-.magic-field label {
-    font-family: var(--font-title);
-    color: var(--marrone-text);
-    font-size: 0.9rem;
-    margin-left: 10px;
-}
-
-.field-wrapper {
+    margin: 0;
+    line-height: 1.2;
+    z-index: 2;
     position: relative;
+    
+    /* Opzionale: un'ombra leggera per staccarlo meglio dallo sfondo */
+    text-shadow: 2px 2px 0 rgba(197, 160, 89, 0.2);
 }
+
+/* NASTRO */
+.title-ribbon {
+    display: block;
+    margin: -65px auto 10px auto; /* Sovrapposizione leggera col testo */
+    width: 100%;
+    max-width: 400px;
+    filter: drop-shadow(0 3px 4px rgba(0,0,0,0.1));
+}
+
+.login-subtitle {
+    font-family: var(--font-title);
+    color: var(--disney-gold);
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-top: 5px;
+    margin-bottom: 1.5rem;
+}
+
+/* --- CAMPI INPUT --- */
+.magic-field { margin-bottom: 5px; }
+.field-wrapper { position: relative; }
 
 .input-icon {
     position: absolute;
     left: 15px;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--oro);
-    z-index: 10;
+    color: var(--disney-gold);
+    font-size: 1rem;
 }
 
-/* Sovrascriviamo Bootstrap Form Control */
 .form-control {
-    border-radius: 50px; /* Pillola */
-    padding: 12px 15px 12px 45px; /* Spazio per l'icona a sinistra */
-    border: 2px solid #EEE;
-    background-color: #FAFAFA;
+    border-radius: 50px;
+    padding: 12px 15px 12px 45px;
+    border: 1px solid #ddd;
+    background-color: #fcfcfc;
     font-size: 1rem;
-    color: var(--marrone-dark);
     transition: all 0.3s;
 }
 
 .form-control:focus {
-    box-shadow: 0 0 0 4px rgba(197, 160, 89, 0.2); /* Glow dorato */
-    border-color: var(--oro);
+    box-shadow: 0 0 10px rgba(197, 160, 89, 0.3);
+    border-color: var(--disney-gold);
     background-color: #fff;
+    transform: scale(1.02);
 }
 
 /* --- BOTTONI --- */
 .royal-btn {
-    background-image: linear-gradient(45deg, #C5A059 0%, #E6C676 50%, #C5A059 100%);
+    /* Gradiente animato */
+    background: linear-gradient(90deg, #C5A059, #e6c676, #F4E2D8, #e6c676, #C5A059);
     background-size: 200% auto;
-    border: none;
+    
     color: white;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    border: none;
+    
     font-family: var(--font-title);
-    font-weight: bold;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 1.1rem;
+    
     border-radius: 50px;
     padding: 12px;
-    font-size: 1.1rem;
+    width: 100%;
+    
     transition: 0.3s;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    box-shadow: 0 5px 15px rgba(197, 160, 89, 0.4);
+    
+    /* Animazione continua */
+    animation: shine 4s linear infinite;
+}
+
+@keyframes shine {
+    to {
+        background-position: 200% center;
+    }
 }
 
 .royal-btn:hover {
-    background-position: right center;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(197, 160, 89, 0.4);
+    transform: scale(1.03);
+    box-shadow: 0 8px 25px rgba(197, 160, 89, 0.6);
 }
 
-/* --- GOOGLE BUTTON --- */
 .google-magic-btn {
     display: flex;
-    align-items: center;
     justify-content: center;
-    background-color: white;
-    border: 2px solid #eee;
+    align-items: center;
+    border: 1px solid #ddd;
     border-radius: 50px;
     padding: 10px;
     text-decoration: none;
     color: #555;
     font-weight: 600;
-    transition: all 0.3s;
+    background: white;
     gap: 10px;
+    transition: 0.3s;
 }
 
-.google-magic-btn img {
-    width: 20px;
-    height: 20px;
-}
+.google-magic-btn img { width: 18px; height: 18px; }
 
 .google-magic-btn:hover {
     background-color: #f8f9fa;
-    border-color: #ddd;
-    color: #333;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    border-color: #ccc;
+    transform: translateY(-1px);
 }
 
-/* --- ERRORI / ALERTS --- */
-.magic-alert {
-    border-radius: 15px;
-    font-size: 0.9rem;
-    border: none;
+/* Stile per l'icona PNG di Google */
+.google-icon {
+    width: 22px; /* Dimensione ideale */
+    height: 22px;
+    margin-right: 10px; /* Spazio tra icona e testo */
+    object-fit: contain; /* Mantiene le proporzioni */
+    vertical-align: middle;
 }
-.alert-danger {
-    background-color: #FFEBEE;
-    color: #C62828;
+
+/* Aggiornamento bottone per allineare tutto */
+.google-magic-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* ... le altre proprietà che avevi già ... */
 }
-.alert-success {
-    background-color: #E8F5E9;
-    color: #2E7D32;
+
+.small-text-gold {
+    font-family: var(--font-title);
+    color: var(--disney-gold);
+    font-size: 0.75rem;
+    font-weight: bold;
 }
 
 /* --- LINK REGISTRAZIONE --- */
-.scroll-link {
-    color: var(--marrone-text);
-    font-size: 0.9rem;
-}
 .scroll-link a {
-    color: var(--oro);
-    font-weight: bold;
+    color: #8B4513;
     text-decoration: none;
-    font-family: var(--font-title);
+    font-weight: 700;
+    font-size: 0.9rem;
 }
 .scroll-link a:hover {
     text-decoration: underline;
-    color: var(--marrone-dark);
+    color: var(--disney-gold);
 }
