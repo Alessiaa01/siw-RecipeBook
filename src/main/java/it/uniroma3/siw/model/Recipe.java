@@ -64,8 +64,7 @@ public class Recipe {
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
     private List<Review> reviews = new ArrayList<>();
     
-    @DateTimeFormat(pattern = "yyyy-MM-dd") // 1. Spiega a Spring il formato del browser
-    private LocalDate creationDate; // 2. Usa LocalDate (solo giorno/mese/anno)
+    private LocalDate creationDate;
     
 
     // ---------------------------------------------------------------------------------
@@ -212,6 +211,7 @@ public class Recipe {
     public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
+    
     
     // --- Metodi equals e hashCode (importanti per la persistenza e il confronto) ---
     // Due oggetti Recipe sono considerati uguali se hanno lo stesso titolo.

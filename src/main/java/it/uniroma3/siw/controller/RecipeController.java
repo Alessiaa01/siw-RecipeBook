@@ -137,22 +137,38 @@ public class RecipeController {
     }
 
     @PostMapping("/formNewRecipe")
-    public String newRecipe(@Valid @ModelAttribute("recipe") Recipe recipe,
+    public String newRecipe(@Valid @ModelAttribute("recipe") Recipe recipe, 
                             BindingResult bindingResult, 
                             Model model) {
         
+        // 1. Controllo utente loggato
         User currentUser = (User) model.getAttribute("currentUser");
+        if (currentUser == null) return "redirect:/login";
 
-        if (currentUser == null) {
-            return "redirect:/login";
-        }
-
+        // 2. Validazione
         recipeValidator.validate(recipe, bindingResult);
         if (bindingResult.hasErrors()) {
-            return "formNewRecipe.html"; 
+            return "formNewRecipe"; // Torna al form se ci sono errori
         }
         
+        // 3. Imposta i dati della ricetta padre
+        recipe.setCreationDate(LocalDate.now());
         recipe.setAuthor(currentUser);
+
+        // --- PUNTO CRUCIALE PER IL TUO FORM HTML ---
+        // Il form ha riempito la lista 'recipe.ingredients', ma il campo 'recipe' 
+        // dentro ogni ingrediente è ancora NULL. Dobbiamo settarlo ora.
+        
+        if (recipe.getIngredients() != null) {
+            for (Ingredient ing : recipe.getIngredients()) {
+                ing.setRecipe(recipe); // <--- COLLEGAMENTO MAGICO
+                // Assicuriamoci che la quantità non sia null se l'utente ha lasciato vuoto
+                // (Dipende se nel DB accetti null o no)
+            }
+        }
+        // -------------------------------------------
+
+        // 4. Salvataggio a Cascata (Salva ricetta + ingredienti insieme)
         recipeService.save(recipe);
         
         return "redirect:/recipe/" + recipe.getId(); 
@@ -309,11 +325,30 @@ public class RecipeController {
         User currentUser = (User) model.getAttribute("currentUser");
 
         if (recipe == null) 
-        	return "redirect:/recipes";
+            return "redirect:/recipes";
 
+        // Questo controllo verifica se sei l'autore OPPURE un Admin
         if (isAuthorized(recipe, currentUser)) {
+            
             recipeService.deleteById(id);
-            return "redirect:/myRecipes"; 
+            
+            // --- QUI C'È LA MODIFICA ---
+            // Recuperiamo i permessi dell'utente loggato
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            
+            // Controlliamo se tra i permessi c'è "ADMIN"
+            boolean isAdmin = auth.getAuthorities().stream()
+                    .anyMatch(a -> a.getAuthority().equals("ADMIN"));
+            
+            if (isAdmin) {
+                // Se sei l'Admin, torni alla lista generale (o al pannello di controllo)
+                return "redirect:/recipes"; 
+            } else {
+                // Se sei l'utente normale, torni alla tua bacheca personale
+                return "redirect:/myRecipes"; 
+            }
+            // ---------------------------
+            
         } else {
             return "redirect:/recipe/" + id + "?error=notAuthorized";
         }

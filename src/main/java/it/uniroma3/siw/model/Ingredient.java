@@ -5,7 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-//import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinColumn;
 
 import java.util.Objects;
 
@@ -21,7 +21,7 @@ public class Ingredient {
     private String unit;     // es. "g", "ml", "pz"
 
     @ManyToOne
-    //@JoinColumn(name = "recipe_id")
+    @JoinColumn(name = "recipe_id", nullable = false)
     private Recipe recipe;
 
 

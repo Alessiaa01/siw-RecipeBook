@@ -67,9 +67,5 @@ public class RecipeService {
         return recipeRepository.findByAuthor(author);
     }
     
- // NUOVO METODO: cerca ricette per nome ingrediente
-    @Transactional(readOnly = true)
-    public List<Recipe> findByIngredientNameContainingIgnoreCase(String ingredientName) {
-        return recipeRepository.findByIngredientsNameContainingIgnoreCase(ingredientName);
-    }
+ 
 }

@@ -156,7 +156,7 @@
                 <div class="ing-row-dynamic" id="ing-block-${index}">
                     <div class="ing-inputs">
                         <input type="text" name="ingredients[${index}].name" placeholder="Ingrediente" class="magic-input-sm name" required />
-                        <input type="text" name="ingredients[${index}].quantity" placeholder="Qt." class="magic-input-sm qty" />
+                        <input type="number" name="ingredients[${index}].quantity" placeholder="Qt." class="magic-input-sm qty" />
                         <input type="text" name="ingredients[${index}].unit" placeholder="Unità" class="magic-input-sm unit" />
                     </div>
                     <button type="button" onclick="removeIngredientField(${index})" class="mini-del-btn" title="Rimuovi">×</button>
