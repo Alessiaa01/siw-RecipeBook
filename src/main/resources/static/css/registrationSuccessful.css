@@ -1,4 +1,4 @@
-/* --- VARIABILI COLORI E FONT --- */
+/* --- 1. VARIABILI (Identiche a recipes.css e formRegister) --- */
 :root {
     --celeste-bg: #E1F5FE;       
     --marrone-dark: rgb(100, 62, 41);
@@ -6,176 +6,180 @@
     --oro: #C5A059;
     --oro-light: #FFF8E1;        
     --parchment: #fffbf0;   
+    --royal-gold: #c5a059;  
+    
     --font-title: 'Cinzel Decorative', cursive; 
+    --font-heading: 'Cinzel', serif;
     --font-body: 'Cormorant Garamond', serif;   
     --font-ui: 'Lato', sans-serif;              
 }
 
-/* --- RESET E BODY --- */
+/* --- 2. RESET E BODY --- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
 body {
     background-color: var(--celeste-bg);
-    background-image: radial-gradient(circle at center, #E1F5FE 0%, #B3E5FC 100%);
+    background-image: linear-gradient(to bottom, #E1F5FE 0%, #B3E5FC 100%);
+    background-attachment: fixed;
     font-family: var(--font-body);
     color: var(--marrone-text);
     min-height: 100vh;
-    margin: 0;
     overflow-x: hidden;
+    
     /* Cursore Freccia Dorata */
     cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23C5A059' stroke='%235D4037' stroke-width='1.5' d='M2 2l6.5 19 3.5-8.5 8.5-3.5z'/%3E%3C/svg%3E") 2 2, auto;
 }
 
-/* --- LOGO FLUTTUANTE --- */
-.main-logo {
-    max-height: 140px;
-    filter: drop-shadow(0 8px 15px rgba(0,0,0,0.1));
-    animation: floatLogo 4s ease-in-out infinite;
+/* --- 3. LAYOUT CONTENITORE --- */
+.enchanted-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem;
 }
 
-@keyframes floatLogo {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
+.magic-background-layer {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.4) 0%, transparent 70%);
+    z-index: -1; pointer-events: none;
 }
 
-/* --- CARD GRIMORIO --- */
-.grimorio-card {
+/* --- 4. CARD SUCCESSO (Stile 'Cornice Preziosa') --- */
+.success-card {
     background-color: var(--parchment);
-    background-image: linear-gradient(135deg, #fffbf0 0%, #fff8e1 100%);
-    border: 2px solid var(--oro);
-    border-radius: 20px;
-    max-width: 700px;
+    background-image: linear-gradient(to bottom, #fffbf0 0%, #fff8e1 100%);
+    border-radius: 15px;
+    padding: 3rem 2rem;
+    max-width: 600px;
     width: 100%;
+    text-align: center;
     position: relative;
-    box-shadow: 0 20px 60px rgba(78, 52, 46, 0.2);
+    
+    /* Doppio bordo identico alla registrazione */
+    box-shadow: 
+        0 0 0 1px rgba(197, 160, 89, 0.3),
+        0 20px 50px rgba(78, 52, 46, 0.2);
+        
+    animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+    0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 /* Cornice interna decorativa */
-.grimorio-card::before {
+.success-card::before {
     content: '';
     position: absolute;
-    top: 12px; left: 12px; right: 12px; bottom: 12px;
+    top: 15px; left: 15px; right: 15px; bottom: 15px;
     border: 1px solid rgba(197, 160, 89, 0.3);
-    border-radius: 15px;
+    border-radius: 10px;
     pointer-events: none;
 }
 
-/* --- TITOLO E DECORAZIONI --- */
-.decorative-header h1 {
+/* --- 5. LOGO E HEADER --- */
+.main-logo {
+    max-height: 130px;
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0 5px 10px rgba(78, 52, 46, 0.15));
+    animation: magicFloat 4s ease-in-out infinite;
+}
+
+@keyframes magicFloat {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+.title-success {
     font-family: var(--font-title);
     color: var(--marrone-dark);
-    text-shadow: 1px 1px 0px var(--oro);
-    font-size: 2.8rem;
-}
-
-.magic-sparkle-icon {
-    color: var(--oro);
     font-size: 2.5rem;
-    margin-bottom: 10px;
-    animation: sparkle 2s ease-in-out infinite;
+    margin-bottom: 0.5rem;
+    text-shadow: 1px 1px 0px var(--oro);
 }
 
-@keyframes sparkle {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.6; transform: scale(1.1); }
-}
-
-.ornament-divider {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 10px;
-}
-
-.ornament-divider .line {
-    height: 1px;
-    width: 80px;
-    background-color: var(--oro);
-}
-
-.ornament-divider .symbol {
-    color: var(--oro);
-    font-size: 1.2rem;
-}
-
-/* --- TESTO --- */
+/* --- 6. TESTO E MESSAGGIO --- */
 .welcome-msg {
-    font-size: 2.2rem;
-    font-style: italic;
+    font-size: 1.5rem;
     margin-bottom: 1rem;
+    color: var(--marrone-text);
 }
 
 .highlight-name {
     color: var(--oro);
     font-weight: 700;
-    font-family: var(--font-title);
-    text-decoration: underline dotted rgba(197, 160, 89, 0.5);
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
 }
 
 .sub-text {
-    font-size: 1.3rem;
-    color: #6D4C41;
+    font-size: 1.1rem;
+    color: #8D6E63;
+    font-style: italic;
+    margin-bottom: 2rem;
 }
 
-/* --- SIGILLO --- */
+/* --- 7. SIGILLO DI APPROVAZIONE --- */
+.seal-container {
+    margin: 2rem 0;
+    display: flex;
+    justify-content: center;
+}
+
 .seal-circle {
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     border: 2px solid var(--oro);
     border-radius: 50%;
-    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2.5rem;
+    font-size: 2rem;
     color: var(--oro);
     background: rgba(197, 160, 89, 0.05);
-    animation: rotateSeal 10s linear infinite;
+    box-shadow: 0 0 15px rgba(197, 160, 89, 0.2);
+    animation: pulseSeal 3s infinite;
 }
 
-@keyframes rotateSeal {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+@keyframes pulseSeal {
+    0% { transform: scale(1); box-shadow: 0 0 0 rgba(197, 160, 89, 0.2); }
+    50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(197, 160, 89, 0.4); }
+    100% { transform: scale(1); box-shadow: 0 0 0 rgba(197, 160, 89, 0.2); }
 }
 
-/* --- BOTTONE REALE --- */
+/* --- 8. BOTTONE REALE (Identico a formRegister) --- */
 .btn-royal {
     font-family: var(--font-ui);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
     text-decoration: none;
+    
     background-image: linear-gradient(45deg, var(--oro) 0%, #E6C676 50%, var(--oro) 100%);
     background-size: 200% auto;
+    
     color: white !important;
-    padding: 16px 48px;
+    padding: 14px 50px;
     border-radius: 50px;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
+    display: inline-flex; align-items: center; gap: 10px;
+    
     box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4);
     transition: all 0.3s ease;
     cursor: pointer;
+    border: none;
 }
 
 .btn-royal:hover {
     background-position: right center;
     transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(197, 160, 89, 0.6);
+    box-shadow: 0 8px 25px rgba(197, 160, 89, 0.6);
+    color: white;
 }
 
-.back-link {
-    color: var(--marrone-dark);
-    font-family: var(--font-ui);
-    text-decoration: none;
-    font-weight: 700;
-    transition: 0.3s;
-}
-
-.back-link:hover {
-    color: var(--oro);
-}
-
-/* SCROLLBAR ORO */
+/* --- 9. SCROLLBAR --- */
 ::-webkit-scrollbar { width: 10px; }
 ::-webkit-scrollbar-track { background: var(--celeste-bg); }
 ::-webkit-scrollbar-thumb {
