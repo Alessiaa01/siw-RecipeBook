@@ -1,634 +1,290 @@
 /* ========================================================== */
-/* STILE "FIABA DISNEY" (Celeste, Oro e Magia) */
+/* STILE COERENTE CON RECIPES.CSS (Celeste, Oro, Trasparenze) */
 /* ========================================================== */
 
-/* 1. IMPORTAZIONE FONT MAGICI */
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap');
+/* 1. IMPORTAZIONE FONT & VARIABILI (Identiche a recipes.css) */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap');
 
-/* 2. SFONDO PAGINA */
+:root {
+    /* Palette Celeste (Sfondo) */
+    --celeste-bg: #E1F5FE;       
+    --celeste-accent: #81D4FA;   
+    
+    /* Palette Colori Elementi */
+    --marrone-dark: rgb(100, 62, 41);
+    --marrone-text: #5D4037;
+    --oro: #C5A059;
+    --oro-light: #FFF8E1;        
+    --bianco: #FFFFFF;
+    
+    /* Variabili Card */
+    --parchment: #fffbf0;   
+    --royal-gold: #c5a059;  
+    --royal-gold-shine: #e6c676;
+    
+    /* Font */
+    --font-title: 'Cinzel Decorative', cursive; 
+    --font-body: 'Cormorant Garamond', serif;   
+    --font-ui: 'Lato', sans-serif;              
+}
+
+/* 2. RESET & GLOBAL */
+* { box-sizing: border-box; margin: 0; padding: 0; caret-color: var(--oro); }
+
 body {
-    margin: 0;
-    padding: 0;
-    /* Sfondo Celeste con sfumatura radiale per dare "luce" al centro */
-    background: radial-gradient(circle at center, #E0F7FA 0%, #B2EBF2 100%);
+    background-color: var(--celeste-bg);
+    background-image: linear-gradient(to bottom, #E1F5FE 0%, #B3E5FC 100%);
+    background-attachment: fixed;
+    font-family: var(--font-body);
+    color: var(--marrone-text);
     min-height: 100vh;
-    font-family: 'Cormorant Garamond', serif;
-    color: #5D4037; /* Marrone Bronzo */
+    display: flex; flex-direction: column;
+}
+
+/* Sfondo Magico (Opzionale, texture leggera) */
+.magic-background {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.4) 0%, transparent 70%);
+    pointer-events: none; z-index: -1;
+}
+
+/* ========================================================== */
+/* 3. HEADER TRASPARENTE (Identico a recipes.css) */
+/* ========================================================== */
+.main-header {
+    position: sticky; 
+    top: 0;
+    z-index: 1000; 
+    background-color: rgba(255, 255, 255, 0.15); /* Molto trasparente */
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px); 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3); 
+    padding: 0.8rem 2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+.header-content-wrapper {
+    max-width: 1200px;  
+    margin: 0 auto;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between; 
     align-items: center;
 }
 
-/* Texture "Polvere di Stelle" sullo sfondo */
-.magic-background {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background-image: url('https://www.transparenttextures.com/patterns/stardust.png'); /* Texture leggera */
-    opacity: 0.5;
-    pointer-events: none;
-    z-index: 0;
+.nav-left, .user-right {
+    display: flex; align-items: center; gap: 15px;
 }
 
-/* Header di Navigazione (Minimal) */
-header {
-    width: 100%;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    position: relative;
-    z-index: 10;
+/* User Info Styles */
+.chef-badge {
+    display: flex; align-items: center; gap: 8px;
+    background-color: rgba(255,255,255,0.6);
+    padding: 5px 15px;
+    border-radius: 30px;
+    border: 1px solid var(--oro);
+    font-family: var(--font-ui);
+    font-weight: 700;
+    color: var(--marrone-dark);
 }
-header a { text-decoration: none; color: #8B4513; font-weight: bold; font-family: 'Cinzel Decorative', serif; }
 
 /* ========================================================== */
-/* 3. LA CARTA FATATA (Contenitore Principale) */
+/* 4. CARD DETTAGLIO RICETTA */
 /* ========================================================== */
-.fairy-card {
+.single-recipe-card {
     position: relative;
     z-index: 1;
     width: 90%;
     max-width: 1100px;
-    margin: 20px auto 50px auto;
+    margin: 40px auto;
     padding: 60px 50px;
     
-    /* Bordo Doppio Dorato */
-    border: 3px double #D4AF37; 
-    outline: 2px solid #D4AF37; /* Secondo bordo esterno */
-    outline-offset: 8px;
-    border-radius: 15px;
+    background-color: var(--parchment);
+    /* Sfumatura carta antica */
+    background-image: linear-gradient(to bottom, #fffbf0 0%, #fff8e1 100%);
     
-    background-color: rgba(255, 255, 255, 0.2); /* Trasparenza vetrosa */
-    box-shadow: 0 0 30px rgba(212, 175, 55, 0.2); /* Alone dorato */
+    /* Bordo Cornice Preziosa */
+    border-radius: 12px;
+    box-shadow: 
+        0 0 0 1px rgba(197, 160, 89, 0.3), /* Bordo sottile oro */
+        0 20px 50px rgba(78, 52, 46, 0.15); /* Ombra profonda */
 }
 
-/* Decorazioni Angoli (Opzionale: simula i ghirigori) */
-.corner {
-    position: absolute;
-    width: 40px; height: 40px;
-    border: 3px solid #D4AF37;
-    transition: all 0.3s;
-}
-.top-left { top: 15px; left: 15px; border-right: none; border-bottom: none; border-radius: 10px 0 0 0; }
-.top-right { top: 15px; right: 15px; border-left: none; border-bottom: none; border-radius: 0 10px 0 0; }
-.bottom-left { bottom: 15px; left: 15px; border-right: none; border-top: none; border-radius: 0 0 0 10px; }
-.bottom-right { bottom: 15px; right: 15px; border-left: none; border-top: none; border-radius: 0 0 10px 0; }
-
-/* ========================================================== */
-/* 4. TIPOGRAFIA E TITOLI */
-/* ========================================================== */
-.title-section { text-align: center; margin-bottom: 40px; }
-
-h1 {
-    font-family: 'Great Vibes', cursive; /* Font Corsivo Magico */
-    font-size: 4.5rem;
-    color: #8B4513;
-    margin: 0;
-    text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
-    line-height: 1.2;
-}
-
-.subtitle {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 1.5rem;
-    color: #A67B5B;
-    margin-top: 5px;
-}
-/* === Header Bar === */
-header {
-    background-color: #F8F4E8; 
-    padding: 10px 0;
-    border-bottom: 1px solid var(--secondary-color);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    width: 100%; 
-    margin: 0; 
-    display: block; 
-}
-
-/* Contenitore per allineare Admin (sinistra) e Utente (destra) */
-.header-content-wrapper {
-    display: flex;
-    justify-content: space-between; 
-    align-items: center;
-    max-width: var(--max-content-width); 
-    margin: 0 auto; 
-    padding: 0 !important; 
-}
-
-/* Stile per il link di Gestione Admin (Sinistra) */
-.admin-link-header-left {
-    margin-left: -250px; 
-}
-
-.admin-link-header-left a {
-    padding: 8px 15px; 
-    border-radius: 15px; 
-    font-weight: 700;
-    text-decoration: none;
-    background-color: #D3B88C !important; 
-    border: none !important;
-    color: #4a4a4a !important; 
-    transition: all 0.2s;
-}
-.admin-link-header-left a:hover {
-    background-color: var(--primary-color) !important;
-    color: white !important;
-}
-
-
-/* Contenitore interno delle azioni (Chef/Logout) */
-header div {
-    background-color: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
-    padding: 0; 
-    margin: 0; 
-    
-    display: flex;
-    justify-content: flex-end; 
-    align-items: center;
-}
-
-/* Sezione Utente Loggato */
-header div[th\:if*="userDetails"] {
-    background-color: #FFFFFF !important;
-    border: 1px solid var(--secondary-color) !important;
-    border-radius: 15px !important; 
-    box-shadow: 0 2px 5px var(--box-shadow-color) !important;
-    
-    width: auto; 
-    padding: 8px 15px !important; 
-    margin: 0 !important; 
-
-    justify-content: center; 
-    gap: 10px;
-    flex-shrink: 0;
-}
-
-
-/* Stili del testo interno */
-.chef-name {
-    color: var(--primary-color); 
-    font-weight: 600;
-    font-family: 'Cormorant Unicase', serif; 
-    font-size: 1.1rem; 
-    margin-right: 15px; 
-    
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-/* Icona Placeholder */
-.chef-name::before {
-    content: '';
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: var(--secondary-color); 
-    border: 1px solid var(--primary-color);
-}
-.chef-name span {
-    color: var(--accent-color);
-}
-
-/* === Stile Bottone Logout */
-header a[href="/logout"] {
-    font-weight: 700;
-    font-size: 0.95rem;
-    padding: 5px 15px; 
-    text-decoration: none;
-    border-radius: 15px; 
-    
-    background-color: #D3B88C; 
-    color: #4a4a4a; 
-    border: none;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.2s;
-	margin-right: 0;
-}
-
-header a[href="/logout"]:hover {
-    background-color: var(--primary-color);
-    color: white;
-    text-decoration: none;
-}
-
-/* Neutralizza il div che contiene il logo */
-body > div:first-of-type {
-    max-width: 100% !important;
-    padding: 0 !important;
-    margin: 20px auto 10px !important;
-    text-align: center;
-}
-/* Sposta la sezione utente verso sinistra staccandola dal bordo */
-.header-user-section {
-    margin-right: 50px; /* Puoi aumentare questo numero per spostarlo più a sinistra */
-    
-    /* Opzionale: se vuoi essere sicuro che le scritte restino allineate bene */
-    display: flex; 
-    align-items: center;
-}
-/* ========================================================== */
-/* 5. GRIGLIA CONTENUTO */
-/* ========================================================== */
-.content-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Due colonne */
-    gap: 60px;
-    align-items: start;
-}
-
-/* --- COLONNA SINISTRA (Ingredienti) --- */
-
-/* Nastro/Pergamena Titolo Ingredienti */
-.magic-scroll-header {
-    background: linear-gradient(to right, transparent 0%, #F3E5AB 20%, #F3E5AB 80%, transparent 100%);
-    text-align: center;
-    padding: 10px 0;
-    margin-bottom: 20px;
-    position: relative;
-}
-.magic-scroll-header h2 {
-    font-family: 'Great Vibes', cursive;
-    font-size: 2.5rem;
-    color: #6D4C41;
-    margin: 0;
-}
-/* Decorazione ai lati del nastro */
-.magic-scroll-header::before, .magic-scroll-header::after {
-    content: '❧'; /* Simbolo floreale */
-    color: #D4AF37;
-    font-size: 1.5rem;
-    position: absolute;
-    top: 10px;
-}
-.magic-scroll-header::before { left: 10%; }
-.magic-scroll-header::after { right: 10%; }
-
-/* Lista Ingredienti */
-.ingredients-list {
-    list-style: none;
-    padding: 0;
-    text-align: center;
-    font-size: 1.3rem;
-}
-.ingredients-list li { margin-bottom: 10px; }
-.star { color: #DAA520; margin-right: 8px; font-size: 1rem; }
-
-.procedure-text {
-    margin-top: 30px;
-    font-size: 1.2rem;
-    line-height: 1.6;
-    text-align: justify;
-    padding: 0 20px;
-}
-
-/* --- COLONNA DESTRA (Foto e Dettagli) --- */
-
-/* Cornice Foto Quadrata e Dorata */
-.magic-frame {
-    position: relative;
-    padding: 10px;
-    border: 4px solid #D4AF37;
-    border-radius: 5px;
-    background-color: #FFF;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    width: 300px; /* Dimensione fissa come nell'immagine */
-    height: 300px;
-    margin: 0 auto 30px auto;
-    transform: rotate(2deg); /* Leggera inclinazione */
-}
-
-/* Decorazione angoli foto */
-.magic-frame::after {
-    content: '';
-    position: absolute; top: -10px; left: -10px; right: -10px; bottom: -10px;
-    border: 1px solid #D4AF37;
-    border-radius: 10px;
+/* Decorazione interna sottile */
+.single-recipe-card::before {
+    content: ''; position: absolute;
+    top: 15px; left: 15px; right: 15px; bottom: 15px;
+    border: 1px solid rgba(197, 160, 89, 0.2);
+    border-radius: 8px;
     pointer-events: none;
 }
 
-.magic-frame img {
-    width: 100%; height: 100%; object-fit: cover;
-    border: 1px solid #EEE;
-}
-
-/* Sezione Dettagli Tecnici */
-.details-section { text-align: center; }
-
-.cursive-sub {
-    font-family: 'Great Vibes', cursive;
-    font-size: 2.5rem;
-    color: #8B4513;
-    margin: 0 0 10px 0;
-}
-
-.separator-line {
-    height: 2px;
-    background: linear-gradient(to right, transparent, #D4AF37, transparent);
-    width: 80%;
-    margin: 0 auto 20px auto;
-    position: relative;
-}
-.separator-line::after { /* Stellina centrale */
-    content: '✦';
-    position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
-    background-color: #E8F6F8; /* Colore sfondo per coprire la riga */
-    padding: 0 5px;
-    color: #D4AF37;
-}
-
-.tech-list {
-    list-style: none;
-    padding: 0;
-    font-size: 1.2rem;
-}
-.tech-list li { margin-bottom: 8px; font-style: italic; }
-.tech-list strong { color: #A67B5B; font-weight: normal; font-family: 'Cinzel Decorative', serif; }
-
-/* ========================================================== */
-/* 6. FOOTER NASTRO */
-/* ========================================================== */
-.bottom-scroll-footer {
-    margin-top: 60px;
-    background: linear-gradient(to right, transparent, #F3E5AB, transparent);
+/* Titolo */
+.title-section h1 {
+    font-family: var(--font-title);
+    font-size: 3.5rem;
+    color: var(--marrone-dark);
     text-align: center;
-    padding: 10px;
-    font-family: 'Great Vibes', cursive;
-    font-size: 1.8rem;
-    color: #5D4037;
-    position: relative;
-    border-top: 1px solid rgba(212, 175, 55, 0.3);
-    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    margin-bottom: 0.5rem;
+    text-shadow: 1px 1px 0px var(--oro);
 }
 
-/* Contenitore per centrare i bottoni in basso */
-.action-buttons-container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
+.subtitle {
+    text-align: center;
+    font-size: 1.4rem;
+    color: #777;
+    margin-bottom: 2rem;
+    font-style: italic;
+}
+
+/* Meta Info (Autore, Data) */
+.meta-info-row {
+    display: flex; justify-content: center; gap: 20px;
+    color: var(--marrone-text);
+    font-family: var(--font-ui);
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+.meta-info-row i { color: var(--oro); margin-right: 5px; }
+
+/* ========================================================== */
+/* 5. GRIGLIA CONTENUTO (2 Colonne) */
+/* ========================================================== */
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: start;
+    position: relative; z-index: 2;
+}
+
+/* Colonna Ingredienti */
+.ingredients-header {
+    text-align: center; margin-bottom: 20px;
+    font-family: var(--font-title); color: var(--marrone-dark);
+    border-bottom: 2px solid var(--oro); display: inline-block;
+    padding-bottom: 5px;
+}
+
+.ingredients-list {
+    list-style: none; font-size: 1.2rem;
+}
+.ingredients-list li {
+    margin-bottom: 12px;
+    border-bottom: 1px dotted rgba(197, 160, 89, 0.4);
+    padding-bottom: 5px;
+    display: flex; align-items: center; gap: 10px;
+}
+.star-icon { color: var(--oro); font-size: 0.8rem; }
+
+/* Procedimento */
+.procedure-text {
     margin-top: 30px;
-    margin-bottom: 20px;
-    padding: 0 20px;
-}
-
-/* Stile base del bottone magico */
-.magic-btn {
-    display: inline-block;
-    padding: 10px 25px;
-    text-decoration: none;
-    font-family: 'Cinzel Decorative', serif; /* Usa lo stesso font del titolo */
-    font-weight: bold;
-    color: #5a3e1b; /* Un marrone scuro/oro scuro */
-    border: 1px solid #B8860B; /* Bordo color oro */
-    border-radius: 25px;
-    background-color: rgba(255, 255, 255, 0.6); /* Sfondo leggero */
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-/* Effetto quando passi sopra col mouse */
-.magic-btn:hover {
-    background-color: #B8860B; /* Diventa oro */
-    color: white;
-    transform: translateY(-2px); /* Si alza leggermente */
-    box-shadow: 0 4px 8px rgba(184, 134, 11, 0.3);
-}
-
-/* Stile specifico per il tasto modifica (opzionale, per distinguerlo) */
-.edit-btn {
-    border-color: #8B0000; /* Rosso scuro per le modifiche */
-    color: #8B0000;
-}
-
-.edit-btn:hover {
-    background-color: #8B0000;
-    color: white;
-}
-
-/* ========================================================== */
-/* 7. SEZIONE RECENSIONI (CALDERONE DEI COMMENTI) */
-/* ========================================================== */
-
-.reviews-container {
-    margin-top: 50px; /* Distanza dalla griglia sopra */
-    padding: 30px;
-    background-color: rgba(255, 255, 255, 0.5); /* Bianco leggermente trasparente */
-    border-radius: 15px;
-    border: 1px solid #D4AF37; /* Bordo sottile dorato */
-    box-shadow: inset 0 0 20px rgba(212, 175, 55, 0.15); /* Luce interna dorata */
-    position: relative;
-}
-
-/* Decorazione opzionale sopra il titolo */
-.reviews-container h2::before {
-    content: '✦';
-    display: block;
-    font-size: 1.5rem;
-    color: #D4AF37;
-    margin-bottom: 5px;
-}
-
-/* --- Singola Card Recensione --- */
-.review-card {
-    background: #FFFAF0; /* Crema molto chiaro (FloralWhite) */
-    border: 1px solid #E6D7C3;
-    border-radius: 8px;
+    font-size: 1.15rem;
+    line-height: 1.8;
+    text-align: justify;
+    background: rgba(255,255,255,0.5);
     padding: 20px;
-    margin-bottom: 20px;
-    position: relative;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.review-card:hover {
-    transform: translateY(-3px); /* Si alza leggermente quando ci passi sopra */
-    box-shadow: 0 6px 12px rgba(212, 175, 55, 0.2); /* Ombra dorata */
-}
-
-.review-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-    border-bottom: 1px dashed #D4AF37; /* Linea tratteggiata oro */
-    padding-bottom: 8px;
-}
-
-.review-author {
-    color: #8B4513; /* Marrone scuro */
-    font-weight: bold;
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 1.1rem;
-}
-
-.stars {
-    color: #FFD700; /* Oro puro */
-    font-size: 1.3rem;
-    text-shadow: 1px 1px 0px rgba(0,0,0,0.1); /* Leggera ombreggiatura per farle risaltare */
-    letter-spacing: 2px;
-}
-
-/* --- Form di Inserimento --- */
-.review-form {
-    margin-top: 40px;
-    padding-top: 20px;
-    border-top: 2px solid #D4AF37; /* Linea separatrice solida */
-    background: rgba(255, 255, 255, 0.3);
     border-radius: 10px;
+    border-left: 3px solid var(--oro);
+}
+
+/* Colonna Destra (Immagine) */
+.recipe-image-wrapper {
+    position: relative;
+    padding: 10px;
+    background: #fff;
+    border: 1px solid var(--oro);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transform: rotate(2deg); /* Leggera inclinazione artistica */
+    margin-bottom: 30px;
+}
+.recipe-image-wrapper img {
+    width: 100%; height: auto; display: block;
+}
+
+/* Dettagli Tecnici */
+.tech-details {
+    background-color: var(--oro-light);
     padding: 20px;
+    border-radius: 10px;
+    border: 1px dashed var(--oro);
+}
+.tech-list { list-style: none; font-size: 1.1rem; }
+.tech-list li { margin-bottom: 10px; display: flex; justify-content: space-between; }
+.tech-list strong { color: var(--marrone-dark); font-family: var(--font-ui); }
+
+/* ========================================================== */
+/* 6. BOTTONI (Stile recipes.css) */
+/* ========================================================== */
+.btn-gold, .btn-royal, .btn-logout, .btn-login {
+    border: none; cursor: pointer;
+    font-family: var(--font-ui); font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    padding: 10px 24px; border-radius: 50px;
+    transition: all 0.3s ease; text-decoration: none;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    font-size: 0.9rem;
 }
 
-.form-group {
-    margin-bottom: 20px;
+/* Oro Pieno */
+.btn-gold {
+    background-image: linear-gradient(45deg, #C5A059 0%, #E6C676 50%, #C5A059 100%);
+    background-size: 200% auto; color: white;
+    box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4);
+}
+.btn-gold:hover { background-position: right center; transform: translateY(-2px); }
+
+/* Outline (Trasparente con bordo) */
+.btn-gold-outline {
+    background: transparent; border: 2px solid var(--oro); color: var(--marrone-dark);
+    padding: 8px 20px; border-radius: 50px; font-weight: 700; font-family: var(--font-ui);
+    display: inline-flex; align-items: center; gap: 5px; text-decoration: none; text-transform: uppercase; font-size: 0.8rem;
+}
+.btn-gold-outline:hover { background: var(--oro); color: white; }
+
+/* Logout / Delete (Scuri) */
+.btn-dark {
+    background-color: var(--marrone-dark); color: #F8F1E0;
+    box-shadow: 0 4px 10px rgba(93, 64, 55, 0.3);
+}
+.btn-dark:hover { background-color: #3E2723; transform: translateY(-2px); color: white; }
+
+/* ========================================================== */
+/* 7. RECENSIONI */
+/* ========================================================== */
+.reviews-section {
+    margin-top: 60px; padding-top: 40px;
+    border-top: 1px solid rgba(197, 160, 89, 0.3);
 }
 
-.form-group label {
-    display: block;
-    font-weight: bold;
-    color: #5D4037;
-    margin-bottom: 8px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.3rem;
+.review-card {
+    background: #fff; border: 1px solid #eee;
+    padding: 20px; margin-bottom: 20px; border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
+.review-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: bold; color: var(--oro); }
 
-.form-group input[type="text"],
-.form-group select,
-.form-group textarea {
+/* Form Input Stile "Magic" */
+.form-magic input, .form-magic select, .form-magic textarea {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #D4AF37; /* Bordo dorato */
-    border-radius: 8px;
-    background-color: #FFFAF0; /* Sfondo crema */
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.2rem;
-    color: #5D4037;
-    box-sizing: border-box; /* Importante per non sballare le misure */
-    transition: box-shadow 0.3s;
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-    outline: none;
-    box-shadow: 0 0 8px rgba(212, 175, 55, 0.5); /* Glow dorato quando scrivi */
-    border-color: #B8860B;
-}
-
-.form-group textarea {
-    resize: vertical; /* Permette di allungare la casella di testo */
-    min-height: 100px;
-}
-
-/* Messaggi di errore */
-.error-msg {
-    color: #B71C1C; /* Rosso scuro elegante */
-    font-size: 1rem;
-    font-weight: bold;
-    margin-top: 5px;
-    font-style: italic;
-    display: block;
-}
-
-.author-info {
-    font-family: 'Great Vibes'; /* Font stile firma */
-    color: #B8860B;                      /* Color Oro scuro (Goldenrod) */
-    font-size: 2.2em;                    /* Molto grande per essere leggibile */
-    margin-top: 5px;
+    border: 1px solid #ddd;
+    background-color: var(--oro-light);
+    border-radius: 20px;
+    padding: 12px 20px;
+    font-family: var(--font-ui);
     margin-bottom: 15px;
-    text-shadow: 1px 1px 1px rgba(0,0,0,0.2); /* Leggera ombra per staccarlo dallo sfondo */
-    letter-spacing: 1px;                 /* Leggero spazio tra le lettere */
+    outline: none; transition: 0.3s;
+}
+.form-magic input:focus, .form-magic textarea:focus {
+    border-color: var(--oro); background-color: #fff;
 }
 
 /* ========================================================== */
-/* 8. NUOVI STILI AGGIUNTI (TITOLI E PULSANTI) */
+/* 8. RESPONSIVE */
 /* ========================================================== */
-
-/* Titoli delle sezioni (Sostituisce lo stile inline rosso scuro) */
-.section-title {
-    font-family: 'Cinzel Decorative', serif;
-    color: #8B0000;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-/* Titolo e Testo dentro la card della recensione */
-.review-title {
-    display: block; 
-    margin-bottom: 5px;
-    font-size: 1.1rem;
-    color: #5D4037;
-}
-
-.review-text {
-    margin: 0; 
-    font-style: italic;
-    color: #4a4a4a;
-    line-height: 1.4;
-}
-
-/* Contenitore dei pulsanti Modifica/Cancella */
-.review-actions {
-    margin-top: 15px;
-    text-align: right; /* Sposta i bottoni a destra */
-    border-top: 1px dotted #D4AF37; /* Separatore leggero */
-    padding-top: 10px;
-}
-
-/* Bottone Modifica (Testo semplice ma elegante) */
-.btn-edit {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 0.9em; 
-    color: #1976D2; /* Blu elegante */
-    text-decoration: none;
-    margin-right: 15px;
-    font-weight: bold;
-    transition: color 0.3s;
-}
-
-.btn-edit:hover {
-    color: #0D47A1;
-    text-decoration: underline;
-}
-
-/* Bottone Cancella */
-.btn-delete {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 0.9em; 
-    color: #D32F2F; /* Rosso */
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s;
-}
-
-.btn-delete:hover {
-    color: #B71C1C;
-    text-decoration: underline;
-}
-
-/* Messaggi di stato (Nessuna recensione, Login) */
-.no-reviews, .login-prompt {
-    text-align: center;
-    font-style: italic;
-    color: #666;
-    margin: 20px 0;
-}
-
-.login-link {
-    color: #B8860B;
-    font-weight: bold;
-    text-decoration: none;
-}
-.login-link:hover {
-    text-decoration: underline;
-}
-
-/* Titolo specifico del form */
-.form-title {
-    font-family: 'Great Vibes', cursive;
-    font-size: 1.8em;
-    color: #8b4513;
-    margin-bottom: 15px;
+@media (max-width: 768px) {
+    .content-grid { grid-template-columns: 1fr; }
+    .recipe-image-wrapper { transform: rotate(0deg); max-width: 100%; }
+    .title-section h1 { font-size: 2.5rem; }
+    .single-recipe-card { padding: 30px 20px; }
 }

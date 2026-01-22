@@ -3,6 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"> 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${recipe.title}">Dettaglio Ricetta</title>
     
     <link rel="stylesheet" href="/css/recipe.css" />
@@ -12,231 +13,216 @@
 <body>
     <div class="magic-background"></div>
 
-    <header>
+    <header class="main-header">
         <div class="header-content-wrapper">
-            <div class="left-nav-group">
+            
+            <div class="nav-left">
+                <a href="/" class="btn-gold-outline">
+                    <i class="fas fa-arrow-left"></i> Home
+                </a>
+                
+                <span sec:authorize="hasAuthority('ADMIN')">
+                    <a href="/admin" class="btn-gold-outline">
+                        <i class="fas fa-tools"></i> Admin
+                    </a>
+                </span>
             </div>
 
-            <div class="header-user-section">
+            <div class="user-right">
+                <div th:if="${userDetails}" class="chef-badge">
+                    <i class="fas fa-hat-wizard"></i>
+                    <span th:text="${userDetails.username}">Chef</span>
+                </div>
+                
                 <div th:if="${userDetails}">
-                    <span class="chef-name">✨ Chef <span th:text="${userDetails.username}"></span></span>
-                    <a href="/logout">Logout</a>
+                    <a href="/logout" class="btn-dark btn-logout">Logout</a>
                 </div>
                 <div th:unless="${userDetails}">
-                    <a href="/login">Login</a>
+                    <a href="/login" class="btn-gold">Accedi</a>
                 </div>
             </div>
         </div>
     </header>
 
-    <main class="fairy-card">
+    <main class="single-recipe-card">
         
-        <div class="corner top-left"></div>
-        <div class="corner top-right"></div>
-        <div class="corner bottom-left"></div>
-        <div class="corner bottom-right"></div>
-
         <div class="title-section">
 		    <h1 th:text="${recipe.title}">Titolo Ricetta</h1>
 
-            <div class="meta-info-row" style="display: flex; justify-content: center; align-items: center; gap: 15px; color: #5d4037; font-size: 1.1rem; margin-bottom: 20px;">
-		        
-                <span class="author-span">
-		            👨‍🍳 
-                    <span th:if="${recipe.author != null}">
-		                Chef <strong th:text="${recipe.author.name} + ' ' + ${recipe.author.surname}">Nome Cognome</strong>
-		            </span>
-		            <span th:unless="${recipe.author != null}">
-		                Chef Anonimo
-		            </span>
+            <div class="meta-info-row">
+                <span>
+		            <i class="fas fa-user-edit"></i>
+                    <span th:if="${recipe.author != null}" th:text="${recipe.author.name} + ' ' + ${recipe.author.surname}">Chef</span>
+		            <span th:unless="${recipe.author != null}">Anonimo</span>
 		        </span>
                 
-                <span th:if="${recipe.creationDate}" style="color: #bcaaa4;">|</span>
+                <span th:if="${recipe.creationDate}">|</span>
 
-                <span class="date-span" th:if="${recipe.creationDate}">
-                    📅 <span th:text="${#temporals.format(recipe.creationDate, 'dd MMMM yyyy')}">20 Maggio 2023</span>
+                <span th:if="${recipe.creationDate}">
+                    <i class="far fa-calendar-alt"></i> 
+                    <span th:text="${#temporals.format(recipe.creationDate, 'dd MMMM yyyy')}">Data</span>
                 </span>
-
 		    </div>
 
-		    <p class="subtitle" th:text="${recipe.description}">Descrizione...</p>
+		    <p class="subtitle" th:text="${recipe.description}">Descrizione breve...</p>
 		</div>
+
         <div class="content-grid">
             
             <div class="left-column">
                 
-                <div class="magic-scroll-header">
-                    <h2>Ingredienti</h2>
+                <div style="text-align: center;">
+                    <h2 class="ingredients-header">Ingredienti</h2>
                 </div>
 			
                 <ul class="ingredients-list">
                     <li th:each="ing : ${recipe.ingredients}">
-                        <span class="star">★</span> 
-                        <span th:text="${ing.name}">Nome</span>
-                        <span th:if="${ing.quantity} != null"> - <span th:text="${ing.quantity}">0</span></span>
-                        <span th:if="${ing.unit} != null" th:text="${ing.unit}">unità</span>
+                        <i class="fas fa-star star-icon"></i> 
+                        <strong th:text="${ing.name}" style="margin-right: 5px;">Nome</strong>
+                        <span th:if="${ing.quantity} != null"> 
+                            <span th:text="${ing.quantity}">0</span>
+                            <span th:if="${ing.unit} != null" th:text="${ing.unit}">unità</span>
+                        </span>
                     </li>
                 </ul>
 
                 <div class="procedure-text">
-                    <h3 style="color: #B8860B; font-family: 'Cinzel Decorative', serif; margin-bottom: 10px;">Procedimento:</h3>
+                    <h3 style="color: var(--oro); font-family: var(--font-title); margin-bottom: 10px;">
+                        <i class="fas fa-scroll"></i> Procedimento
+                    </h3>
                     <p th:text="${recipe.procedure}">Qui ci sarà il procedimento...</p>
                 </div>
             </div>
 
             <div class="right-column">
                 
-                <div class="magic-frame">
+                <div class="recipe-image-wrapper">
                     <img th:if="${recipe.imageUrl}" th:src="${recipe.imageUrl}" alt="Immagine Ricetta"/>
                     <img th:unless="${recipe.imageUrl}" src="/images/placeholder-piatto.jpg" alt="Nessuna immagine"/>
                 </div>
 
-                <div class="details-section">
-                    <h3 class="cursive-sub">Dettagli Tecnici</h3>
-                    <div class="separator-line"></div>
+                <div class="tech-details">
+                    <h4 style="text-align: center; color: var(--marrone-dark); margin-bottom: 15px; font-family: var(--font-title);">Dettagli </h4>
                     
                     <ul class="tech-list">
                         <li>
-                            <strong>Tempo:</strong> 
-                            <span th:text="${recipe.preparationTime} + ' minuti'"> min</span>
+                            <strong><i class="fas fa-clock"></i> Tempo:</strong> 
+                            <span th:text="${recipe.preparationTime} + ' min'"> min</span>
                         </li>
                         <li>
-                            <strong>Difficoltà:</strong> 
+                            <strong><i class="fas fa-signal"></i> Difficoltà:</strong> 
                             <span th:text="${recipe.difficulty}"></span>
                         </li>
-                        
                         <li>
-                            <strong>Cottura:</strong> 
-                            <span th:text="${recipe.cookingTime != null} ? ${recipe.cookingTime} + ' minuti' : '-'">-</span>
+                            <strong><i class="fas fa-fire"></i> Cottura:</strong> 
+                            <span th:text="${recipe.cookingTime != null} ? ${recipe.cookingTime} + ' min' : '-'">-</span>
                         </li>
-
                         <li>
-                            <strong>Porzioni:</strong> 
+                            <strong><i class="fas fa-utensils"></i> Porzioni:</strong> 
                             <span th:text="${recipe.servings} != null ? ${recipe.servings} : '-'">4</span>
                         </li>
-                        
                         <li>
-                            <strong>Categoria:</strong> 
+                            <strong><i class="fas fa-bookmark"></i> Categoria:</strong> 
                             <span th:text="${recipe.category}">Categoria</span>
-                        </li>
-                        
-                        <li th:if="${!recipe.tags.empty}">
-                            <strong>Tag:</strong>
-                            <span th:each="tag, iterStat : ${recipe.tags}" 
-                                  th:text="${tag} + ${!iterStat.last ? ', ' : ''}">Tag</span>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
 
-		<div class="reviews-container">
-		    <h2 class="section-title">
-		        ✨ I Commenti 
+        <div class="reviews-section">
+		    <h2 style="text-align: center; font-family: var(--font-title); color: var(--marrone-dark); margin-bottom: 30px;">
+		        <i class="fas fa-comments"></i> I Commenti 
 		    </h2>
 
 		    <div th:if="${!recipe.reviews.empty}">
 		        <div th:each="review : ${recipe.reviews}" class="review-card">
 		            <div class="review-header">
-		                <span class="review-author">🧙‍♂️ Chef <span th:text="${review.user.name}">Nome</span></span>
-		                <span class="stars">
-		                    <span th:if="${review.rating >= 1}">★</span>
-		                    <span th:if="${review.rating >= 2}">★</span>
-		                    <span th:if="${review.rating >= 3}">★</span>
-		                    <span th:if="${review.rating >= 4}">★</span>
-		                    <span th:if="${review.rating == 5}">★</span>
+		                <span><i class="fas fa-user"></i> <span th:text="${review.user.name}">Nome</span></span>
+		                <span style="color: #FFD700;">
+		                    <i class="fas fa-star" th:each="i : ${#numbers.sequence(1, review.rating)}"></i>
 		                </span>
 		            </div>
-		            
-		            <strong th:text="${review.title}" class="review-title">Titolo</strong>
-		            <p th:text="${review.text}" class="review-text">Testo recensione...</p>
+		            <strong th:text="${review.title}" style="display:block; margin-bottom:5px;">Titolo</strong>
+		            <p th:text="${review.text}" style="color: #555; font-style: italic;">Testo...</p>
 
-					<div class="review-actions" 
+                    <div style="text-align: right; margin-top: 10px;" 
 					     th:if="${currentUser != null} and (${review.user.id} == ${currentUser.id} or ${#authorization.expression('hasAuthority(''ADMIN'')')})">
 					     
 					    <a th:if="${review.user.id} == ${currentUser.id}"
 					       th:href="@{'/review/edit/' + ${review.id}}" 
-					       class="btn-edit">Modifica</a>
+					       style="color: var(--oro); text-decoration: none; font-weight: bold; margin-right: 15px;">Modifica</a>
 					    
 					    <a th:href="@{'/review/delete/' + ${review.id}}" 
-					       onclick="return confirm('Sei sicuro di voler cancellare questa recensione?');"
-					       class="btn-delete">Cancella</a>
+					       onclick="return confirm('Cancellare?');"
+					       style="color: #d32f2f; text-decoration: none; font-weight: bold;">Cancella</a>
 					</div>
 		        </div>
 		    </div>
 
-		    <div th:if="${recipe.reviews.empty}" class="no-reviews">
-		        <p>Nessuna recensione presente!</p>
+		    <div th:if="${recipe.reviews.empty}" style="text-align: center; margin-bottom: 30px; color: #777;">
+		        <p>Nessuna recensione presente. Sii il primo a commentare!</p>
 		    </div>
 
-		    <div sec:authorize="isAuthenticated()" class="review-form">
-		        <h3 class="form-title">
-		            Lascia la tua opinione 
-		        </h3>
+            <div sec:authorize="isAuthenticated()" style="background: rgba(255,255,255,0.6); padding: 30px; border-radius: 15px; border: 1px solid var(--oro);">
+		        <h3 style="text-align: center; margin-bottom: 20px; color: var(--marrone-dark);">Lascia la tua opinione</h3>
 		        
-		        <form th:action="@{'/recipe/' + ${recipe.id} + '/review'}" method="POST" th:object="${review}">
+		        <form th:action="@{'/recipe/' + ${recipe.id} + '/review'}" method="POST" th:object="${review}" class="form-magic">
 		            
-		            <div th:if="${#fields.hasGlobalErrors()}" class="error-msg">
+		            <div th:if="${#fields.hasGlobalErrors()}" style="color: red; text-align: center;">
 		                <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
 		            </div>
 
-		            <div class="form-group">
-		                <label>Titolo:</label>
-		                <input type="text" th:field="*{title}" placeholder="Es: Deliziosa!" required />
-		                <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="error-msg"></span>
-		            </div>
+		            <div class="row">
+                        <div style="width: 70%; display: inline-block;">
+		                    <input type="text" th:field="*{title}" placeholder="Titolo della recensione..." required />
+                        </div>
+                        <div style="width: 28%; display: inline-block; float: right;">
+		                    <select th:field="*{rating}" required>
+		                        <option value="5">5 ★★★★★</option>
+		                        <option value="4">4 ★★★★</option>
+		                        <option value="3">3 ★★★</option>
+		                        <option value="2">2 ★★</option>
+		                        <option value="1">1 ★</option>
+		                    </select>
+                        </div>
+                    </div>
+                    <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color: red;"></span>
 
-		            <div class="form-group">
-		                <label>Voto (1-5):</label>
-		                <select th:field="*{rating}" required>
-		                    <option value="5">5 - Magico! ★★★★★</option>
-		                    <option value="4">4 - Ottimo ★★★★</option>
-		                    <option value="3">3 - Buono ★★★</option>
-		                    <option value="2">2 - Così così ★★</option>
-		                    <option value="1">1 - Disastroso ★</option>
-		                </select>
-		                <span th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}" class="error-msg"></span>
-		            </div>
+		            <textarea th:field="*{text}" rows="3" placeholder="Raccontaci la tua esperienza..." required></textarea>
+		            <span th:if="${#fields.hasErrors('text')}" th:errors="*{text}" style="color: red;"></span>
 
-		            <div class="form-group">
-		                <label>La tua esperienza:</label>
-		                <textarea th:field="*{text}" rows="3" placeholder="Scrivi qui..." required></textarea>
-		                <span th:if="${#fields.hasErrors('text')}" th:errors="*{text}" class="error-msg"></span>
-		            </div>
-
-		            <button type="submit" class="magic-btn">Pubblica</button>
+		            <div style="text-align: center;">
+                        <button type="submit" class="btn-gold">Pubblica Recensione</button>
+                    </div>
 		        </form>
 		    </div>
 
-		    <div sec:authorize="!isAuthenticated()" class="login-prompt">
-		        <p><em><a href="/login" class="login-link">Accedi</a> per lasciare una recensione.</em></p>
+		    <div sec:authorize="!isAuthenticated()" style="text-align: center; margin-top: 30px;">
+		        <p><em><a href="/login" style="color: var(--oro); font-weight: bold;">Accedi</a> per lasciare una recensione.</em></p>
 		    </div>
 		</div>
        
-		<div class="action-buttons-container">
-		    <a href="/recipes" class="magic-btn">
-		        ← Torna all'elenco
+        <div style="text-align: center; margin-top: 50px; display: flex; justify-content: center; gap: 15px;">
+		    <a href="/recipes" class="btn-gold-outline">
+		        <i class="fas fa-arrow-left"></i> Torna all'elenco
 		    </a>
 		    
 		    <span th:if="${currentUser != null} and (${recipe.author.id} == ${currentUser.id} or ${#authorization.expression('hasAuthority(''ADMIN'')')})">
-		        <a th:href="@{'/recipe/edit/' + ${recipe.id}}" class="magic-btn edit-btn">
-		            ✏️ Modifica ricetta
+		        <a th:href="@{'/recipe/edit/' + ${recipe.id}}" class="btn-gold">
+		            <i class="fas fa-pencil-alt"></i> Modifica
 		        </a>
 		    </span>
 		    
 		    <span th:if="${currentUser != null} and (${recipe.author.id} == ${currentUser.id} or ${#authorization.expression('hasAuthority(''ADMIN'')')})">
 		         <form th:action="@{'/recipe/delete/' + ${recipe.id}}" method="POST" style="display:inline;">
-		            <button type="submit" class="magic-btn btn-delete" style="margin-left: 10px; border-color: #D32F2F; color: #D32F2F;"
+		            <button type="submit" class="btn-dark"
 		                    onclick="return confirm('Sei sicuro di voler eliminare questa ricetta?');">
-		                🗑️ Elimina
+		                <i class="fas fa-trash-alt"></i> Elimina
 		            </button>
 		         </form>
 		    </span>
 		</div>
-
-        <div class="bottom-scroll-footer">
-            <span>Una ricetta...</span>
-        </div>
 
     </main>
 

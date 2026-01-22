@@ -1,197 +1,266 @@
 /* ========================================================== */
-/* STILE "DISNEY MAGIC SCROLL" - NUOVA RICETTA */
+/* STILE FORM "GRIMORIO" (Coerente con recipe.css) */
 /* ========================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&display=swap');
+/* 1. IMPORTAZIONE FONT & VARIABILI */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap');
 
 :root {
-    /* === MODIFICA QUI: Sfondo Celeste Chiaro === */
-    --bg-sky: #E0F7FA;         /* Celeste chiarissimo (quasi bianco) al centro */
-    --bg-sky-dark: #B2EBF2;    /* Celeste pastello ai bordi */
+    /* Palette Celeste (Sfondo) */
+    --celeste-bg: #E1F5FE;       
+    --celeste-accent: #81D4FA;   
     
-    --gold-dark: #8B4513;      
-    --gold-light: #D4AF37;     
-    --parchment: #FDF5E6;      
-    --input-bg: #FFF8E1;       
+    /* Palette Colori Elementi */
+    --marrone-dark: rgb(100, 62, 41);
+    --marrone-text: #5D4037;
+    --oro: #C5A059;
+    --oro-light: #FFF8E1;        
+    --bianco: #FFFFFF;
+    
+    /* Variabili Card */
+    --parchment: #fffbf0;   
+    --royal-gold: #c5a059;  
+    
+    /* Font */
+    --font-title: 'Cinzel Decorative', cursive; 
+    --font-body: 'Cormorant Garamond', serif;   
+    --font-ui: 'Lato', sans-serif;              
 }
+
+/* 2. RESET & GLOBAL */
+* { box-sizing: border-box; margin: 0; padding: 0; caret-color: var(--oro); }
+
 body {
-    margin: 0;
-    padding: 0;
-    background: radial-gradient(circle at center, var(--bg-sky) 0%, var(--bg-sky-dark) 100%);
-    font-family: 'Cormorant Garamond', serif;
-    color: var(--gold-dark);
+    background-color: var(--celeste-bg);
+    background-image: linear-gradient(to bottom, #E1F5FE 0%, #B3E5FC 100%);
+    background-attachment: fixed;
+    font-family: var(--font-body);
+    color: var(--marrone-text);
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    position: relative;
-    overflow-x: hidden;
+    display: flex; flex-direction: column;
 }
 
-body::before {
-    content: "";
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
-    opacity: 0.6;
-    pointer-events: none;
-    z-index: 0;
+.magic-background {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.4) 0%, transparent 70%);
+    pointer-events: none; z-index: -1;
 }
 
-.page-frame::before {
-    content: "✦";
-    position: absolute;
-    bottom: -15px; 
-    left: 50%;
-    transform: translateX(-50%);
+/* 3. HEADER (Standard come le altre pagine) */
+.main-header {
+    position: sticky; top: 0; z-index: 1000; 
+    background-color: rgba(255, 255, 255, 0.15); 
+    backdrop-filter: blur(10px); 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3); 
+    padding: 0.8rem 2rem;
+}
+.header-content-wrapper {
+    max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;
+}
+
+/* 4. CARD FORM PRINCIPALE */
+.enchanted-form-card {
+    position: relative; z-index: 1;
+    width: 90%; max-width: 1000px;
+    margin: 40px auto; padding: 50px;
     
-    font-size: 2rem;
-    color: var(--gold-light);
-    background: var(--bg-sky);
-    padding: 0 10px;
-    z-index: 1; /* Assicura che stia sopra la linea */
+    background-color: var(--parchment);
+    background-image: linear-gradient(to bottom, #fffbf0 0%, #fff8e1 100%);
+    
+    border-radius: 12px;
+    box-shadow: 
+        0 0 0 1px rgba(197, 160, 89, 0.3), 
+        0 20px 50px rgba(78, 52, 46, 0.15);
 }
 
-
-
-
-/* LAYOUT */
-.main-container {
-    position: relative; z-index: 1; width: 100%; max-width: 950px;
-    padding: 40px 20px 100px 20px;
-    display: flex; flex-direction: column; align-items: center;
+.enchanted-form-card::before {
+    content: ''; position: absolute;
+    top: 15px; left: 15px; right: 15px; bottom: 15px;
+    border: 1px solid rgba(197, 160, 89, 0.2);
+    border-radius: 8px; pointer-events: none;
 }
 
-/* HEADER */
-.magic-header {
-    display: flex; justify-content: space-between; align-items: flex-start;
-    width: 100%; margin-bottom: -30px; padding: 0 20px; position: relative; z-index: 2;
+/* Titoli */
+.form-title h1 {
+    font-family: var(--font-title); font-size: 3rem; color: var(--marrone-dark);
+    text-align: center; text-shadow: 1px 1px 0px var(--oro); margin-bottom: 10px;
 }
-.header-text { flex: 1; padding-top: 20px; }
-.header-text h1 {
-    font-family: 'Great Vibes', cursive; font-size: 3.5rem; color: #8B4513; margin: 0;
-    text-shadow: 2px 2px 0px rgba(255,255,255,0.6);
-}
-.subtitle { font-family: 'Cinzel Decorative', serif; color: #795548; font-size: 1.1rem; margin-left: 10px; }
-.gold-divider {
-    height: 2px; background: linear-gradient(to right, transparent, var(--gold-light), transparent);
-    margin-top: 10px; width: 80%;
-}
-.header-image-preview { text-align: center; width: 200px; }
-.polaroid-frame {
-    background: #FFF; padding: 5px; border: 2px solid var(--gold-light);
-    border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    width: 160px; height: 160px; margin: 0 auto;
-}
-.polaroid-frame img { width: 100%; height: 100%; object-fit: cover; border-radius: 5px; }
-.img-label {
-    display: block; background: #f3e5ab; border: 1px solid var(--gold-light);
-    border-radius: 15px; font-size: 0.8rem; padding: 4px 10px; margin-top: -10px;
-    position: relative; z-index: 3; display: inline-block; font-weight: bold;
+.form-subtitle { text-align: center; color: #777; font-style: italic; margin-bottom: 30px; }
+
+/* 5. INPUT STYLES */
+label {
+    display: block; font-family: var(--font-title); font-size: 0.9rem;
+    color: var(--marrone-dark); margin-bottom: 8px; font-weight: bold;
 }
 
-/* PERGAMENA */
-.scroll-parchment {
-    background-color: var(--parchment); width: 100%;
-    border-radius: 15px 15px 40px 40px; padding: 60px 50px 50px 50px;
-    box-shadow: inset 0 0 60px rgba(139, 69, 19, 0.1), 0 15px 30px rgba(0,0,0,0.2), 0 0 0 5px rgba(255,255,255,0.4);
-    border: 1px solid #D7CCC8; position: relative;
-    background-image: linear-gradient(to bottom, transparent 98%, rgba(139,69,19,0.1) 100%), url('https://www.transparenttextures.com/patterns/cream-paper.png');
-}
-
-
-.scroll-title { font-family: 'Cinzel Decorative', serif; font-size: 1.5rem; border-bottom: none; margin-bottom: 20px; color: #3E2723; }
-
-/* INPUT */
-label { display: block; font-family: 'Cormorant Garamond', serif; font-weight: 600; margin-bottom: 5px; font-size: 1.1rem; color: #5D4037; }
 .magic-input, .magic-textarea, select.magic-input {
-    width: 100%; background-color: var(--input-bg); border: 1px solid var(--gold-light);
-    border-radius: 8px; padding: 10px; font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem; color: #3E2723; box-sizing: border-box;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); transition: all 0.3s;
+    width: 100%;
+    background-color: var(--oro-light);
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 12px 15px;
+    font-family: var(--font-body); font-size: 1.2rem; font-weight: 600;
+    color: var(--marrone-dark);
+    transition: all 0.3s ease;
 }
-.magic-input:focus, .magic-textarea:focus {
-    background-color: #FFF; border-color: var(--gold-dark); outline: none;
-    box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+
+.magic-input:focus, .magic-textarea:focus, select.magic-input:focus {
+    background-color: #fff; border-color: var(--oro);
+    box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.2); outline: none;
 }
-.input-group-full { margin-bottom: 20px; }
-.scroll-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 40px; }
-.spacer { height: 30px; border-bottom: 1px dashed #D7CCC8; margin-bottom: 30px; width: 100%; }
 
-/* COLONNE */
-.columns-container { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; }
+.input-group { margin-bottom: 20px; }
 
-/* INGREDIENTI */
-.ingredients-box {
-    border: 2px solid #F0E68C; border-radius: 10px; padding: 15px;
-    background-color: rgba(255, 255, 255, 0.4); position: relative;
+/* Griglia per i dettagli (Tempo, Difficoltà, etc) */
+.details-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px; margin-bottom: 30px;
+    background: rgba(255,255,255,0.5); padding: 20px; border-radius: 10px;
+    border: 1px dashed var(--oro);
 }
-.ingredients-box h3 { margin-top: 0; font-size: 1.3rem; border-bottom: 1px solid var(--gold-light); padding-bottom: 5px; }
 
-/* Stili specifici per le righe dinamiche JS */
+/* 6. COLONNE (Ingredienti & Procedimento) */
+.columns-container {
+    display: grid; grid-template-columns: 1fr 1.5fr; gap: 40px; margin-top: 30px;
+}
+
+//* ... resto del CSS ... */
+
+/* --- SEZIONE INGREDIENTI AGGIORNATA --- */
+.ingredients-section {
+    background: #fff; 
+    padding: 20px; 
+    border-radius: 10px;
+    border: 1px solid rgba(197, 160, 89, 0.4);
+}
+
 .ing-row-dynamic {
-    display: flex; align-items: center; margin-bottom: 10px; gap: 5px;
-    border-bottom: 1px dotted #E0E0E0; padding-bottom: 5px;
+    display: flex; 
+    gap: 10px; 
+    margin-bottom: 15px; 
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #eee; /* Riga separatrice leggera */
 }
-.ing-inputs { display: flex; gap: 5px; width: 100%; }
+
+/* Stile specifico per gli input degli ingredienti */
+.ing-input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Larghezze specifiche per i campi */
+.ing-name { flex: 3; } /* Il nome prende più spazio */
+.ing-qty { flex: 1; }  /* La quantità è piccola */
+.ing-unit { flex: 1; } /* L'unità è piccola */
+
+.ing-input-group label {
+    font-size: 0.8rem;
+    color: #888;
+    margin-bottom: 2px;
+    font-weight: normal;
+    font-family: var(--font-ui);
+}
+
 .magic-input-sm {
-    padding: 5px; border: 1px solid #D7CCC8; border-radius: 5px;
-    background: #FFF; font-family: 'Cormorant Garamond', serif; font-size: 1rem;
-}
-.magic-input-sm.name { flex: 2; }
-.magic-input-sm.qty { flex: 1; }
-.magic-input-sm.unit { flex: 1; }
-.mini-del-btn { background: none; border: none; color: #E57373; cursor: pointer; font-size: 1.2rem; padding: 0 5px; }
-.btn-add-ing-dashed {
-    width: 100%; border: 2px dashed var(--gold-light); background: transparent;
-    padding: 8px; color: var(--gold-dark); font-weight: bold; cursor: pointer;
-    margin-top: 10px; border-radius: 8px; transition: 0.3s; font-family: 'Cinzel Decorative', serif;
-}
-.btn-add-ing-dashed:hover { background: rgba(212, 175, 55, 0.1); border-style: solid; }
-
-/* PROCEDIMENTO */
-.procedure-box h3 { margin-top: 0; font-size: 1.3rem; }
-.checkbox-wrapper { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; }
-.magic-check { font-size: 1rem; display: flex; align-items: center; gap: 5px; cursor: pointer; }
-.magic-textarea { width: 100%; resize: vertical; }
-.gold-circles { display: flex; gap: 5px; margin-top: 10px; }
-.gold-circles span { width: 12px; height: 12px; border: 2px solid var(--gold-light); border-radius: 50%; display: inline-block; }
-
-/* FOOTER */
-.footer-buttons { display: flex; gap: 20px; margin-top: -25px; z-index: 10; }
-.btn-oval {
-    padding: 12px 40px; border-radius: 50px; font-family: 'Cinzel Decorative', serif;
-    font-weight: bold; font-size: 1.1rem; cursor: pointer; text-decoration: none;
-    border: 2px solid #8B4513; transition: transform 0.2s; display: inline-block;
-}
-.btn-oval.gold { 
-	background: #F3E5AB;
-	 color: #5D4037; 
-	 box-shadow: 0 4px 0 #C5A059;
-  }
-.btn-oval.gold:hover { 
-	background: #FFF; 
-	transform: translateY(2px); 
-	box-shadow: 0 2px 0 #C5A059; 
-}
-/* MODIFICA QUI: Ora anche .beige (Annulla) è identico al .gold */
-.btn-oval.beige { 
-    background: #F3E5AB;   /* Era #FFF8E1 -> Ora Oro */
-    color: #5D4037;        /* Era #8D6E63 -> Ora Marrone scuro */
-    box-shadow: 0 4px 0 #C5A059; /* Era #D7CCC8 -> Ora Ombra scura */
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: var(--oro-light);
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    color: var(--marrone-dark);
 }
 
-/* Aggiungiamo anche l'hover uguale */
-.btn-oval.beige:hover { 
-    background: #FFF; 
-    transform: translateY(2px); 
-    box-shadow: 0 2px 0 #C5A059; 
+.magic-input-sm:focus {
+    background-color: #fff;
+    border-color: var(--oro);
+    outline: none;
 }
+
+.mini-del-btn {
+    background: none; 
+    border: none; 
+    color: #d32f2f; 
+    font-size: 1.2rem; 
+    cursor: pointer;
+    margin-top: 15px; /* Allinea col campo di testo */
+    padding: 0 5px;
+    transition: transform 0.2s;
+}
+.mini-del-btn:hover { transform: scale(1.2); }
+
+/* ... resto del CSS ... */
+
+/* Righe dinamiche ingredienti */
+.ing-row-dynamic {
+    display: flex; gap: 10px; margin-bottom: 10px; align-items: center;
+}
+.input-sm { padding: 8px; font-size: 1rem; }
+
+.btn-add-dashed {
+    width: 100%; border: 2px dashed var(--oro); background: transparent;
+    padding: 10px; color: var(--marrone-dark); font-weight: bold; cursor: pointer;
+    border-radius: 8px; transition: 0.3s; font-family: var(--font-ui); text-transform: uppercase; font-size: 0.8rem;
+}
+.btn-add-dashed:hover { background: var(--oro-light); border-color: var(--marrone-dark); }
+
+.mini-del-btn {
+    background: none; border: none; color: #d32f2f; font-size: 1.2rem; cursor: pointer;
+}
+
+/* Procedimento Box */
+.procedure-section {
+    background: #fff; padding: 20px; border-radius: 10px;
+    border: 1px solid rgba(197, 160, 89, 0.4);
+}
+.checkbox-wrapper { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
+.magic-check { font-family: var(--font-ui); font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+
+/* Anteprima Immagine */
+.preview-container {
+    margin-top: 30px; text-align: center;
+    background: var(--oro-light); padding: 20px; border-radius: 10px;
+}
+.polaroid-frame {
+    width: 200px; height: 200px; margin: 0 auto 15px;
+    background: #fff; padding: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transform: rotate(-2deg); border: 1px solid #ddd;
+}
+.polaroid-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+/* 7. BOTTONI (Stile recipe.css) */
+.footer-buttons {
+    display: flex; justify-content: center; gap: 20px; margin-top: 40px;
+}
+
+.btn-gold {
+    background-image: linear-gradient(45deg, #C5A059 0%, #E6C676 50%, #C5A059 100%);
+    background-size: 200% auto; color: white; border: none;
+    padding: 12px 40px; border-radius: 50px; font-weight: bold; font-family: var(--font-ui);
+    text-transform: uppercase; cursor: pointer; box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4);
+    transition: 0.3s;
+}
+.btn-gold:hover { background-position: right center; transform: translateY(-3px); }
+
+.btn-gold-outline {
+    background: transparent; border: 2px solid var(--oro); color: var(--marrone-dark);
+    padding: 12px 40px; border-radius: 50px; font-weight: bold; font-family: var(--font-ui);
+    text-transform: uppercase; text-decoration: none; display: inline-block; transition: 0.3s;
+}
+.btn-gold-outline:hover { background: var(--oro); color: white; }
+
 /* Error Banner */
-.error-banner { background-color: #ffcdd2; color: #c62828; padding: 10px; border-radius: 5px; margin-bottom: 15px; text-align: center; }
+.error-banner { 
+    background-color: #ffebee; color: #c62828; padding: 15px; 
+    border-radius: 8px; margin-bottom: 20px; border: 1px solid #ffcdd2; text-align: center; font-weight: bold;
+}
 
 @media (max-width: 768px) {
-    .magic-header { flex-direction: column; align-items: center; text-align: center; }
-    .header-image-preview { margin-top: 20px; }
-    .scroll-grid, .columns-container { grid-template-columns: 1fr; }
-    .ing-inputs { flex-direction: column; }
-}
+    .columns-container, .details-grid { grid-template-columns: 1fr; }
+    .enchanted-form-card { padding: 20px; width: 95%; }
+    .ing-row-dynamic { flex-wrap: wrap; }
+    .input-sm { width: 100%; }
+}}
