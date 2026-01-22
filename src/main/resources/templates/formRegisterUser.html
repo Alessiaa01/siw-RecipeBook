@@ -10,123 +10,118 @@
     
     <link rel="stylesheet" href="/css/formRegisterUser.css" />
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Great+Vibes&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
-
-    <style>
-        /* Assicura che il contenuto dentro la colonna stia fermo */
-        .magic-field {
-            position: relative;
-            display: block; /* Importante: Label sopra, input sotto */
-        }
-        
-        /* Assicura che le label abbiano lo stesso stile del tuo CSS */
-        .magic-field label {
-            font-family: 'Cinzel', serif;
-            color: #4A3B2A; /* Marrone scuro */
-            font-weight: bold;
-            margin-bottom: 8px;
-            display: block;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600&family=Cormorant+Garamond:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
     
-    <div class="enchanted-container container d-flex justify-content-center align-items-center min-vh-100 py-4">
+    <div class="magic-background-layer"></div>
+    
+    <div class="enchanted-container">
         
-        <div class="recipe-book-card position-relative">
-            
-            <div class="header-decoration text-center mb-4">
-                <i class="fas fa-crown crown-icon display-4 mb-2"></i>
-                <h1 class="display-4">Registrazione</h1>
-                <p class="subtitle">Crea un nuovo account</p>
+        <div class="recipe-book-card">
+            <div class="card-content-wrapper">
+
+                <div class="mb-3">
+                    <a th:href="@{/}" class="btn-gold-outline">
+                        <i class="fas fa-arrow-left"></i> Home
+                    </a>
+                </div>
+
+                <div class="header-decoration">
+                    <img src="/images/logo2.png" alt="SiwRecipe Logo" class="main-logo">
+
+                    <h1 class="display-6">Crea il tuo account</h1>
+                 
+                </div>
+
+                <form th:action="@{/register}" method="POST" class="magic-form mt-4">
+                    
+                    <div class="row g-3">
+                        
+                        <div class="col-md-6">
+                            <div class="magic-field">
+                                <label for="name">Nome</label>
+                                <div class="field-wrapper">
+                                    <i class="fas fa-user input-icon"></i>
+                                    <input id="name" type="text" class="form-control" required th:field="${user.name}" placeholder="Nome"/>
+                                </div>
+                                <span class="error-msg" th:if="${#fields.hasErrors('user.name')}" th:errors="*{user.name}"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="magic-field">
+                                <label for="surname">Cognome</label>
+                                <div class="field-wrapper">
+                                    <i class="fas fa-user input-icon"></i>
+                                    <input id="surname" type="text" class="form-control" required th:field="${user.surname}" placeholder="Cognome"/>
+                                </div>
+                                <span class="error-msg" th:if="${#fields.hasErrors('user.surname')}" th:errors="*{user.surname}"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="magic-field">
+                                <label for="email">Email</label>
+                                <div class="field-wrapper">
+                                    <i class="fas fa-envelope input-icon"></i>
+                                    <input id="email" type="email" class="form-control" required th:field="${user.email}" placeholder="tua@email.com"/>
+                                </div>
+                                <span class="error-msg" th:if="${#fields.hasErrors('user.email')}" th:errors="*{user.email}"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="magic-field">
+                                <label for="username">Username</label>
+                                <div class="field-wrapper">
+                                    <i class="fas fa-hat-wizard input-icon"></i>
+                                    <input id="username" type="text" class="form-control" required th:field="${credentials.username}" placeholder="Scegli username"/>
+                                </div>
+                                <span class="error-msg" th:if="${#fields.hasErrors('credentials.username')}" th:errors="*{credentials.username}"></span>
+                            </div>
+                        </div>
+                    
+                        <div class="col-md-6">
+                            <div class="magic-field">
+                                <label for="password">Password</label>
+                                <div class="field-wrapper">
+                                    <i class="fas fa-lock input-icon"></i>
+                                    <input id="password" type="password" class="form-control" required th:field="${credentials.password}" placeholder="Password"/>
+                                </div>
+                                <span class="error-msg" th:if="${#fields.hasErrors('credentials.password')}" th:errors="*{credentials.password}"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="magic-field">
+                                <label for="confirm-password">Conferma</label>
+                                <div class="field-wrapper">
+                                    <i class="fas fa-lock input-icon"></i>
+                                    <input id="confirm-password" type="password" class="form-control" required name="confirmPassword" placeholder="Ripeti password"/>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div> 
+
+                    <div class="action-area text-center mt-4">
+                        <button type="submit" class="royal-btn w-100">
+                            Registrati
+                        </button>
+                    </div>
+                    
+                    <div class="scroll-link text-center mt-3">
+                        Hai già un account? <a th:href="@{/login}">Accedi</a>
+                    </div>
+                    
+                </form>
             </div>
-
-            <form th:action="@{/register}" method="POST" class="magic-form">
-                
-                <div class="row g-4">
-                    
-                    <div class="col-md-6">
-                        <div class="magic-field">
-                            <label for="name">Nome</label>
-                            <div class="field-wrapper">
-                                <i class="fas fa-user input-icon"></i>
-                                <input id="name" type="text" class="form-control" required th:field="${user.name}" placeholder=""/>
-                            </div>
-                            <span class="error-msg small" th:if="${#fields.hasErrors('user.name')}" th:errors="*{user.name}"></span>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-6">
-                        <div class="magic-field">
-                            <label for="surname">Cognome</label>
-                            <div class="field-wrapper">
-                                <i class="fas fa-user input-icon"></i>
-                                <input id="surname" type="text" class="form-control" required th:field="${user.surname}" placeholder=""/>
-                            </div>
-                            <span class="error-msg small" th:if="${#fields.hasErrors('user.surname')}" th:errors="*{user.surname}"></span>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="magic-field">
-                            <label for="email">Email</label>
-                            <div class="field-wrapper">
-                                <i class="fas fa-envelope-open-text input-icon"></i>
-                                <input id="email" type="email" class="form-control" required th:field="${user.email}" placeholder=""/>
-                            </div>
-                            <span class="error-msg small" th:if="${#fields.hasErrors('user.email')}" th:errors="*{user.email}"></span>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-6">
-                        <div class="magic-field">
-                            <label for="username">Username</label>
-                            <div class="field-wrapper">
-                                <i class="fas fa-user input-icon"></i>
-                                <input id="username" type="text" class="form-control" required th:field="${credentials.username}" placeholder=""/>
-                            </div>
-                            <span class="error-msg small" th:if="${#fields.hasErrors('credentials.username')}" th:errors="*{credentials.username}"></span>
-                        </div>
-                    </div>
-                
-                    <div class="col-md-6">
-                        <div class="magic-field">
-                            <label for="password">Password</label>
-                            <div class="field-wrapper">
-                                <i class="fas fa-key input-icon"></i>
-                                <input id="password" type="password" class="form-control" required th:field="${credentials.password}" placeholder=""/>
-                            </div>
-                            <span class="error-msg small" th:if="${#fields.hasErrors('credentials.password')}" th:errors="*{credentials.password}"></span>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-6">
-                        <div class="magic-field">
-                            <label for="confirm-password">Conferma Password</label>
-                            <div class="field-wrapper">
-                                <i class="fas fa-lock input-icon"></i>
-                                <input id="confirm-password" type="password" class="form-control" required name="confirmPassword" placeholder=""/>
-                            </div>
-                        </div>
-                    </div>
-
-                </div> <div class="action-area text-center mt-5">
-                    <button type="submit" class="royal-btn">
-                        <span>Registrati Ora</span>
-                        <i class="fas fa-sparkles ms-2"></i>
-                    </button>
-                </div>
-                
-                <div class="scroll-link text-center mt-4">
-                    Hai già un account? <a th:href="@{/login}">Accedi </a>
-                </div>
-                
-            </form>
         </div>
     </div>
 

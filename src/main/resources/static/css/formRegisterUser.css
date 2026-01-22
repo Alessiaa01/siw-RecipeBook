@@ -1,178 +1,240 @@
-/* =========================================
-   1. COLORI E FONT (TEMA DISNEY)
-   ========================================= */
+/* --- 1. VARIABILI (Identiche a recipes.css) --- */
 :root {
-    --bg-sky-light: #E0FFFF;
-    --bg-sky-dark: #87CEEB;
-    --gold: #D4AF37;
-    --gold-dark: #B8860B;
-    --ink: #4A3B2A;
-    --paper: #FFFAF0;
-    --error: #C0392B;
+    /* Palette Celeste (Sfondo) */
+    --celeste-bg: #E1F5FE;       
+    --celeste-accent: #81D4FA;   
     
-    --font-fancy: 'Great Vibes', cursive;
-    --font-title: 'Cinzel', serif;
-    --font-text: 'Quicksand', sans-serif;
+    /* Palette Colori Elementi */
+    --marrone-dark: rgb(100, 62, 41);
+    --marrone-text: #5D4037;
+    --oro: #C5A059;
+    --oro-light: #FFF8E1;        
+    --bianco: #FFFFFF;
+    
+    /* Variabili Card */
+    --parchment: #fffbf0;   /* Crema carta antica */
+    --royal-gold: #c5a059;  
+    --royal-gold-shine: #e6c676;
+    
+    /* --- FONT --- */
+    --font-title: 'Cinzel Decorative', cursive; 
+    --font-heading: 'Cinzel', serif;
+    --font-body: 'Cormorant Garamond', serif;   
+    --font-ui: 'Lato', sans-serif;              
+}
+
+/* --- 2. RESET & GLOBAL --- */
+* { 
+    box-sizing: border-box; margin: 0; padding: 0; 
+    caret-color: var(--oro); /* Cursore di scrittura Oro */
 }
 
 body {
-    /* Sfondo sfumato celeste */
-    background: radial-gradient(circle at center, var(--bg-sky-light), var(--bg-sky-dark));
-    font-family: var(--font-text);
+    font-family: var(--font-body);
+    font-weight: 500; 
+    background-color: var(--celeste-bg);
+    background-image: linear-gradient(to bottom, #E1F5FE 0%, #B3E5FC 100%);
+    background-attachment: fixed; 
+    color: var(--marrone-text);
+    min-height: 100vh;
 }
 
-/* =========================================
-   2. LA CARD (LIBRO DI RICETTE)
-   ========================================= */
+a { text-decoration: none; transition: 0.3s; }
 
-/* Nota: La larghezza ora è gestita dalle classi Bootstrap container/col */
+/* --- 3. LAYOUT CONTENITORE --- */
+.enchanted-container {
+    padding: 2rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.magic-background-layer {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.4) 0%, transparent 70%);
+    z-index: -1; pointer-events: none;
+}
+
+/* --- 4. CARD LIBRO (Più piccola e compatta) --- */
 .recipe-book-card {
-    background-color: var(--paper);
-    border-radius: 20px;
+    background-color: var(--parchment);
+    background-image: linear-gradient(to bottom, #fffbf0 0%, #fff8e1 100%);
+    border-radius: 12px;
+    /* Padding ridotto */
+    padding: 2.5rem;
+    width: 100%;
+    /* LARGHEZZA MASSIMA RIDOTTA */
+    max-width: 550px; 
+    position: relative;
+    overflow: hidden;
+
+    /* Doppio bordo 'Cornice Preziosa' */
+    box-shadow: 
+        0 0 0 1px rgba(197, 160, 89, 0.3),
+        0 15px 35px rgba(0,0,0,0.15);
     
-    /* Bordo Magico Doppio */
-    border: 4px solid var(--gold);
-    outline: 5px solid var(--ink);
-    outline-offset: -10px;
-    
-    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-    padding: 3rem; /* Padding aumentato */
+    transition: all 0.4s ease;
 }
 
-/* Decorazioni angoli */
-.recipe-book-card::before, .recipe-book-card::after {
-    content: "✦";
-    position: absolute;
-    font-size: 30px;
-    color: var(--gold);
+.recipe-book-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 
+        0 0 0 2px var(--royal-gold), 
+        0 20px 40px rgba(197, 160, 89, 0.2);
 }
-.recipe-book-card::before { top: 15px; left: 15px; }
-.recipe-book-card::after { bottom: 15px; right: 15px; }
 
-/* =========================================
-   3. TESTI E TITOLI
-   ========================================= */
-.crown-icon {
-    color: var(--gold);
-    filter: drop-shadow(1px 1px 0 var(--ink));
+/* Decorazione interna */
+.recipe-book-card::before {
+    content: ''; position: absolute;
+    top: 12px; left: 12px; right: 12px; bottom: 12px;
+    border: 1px solid rgba(197, 160, 89, 0.2);
+    border-radius: 8px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.card-content-wrapper { position: relative; z-index: 1; }
+
+/* --- 5. HEADER & LOGO --- */
+.header-decoration {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* Stile Logo Fluttuante (Preso da recipes.css) */
+.main-logo {
+    max-height: 160px; /* Dimensione adatta al form */
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 5px 10px rgba(78, 52, 46, 0.2));
+    animation: magicFloat 4s ease-in-out infinite;
+    display: block;
+    margin-left: auto; margin-right: auto;
+}
+
+@keyframes magicFloat {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0px); }
 }
 
 .header-decoration h1 {
-    font-family: var(--font-fancy);
-    font-weight: normal;
-    color: var(--ink);
-    line-height: 1;
-}
-
-.subtitle {
     font-family: var(--font-title);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gold-dark);
-    font-weight: bold;
-    font-size: 0.9rem;
-}
-
-/* =========================================
-   4. OVERRIDE E STYLE INPUT
-   ========================================= */
-
-/* IMPORTANTISSIMO: Risolve conflitto con Bootstrap */
-.input-group {
-    display: block !important; /* Forza il blocco verticale (Label sopra Input) */
-    position: relative;
-}
-
-.input-group label {
-    font-family: var(--font-title);
-    color: var(--ink);
-    font-size: 0.9rem;
-    font-weight: bold;
-    text-transform: uppercase;
+    color: var(--marrone-dark);
+    font-size: 2.2rem; /* Font leggermente più piccolo */
     margin-bottom: 0.5rem;
+    text-shadow: 1px 1px 0px var(--oro);
 }
 
-/* Wrapper per icona e campo */
-.field-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
+/* --- 6. INPUT FIELDS --- */
+.magic-field { margin-bottom: 1rem; }
 
-.input-icon {
-    position: absolute;
-    left: 15px;
-    color: var(--gold-dark);
-    font-size: 1.1rem;
-    z-index: 5; /* Assicura che l'icona sia sopra */
-}
-
-/* Personalizzazione Input Bootstrap (.form-control) */
-.form-control {
-    padding: 12px 15px 12px 45px; /* Spazio a sinistra per icona */
-    border: 2px solid #E0D6C8;
-    background-color: #FFF;
-    border-radius: 10px;
-    font-family: var(--font-text);
-    color: var(--ink);
-    box-shadow: none; /* Rimuove ombra blu standard Bootstrap */
-}
-
-/* Focus Input */
-.form-control:focus {
-    border-color: var(--gold);
-    box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
-    background-color: #fff;
-    color: var(--ink);
-}
-
-.error-msg {
-    color: var(--error);
-    font-weight: bold;
-    margin-top: 5px;
+.magic-field label {
+    font-family: var(--font-heading);
+    color: var(--marrone-dark);
+    font-weight: 700;
+    font-size: 0.85rem;
+    margin-bottom: 6px;
     display: block;
 }
 
-/* =========================================
-   5. BOTTONE E LINK
-   ========================================= */
-.royal-btn {
-    background: linear-gradient(to right, var(--gold) 0%, var(--gold-dark) 100%);
-    border: none;
-    padding: 14px 60px;
-    border-radius: 50px;
-    color: #FFF;
-    font-family: var(--font-title);
-    font-size: 1.1rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+.field-wrapper { position: relative; }
+
+.input-icon {
+    position: absolute;
+    left: 15px; top: 50%; transform: translateY(-50%);
+    color: var(--oro);
+    z-index: 2;
+    font-size: 0.9rem;
+}
+
+.form-control {
+    font-family: var(--font-ui);
+    background-color: var(--oro-light); 
+    border: 1px solid #ddd;
+    border-radius: 30px;
+    padding: 10px 15px 10px 40px; /* Padding ridotto */
+    color: var(--marrone-dark);
+    font-weight: 600;
     transition: all 0.3s ease;
-    box-shadow: 0 6px 15px rgba(184, 134, 11, 0.3);
-    
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    width: 100%;
+    font-size: 0.95rem;
+}
+
+.form-control:focus {
+    background-color: #fff;
+    border-color: var(--oro);
+    box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.2); 
+    outline: none;
+}
+
+.form-control::placeholder { color: #aaa; font-weight: 400; font-style: italic; }
+
+.error-msg {
+    color: #d32f2f;
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    margin-top: 4px;
+    display: block;
+    font-weight: bold;
+}
+
+/* --- 7. BOTTONI --- */
+.royal-btn {
+    border: none; cursor: pointer;
+    font-family: var(--font-ui); font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    padding: 10px 35px; border-radius: 50px; 
+    transition: all 0.3s ease;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    font-size: 0.9rem;
+    background-image: linear-gradient(45deg, #C5A059 0%, #E6C676 50%, #C5A059 100%);
+    background-size: 200% auto; 
+    color: white;
+    box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4); 
 }
 
 .royal-btn:hover {
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 10px 25px rgba(184, 134, 11, 0.5);
-    background: linear-gradient(to right, #F1C40F 0%, var(--gold) 100%);
+    background-position: right center; 
+    transform: translateY(-2px); 
+    box-shadow: 0 6px 20px rgba(197, 160, 89, 0.6);
 }
 
+.btn-gold-outline {
+    background-color: transparent;
+    border: 1px solid #C5A059;
+    color: #8D6E63;
+    font-family: var(--font-ui); font-weight: 700;
+    text-transform: uppercase;
+    padding: 6px 15px; border-radius: 50px;
+    font-size: 0.7rem;
+    display: inline-flex; align-items: center; gap: 5px;
+    text-decoration: none;
+}
+
+.btn-gold-outline:hover {
+    background-color: #C5A059; color: white;
+    box-shadow: 0 2px 8px rgba(197, 160, 89, 0.3);
+}
+
+/* --- 8. LINK LOGIN --- */
 .scroll-link {
-    color: var(--ink);
-    font-family: var(--font-text);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--marrone-text);
 }
 
 .scroll-link a {
-    color: var(--gold-dark);
-    font-weight: bold;
-    text-decoration: none;
-    border-bottom: 2px dotted var(--gold);
+    color: var(--marrone-dark);
+    font-weight: 700;
+    border-bottom: 1px solid var(--oro);
 }
+.scroll-link a:hover { color: var(--oro); border-color: transparent; }
 
-.scroll-link a:hover {
-    color: var(--ink);
-    border-bottom: 2px solid var(--ink);
+/* Scrollbar Chrome/Safari */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--celeste-bg); }
+::-webkit-scrollbar-thumb {
+    background-color: var(--oro); border-radius: 20px;
+    border: 2px solid var(--celeste-bg); 
 }

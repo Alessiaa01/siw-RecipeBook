@@ -1,188 +1,184 @@
-/* ========================================================== */
-/* STILE "REGISTRAZIONE COMPLETATA" - Versione Grande & Centrata */
-/* ========================================================== */
-
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&display=swap');
-
+/* --- VARIABILI COLORI E FONT --- */
 :root {
-    --bg-sky: #E0F7FA;         
-    --bg-sky-dark: #B2EBF2;    
-    --gold-dark: #8B4513;      
-    --gold-light: #D4AF37;     
-    --parchment: #FDF5E6;      
+    --celeste-bg: #E1F5FE;       
+    --marrone-dark: rgb(100, 62, 41);
+    --marrone-text: #5D4037;
+    --oro: #C5A059;
+    --oro-light: #FFF8E1;        
+    --parchment: #fffbf0;   
+    --font-title: 'Cinzel Decorative', cursive; 
+    --font-body: 'Cormorant Garamond', serif;   
+    --font-ui: 'Lato', sans-serif;              
 }
 
+/* --- RESET E BODY --- */
 body {
+    background-color: var(--celeste-bg);
+    background-image: radial-gradient(circle at center, #E1F5FE 0%, #B3E5FC 100%);
+    font-family: var(--font-body);
+    color: var(--marrone-text);
+    min-height: 100vh;
     margin: 0;
-    padding: 0;
-    background: radial-gradient(circle at center, var(--bg-sky) 0%, var(--bg-sky-dark) 100%);
-    font-family: 'Cormorant Garamond', serif;
-    color: var(--gold-dark);
-    min-height: 100vh; /* Occupa tutta l'altezza dello schermo */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    overflow-x: hidden;
+    /* Cursore Freccia Dorata */
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23C5A059' stroke='%235D4037' stroke-width='1.5' d='M2 2l6.5 19 3.5-8.5 8.5-3.5z'/%3E%3C/svg%3E") 2 2, auto;
 }
 
-/* Sfondo "Polvere di Stelle" */
-.magic-background {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
-    opacity: 0.6; pointer-events: none; z-index: -1;
+/* --- LOGO FLUTTUANTE --- */
+.main-logo {
+    max-height: 140px;
+    filter: drop-shadow(0 8px 15px rgba(0,0,0,0.1));
+    animation: floatLogo 4s ease-in-out infinite;
 }
 
-/* === HEADER === */
-header {
-    width: 100%;
-    padding: 15px 30px;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-bottom: 1px solid var(--gold-light);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    display: flex;
-    justify-content: flex-end;
-    box-sizing: border-box;
-    /* Il flex-shrink impedisce all'header di schiacciarsi */
-    flex-shrink: 0; 
+@keyframes floatLogo {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
 }
 
-header div {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 1.1rem; /* Testo header leggermente più grande */
-}
-
-.user-label { color: var(--gold-light); font-weight: bold; }
-.user-name { font-weight: bold; margin-right: 10px; color: var(--gold-dark); }
-
-.header-link {
-    text-decoration: none;
-    color: var(--gold-dark);
-    padding: 8px 20px;
-    border: 1px solid transparent;
-    border-radius: 20px;
-    transition: all 0.3s;
-}
-.header-link:hover {
-    border-color: var(--gold-light);
-    background-color: #FFF;
-    color: #B8860B;
-}
-
-/* === LOGO === */
-.logo-container {
-    margin-top: 20px;
-    margin-bottom: 10px; /* Riduciamo margine sotto il logo */
-    text-align: center;
-    width: 100%;
-    flex-shrink: 0; /* Impedisce al logo di schiacciarsi */
-}
-.logo-container img {
-    max-width: 350px; /* Logo leggermente più grande */
-    width: 60%; 
-    height: auto;
-    filter: drop-shadow(0 5px 5px rgba(0,0,0,0.2));
-    transition: transform 0.3s;
-}
-.logo-container img:hover { transform: scale(1.05); }
-
-/* === CARD GRIMORIO CENTRALE (MODIFICATA) === */
+/* --- CARD GRIMORIO --- */
 .grimorio-card {
     background-color: var(--parchment);
-    background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
-    
-    /* DIMENSIONI AUMENTATE */
-    width: 90%;
-    max-width: 850px; /* Molto più larga (era 600px) */
-    padding: 60px 50px; /* Più spazio interno */
-    
+    background-image: linear-gradient(135deg, #fffbf0 0%, #fff8e1 100%);
+    border: 2px solid var(--oro);
     border-radius: 20px;
-    text-align: center;
-    
-    /* Decorazioni Bordo */
-    box-shadow: 
-        inset 0 0 60px rgba(139, 69, 19, 0.15), /* Ombra interna più profonda */
-        0 0 0 10px #FFF, 
-        0 0 0 13px var(--gold-light), 
-        0 25px 60px rgba(0,0,0,0.35); /* Ombra esterna più marcata */
-    
+    max-width: 700px;
+    width: 100%;
     position: relative;
-    
-    /* CENTRATURA MAGICA */
-    /* Impostando margin: auto in un flex-column, l'elemento si piazza 
-       automaticamente al centro dello spazio verticale disponibile */
-    margin: auto; 
-    
-    /* Un po' di margine extra sotto per non toccare il bordo se lo schermo è basso */
-    margin-bottom: 50px; 
+    box-shadow: 0 20px 60px rgba(78, 52, 46, 0.2);
 }
 
-/* Titolo */
+/* Cornice interna decorativa */
+.grimorio-card::before {
+    content: '';
+    position: absolute;
+    top: 12px; left: 12px; right: 12px; bottom: 12px;
+    border: 1px solid rgba(197, 160, 89, 0.3);
+    border-radius: 15px;
+    pointer-events: none;
+}
+
+/* --- TITOLO E DECORAZIONI --- */
 .decorative-header h1 {
-    font-family: 'Great Vibes', cursive;
-    font-size: 5rem; /* Titolo ENORME */
-    color: #8B4513;
-    margin: 0 0 30px 0;
-    text-shadow: 2px 2px 0px rgba(255,255,255,0.6);
-    border-bottom: 3px solid rgba(212, 175, 55, 0.3);
-    padding-bottom: 20px;
-    line-height: 1.1;
+    font-family: var(--font-title);
+    color: var(--marrone-dark);
+    text-shadow: 1px 1px 0px var(--oro);
+    font-size: 2.8rem;
 }
 
-/* Testo */
-.content-body p {
-    font-size: 1.6rem; /* Testo più grande e leggibile */
-    margin: 30px 0;
-    line-height: 1.6;
+.magic-sparkle-icon {
+    color: var(--oro);
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.1); }
+}
+
+.ornament-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.ornament-divider .line {
+    height: 1px;
+    width: 80px;
+    background-color: var(--oro);
+}
+
+.ornament-divider .symbol {
+    color: var(--oro);
+    font-size: 1.2rem;
+}
+
+/* --- TESTO --- */
+.welcome-msg {
+    font-size: 2.2rem;
+    font-style: italic;
+    margin-bottom: 1rem;
 }
 
 .highlight-name {
-    color: #D4AF37;
-    font-weight: bold;
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 2rem; /* Nome utente in evidenza */
-    text-shadow: 1px 1px 0 rgba(0,0,0,0.1);
+    color: var(--oro);
+    font-weight: 700;
+    font-family: var(--font-title);
+    text-decoration: underline dotted rgba(197, 160, 89, 0.5);
 }
 
-/* Icona decorativa centrale */
-.seal-icon {
-    font-size: 5rem; /* Icona gigante */
-    color: rgba(212, 175, 55, 0.4);
-    margin: 20px 0;
-    animation: float 3s ease-in-out infinite; /* Piccolo effetto fluttuante */
+.sub-text {
+    font-size: 1.3rem;
+    color: #6D4C41;
 }
 
-/* Animazione opzionale per l'icona */
-@keyframes float {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0px); }
+/* --- SIGILLO --- */
+.seal-circle {
+    width: 80px;
+    height: 80px;
+    border: 2px solid var(--oro);
+    border-radius: 50%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: var(--oro);
+    background: rgba(197, 160, 89, 0.05);
+    animation: rotateSeal 10s linear infinite;
 }
 
-/* Bottone Link */
-.btn-magic-login {
-    display: inline-block;
-    margin-top: 15px;
-    padding: 18px 60px; /* Bottone più grande */
-    
-    background: linear-gradient(to bottom, #FFF8E1, #F3E5AB);
-    border: 3px solid #8B4513;
-    border-radius: 50px;
-    color: #5D4037;
-    
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 1.4rem; /* Testo bottone più grande */
-    font-weight: bold;
+@keyframes rotateSeal {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* --- BOTTONE REALE --- */
+.btn-royal {
+    font-family: var(--font-ui);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     text-decoration: none;
-    
-    box-shadow: 0 8px 15px rgba(0,0,0,0.15);
-    transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
+    background-image: linear-gradient(45deg, var(--oro) 0%, #E6C676 50%, var(--oro) 100%);
+    background-size: 200% auto;
+    color: white !important;
+    padding: 16px 48px;
+    border-radius: 50px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4);
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
-.btn-magic-login:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 25px rgba(139, 69, 19, 0.3);
-    background: #FFF;
-    color: #8B4513;
+.btn-royal:hover {
+    background-position: right center;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(197, 160, 89, 0.6);
+}
+
+.back-link {
+    color: var(--marrone-dark);
+    font-family: var(--font-ui);
+    text-decoration: none;
+    font-weight: 700;
+    transition: 0.3s;
+}
+
+.back-link:hover {
+    color: var(--oro);
+}
+
+/* SCROLLBAR ORO */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--celeste-bg); }
+::-webkit-scrollbar-thumb {
+    background: var(--oro); border-radius: 10px;
+    border: 2px solid var(--celeste-bg);
 }
