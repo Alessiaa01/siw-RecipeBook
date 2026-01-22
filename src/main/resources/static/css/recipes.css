@@ -114,7 +114,7 @@ ul { list-style: none; }
 }
 
 .main-logo {
-    max-height: 150px;
+    max-height: 200px;
     margin-bottom: 1rem;
     filter: drop-shadow(0 5px 15px rgba(78, 52, 46, 0.2));
     animation: magicFloat 4s ease-in-out infinite;

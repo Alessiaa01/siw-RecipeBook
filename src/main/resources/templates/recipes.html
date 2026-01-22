@@ -78,13 +78,13 @@
                 <input type="text" name="ingredient" placeholder="Ingrediente..." />
             </div>
             
-            <button type="submit" class="btn-search">Cerca Magia</button>
+            <button type="submit" class="btn-search">Cerca</button>
         </form>
     </div>
 
     <div th:if="${#lists.isEmpty(recipes)}" class="empty-message">
         <i class="fa-solid fa-cookie-bite"></i>
-        <p>Oh no! Nessuna ricetta trovata nel calderone.</p>
+        <p>Oh no! Nessuna ricetta trovata </p>
     </div>
 
     <div class="container">
