@@ -7,12 +7,11 @@
     <title>Disney RecipeBook - Elenco Ricette</title>
     
     <link rel="stylesheet" href="/css/recipes.css" />
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -97,6 +96,13 @@
                          th:alt="'Immagine di ' + ${recipe.title}" />
                     
                     <span class="difficulty-badge" th:text="${recipe.difficulty}">Facile</span>
+
+                    <div class="rating-badge" title="Media Voti">
+                        <i class="fa-solid fa-star"></i>
+                        <span th:if="${not #lists.isEmpty(recipe.reviews)}" 
+                              th:text="${#numbers.formatDecimal(#aggregates.avg(recipe.reviews.![rating]), 1, 1)}">4.5</span>
+                        <span th:if="${#lists.isEmpty(recipe.reviews)}">-</span>
+                    </div>
                 </div>
                 
                 <div class="card-content">
@@ -110,7 +116,16 @@
 
                     <div class="card-footer">
                         <div class="meta-info">
-                            <span class="meta-item"><i class="fa-regular fa-clock"></i> <span th:text="${recipe.preparationTime}">0</span>'</span>
+                            <span class="meta-item" title="Tempo di preparazione">
+                                <i class="fa-regular fa-clock"></i> 
+                                <span th:text="${recipe.preparationTime}">0</span>'
+                            </span>
+
+                            <span class="meta-item" title="Porzioni">
+                                <i class="fa-solid fa-users"></i> 
+                                <span th:text="${recipe.servings}">2</span>
+                            </span>
+
                             <span class="meta-item author">
                                 <i class="fa-solid fa-user-pen"></i>
                                 <span th:if="${recipe.author != null}" th:text="${recipe.author.name}">Chef</span>
@@ -119,6 +134,7 @@
                         </div>
                         
                         <div class="date-info" th:if="${recipe.creationDate}">
+                            <i class="fa-regular fa-calendar-days"></i>
                             <span th:text="${#temporals.format(recipe.creationDate, 'dd/MM/yyyy')}"></span>
                         </div>
                     </div>
