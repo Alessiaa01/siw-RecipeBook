@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="'Profilo di ' + ${user.name}">Profilo</title>
+    <link rel="stylesheet" href="/css/userProfile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-content-wrapper">
+            
+            <div class="header-left">
+                <a href="/recipes" class="nav-link-home">
+                    <i class="fa-solid fa-home"></i> Home
+                </a>
+            </div>
+
+           
+            
+        </div>
+    </header>
+    <div class="enchanted-container">
+        
+        <div class="profile-card">
+            <div class="card-content-wrapper">
+                
+                <header class="profile-header">
+                    <div class="avatar-circle">
+                        <span th:text="${#strings.substring(user.name, 0, 1)}">U</span>
+                    </div>
+                    
+                    <h1 th:text="${user.name} + ' ' + ${user.surname}">Nome Cognome</h1>
+                    
+                    <p class="user-meta">
+                        <i class="fa-solid fa-envelope"></i> 
+                        <span th:text="${user.email}">email</span>
+                    </p>
+                    
+                    <p class="user-meta" th:if="${user.dateOfBirth != null}">
+                        <i class="fa-solid fa-cake-candles"></i>
+                        <span th:text="${#temporals.format(user.dateOfBirth, 'dd MMMM yyyy')}">Data</span>
+                    </p>
+                </header>
+
+                <div class="divider"></div>
+
+				<section class="user-recipes-section">
+				    <h2>Ricette dello Chef</h2>
+
+				    <div th:if="${userRecipes.isEmpty()}" class="empty-state">
+				        <p>Nessuna ricetta pubblicata.</p>
+				    </div>
+
+				    <ul th:unless="${userRecipes.isEmpty()}" class="recipe-list">
+				        <li th:each="recipe : ${userRecipes}">
+				            
+				            <a th:href="@{'/recipe/' + ${recipe.id}}" class="recipe-card-mini">
+				                
+				                <div>
+				                    <span class="recipe-link" th:text="${recipe.title}">Nome Ricetta</span>
+				                    
+				                    <span class="recipe-difficulty" 
+				                          th:if="${recipe.difficulty != null}" 
+				                          th:text="${recipe.difficulty}">
+				                    </span>
+				                </div>
+				                
+				                <i class="fa-solid fa-chevron-right btn-icon-go"></i>
+				            </a>
+
+				        </li>
+				    </ul>
+				</section>
+                
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

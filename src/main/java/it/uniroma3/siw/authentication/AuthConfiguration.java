@@ -72,6 +72,7 @@ public class AuthConfiguration {
                     .requestMatchers(HttpMethod.GET, "/", "/index", "/register", "/login", "/css/**", "/images/**", "favicon.ico", "/recipes", "/recipe/**", "/searchRecipes", "/cooks", "/cook/**").permitAll()
                     // CHIUNQUE deve poter inviare i dati per registrarsi o loggarsi
                     .requestMatchers(HttpMethod.POST, "/register", "/login").permitAll()
+                    .requestMatchers("/user/**").permitAll()
                     //Se L'URL inizia con /admin/ puoi entrare 
                     .requestMatchers("/admin/**").hasAnyAuthority(ADMIN_ROLE)
                     //per tutte le altre pagine non menzionate sopra l'utente deve essere per forza loggato per poterci andare

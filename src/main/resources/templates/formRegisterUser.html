@@ -86,6 +86,28 @@
                                 <span class="error-msg" th:if="${#fields.hasErrors('credentials.username')}" th:errors="*{credentials.username}"></span>
                             </div>
                         </div>
+						
+						<div class="col-md-6">
+						    <div class="magic-field">
+						        <label for="dateOfBirth">Data di Nascita</label>
+						        
+						        <div class="field-wrapper">
+						            <i class="fas fa-cake-candles input-icon"></i> 
+						            
+						            <input id="dateOfBirth" 
+						                   type="date" 
+						                   class="form-control" 
+						                   required 
+						                   th:field="${user.dateOfBirth}" 
+						                   placeholder="dd/mm/yyyy"/>
+						        </div>
+						        
+						        <span class="error-msg" 
+						              th:if="${#fields.hasErrors('user.dateOfBirth')}" 
+						              th:errors="*{user.dateOfBirth}">
+						        </span>
+						    </div>
+						</div>
                     
                         <div class="col-md-6">
                             <div class="magic-field">
@@ -98,16 +120,6 @@
                             </div>
                         </div>
                         
-                        <div class="col-md-6">
-                            <div class="magic-field">
-                                <label for="confirm-password">Conferma</label>
-                                <div class="field-wrapper">
-                                    <i class="fas fa-lock input-icon"></i>
-                                    <input id="confirm-password" type="password" class="form-control" required name="confirmPassword" placeholder="Ripeti password"/>
-                                </div>
-                            </div>
-                        </div>
-
                     </div> 
 
                     <div class="action-area text-center mt-4">

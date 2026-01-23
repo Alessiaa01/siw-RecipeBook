@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuova Ricetta Magica</title>
+    <title>Nuova Ricetta </title>
     
     <link rel="stylesheet" th:href="@{/css/formNewRecipe.css}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -32,7 +32,7 @@
         
         <div class="form-title">
             <h1>Crea Nuova Ricetta</h1>
-            <p class="form-subtitle">Aggiungi un nuovo incantesimo culinario al grimorio.</p>
+            
         </div>
 
         <form th:action="@{/formNewRecipe}" th:object="${recipe}" method="POST" id="newRecipeForm">
@@ -43,13 +43,13 @@
 
 			<div class="input-group">
                 <label>Titolo della Ricetta</label>
-                <input type="text" th:field="*{title}" placeholder="Es. Pozione Polisucco..." class="magic-input" required/>
+                <input type="text" th:field="*{title}" placeholder="" class="magic-input" required/>
                 <span style="color: #d32f2f; font-size: 0.9rem;" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
             </div>
 
             <div class="input-group">
                 <label>Breve Descrizione</label>
-                <textarea th:field="*{description}" rows="2" class="magic-textarea" placeholder="Una breve storia di questo piatto..."></textarea>
+                <textarea th:field="*{description}" rows="2" class="magic-textarea" placeholder=""></textarea>
             </div>
 
 			<div class="details-grid">
@@ -77,7 +77,7 @@
                         <option value="Facile">Facile</option>
                         <option value="Media">Media</option>
                         <option value="Difficile">Difficile</option>
-                        <option value="Magica">Magica</option>
+                       
                     </select>
 			    </div>
 			    <div>
@@ -110,7 +110,7 @@
                     </div>
 					
 					<label>Istruzioni passo dopo passo</label>
-                    <textarea th:field="*{procedure}" rows="12" class="magic-textarea" placeholder="Descrivi il rituale di preparazione..." required></textarea>
+                    <textarea th:field="*{procedure}" rows="12" class="magic-textarea" placeholder="Procedimento" required></textarea>
                 </div>
             </div>
 
@@ -125,7 +125,7 @@
             </div>
 
             <div class="footer-buttons">
-                <button type="submit" class="btn-gold">Salva nel Grimorio</button>
+                <button type="submit" class="btn-gold">Salva </button>
                 <a th:href="@{/recipes}" class="btn-gold-outline">Annulla</a>
             </div>
 

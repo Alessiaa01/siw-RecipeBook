@@ -124,7 +124,7 @@ label {
     display: grid; grid-template-columns: 1fr 1.5fr; gap: 40px; margin-top: 30px;
 }
 
-//* ... resto del CSS ... */
+/* ... resto del CSS ... */
 
 /* --- SEZIONE INGREDIENTI AGGIORNATA --- */
 .ingredients-section {
