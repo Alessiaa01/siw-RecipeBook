@@ -7,8 +7,8 @@
     <title>Disney RecipeBook - Elenco Ricette</title>
     
     <link rel="stylesheet" href="/css/recipes.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
@@ -22,14 +22,14 @@
             
             <div class="header-left">
                 
-                <div sec:authorize="hasAuthority('ADMIN')" class="admin-badge">
-                    <a th:href="@{/admin}" class="btn-text">
+                <div sec:authorize="hasAuthority('ADMIN')">
+                    <a th:href="@{/admin/indexAdmin}" class="btn-admin-badge">
                         <i class="fa-solid fa-crown"></i> Gestione Admin
                     </a>
                 </div>
 
                 <div sec:authorize="isAuthenticated() and !hasAuthority('ADMIN')">
-                    <a th:href="@{/myRecipes}" class="btn-gold-outline">
+                    <a th:href="@{/myRecipes}" class="btn-my-recipes">
                         <i class="fa-solid fa-book-open"></i> Le mie ricette
                     </a>
                 </div>
@@ -37,13 +37,18 @@
             
             <div class="header-right">
                 
-                <div sec:authorize="isAuthenticated()" class="user-profile">
+                <div sec:authorize="isAuthenticated()" class="user-profile" style="display: flex; align-items: center; gap: 15px;">
                     <span class="chef-name">
-                        ✨ Chef 
+						<i class="fa-solid fa-user"></i>
                         <span th:if="${currentUser != null}" th:text="${currentUser.name} + ' ' + ${currentUser.surname}">Nome Cognome</span>
                         <span th:if="${currentUser == null}" sec:authentication="name">User</span>
                     </span>
-                    <a th:href="@{/logout}" class="btn-logout">Logout</a>
+                    
+                    <form th:action="@{/logout}" method="post" style="margin: 0;">
+                        <button type="submit" class="btn-logout-header">
+                            Logout <i class="fa-solid fa-right-from-bracket"></i>
+                        </button>
+                    </form>
                 </div>
 
                 <div sec:authorize="!isAuthenticated()" class="guest-actions">
@@ -84,7 +89,7 @@
 
     <div th:if="${#lists.isEmpty(recipes)}" class="empty-message">
         <i class="fa-solid fa-cookie-bite"></i>
-        <p>Oh no! Nessuna ricetta trovata </p>
+        <p>Oh no! Nessuna ricetta trovata.</p>
     </div>
 
     <div class="container">
@@ -125,13 +130,19 @@
                                 <i class="fa-solid fa-users"></i> 
                                 <span th:text="${recipe.servings}">2</span>
                             </span>
-
-                            <span class="meta-item author">
-                                <i class="fa-solid fa-user-pen"></i>
-                                <span th:if="${recipe.author != null}" th:text="${recipe.author.name}">Chef</span>
-                                <span th:unless="${recipe.author != null}">Anonimo</span>
-                            </span>
                         </div>
+
+                        <span class="meta-item author">
+                            <i class="fa-solid fa-user-pen"></i>
+                            
+                            <a th:if="${recipe.author != null}" 
+                               th:href="@{'/user/' + ${recipe.author.id}}" 
+                               class="author-link">
+                               <span th:text="${recipe.author.name}">Chef</span>
+                            </a>
+
+                            <span th:unless="${recipe.author != null}">Anonimo</span>
+                        </span>
                         
                         <div class="date-info" th:if="${recipe.creationDate}">
                             <i class="fa-regular fa-calendar-days"></i>

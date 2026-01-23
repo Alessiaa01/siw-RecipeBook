@@ -358,10 +358,10 @@ public class RecipeController {
     // SEZIONE ADMIN (Generale)
     // -------------------------------------------------------------------------
 
-    @GetMapping("/admin/manageRecipes")
+    @GetMapping("/admin/indexAdmin")
     public String manageRecipes(Model model) {
         model.addAttribute("recipes", recipeService.findAll());
-        return "admin/manageRecipes.html"; 
+        return "admin/indexAdmin.html"; 
     }
 
     // -------------------------------------------------------------------------

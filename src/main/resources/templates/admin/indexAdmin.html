@@ -2,9 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>SiwRecipe - Admin</title>
-    <link rel="stylesheet" href="/css/stile.css" />
+    
     <link rel="stylesheet" href="/css/indexAdmin.css" />
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -23,33 +27,39 @@
                     Benvenuto <span sec:authentication="name">Admin</span>
                 </span>
                 
-                <a th:href="@{/logout}" class="btn-logout">Logout</a>
+                <a th:href="@{/logout}" class="btn-logout">
+                    <i class="fa-solid fa-right-from-bracket"></i> Logout
+                </a>
             </div>
 
         </div>
     </header>
 
     <div class="logo-container">
-        <a href="/"><img src="/images/logo2.png" class="main-logo" /></a>
+        <a href="/"><img src="/images/logo2.png" class="main-logo" onerror="this.style.display='none'"/></a>
         <h1 class="main-title">Pannello di Controllo</h1>
     </div>
-	<div class="dashboard-container">
-	        
-		<div class="dashboard-card">
-		            <span class="icon"><i class="fa-solid fa-book-open"></i></span>
-		            <h2>Ricette</h2>
-		            <p>Aggiungi, modifica o cancella le ricette del sito</p>
-		            <a href="/admin/manageRecipes" class="dashboard-btn">Gestisci ricette</a>
-		        </div>
+    
+    <div class="dashboard-container">
+            
+        <div class="dashboard-card">
+            <span class="icon"><i class="fa-solid fa-book-open"></i></span>
+            <h2>Ricette</h2>
+            <p>Aggiungi, modifica o cancella le ricette del sito</p>
+            <a href="/admin/manageRecipes" class="dashboard-btn">Gestisci ricette</a>
+        </div>
 
-	        <div class="dashboard-card">
-	            <span class="icon"><i class="fa-solid fa-users"></i></span>
-	            <h2>Utenti</h2>
-	            <p>Visualizza gli iscritti e gestisci i ban</p>
-	            <a href="/admin/users" class="dashboard-btn">Gestisci utenti</a>
-	        </div>
+        <div class="dashboard-card">
+            <span class="icon"><i class="fa-solid fa-users"></i></span>
+            <h2>Utenti</h2>
+            <p>Visualizza gli iscritti e gestisci i ban</p>
+            <a href="/admin/users" class="dashboard-btn">Gestisci utenti</a>
+        </div>
+        
+       
+    
 
-	    </div>
+    </div>
    
 </body>
 </html>

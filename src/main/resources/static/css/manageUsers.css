@@ -1,292 +1,317 @@
-/* File: src/main/resources/static/css/manageUsers.css */
+/* ========================================================== */
+/* MANAGEUSERS.CSS - BASATO SUL TUO STILE RECIPES.CSS */
+/* ========================================================== */
 
-/* 0. IMPORTAZIONI E VARIABILI */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:wght@600;700&family=Cormorant+Unicase:wght@400;600;700&family=Great+Vibes&display=swap');
-
+/* --- 1. VARIABILI COLORI E FONT (TUE) --- */
 :root {
-    /* Variabili colori (uguali a indexAdmin) */
-    --primary-color: #8B4513;   /* Marrone Bronzo */
-    --secondary-color: #D4AF37; /* Oro */
-    --text-color: #4E342E;      /* Marrone scuro */
+    /* Palette Celeste (Sfondo) */
+    --celeste-bg: #E1F5FE;       
+    --celeste-accent: #81D4FA;   
     
-    /* Variabili azioni (Tuoi colori originali) */
-    --red-ink: #B71C1C;         
-    --green-ink: #2E7D32;       
-    --ban-bg: #FFCDD2;          
-    --ban-border: #E57373;      
-    --unban-bg: #C8E6C9;        
-    --unban-border: #81C784;    
+    /* Palette Colori Elementi */
+    --marrone-dark: rgb(100, 62, 41);
+    --marrone-text: #5D4037;
+    --oro: #C5A059;
+    --oro-light: #FFF8E1;        
+    --bianco: #FFFFFF;
+    
+    /* Variabili Card */
+    --parchment: #fffbf0;   /* Crema carta antica */
+    --royal-gold: #c5a059;  
+    --royal-gold-shine: #e6c676;
+    
+    --shadow-card: 0 10px 20px rgba(78, 52, 46, 0.1);
+    
+    /* --- FONT --- */
+    --font-title: 'Cinzel Decorative', cursive; 
+    --font-body: 'Cormorant Garamond', serif;   
+    --font-ui: 'Lato', sans-serif;              
 }
+
+/* --- 2. RESET & GLOBAL --- */
+* { box-sizing: border-box; margin: 0; padding: 0; caret-color: var(--oro); }
+
+::-webkit-scrollbar { width: 12px; }
+::-webkit-scrollbar-track { background: var(--celeste-bg); }
+::-webkit-scrollbar-thumb { background-color: var(--oro); border-radius: 20px; border: 3px solid var(--celeste-bg); }
+::-webkit-scrollbar-thumb:hover { background-color: #b08d4b; }
+* { scrollbar-width: thin; scrollbar-color: var(--oro) var(--celeste-bg); }
 
 body {
-    background: radial-gradient(circle at center, #E0F7FA 0%, #B2EBF2 100%);
-    background-attachment: fixed;
-    font-family: 'Cormorant Garamond', serif;
-    margin: 0;
-    color: var(--text-color);
+    font-family: var(--font-body);
+    font-weight: 500; 
+    background-color: var(--celeste-bg);
+    background-image: linear-gradient(to bottom, #E1F5FE 0%, #B3E5FC 100%);
+    background-attachment: fixed; 
+    color: var(--marrone-text);
+    min-height: 100vh;
+}
+
+a { text-decoration: none; transition: 0.3s; }
+ul { list-style: none; }
+
+/* --- 3. HEADER & HERO (IDENTICI AL TUO FILE) --- */
+.main-header {
+    position: sticky; top: 0; z-index: 1000; 
+    background-color: rgba(255, 255, 255, 0.15); 
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3); 
+    padding: 0.8rem 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+.header-content-wrapper { max-width: 100%; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+.header-left, .header-right { display: flex; align-items: center; gap: 15px; }
+.welcome-text { font-family: var(--font-ui); font-weight: 700; color: var(--marrone-dark); font-size: 1rem; }
+
+.hero-section { text-align: center; padding: 2rem 1rem 1rem; }
+.main-logo {
+    max-height: 200px; margin-bottom: 1rem;
+    filter: drop-shadow(0 5px 15px rgba(78, 52, 46, 0.2));
+    animation: magicFloat 4s ease-in-out infinite;
+}
+@keyframes magicFloat { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+
+.main-title {
+    font-family: var(--font-title); color: var(--marrone-dark);
+    font-size: 3rem; margin-bottom: 0.5rem;
+    text-shadow: 1px 1px 0px var(--oro); font-style: italic; 
+}
+
+/* --- BUTTONS (Inclusi i tuoi gradienti) --- */
+.btn-logout-header {
+    background-image: linear-gradient(45deg, #D32F2F 0%, #FF6B6B 50%, #D32F2F 100%);
+    background-size: 200% auto; color: white;
+    border: 1px solid rgba(255,255,255,0.2);
+    font-family: 'Lato', sans-serif; font-weight: 700; text-transform: uppercase; font-size: 0.85rem;
+    padding: 8px 20px; border-radius: 50px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(211, 47, 47, 0.4); 
+}
+.btn-logout-header:hover { background-position: right center; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(211, 47, 47, 0.6); }
+
+.magic-background {
+    position: fixed; bottom: 0; left: 0; width: 100%; height: 300px;
+    background: linear-gradient(to top, rgba(255,255,255,0.8) 0%, transparent 100%);
+    pointer-events: none; z-index: -1;
 }
 
 /* ========================================================== */
-/* HEADER & BARRA NAVIGAZIONE (Stile indexAdmin) */
+/* --- SPECIFIC FOR MANAGE USERS (NUOVO CODICE) --- */
 /* ========================================================== */
-header {
-    background-color: #F8F4E8; 
-    border-bottom: 2px solid var(--secondary-color);
-    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
-    width: 100%; 
-    margin: 0 !important; 
-    padding: 10px 0 !important;
-    position: relative;
-    z-index: 100;
-}
 
-.header-content-wrapper {
-    display: flex;
-    justify-content: space-between; 
-    align-items: center;
-    width: 100%;
-    max-width: 98%; 
+.container.user-container {
+    max-width: 1000px; 
     margin: 0 auto; 
-    padding: 0 20px !important; 
-    
-    /* FIX: Rimuove il box bianco */
-    background: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
+    padding: 0 1.5rem 5rem;
 }
 
-/* ELEMENTI INTERNI HEADER */
-.admin-link-header-left, 
-.user-actions-right {
-    background: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
+/* Pannello Pergamena (Contenitore Tabella) */
+.parchment-panel {
+    background-color: var(--parchment);
+    border-radius: 12px;
+    box-shadow: var(--shadow-card), 0 0 0 1px rgba(197, 160, 89, 0.3);
+    overflow: hidden; /* Per i bordi arrotondati */
+    animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Header della Tabella (Oro) */
+.panel-header {
+    background-image: linear-gradient(45deg, #C5A059 0%, #E6C676 100%);
+    padding: 1.5rem 2rem;
     display: flex;
+    justify-content: space-between;
     align-items: center;
+    border-bottom: 3px solid #b08d4b;
 }
 
-.user-actions-right { gap: 15px; }
-
-/* Bottone Dashboard (Sinistra) */
-.admin-link-header-left a {
-    display: flex; align-items: center; gap: 8px;
-    font-family: 'Cormorant Unicase', serif; font-weight: 700; font-size: 0.95rem;
-    padding: 8px 20px; border-radius: 25px;
-    background-color: #D3B88C; color: #8B4513; border: 1px solid #B8860B; 
-    transition: all 0.3s ease; text-decoration: none;
-}
-.admin-link-header-left a:hover {
-    background-color: var(--primary-color); color: white;
-    transform: scale(1.05); box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+.panel-header h3 {
+    font-family: var(--font-title);
+    color: var(--marrone-dark);
+    font-size: 1.8rem;
+    margin: 0;
+    display: flex; align-items: center; gap: 10px;
 }
 
-/* Nome Utente */
-.chef-name {
-    font-family: 'Cinzel Decorative', serif; font-weight: 700; color: #8B4513; font-size: 1.1rem; margin-right: 5px;
-}
-.chef-name span { color: var(--secondary-color); margin-left: 5px; text-transform: uppercase; }
-
-/* Bottone Logout */
-.btn-logout {
-    display: inline-block; padding: 6px 18px; border-radius: 20px;
-    font-family: 'Cinzel Decorative', serif; font-weight: bold; font-size: 0.9rem;
-    transition: all 0.3s ease; cursor: pointer;
-    background-color: #D3B88C; color: #4a4a4a; border: 1px solid #B8860B; text-decoration: none;
-}
-.btn-logout:hover {
-    background-color: #A52A2A; color: white; transform: scale(1.05);
+.user-count {
+    background: rgba(255,255,255,0.3);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-family: var(--font-ui);
+    font-weight: bold;
+    color: var(--marrone-dark);
 }
 
-/* ========================================================== */
-/* HERO SECTION (Logo e Titolo - NO RIQUADRI) */
-/* ========================================================== */
-.hero-section {
-    text-align: center;
-    margin-top: 30px;
-    margin-bottom: 40px;
-    
-    /* TRASPARENZA TOTALE */
-    background: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
-    padding: 0 !important;
+/* Tabella Magica */
+.table-responsive {
+    overflow-x: auto;
 }
 
-/* Rimuove riquadri dai div interni */
-.hero-section div {
-    background: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
-    padding: 0 !important;
-}
-
-.hero-logo {
-    width: 140px;
-    filter: drop-shadow(0 5px 10px rgba(212, 175, 55, 0.3));
-    transition: transform 0.5s ease;
-}
-.hero-logo:hover { transform: rotate(5deg) scale(1.1); }
-
-/* TITOLO CON LINEA SOTTSTANTE */
-.hero-title {
-   font-family: 'Cormorant Garamond', serif;
-    font-size: 4.5rem;
-    color: var(--primary-color);
-    margin: 10px 0;
-    text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.6);
-    position: relative;
-}
-
-/* NUOVA REGOLA: La linea sfumata sotto il titolo */
-.hero-title::after {
-    content: '';
-    display: block;
-    height: 2px;
-    /* Sfumatura: trasparente -> oro -> trasparente */
-    background: linear-gradient(to right, transparent, #D4AF37, transparent);
-    width: 50%;
-    margin: 15px auto 0 auto;
-}
-
-/* Bottone 'Torna al Pannello' (Stile uguale a Dashboard) */
-.back-link {
-    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-    font-family:'Cormorant Unicase', serif;font-weight: 700; font-size: 0.95rem;
-    padding: 8px 20px; border-radius: 25px; 
-    background-color: #D3B88C; color: #8B4513; border: 1px solid #B8860B; 
-    transition: all 0.3s ease; text-decoration: none;
-}
-.back-link:hover {
-    background-color: var(--primary-color); color: white; transform: scale(1.05); box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
-}
-
-/* ========================================================== */
-/* UNICO CONTENITORE (Trasparente - Senza Riquadro) */
-/* ========================================================== */
-.users-container {
-    max-width: 1000px;
-    margin: 0 auto 50px auto; 
-    
-    background: transparent !important;
-    background-image: none !important;
-    border: none !important;
-    box-shadow: none !important;
-    padding: 10px 0 !important;       
-}
-
-/* ========================================================== */
-/* TABELLA PULITA (Direttamente sullo sfondo) */
-/* ========================================================== */
-.users-table {
+.magic-table {
     width: 100%;
     border-collapse: collapse;
+    font-family: var(--font-ui);
 }
 
-.users-table th {
-    font-family: 'Cinzel Decorative', serif;
-    color: #8B4513; 
-    font-size: 1.2rem;
+.magic-table th {
+    background-color: rgba(197, 160, 89, 0.1);
+    color: var(--marrone-dark);
+    font-family: var(--font-title);
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 1rem 1.5rem;
     text-align: left;
-    padding: 15px;
-    border-bottom: 3px solid #D4AF37; 
+    border-bottom: 2px solid rgba(197, 160, 89, 0.3);
 }
 
-.users-table td {
-    padding: 15px;
-    border-bottom: 1px solid rgba(139, 69, 19, 0.2); 
-    font-size: 1.15rem;
-    color: var(--text-color);
-}
-
-.users-table tr:hover td {
-    background-color: rgba(255, 255, 255, 0.4); 
-    border-radius: 10px;
-}
-
-/* ========================================================== */
-/* STATI E BOTTONI (I tuoi originali) */
-/* ========================================================== */
-.status-active { color: var(--green-ink); font-weight: 700; font-style: italic; }
-.status-banned { color: var(--red-ink); font-weight: 700; text-decoration: line-through; opacity: 0.8; }
-
-.action-btn {
-    border: none;
-    padding: 6px 15px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 700;
+.magic-table td {
+    padding: 1.2rem 1.5rem;
+    color: var(--marrone-text);
+    border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+    vertical-align: middle;
     font-size: 1rem;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-.action-btn:active { transform: scale(0.95); }
 
-.btn-ban { background-color: var(--ban-bg); color: var(--red-ink); border: 1px solid var(--ban-border); }
-.btn-ban:hover { background-color: #EF9A9A; }
+/* Hover sulla riga */
+.magic-table tbody tr { transition: background-color 0.2s; }
+.magic-table tbody tr:hover {
+    background-color: rgba(197, 160, 89, 0.1);
+}
 
-.btn-unban { background-color: var(--unban-bg); color: #1B5E20; border: 1px solid var(--unban-border); }
-.btn-unban:hover { background-color: #A5D6A7; }
+/* Avatar Circle */
+.user-avatar-circle {
+    width: 45px; height: 45px;
+    background-color: var(--oro);
+    color: white;
+    border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
+    font-family: var(--font-title);
+    font-size: 1.4rem;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    border: 2px solid #fff;
+}
 
-.no-action-text { font-style: italic; color: #aaa; font-size: 0.9rem; }
+/* Username Font */
+.font-title {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--marrone-dark);
+}
 
-
-/* ========================================================== */
-/* CONSIGLI EXTRA: BADGE RUOLI E ICONE AZIONI */
-/* ========================================================== */
-
-/* Stile per il "Timbro" del Ruolo */
+/* Badge Ruoli */
 .role-badge {
     padding: 5px 12px;
-    border-radius: 15px;
-    font-size: 0.85rem;
-    font-family: 'Cormorant Unicase', serif; 
-    font-weight: 700;
-    letter-spacing: 0.5px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 800;
     text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-block;
 }
 
-/* Colori specifici per i ruoli */
-.role-admin {
-    background-color: rgba(212, 175, 55, 0.2); /* Oro tenue */
-    color: #8B4513;
-    border: 1px solid #D4AF37;
+.badge-admin {
+    background-color: #E3F2FD;
+    color: #1565C0;
+    border: 1px solid #90CAF9;
 }
 
-.role-user {
-    background-color: rgba(139, 69, 19, 0.1); /* Marrone tenue */
-    color: #5D4037;
-    border: 1px solid rgba(139, 69, 19, 0.3);
+.badge-user {
+    background-color: #FFF3E0;
+    color: #E65100;
+    border: 1px solid #FFCC80;
 }
 
-/* Modifica ai Bottoni per farli rotondi (Icone) */
-.action-btn {
-    width: 38px;       /* Larghezza fissa */
-    height: 38px;      /* Altezza fissa */
-    border-radius: 50%; /* Cerchio perfetto */
-    padding: 0;        /* Rimuovi padding testo */
+/* Bottone Delete */
+.btn-icon-delete {
+    width: 35px; height: 35px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #D32F2F;
+    border: 1px solid transparent;
+    transition: all 0.3s;
+    background-color: rgba(211, 47, 47, 0.1);
+}
+
+.btn-icon-delete:hover {
+    background-color: #D32F2F;
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 3px 10px rgba(211, 47, 47, 0.3);
+}
+
+.text-right { text-align: right; }
+.empty-row { text-align: center; padding: 3rem; font-style: italic; color: #999; }
+
+/* --- Nuovi Bottoni Magici --- */
+
+/* Stile base per entrambi i bottoni */
+.btn-magic {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
+    gap: 8px; /* Spazio tra icona e testo */
+    padding: 8px 16px;
+    border: none;
+    border-radius: 30px; /* Molto arrotondati */
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Transizione fluida */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Ombra leggera iniziale */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Effetto Hover generale */
+.btn-magic:hover {
+    transform: translateY(-3px) scale(1.02); /* Si alza e si ingrandisce leggermente */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3); /* Ombra più marcata */
+}
+
+/* Effetto Click */
+.btn-magic:active {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+/* Stile specifico per il bottone BLOCCA (Rosso sfumato) */
+.btn-ban-magic {
+    /* Gradiente dal rosso vivo a un rosso più scuro */
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+}
+
+/* Stile specifico per il bottone ATTIVA (Verde sfumato) */
+.btn-unban-magic {
+    /* Gradiente dal verde smeraldo a un verde più scuro */
+    background: linear-gradient(135deg, #00b09b, #96c93d);
+}
+
+/* Icone dentro i bottoni */
+.btn-magic i {
     font-size: 1rem;
-    margin-left: 5px;
 }
 
-/* ========================================================== */
-/* FIX FINALE: Rimuove i riquadri bianchi dai pulsanti (Form) */
-/* ========================================================== */
-
-/* Rende trasparenti i contenitori dei bottoni */
-.users-table td form,
-.users-table td div {
-    background: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    display: inline-block; /* Mantiene i bottoni allineati */
+/* Tag per l'utente corrente (Tu) */
+.current-user-tag {
+    font-size: 0.85rem;
+    color: var(--marrone-dark);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    opacity: 0.7;
 }
 
-
+.status-badge.badge-active {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: bold;
+}

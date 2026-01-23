@@ -2,146 +2,169 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="'Modifica Ricetta: ' + ${recipe.title}">Modifica Ricetta</title>
+    <title th:text="'Modifica: ' + ${recipe.title}">Modifica Ricetta</title>
+    
     <link rel="stylesheet" th:href="@{/css/editRecipe.css}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <div class="page-frame"></div>
-
-    <div class="main-container">
+    <div class="enchanted-container">
         
-        <div class="magic-header">
-            <div class="header-text">
-                <h1>Modifica la Ricetta</h1>
-                <p class="subtitle">Aggiorna la Ricetta</p>
-                <div class="gold-divider"></div>
-            </div>
-            
-            <div class="header-image-preview">
-                <div class="polaroid-frame">
-                    <img id="preview-img" th:src="${recipe.imageUrl} ? ${recipe.imageUrl} : '/images/placeholder-piatto.jpg'" alt="Anteprima">
+        <div class="recipe-book-card">
+            <div class="card-content-wrapper">
+                
+                <div class="header-decoration">
+                    <h1>Modifica Ricetta</h1>
+                    <p class="subtitle" th:text="${recipe.title}">Nome Ricetta</p>
                 </div>
-                <span class="img-label">Sostituisci Ricetta Attuale</span>
+
+                <form th:action="@{'/recipe/update/' + ${recipe.id}}" th:object="${recipe}" method="post" id="editForm">
+                    
+                    <div class="form-grid-layout">
+                        
+                        <div class="left-col">
+                            
+                            <div class="magic-field">
+                                <label>Titolo Ricetta</label>
+                                <div class="field-wrapper">
+                                    <i class="fa-solid fa-heading input-icon"></i>
+                                    <input type="text" th:field="*{title}" class="form-control" placeholder="Es. Torta di Mele"/>
+                                </div>
+                            </div>
+
+                            <div class="magic-field">
+                                <label>Descrizione Breve</label>
+                                <div class="field-wrapper">
+                                    <i class="fa-solid fa-quote-left input-icon"></i>
+                                    <input type="text" th:field="*{description}" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                
+                                <div class="magic-field">
+                                    <label>Prep. (min)</label>
+                                    <div class="field-wrapper">
+                                        <i class="fa-regular fa-clock input-icon"></i>
+                                        <input type="number" th:field="*{preparationTime}" class="form-control"/>
+                                    </div>
+                                </div>
+
+                                <div class="magic-field">
+                                    <label>Cottura (min)</label>
+                                    <div class="field-wrapper">
+                                        <i class="fa-solid fa-fire-burner input-icon"></i>
+                                        <input type="number" th:field="*{cookingTime}" class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                <div class="magic-field">
+                                    <label>Difficoltà</label>
+                                    <div class="field-wrapper">
+                                        <i class="fa-solid fa-gauge-high input-icon"></i>
+                                        <select th:field="*{difficulty}" class="form-control" style="padding-left: 45px;">
+                                            <option value="Facile">Facile</option>
+                                            <option value="Media">Media</option>
+                                            <option value="Difficile">Difficile</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="magic-field">
+                                    <label>Porzioni</label>
+                                    <div class="field-wrapper">
+                                        <i class="fa-solid fa-utensils input-icon"></i>
+                                        <input type="number" th:field="*{servings}" class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
+                             
+                             <div class="magic-field">
+                                <label>Categoria</label>
+                                <div class="field-wrapper">
+                                    <i class="fa-solid fa-list input-icon"></i>
+                                    <select th:field="*{category}" class="form-control" style="padding-left: 45px;">
+                                        <option value="Antipasto">Antipasto</option>
+                                        <option value="Primo">Primo</option>
+                                        <option value="Secondo">Secondo</option>
+                                        <option value="Dolce">Dolce</option>
+                                        <option value="Altro">Altro</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="magic-field">
+                                <label>URL Immagine</label>
+                                <div class="field-wrapper">
+                                    <i class="fa-regular fa-image input-icon"></i>
+                                    <input type="text" th:field="*{imageUrl}" id="imgUrlInput" oninput="updatePreview()" class="form-control"/>
+                                </div>
+                            </div>
+                            
+                            <div class="image-preview-box">
+                                <img id="preview-img" 
+                                     th:src="${recipe.imageUrl} ? ${recipe.imageUrl} : '/images/placeholder-piatto.jpg'" 
+                                     class="preview-frame" alt="Anteprima">
+                            </div>
+
+                        </div>
+
+                        <div class="right-col">
+                            
+                            <div class="magic-field">
+                                <label>Ingredienti</label>
+                                <div class="ingredients-section">
+                                    
+                                    <div class="ing-list-scroll">
+                                        <div th:each="ing : ${recipe.ingredients}" class="ing-row">
+                                            <span class="ing-text">
+                                                <i class="fa-solid fa-pepper-hot"></i>
+                                                <span th:text="${ing.name} + ' (' + ${ing.quantity} + ' ' + ${ing.unit} + ')'"></span>
+                                            </span>
+                                            <button type="submit" 
+                                                    th:form="'form-delete-' + ${ing.id}"
+                                                    class="btn-delete-ing"
+                                                    title="Rimuovi">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="add-ing-mini">
+                                        <input type="text" name="name" placeholder="Nome" class="input-mini" style="flex: 2;"/>
+                                        <input type="text" name="quantity" placeholder="Qt." class="input-mini" style="flex: 1; border-left: 1px solid #eee; padding-left: 5px;"/>
+                                        <input type="text" name="unit" placeholder="Unità" class="input-mini" style="flex: 1; border-left: 1px solid #eee; padding-left: 5px;"/>
+                                        
+                                        <button type="submit" 
+                                                th:formaction="@{'/recipe/' + ${recipe.id} + '/ingredient/add'}" 
+                                                formnovalidate
+                                                class="btn-add-mini"
+                                                title="Aggiungi">
+                                            <i class="fa-solid fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="magic-field">
+                                <label>Procedimento</label>
+                                <div class="field-wrapper">
+                                    <textarea th:field="*{procedure}" class="form-control" placeholder="Descrivi i passaggi..."></textarea>
+                                </div>
+                            </div>
+
+                        </div> </div> </form>
+
+                <div class="form-actions">
+                    <a th:href="@{'/recipe/' + ${recipe.id}}" class="btn-outline">Annulla</a>
+                    <button type="submit" form="editForm" class="btn-royal">Salva Modifiche</button>
+                </div>
+
             </div>
         </div>
-
-        <form th:action="@{'/recipe/update/' + ${recipe.id}}" th:object="${recipe}" method="post" class="scroll-parchment" id="editForm">
-            
-            <h2 class="scroll-title">Dettagli Principali</h2>
-            
-            <div class="input-group-full">
-                <label>Titolo </label>
-                <input type="text" th:field="*{title}" placeholder="" class="magic-input"/>
-            </div>
-
-            <div class="input-group-full">
-                <label>Breve Descrizione </label>
-                <input type="text" th:field="*{description}" class="magic-input"/>
-            </div>
-
-            <div class="scroll-grid">
-                <div>
-                    <label>Categoria</label>
-                    <select th:field="*{category}" class="magic-input">
-                        <option value="Antipasto">Antipasto</option>
-                        <option value="Primo">Primo</option>
-                        <option value="Secondo">Secondo</option>
-                        <option value="Dolce">Dolce</option>
-                        <option value="Altro">Altro</option>
-                    </select>
-                </div>
-                
-                <div>
-                    <label>Tempo Preparazione (min)</label>
-                    <input type="number" th:field="*{preparationTime}" class="magic-input"/>
-                </div>
-
-                <div>
-                    <label>Tempo Cottura (min)</label>
-                    <input type="number" th:field="*{cookingTime}" class="magic-input"/>
-                </div>
-                <div>
-                    <label>Difficoltà</label>
-                    <input type="text" th:field="*{difficulty}" class="magic-input"/>
-                </div>
-                
-                <div>
-                    <label>Porzioni </label>
-                    <input type="number" th:field="*{servings}" class="magic-input"/>
-                </div>
-            </div>
-            
-            <div class="spacer"></div>
-
-            <div class="columns-container">
-                
-                <div class="ingredients-box">
-				    <h3>Ingredienti</h3>
-				    
-				    <div class="ing-list-scroll">
-				        <div th:each="ing : ${recipe.ingredients}" class="ing-row">
-				            
-				            <i class="fa-solid fa-star star-icon"></i>
-				            <span th:text="${ing.name} + ' (' + ${ing.quantity} + ' ' + ${ing.unit} + ')'">Ingrediente</span>
-				            
-                            <button type="submit" 
-                                    th:form="'form-delete-' + ${ing.id}"
-                                    class="mini-del-btn"
-                                    style="border: none; background: transparent; cursor: pointer; color: #8B4513; font-weight: bold; font-size: 1.2rem;"
-                                    title="Rimuovi Ingrediente">
-                                ×
-                            </button>
-				        </div>
-				    </div>
-				    
-                    <div class="add-ing-mini" style="margin-top: 10px; display: flex; gap: 5px;">
-                        <input type="text" name="name" placeholder="Nome" class="magic-input" style="flex: 2;"/>
-				        <input type="text" name="quantity" placeholder="Qt." class="magic-input" style="flex: 1;"/>
-				        <input type="text" name="unit" placeholder="Unità" class="magic-input" style="flex: 1;"/>
-				        
-                        <button type="submit" 
-				                th:formaction="@{'/recipe/' + ${recipe.id} + '/ingredient/add'}" 
-                                formnovalidate
-				                class="btn-add-ing" 
-				                style="cursor: pointer; background: #F3E5AB; border: 1px solid #8B4513; border-radius: 5px; font-weight: bold;"
-				                title="Aggiungi alla lista">
-				            +
-				        </button>
-				    </div>
-				</div>
-
-                <div class="procedure-box">
-                    <h3>Tag </h3>
-                    <div class="checkbox-wrapper">
-                        <label class="magic-check"><input type="checkbox" value="Vegetariano" th:field="*{tags}"> Vegetariano</label>
-                        <label class="magic-check"><input type="checkbox" value="Vegano" th:field="*{tags}"> Vegano</label>
-                        <label class="magic-check"><input type="checkbox" value="Senza Glutine" th:field="*{tags}"> No Glutine</label>
-                        <label class="magic-check"><input type="checkbox" value="Senza Lattosio" th:field="*{tags}"> No Lattosio</label>
-                    </div>
-                                    
-                    <h3>Procedimento</h3>
-                    <textarea th:field="*{procedure}" rows="10" class="magic-textarea" required></textarea>
-                    
-                    <div class="gold-circles">
-                        <span></span><span></span><span></span><span></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="input-group-full" style="margin-top: 20px;">
-                <label>URL Immagine (Copia qui il link)</label>
-                <input type="text" th:field="*{imageUrl}" id="imgUrlInput" oninput="updatePreview()" class="magic-input"/>
-            </div>
-
-        </form>
-
-		<div class="footer-buttons">
-		    <button type="submit" form="editForm" class="btn-oval gold">Salva Modifiche</button>
-            <a th:href="@{'/recipe/' + ${recipe.id}}" class="btn-oval beige">Annulla</a>
-		</div>
-
     </div>
 
     <div th:each="ing : ${recipe.ingredients}">

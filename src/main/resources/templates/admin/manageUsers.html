@@ -1,110 +1,144 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>SiwRecipe - Registro Iscritti</title>
-    <link rel="stylesheet" href="/css/stile.css" />
-    <link rel="stylesheet" href="/css/manageUsers.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-
-<body>
+    <meta charset="UTF-8">
+    <title>Gestione Utenti - RecipeBook</title>
     
-    <header>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" th:href="@{/css/manageUsers.css}" />
+</head>
+<body>
+
+    <header class="main-header">
         <div class="header-content-wrapper">
-             
-             <div class="admin-link-header-left">
-                <a href="/">
-                    <i class="fa-solid fa-house"></i> Home 
+            <div class="header-left">
+                <a th:href="@{/}" class="welcome-text">
+                    <i class="fas fa-home"></i> Home
                 </a>
-             </div>
-             
-             <div class="user-actions-right" th:if="${userDetails}">
-                <span class="chef-name">
-                    Admin: <span th:text="${userDetails.username}">User</span>
-                </span>
-                <a href="/logout" class="btn-logout">Logout</a>
+            </div>
+
+            <div class="header-right">
+                <span class="welcome-text">Area Amministratore</span>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn-logout-header">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </form>
             </div>
         </div>
     </header>
 
     <div class="hero-section">
-        <div class="logo-container">
-            <a href="/"><img src="/images/logo2.png" class="hero-logo" /></a>
+        <div class="main-logo">
+          
         </div>
-        
-        <h1 class="hero-title">Registro degli Iscritti</h1>
-        </div>
+        <h1 class="main-title">Registro Utenti</h1>
+    </div>
 
-    <div class="users-container">
-        <table class="users-table">
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Nome e Cognome</th>
-                    <th>Ruolo</th>
-                    <th>Stato</th>
-                    <th style="text-align: right;">Azioni</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="cred : ${credentialsList}">
-                    
-                    <td style="font-weight: bold;">
-                        <span th:text="${cred.username}">user123</span>
-                    </td>
-                    
-                    <td th:text="${cred.user.name} + ' ' + ${cred.user.surname}">Mario Rossi</td>
+    <div class="container user-container">
+        <div class="parchment-panel">
+            <div class="panel-header">
+                <h3><i class="fas fa-scroll"></i> Elenco Iscritti</h3>
+                <span class="user-count" th:text="${credentialsList != null ? credentialsList.size() + ' Utenti' : '0 Utenti'}">0 Utenti</span>
+            </div>
 
-                    <td>
-                        <span th:text="${cred.role}" 
-                              class="role-badge"
-                              th:classappend="${cred.role == 'ADMIN' ? 'role-admin' : 'role-user'}">
-                            DEFAULT
-                        </span>
-                    </td>
+            <div class="table-responsive">
+                <table class="magic-table">
+                    <thead>
+                        <tr>
+                            <th>Avatar</th>
+                            <th>Nome Utente</th>
+                            <th>Email</th>
+                            <th>Ruolo</th>
+                            <th>Stato</th> <th class="text-right">Azioni</th>
+                        </tr>
+                    </thead>
                     
-                    <td>
-                        <span th:if="${cred.enabled}" class="status-active">Attivo</span>
-                        <span th:unless="${cred.enabled}" class="status-banned">Bannato</span>
-                    </td>
-
-                    <td style="text-align: right;">
-                        <div th:if="${cred.role != 'ADMIN'}" style="display:inline-block;">
-                            <form th:if="${cred.enabled}" 
-                                  th:action="@{'/admin/users/' + ${cred.username} + '/ban'}" 
-                                  method="POST" style="display:inline;">
-                                <button type="submit" class="action-btn btn-ban" title="Banna Utente">
-                                    <i class="fa-solid fa-lock"></i>
-                                </button>
-                            </form>
+                    <tbody>
+                        <tr th:each="user : ${credentialsList}" 
+                            th:classappend="${!user.enabled} ? 'row-banned' : ''">
                             
-                            <form th:unless="${cred.enabled}" 
-                                  th:action="@{'/admin/users/' + ${cred.username} + '/unban'}" 
-                                  method="POST" style="display:inline;">
-                                <button type="submit" class="action-btn btn-unban" title="Riattiva Utente">
-                                    <i class="fa-solid fa-unlock"></i>
-                                </button>
-                            </form>
-                        </div>
-                        
-                        <span th:if="${cred.role == 'ADMIN'}" class="no-action-text">
-                            <i class="fa-solid fa-crown" style="color: #D4AF37;"></i>
-                        </span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                            <td>
+                                <div class="user-avatar-circle">
+                                    <span th:text="${#strings.substring(user.username,0,1).toUpperCase()}">U</span>
+                                </div>
+                            </td>
+                            
+                            <td class="font-title" th:text="${user.username}"
+                                th:style="${!user.enabled} ? 'text-decoration: line-through; color: #999;' : ''">
+                                MarioRossi
+                            </td>
+                            
+                            <td th:text="${user.user != null ? user.user.email : 'N/A'}">email@example.com</td>
+                            
+                            <td>
+                                <span class="role-badge" 
+                                      th:classappend="${user.role == 'ADMIN'} ? 'badge-admin' : 'badge-user'"
+                                      th:text="${user.role}">USER</span>
+                            </td>
 
-        <div th:if="${credentialsList.isEmpty()}" style="text-align: center; padding: 30px; font-style: italic; color: #888;">
-            Nessun iscritto presente nel registro.
+                            <td>
+                                <span th:if="${user.enabled}" class="status-badge badge-active">
+                                    <i class="fas fa-check-circle"></i> Attivo
+                                </span>
+                                <span th:if="${!user.enabled}" class="badge-banned">
+                                    <i class="fas fa-user-slash"></i> Disabilitato
+                                </span>
+                            </td>
+                            
+							<td class="text-right">
+							    <div class="action-buttons" style="display: flex; justify-content: flex-end; gap: 10px;">
+							        
+							        <div th:if="${user.username != #authentication.name}" style="display: flex; gap: 10px;">
+							            
+							            <form th:if="${user.enabled}" 
+							                  th:action="@{'/admin/users/' + ${user.username} + '/ban'}" 
+							                  method="post" style="margin:0;">
+							                
+							                <button type="submit" class="btn-magic btn-ban-magic" 
+							                        onclick="return confirm('Sei sicuro di voler bloccare l\'accesso a questo utente nel regno?');">
+							                    <i class="fas fa-user-slash"></i>
+							                    <span>Blocca</span>
+							                </button>
+							            </form>
+
+							            <form th:if="${!user.enabled}" 
+							                  th:action="@{'/admin/users/' + ${user.username} + '/unban'}" 
+							                  method="post" style="margin:0;">
+							                  
+							                <button type="submit" class="btn-magic btn-unban-magic" 
+							                        onclick="return confirm('Vuoi riammettere questo utente nel regno?');">
+							                    <i class="fas fa-user-check"></i>
+							                    <span>Attiva</span>
+							                </button>
+							            </form>
+
+							        </div>
+
+							        <span th:if="${user.username == #authentication.name}" 
+							              class="current-user-tag">
+							            <i class="fas fa-user-circle"></i> (Tu)
+							        </span>
+							    </div>
+							</td>
+                        </tr>
+                        
+                        <tr th:if="${credentialsList == null or credentialsList.empty}">
+                            <td colspan="6" class="empty-row">
+                                <i class="fas fa-wind"></i> Nessun utente trovato nel regno.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
-    <div style="text-align: center; margin-bottom: 60px;">
-        <a href="/admin" class="back-link">
-            <i class="fa-solid fa-arrow-left"></i> Torna indietro
-        </a>
-    </div>
-
+    <div class="magic-background"></div>
 </body>
 </html>

@@ -1,290 +1,198 @@
-/* File: src/main/resources/static/css/indexAdmin.css */
-
 /* ========================================================== */
-/* STILE "FIABA DISNEY" - DASHBOARD ADMIN */
+/* INDEX ADMIN.CSS - ADATTATO AI TUOI NOMI CLASSE */
 /* ========================================================== */
 
-/* 0. VARIABILI COLORI */
+/* --- 1. VARIABILI & FONTS --- */
 :root {
-    --primary-color: #8B4513;   /* Marrone Bronzo */
-    --secondary-color: #D4AF37; /* Oro */
-    --accent-color: #B2EBF2;    /* Celeste chiaro */
-    --box-shadow-color: rgba(0,0,0,0.1);
+    --celeste-bg: #E1F5FE;       
+    --marrone-dark: rgb(100, 62, 41);
+    --marrone-text: #5D4037;
+    --oro: #C5A059;
+    --oro-light: #FFF8E1;        
+    --parchment: #fffbf0;   
+    
+    --font-title: 'Cinzel Decorative', cursive; 
+    --font-body: 'Cormorant Garamond', serif;   
+    --font-ui: 'Lato', sans-serif;              
 }
 
-/* 1. FONT MAGICI */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Cormorant+Unicase:wght@400;600;700&family=Great+Vibes&display=swap');
+/* --- 2. RESET & BODY --- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* 2. SFONDO E BODY */
 body {
-    margin: 0 !important;
-    padding: 0 !important;
-    background: radial-gradient(circle at center, #E0F7FA 0%, #B2EBF2 100%);
-    background-attachment: fixed;
+    font-family: var(--font-body);
+    font-weight: 500; 
+    background-color: var(--celeste-bg);
+    background-image: linear-gradient(to bottom, #E1F5FE 0%, #B3E5FC 100%);
+    background-attachment: fixed; 
+    color: var(--marrone-text);
     min-height: 100vh;
-    font-family: 'Cormorant Garamond', serif;
-    color: #5D4037;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-sizing: border-box;
 }
 
-/* Link generici */
-a { text-decoration: none; color: inherit; }
+a { text-decoration: none; transition: 0.3s; }
 
-/* ========================================================== */
-/* 3. HEADER & BARRA NAVIGAZIONE */
-/* ========================================================== */
+/* --- 3. HEADER (Uso il tag header generico) --- */
 header {
-    background-color: #F8F4E8; 
-    border-bottom: 2px solid var(--secondary-color);
-    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
-    width: 100%; 
-    margin: 0 !important; 
-    padding: 10px 0 !important;
-    position: relative;
-    z-index: 100;
+    position: sticky; top: 0; z-index: 1000; 
+    background-color: rgba(255, 255, 255, 0.15); 
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px); 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3); 
+    padding: 0.8rem 2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
 }
 
 .header-content-wrapper {
-    display: flex;
-    justify-content: space-between; 
-    align-items: center;
-    width: 100%;
-    max-width: 98%; 
-    margin: 0 auto; 
-    padding: 0 20px !important; 
-    
-    /* FIX: Rimuove il box bianco ereditato da stile.css */
-    background: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
+    max-width: 100%; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
 }
 
-/* --- LATO SINISTRO (Admin Link style) --- */
-
-/* NUOVA REGOLA per il contenitore del bottone Home */
-.admin-link-header-left {
-    background: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
-}
-
+/* --- 4. TASTO HOME (Sinistra) --- */
 .admin-link-header-left a {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-family: 'Cormorant Unicase', serif;
-    font-weight: 700;
-    font-size: 0.95rem;
-    padding: 8px 20px;
-    border-radius: 25px;
-    background-color: #D3B88C; 
-    color: #8B4513; 
-    border: 1px solid #B8860B; 
+    /* Stile Bottone Oro Gradient */
+    background-image: linear-gradient(45deg, #C5A059 0%, #E6C676 50%, #C5A059 100%);
+    background-size: 200% auto; 
+    color: white;
+    font-family: var(--font-ui); font-weight: 700;
+    text-transform: uppercase; font-size: 0.85rem;
+    padding: 8px 20px; border-radius: 50px; 
+    display: inline-flex; align-items: center; gap: 8px;
+    box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4); 
     transition: all 0.3s ease;
 }
 
 .admin-link-header-left a:hover {
-    background-color: var(--primary-color);
-    color: white;
-    transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+    background-position: right center; transform: translateY(-2px); 
+    box-shadow: 0 6px 20px rgba(197, 160, 89, 0.6); 
 }
 
-/* --- LATO DESTRO (Utente e Bottoni) --- */
+/* --- 5. UTENTE & LOGOUT (Destra) --- */
 .user-actions-right {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    
-    /* FIX: Rimuove il box bianco ereditato da stile.css */
-    background: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
-}
-/* Testo Benvenuto */
-.chef-name {
-    font-family: 'Cinzel Decorative', serif;
-    font-weight: 700;
-    color: #8B4513;
-    font-size: 1.1rem;
-    margin-right: 5px;
-}
-.chef-name span {
-    color: var(--secondary-color);
-    margin-left: 5px;
-    text-transform: uppercase;
+    display: flex; align-items: center; gap: 15px;
 }
 
-/* STILE DEL BOTTONE LOGOUT */
-/* Questo stile assicura che appaia come un bottone e non solo testo */
+.chef-name {
+    font-family: var(--font-ui); font-weight: 700;
+    color: var(--marrone-dark);
+}
+
+/* Tasto Logout (Stile Rosso Gradient) */
 .btn-logout {
-    display: inline-block;
-    padding: 6px 18px;
-    border-radius: 20px;
-    font-family: 'Cinzel Decorative', serif;
-    font-weight: bold;
-    font-size: 0.9rem;
+    background-image: linear-gradient(45deg, #D32F2F 0%, #FF6B6B 50%, #D32F2F 100%);
+    background-size: 200% auto;
+    color: white;
+    font-family: var(--font-ui); font-weight: 700;
+    text-transform: uppercase; font-size: 0.85rem;
+    padding: 8px 20px; border-radius: 50px;
+    display: inline-flex; align-items: center; gap: 8px;
     transition: all 0.3s ease;
-    cursor: pointer;
-    
-    /* Colori del bottone */
-    background-color: #D3B88C; 
-    color: #4a4a4a;
-    border: 1px solid #B8860B; /* Aggiunto bordo per definirlo meglio */
-    text-decoration: none; /* Rimuove sottolineatura tipica dei link */
+    box-shadow: 0 4px 15px rgba(211, 47, 47, 0.4); 
 }
 
 .btn-logout:hover {
-    background-color: #A52A2A; /* Diventa rosso scuro al passaggio */
-    color: white;
-    transform: scale(1.05);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    background-position: right center; transform: translateY(-2px); 
+    box-shadow: 0 6px 20px rgba(211, 47, 47, 0.6); 
 }
 
-/* ... resto del CSS per .chef-name e .btn-logout rimane uguale ... */
-
-/* ========================================================== */
-/* 4. LOGO FLUTTUANTE E TITOLI (NO BOX BIANCO) */
-/* ========================================================== */
+/* --- 6. LOGO & TITOLO --- */
 .logo-container {
     text-align: center;
-    margin: 30px 0 10px 0;
-    
-    /* Assicuriamoci che il contenitore sia trasparente */
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
+    padding: 2rem 1rem 1rem;
 }
 
 .main-logo {
-    width: 200px; 
-    height: auto;
-    filter: drop-shadow(0 5px 15px rgba(212, 175, 55, 0.4));
-    animation: floatLogo 6s ease-in-out infinite; 
+    max-height: 180px;
+    filter: drop-shadow(0 5px 15px rgba(78, 52, 46, 0.2));
+    animation: magicFloat 4s ease-in-out infinite;
 }
 
-@keyframes floatLogo {
+@keyframes magicFloat {
     0% { transform: translateY(0px); }
     50% { transform: translateY(-10px); }
     100% { transform: translateY(0px); }
 }
 
 .main-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 4.5rem;
-    color: #8B4513;
-    text-align: center;
-    margin: 10px 0 40px 0;
-    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
-    line-height: 1.1;
-    
-    /* FORZA LA TRASPARENZA */
-    background: transparent !important;
-    background-color: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
+    font-family: var(--font-title);
+    color: var(--marrone-dark);
+    font-size: 3rem; 
+    text-shadow: 1px 1px 0px var(--oro);
+    margin-top: 10px;
 }
 
-.main-title::after {
-    content: '';
-    display: block;
-    height: 2px;
-    background: linear-gradient(to right, transparent, #D4AF37, transparent);
-    width: 50%;
-    margin: 15px auto 0 auto;
-}
-
-/* ========================================================== */
-/* 5. DASHBOARD CARDS */
-/* ========================================================== */
+/* --- 7. DASHBOARD GRID (Container Card) --- */
 .dashboard-container {
-    display: flex;
-    justify-content: center;
-    gap: 60px;
-    margin-top: 20px;
-    padding: 0 20px 60px 20px;
-    flex-wrap: wrap;
-    max-width: 1200px;
-    width: 100%;
+    max-width: 1000px; 
+    margin: 2rem auto; 
+    padding: 0 1.5rem 5rem;
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
 }
 
+/* --- 8. DASHBOARD CARD (Le Schede) --- */
 .dashboard-card {
-    /* Le card hanno il riquadro */
-    background-color: rgba(255, 255, 255, 0.6); 
-    border: 2px solid var(--secondary-color); 
-    border-radius: 30px;
-    padding: 40px 30px;
-    width: 300px;
+    background-color: var(--parchment);
+    background-image: linear-gradient(to bottom, #fffbf0 0%, #fff8e1 100%);
+    border-radius: 15px;
+    padding: 2.5rem 1.5rem;
     text-align: center;
+    position: relative;
+    overflow: hidden;
     
-    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15);
-    transition: all 0.4s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
+    /* Cornice Preziosa */
+    box-shadow: 
+        0 0 0 1px rgba(197, 160, 89, 0.3), 
+        0 10px 25px rgba(78, 52, 46, 0.1);
+    
+    transition: all 0.3s ease;
+    display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+    min-height: 280px;
 }
 
 .dashboard-card:hover {
-    background-color: #fff;
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 15px 40px rgba(212, 175, 55, 0.4);
+    transform: translateY(-8px);
+    box-shadow: 
+        0 0 0 2px var(--oro), 
+        0 20px 40px rgba(197, 160, 89, 0.3);
 }
 
-.icon {
-    font-size: 4.5rem;
-    margin-bottom: 20px;
-    
-    /* MODIFICA QUI: Colore Oro */
-    color: var(--secondary-color); 
-    
-    /* Opzionale: Aggiunge un'ombra luminosa dorata invece di quella nera */
-    filter: drop-shadow(0px 0px 5px rgba(212, 175, 55, 0.5));
+/* Icona dentro la card */
+.dashboard-card .icon {
+    font-size: 3.5rem;
+    color: var(--marrone-dark);
+    margin-bottom: 1rem;
+    display: block;
 }
+.dashboard-card:hover .icon { color: var(--oro); transform: scale(1.1); transition: 0.3s; }
 
 .dashboard-card h2 {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 2rem;
-    color: var(--primary-color);
-    margin-bottom: 10px;
+    font-family: var(--font-title);
+    color: var(--marrone-dark);
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
 }
 
 .dashboard-card p {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.2rem;
-    color: #5D4037;
-    font-style: italic;
-    margin-bottom: 30px;
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    color: #777;
+    margin-bottom: 2rem;
 }
 
+/* Bottone dentro la card */
 .dashboard-btn {
-    display: inline-block;
-    padding: 10px 30px;
-    border-radius: 25px;
-    font-family: 'Cinzel Decorative', serif;
-    font-weight: bold;
-    font-size: 1rem;
-    text-transform: uppercase;
-    text-decoration: none;
-    cursor: pointer;
+    background-color: transparent;
+    border: 2px solid var(--marrone-dark);
+    color: var(--marrone-dark);
+    font-family: var(--font-ui); font-weight: 700;
+    text-transform: uppercase; font-size: 0.85rem;
+    padding: 10px 25px; border-radius: 50px;
     transition: all 0.3s ease;
-    
-    background-color: #D3B88C;  
-    border: 1px solid #B8860B; 
-    color: #8B4513;
 }
 
 .dashboard-btn:hover {
-    background-color: #8B4513;
+    background-color: var(--marrone-dark);
     color: white;
-    border-color: #8B4513;
-    transform: translateY(-3px);
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+    box-shadow: 0 4px 10px rgba(93, 64, 55, 0.3);
 }
