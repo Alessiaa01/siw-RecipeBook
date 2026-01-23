@@ -99,7 +99,7 @@ body::before {
 }
 
 .login-subtitle {
-    font-family: var(--font-title);
+    font-family:'Pinyon Script ', sans-serif;
     color: var(--disney-gold);
     font-weight: 700;
     font-size: 0.9rem;

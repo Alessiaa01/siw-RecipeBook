@@ -1,28 +1,24 @@
 package it.uniroma3.siw.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 
 import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.service.CredentialsService;
+import it.uniroma3.siw.service.RecipeService;
 import it.uniroma3.siw.service.UserService;
 import jakarta.validation.Valid;
-
-import org.springframework.security.oauth2.core.user.OAuth2User;
-import java.util.UUID;
 
 
 @Controller
@@ -33,6 +29,9 @@ public class AuthenticationController {
 
     @Autowired
 	private UserService userService;
+    
+    @Autowired
+    private RecipeService recipeService;
 	
 	// Mostra il form di registrazione
 	@GetMapping("/register") 
@@ -146,6 +145,15 @@ public class AuthenticationController {
         model.addAttribute("credentialsList", this.credentialsService.getAllCredentials());
         return "admin/manageUsers"; // Nome del template HTML che creeremo
     }
+	// Assicurati che ci sia un mapping che punta a /admin/recipes (o quello che hai usato nel link)
+	@GetMapping("/admin/recipes")
+	public String manageRecipes(Model model) {
+	    // Carica le ricette dal database
+	    model.addAttribute("recipes", this.recipeService.findAll()); 
+	    
+	    // ATTENZIONE: Il nome deve corrispondere al file in templates/admin/
+	    return "admin/manageRecipes"; 
+	}
 	
 	//Azione per bannare un utente 
 	@PostMapping("/admin/users/{username}/ban")

@@ -315,3 +315,39 @@ ul { list-style: none; }
     font-size: 0.85rem;
     font-weight: bold;
 }
+
+/* Stile per il bottone Indietro nell'Header */
+.btn-back-header {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 15px;
+    background: rgba(255, 255, 255, 0.4); /* Effetto vetro */
+    border: 1.5px solid var(--oro);
+    border-radius: 50px;
+    color: var(--marrone-dark);
+    font-family: var(--font-ui);
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-back-header:hover {
+    background-color: var(--oro);
+    color: white;
+    transform: translateX(-3px); /* Si sposta verso sinistra al passaggio del mouse */
+    box-shadow: 0 4px 10px rgba(197, 160, 89, 0.3);
+}
+
+.btn-back-header i {
+    font-size: 0.9rem;
+}
+
+/* Allineamento della parte sinistra */
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Spazio tra il tasto Indietro e la scritta Home */
+}

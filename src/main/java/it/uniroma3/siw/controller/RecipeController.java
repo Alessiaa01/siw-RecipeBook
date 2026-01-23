@@ -1,10 +1,12 @@
 package it.uniroma3.siw.controller;
 
+import java.security.Principal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -18,13 +20,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 import it.uniroma3.siw.controller.validator.RecipeValidator;
 import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.model.Ingredient;
 import it.uniroma3.siw.model.Recipe;
 import it.uniroma3.siw.model.Review;
 import it.uniroma3.siw.model.User;
+import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.IngredientService;
 import it.uniroma3.siw.service.RecipeService;
 import it.uniroma3.siw.service.ReviewService;
@@ -44,6 +46,9 @@ public class RecipeController {
 
     @Autowired 
     private RecipeValidator recipeValidator;
+    
+    @Autowired
+    private CredentialsService credentialsService;
 
     // Blocca l'invio malevolo di campi sensibili tramite form
     @InitBinder("recipe")
@@ -175,18 +180,28 @@ public class RecipeController {
     }
     
     @GetMapping("/myRecipes")
-    public String myRecipes(Model model) {
-        User currentUser = (User) model.getAttribute("currentUser");
-        
-        if (currentUser == null) {
+    public String myRecipes(Model model, Principal principal) {
+        // 1. Controllo di sicurezza: se principal è null, l'utente non è loggato
+        if (principal == null) {
             return "redirect:/login";
         }
 
-        List<Recipe> recipes = recipeService.getRecipesByAuthor(currentUser);
-        model.addAttribute("recipes", recipes);
+        // 2. Recuperiamo le credenziali e l'utente associato tramite il nome (username)
+        // Usiamo il Principal che Spring ci passa automaticamente
+        Credentials credentials = credentialsService.getCredentials(principal.getName());
+        User currentUser = credentials.getUser();
         
-        return "myRecipes.html"; 
+        // 3. Recuperiamo solo le sue ricette
+        List<Recipe> recipes = recipeService.findByAuthor(currentUser);
+        
+        // 4. Passiamo i dati al template
+        model.addAttribute("recipes", recipes);
+        model.addAttribute("viewTitle", "Le mie Ricette"); // Titolo dinamico per la pergamena
+        
+        // Ritorna il nome del file (senza .html)
+        return "admin/manageRecipes"; 
     }
+    
    
     // -------------------------------------------------------------------------
     // SEZIONE MODIFICA (Richiede Autore o Admin)
@@ -362,6 +377,15 @@ public class RecipeController {
     public String manageRecipes(Model model) {
         model.addAttribute("recipes", recipeService.findAll());
         return "admin/indexAdmin.html"; 
+    }
+    
+    @GetMapping("/admin/recipes/all")
+    @PreAuthorize("hasAuthority('ADMIN')") // Protegge il portale: solo Admin possono entrare
+    public String allRecipes(Model model, Principal principal) {
+        model.addAttribute("recipes", recipeService.findAll());
+        model.addAttribute("viewTitle", "Gran Registro Culinario"); // La tua scelta qui
+        model.addAttribute("userDetails", principal);
+        return "admin/manageRecipes";
     }
 
     // -------------------------------------------------------------------------

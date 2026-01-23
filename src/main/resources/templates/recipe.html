@@ -27,20 +27,27 @@
                     </a>
                 </span>
             </div>
+<div class="user-right">
+    <div sec:authorize="isAnonymous()">
+        <a th:href="@{/login}" class="btn-gold">
+            <i class="fas fa-sign-in-alt"></i> Accedi
+        </a>
+    </div>
 
-            <div class="user-right">
-                <div th:if="${userDetails}" class="chef-badge">
-                    <i class="fas fa-hat-wizard"></i>
-                    <span th:text="${userDetails.username}">Chef</span>
-                </div>
-                
-                <div th:if="${userDetails}">
-                    <a href="/logout" class="btn-dark btn-logout">Logout</a>
-                </div>
-                <div th:unless="${userDetails}">
-                    <a href="/login" class="btn-gold">Accedi</a>
-                </div>
-            </div>
+    <div sec:authorize="isAuthenticated()" style="display: flex; align-items: center; gap: 15px;">
+        
+        <div class="chef-badge">
+            <i class="fas fa-user"></i>
+            <span th:text="${#authentication.name}">Username</span>
+        </div>
+        
+        <form th:action="@{/logout}" method="post" style="margin: 0;">
+            <button type="submit" class="btn-dark btn-logout" style="cursor: pointer; border: none; padding: 10px 20px; border-radius: 50px;">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </form>
+    </div>
+</div>
         </div>
     </header>
 
