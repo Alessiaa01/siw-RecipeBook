@@ -1,231 +1,300 @@
 /* ========================================================== */
-/* GRIMORIO DEL MASTRO CUOCO - CSS UNIFICATO (ADMIN & FORM)   */
+/* NUOVO STILE FORM CREAZIONE RICETTA (Ispirato a recipe.css) */
 /* ========================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Great+Vibes&family=Lato:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap');
 
 :root {
-    /* Palette Colori Principale */
-    --gold-border: #C5A059;      
-    --gold-btn: #E6CFA0;         
-    --gold-shadow: #8B5A2B;      
-    --blue-bg: #DDF4F8;          
-    --parchment: #FDF6E3;        
-    --text-color: #4E342E;       
-    --primary-marrone: #5D4037;
-    --accent-red: #B71C1C;
-    --accent-blue: #006064;
-    
-    /* Font */
-    --font-magic: 'Cinzel Decorative', cursive;
-    --font-cursive: 'Great Vibes', cursive;
-    --font-body: 'Cormorant Garamond', serif;
-    --font-ui: 'Lato', sans-serif;
-    
-    --max-content-width: 1100px;
+    --celeste-bg: #E1F5FE;       
+    --celeste-accent: #81D4FA;   
+    --marrone-dark: rgb(100, 62, 41);
+    --marrone-text: #5D4037;
+    --oro: #C5A059;
+    --oro-light: #FFF8E1;        
+    --bianco: #FFFFFF;
+    --parchment: #fffbf0;   
+    --royal-gold: #c5a059;
+    --font-title: 'Cinzel Decorative', cursive; 
+    --font-body: 'Cormorant Garamond', serif;   
+    --font-ui: 'Lato', sans-serif;              
 }
 
-/* 1. SETUP GENERALE */
+/* --- RESET & GLOBAL --- */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-    background-color: var(--blue-bg);
-    background-image: radial-gradient(circle at center, rgba(255,255,255,0.4) 0%, transparent 70%),
-                      linear-gradient(to bottom, #DDF4F8 0%, #B3E5FC 100%);
+    background-color: var(--celeste-bg);
+    background-image: linear-gradient(to bottom, #E1F5FE 0%, #B3E5FC 100%);
     background-attachment: fixed;
     font-family: var(--font-body);
-    color: var(--text-color);
+    color: var(--marrone-text);
     min-height: 100vh;
+    display: flex; flex-direction: column;
 }
 
-/* 2. HEADER MAGICO (Coerente su tutte le pagine) */
+.magic-background {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.4) 0%, transparent 70%);
+    pointer-events: none; z-index: -1;
+}
+
+/* --- HEADER IDENTICO A RECIPES.CSS --- */
 .main-header {
-    background: rgba(248, 244, 232, 0.85);
-    backdrop-filter: blur(8px);
-    border-bottom: 2px solid var(--gold-border);
-    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-    padding: 12px 20px;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+    padding: 0.8rem 2rem;
+    position: sticky; top: 0; z-index: 1000;
 }
 
 .header-content-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: var(--max-content-width);
-    margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
 }
 
-.header-left a {
-    padding: 8px 18px;
-    border-radius: 20px;
-    font-family: var(--font-magic);
-    font-size: 0.85rem;
-    text-decoration: none;
-    background: var(--gold-btn);
-    color: var(--text-color);
-    box-shadow: 2px 2px 0 var(--gold-border);
-    transition: 0.3s;
+.header-left, .header-right, .user-profile {
+    display: flex; align-items: center; gap: 15px;
 }
 
-.header-right { display: flex; align-items: center; gap: 15px; }
+.btn-home-royal, .btn-logout-header {
+    background-image: linear-gradient(45deg, #C5A059 0%, #e6c676 50%, #C5A059 100%);
+    background-size: 200% auto;
+    color: white !important;
+    font-family: 'Lato', sans-serif; font-weight: 700;
+    text-transform: uppercase; font-size: 0.8rem;
+    padding: 10px 20px; border-radius: 50px;
+    display: inline-flex; align-items: center; gap: 8px;
+    box-shadow: 0 4px 15px rgba(197, 160, 89, 0.3);
+    transition: all 0.3s ease; text-decoration: none; border: none; cursor: pointer;
+}
 
-/* 3. LAYOUT PERGAMENA (Il contenitore principale) */
-.enchanted-form-card, .parchment-panel {
+.btn-home-royal:hover, .btn-logout-header:hover {
+    background-position: right center; transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(197, 160, 89, 0.5);
+}
+
+.chef-name {
+    font-family: 'Lato', sans-serif; font-weight: 700;
+    color: #5D4037; font-size: 0.9rem;
+}
+
+/* --- CARD PRINCIPALE (Stile Pergamena) --- */
+.single-recipe-card {
+    position: relative; z-index: 1; width: 90%; max-width: 1000px;
+    margin: 40px auto; padding: 50px;
     background-color: var(--parchment);
-    background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
-    width: 90%;
-    max-width: 1000px;
-    margin: 40px auto;
-    padding: 50px;
+    background-image: linear-gradient(to bottom, #fffbf0 0%, #fff8e1 100%);
     border-radius: 12px;
-    border: 2px solid var(--gold-border);
-    box-shadow: inset 0 0 50px rgba(139, 90, 43, 0.15), 0 10px 30px rgba(0,0,0,0.2);
-    position: relative;
+    box-shadow: 0 0 0 1px rgba(197, 160, 89, 0.3), 0 20px 50px rgba(78, 52, 46, 0.15);
 }
 
-/* Titoli */
-.main-title, .form-title h1 {
-    font-family: var(--font-cursive);
-    font-size: 4.5rem;
-    color: var(--primary-marrone);
-    text-align: center;
-    margin-bottom: 20px;
-    line-height: 1;
+.form-title h1 {
+    font-family: var(--font-title); font-size: 3rem; color: var(--marrone-dark);
+    text-align: center; margin-bottom: 30px; text-shadow: 1px 1px 0px var(--oro);
 }
 
-/* 4. FORM ELEMENTS (Input incantati) */
-.input-group { margin-bottom: 20px; }
+/* --- INPUT & CAMPI DEL FORM --- */
+.input-group { margin-bottom: 25px; }
 
 label {
     display: block;
-    font-family: var(--font-magic);
-    font-size: 0.85rem;
-    color: var(--primary-marrone);
+    font-family: var(--font-ui);
+    font-weight: 700;
+    color: var(--marrone-dark);
     margin-bottom: 8px;
-    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
 }
 
-.magic-input, .magic-textarea {
+/* Stile Input Magico */
+.magic-input, .magic-textarea, select.magic-input {
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.5);
-    border: 1px solid var(--gold-border);
-    border-radius: 8px;
-    padding: 12px 15px;
+    background-color: var(--oro-light);
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    padding: 12px 20px;
     font-family: var(--font-body);
-    font-size: 1.2rem;
-    color: var(--text-color);
+    font-size: 1.1rem;
+    color: var(--marrone-text);
     transition: all 0.3s ease;
-}
-
-.magic-input:focus {
-    background-color: #fff;
-    box-shadow: 0 0 8px rgba(197, 160, 89, 0.4);
     outline: none;
 }
 
-/* Griglia Dettagli (Tempo, Difficoltà) */
+.magic-input:focus, .magic-textarea:focus, select.magic-input:focus {
+    background-color: #fff;
+    border-color: var(--oro);
+    box-shadow: 0 0 10px rgba(197, 160, 89, 0.2);
+}
+
+textarea.magic-textarea {
+    resize: vertical;
+    line-height: 1.6;
+}
+
+/* --- GRIGLIA DETTAGLI (Categoria, Tempo, etc.) --- */
 .details-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 20px;
-    background: rgba(255, 255, 255, 0.3);
-    padding: 20px;
-    border-radius: 10px;
-    border: 1px dashed var(--gold-border);
+    background: rgba(255, 255, 255, 0.5);
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px dashed var(--oro);
     margin-bottom: 30px;
 }
 
-/* 5. SEZIONE INGREDIENTI DINAMICA */
+/* --- SEZIONE INGREDIENTI DINAMICA --- */
+.columns-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+.section-header {
+    font-family: var(--font-title);
+    color: var(--marrone-dark);
+    border-bottom: 2px solid var(--oro);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
 .ingredients-section {
     background: rgba(255, 255, 255, 0.4);
     padding: 20px;
     border-radius: 10px;
-    border: 1px solid var(--gold-border);
 }
 
 .ing-row-dynamic {
     display: flex;
     gap: 10px;
-    margin-bottom: 12px;
-    align-items: center;
+    margin-bottom: 10px;
+    align-items: flex-end;
+    background: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
 .magic-input-sm {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 1rem;
-}
-
-/* 6. BOTTONI MAGICI (Unificati) */
-.btn-magic {
-    font-family: var(--font-magic);
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 12px 25px;
-    border-radius: 30px;
-    border: none;
-    cursor: pointer;
-    transition: 0.3s;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-}
-
-/* Oro (Salva / Aggiungi) */
-.btn-gold-magic {
-    background: linear-gradient(135deg, #C5A059 0%, #E6CFA0 100%);
-    color: var(--text-color);
-    box-shadow: 0 4px 0 var(--gold-shadow);
-}
-
-/* Blu (Modifica) */
-.btn-blue-magic {
-    background: #B2EBF2;
-    color: var(--accent-blue);
-    box-shadow: 0 4px 0 #00838F;
-}
-
-/* Rosso (Elimina) */
-.btn-red-magic {
-    background: #FFCDD2;
-    color: var(--accent-red);
-    box-shadow: 0 4px 0 #C62828;
-}
-
-.btn-magic:hover {
-    transform: translateY(-3px);
-    filter: brightness(1.05);
-}
-
-.btn-magic:active { transform: translateY(0); }
-
-/* 7. ANTEPRIMA POLAROID */
-.polaroid-frame {
-    width: 220px;
-    background: white;
-    padding: 12px 12px 25px 12px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-    transform: rotate(-2deg);
-    margin: 20px auto;
-    border: 1px solid #eee;
-}
-
-.polaroid-frame img {
     width: 100%;
-    height: 180px;
-    object-fit: cover;
+    padding: 8px 10px;
+    border: 1px solid #eee;
+    background: var(--oro-light);
+    border-radius: 8px;
+    font-family: var(--font-body);
 }
 
-/* 8. RESPONSIVE */
+.ing-name { flex: 2; }
+.ing-qty { flex: 1; }
+.ing-unit { flex: 1; }
+
+.mini-del-btn, .btn-add-dashed {
+    cursor: pointer; border: none; transition: 0.3s;
+}
+
+.mini-del-btn {
+    background: #FFCDD2; color: #D32F2F;
+    width: 30px; height: 30px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+}
+.mini-del-btn:hover { background: #E57373; color: white; }
+
+.btn-add-dashed {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 2px dashed var(--oro);
+    background: transparent;
+    color: var(--marrone-dark);
+    font-weight: bold;
+    border-radius: 10px;
+    font-family: var(--font-ui);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+.btn-add-dashed:hover {
+    background: var(--oro-light);
+    border-style: solid;
+}
+
+/* --- CHECKBOX TAGS --- */
+.checkbox-wrapper {
+    display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 20px;
+}
+.magic-check {
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 5px;
+}
+
+/* --- ANTEPRIMA POLAROID --- */
+.preview-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 40px 0;
+    padding-top: 30px;
+    border-top: 1px solid rgba(197, 160, 89, 0.3);
+}
+
+.polaroid-frame {
+    background: white;
+    padding: 15px 15px 40px 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    transform: rotate(-2deg);
+    border: 1px solid #eee;
+    margin-bottom: 20px;
+    max-width: 300px;
+}
+.polaroid-frame img { width: 100%; height: auto; display: block; }
+
+/* --- FOOTER BUTTONS --- */
+.footer-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.btn-gold {
+    background-image: linear-gradient(45deg, #C5A059 0%, #E6C676 50%, #C5A059 100%);
+    background-size: 200% auto;
+    color: white; border: none;
+    padding: 12px 40px; border-radius: 50px;
+    font-weight: 700; font-family: var(--font-ui);
+    text-transform: uppercase; cursor: pointer;
+    box-shadow: 0 5px 15px rgba(197, 160, 89, 0.4);
+    transition: 0.3s;
+}
+.btn-gold:hover { background-position: right center; transform: translateY(-3px); }
+
+.btn-gold-outline {
+    border: 2px solid var(--oro);
+    background: transparent;
+    color: var(--oro);
+    padding: 12px 30px; border-radius: 50px;
+    font-weight: 700; font-family: var(--font-ui);
+    text-transform: uppercase; text-decoration: none;
+    transition: 0.3s;
+    display: inline-flex; align-items: center;
+}
+.btn-gold-outline:hover {
+    background: var(--oro); color: white;
+}
+
+/* --- ERRORI --- */
+.error-banner {
+    background: #FFEBEE; border: 1px solid #EF9A9A; color: #C62828;
+    padding: 10px; border-radius: 8px; margin-bottom: 20px; text-align: center;
+}
+
+/* RESPONSIVE */
 @media (max-width: 768px) {
-    .enchanted-form-card { padding: 25px; }
-    .main-title { font-size: 3rem; }
-    .ing-row-dynamic { flex-direction: column; align-items: stretch; }
     .columns-container { grid-template-columns: 1fr; }
+    .ing-row-dynamic { flex-wrap: wrap; }
+    .ing-name { width: 100%; flex: none; }
+    .main-header { padding: 10px; }
 }

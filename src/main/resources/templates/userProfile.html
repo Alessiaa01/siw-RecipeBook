@@ -9,19 +9,50 @@
 </head>
 <body>
 
-    <header class="main-header">
-        <div class="header-content-wrapper">
-            
-            <div class="header-left">
-                <a href="/recipes" class="nav-link-home">
-                    <i class="fa-solid fa-home"></i> Home
-                </a>
-            </div>
+	<header class="main-header">
+	       <div class="header-content-wrapper">
+	           
+	           <div class="header-left">
+	               
+	               <div sec:authorize="hasAuthority('ADMIN')">
+	                   <a th:href="@{/admin/indexAdmin}" class="btn-admin-badge">
+	                       <i class="fa-solid fa-crown"></i> Gestione Admin
+	                   </a>
+	               </div>
 
-           
-            
-        </div>
-    </header>
+	               <div sec:authorize="isAuthenticated() and !hasAuthority('ADMIN')">
+	                   <a th:href="@{/myRecipes}" class="btn-my-recipes">
+	                       <i class="fa-solid fa-book-open"></i> Le mie ricette
+	                   </a>
+	               </div>
+	           </div>
+	           
+	           <div class="header-right">
+	               
+	               <div sec:authorize="isAuthenticated()" class="user-profile" style="display: flex; align-items: center; gap: 15px;">
+	                   <span class="chef-name">
+						  <i class="fa-solid fa-user-circle"></i>
+	                       <span th:if="${currentUser != null}" th:text="${currentUser.name} + ' ' + ${currentUser.surname}">Nome Cognome</span>
+	                       <span th:if="${currentUser == null}" sec:authentication="name">User</span>
+						
+	                   </span>
+	                   
+	                   <form th:action="@{/logout}" method="post" style="margin: 0;">
+	                       <button type="submit" class="btn-logout-header">
+	                           Logout <i class="fa-solid fa-right-from-bracket"></i>
+	                       </button>
+	                   </form>
+	               </div>
+
+	               <div sec:authorize="!isAuthenticated()" class="guest-actions">
+	                   <span class="welcome-text">Benvenuto!</span>
+	                   <a th:href="@{/login}" class="btn-gold">Accedi</a>
+	                   <a th:href="@{/register}" class="btn-gold">Registrati</a>
+	               </div>
+	               
+	           </div>
+	       </div>
+	   </header>
     <div class="enchanted-container">
         
         <div class="profile-card">

@@ -72,17 +72,30 @@ ul { list-style: none; }
     gap: 15px;
 }
 
-/* Stile link Home nell'header */
-.nav-link-home {
-    font-family: var(--font-ui);
-    color: var(--marrone-dark);
-    font-weight: 700;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+/* Base Bottone */
+button, .btn-gold, .btn-royal, .btn-login, .btn-register, 
+.btn-gold-outline, .btn-royal-outline, .btn-search , .btn-my-recipes{
+    border: none; cursor: pointer;
+    font-family: var(--font-ui); font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    padding: 10px 24px; border-radius: 50px; 
+    transition: all 0.3s ease; text-decoration: none;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    font-size: 0.9rem;
 }
-.nav-link-home:hover { color: var(--oro); }
+
+/* Bottoni Standard (Login, Cerca) */
+.btn-gold, .btn-royal, .btn-login, .btn-search,.btn-my-recipes {
+    background-image: linear-gradient(45deg, #C5A059 0%, #E6C676 50%, #C5A059 100%);
+    background-size: 200% auto; 
+    color: white;
+    box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4); 
+    border: 1px solid rgba(255,255,255,0.2);
+}
+.btn-gold:hover, .btn-royal:hover, .btn-login:hover, .btn-search:hover,.btn-my-recipes:hover {
+    background-position: right center; transform: translateY(-2px); 
+    box-shadow: 0 6px 20px rgba(197, 160, 89, 0.6);
+}
 
 /* Stile Bottone Logout (Coerente con il tuo stile) */
 .btn-logout {

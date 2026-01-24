@@ -4,35 +4,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuova Ricetta </title>
-	<link rel="stylesheet" th:href="@{/css/stile.css}" />
+    <title>Nuova Ricetta - Disney RecipeBook</title>
+    
     <link rel="stylesheet" th:href="@{/css/formNewRecipe.css}" />
+	<link rel="stylesheet" th:href="@{/css/stile.css}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
 
     <div class="magic-background"></div>
 
     <header class="main-header">
         <div class="header-content-wrapper">
-            <div style="display: flex; gap: 15px;">
-                <a href="/" class="btn-gold-outline" style="padding: 8px 20px; font-size: 0.8rem;">
-                    <i class="fas fa-arrow-left"></i> Home
+            
+            <div class="header-left">
+                <a th:href="@{/}" class="btn-home-royal">
+                    <i class="fas fa-home"></i> Home
                 </a>
             </div>
-            <div style="display: flex; align-items: center; gap: 15px;">
-                 <div th:if="${userDetails}" style="font-weight: bold; color: #5D4037;">
-                    <i class="fas fa-hat-wizard"></i> <span th:text="${userDetails.username}">Chef</span>
+            
+            <div class="header-right">
+                
+                <div sec:authorize="isAuthenticated()" class="user-profile">
+                    <span class="chef-name">
+                        <i class="fa-solid fa-user-circle"></i>
+                        <span th:if="${currentUser != null}" th:text="${currentUser.name} + ' ' + ${currentUser.surname}">Chef</span>
+                        <span th:if="${currentUser == null}" sec:authentication="name">User</span>
+                    </span>
+                    
+                    <form th:action="@{/logout}" method="post" style="margin: 0;">
+                        <button type="submit" class="btn-logout">
+                            Logout <i class="fa-solid fa-right-from-bracket"></i>
+                        </button>
+                    </form>
                 </div>
+
+                <div sec:authorize="!isAuthenticated()" class="header-right">
+                     <a th:href="@{/login}" class="btn-home-royal">Accedi</a>
+                </div>
+                
             </div>
         </div>
     </header>
 
-    <div class="enchanted-form-card">
+    <div class="single-recipe-card">
         
         <div class="form-title">
-            <h1>Crea Nuova Ricetta</h1>
-            
+            <h1><i class="fas fa-feather-alt"></i> Crea Nuova Ricetta</h1>
         </div>
 
         <form th:action="@{/formNewRecipe}" th:object="${recipe}" method="POST" id="newRecipeForm">
@@ -41,7 +60,7 @@
                 <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
             </div>
 
-			<div class="input-group">
+            <div class="input-group">
                 <label>Titolo della Ricetta</label>
                 <input type="text" th:field="*{title}" placeholder="" class="magic-input" required/>
                 <span style="color: #d32f2f; font-size: 0.9rem;" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
@@ -52,7 +71,7 @@
                 <textarea th:field="*{description}" rows="2" class="magic-textarea" placeholder=""></textarea>
             </div>
 
-			<div class="details-grid">
+            <div class="details-grid">
 			    <div>
 			        <label>Categoria</label>
 			        <select th:field="*{category}" class="magic-input">
@@ -77,7 +96,6 @@
                         <option value="Facile">Facile</option>
                         <option value="Media">Media</option>
                         <option value="Difficile">Difficile</option>
-                       
                     </select>
 			    </div>
 			    <div>
@@ -92,7 +110,7 @@
                     <h3 class="section-header"><i class="fas fa-flask"></i> Ingredienti</h3>
                     
                     <div id="ingredients-container">
-                        </div>
+                    </div>
 
                     <button type="button" onclick="addIngredientField()" class="btn-add-dashed">
                         <i class="fas fa-plus"></i> Aggiungi Ingrediente
@@ -100,7 +118,7 @@
                 </div>
 
                 <div class="procedure-section">
-                    <h3 class="section-header"><i class="fas fa-tags"></i> Tag & Procedimento</h3>
+                    <h3 class="section-header"><i class="fas fa-scroll"></i> Procedimento</h3>
                     
                     <div class="checkbox-wrapper">
                         <label class="magic-check"><input type="checkbox" value="Vegetariano" th:field="*{tags}"> Vegetariano</label>
@@ -110,7 +128,7 @@
                     </div>
 					
 					<label>Istruzioni passo dopo passo</label>
-                    <textarea th:field="*{procedure}" rows="12" class="magic-textarea" placeholder="Procedimento" required></textarea>
+                    <textarea th:field="*{procedure}" rows="12" class="magic-textarea" placeholder="Scrivi qui i passaggi della preparazione..." required></textarea>
                 </div>
             </div>
 
@@ -118,14 +136,14 @@
                 <div class="polaroid-frame">
                     <img id="preview-img" src="/images/placeholder-piatto.jpg" alt="Anteprima">
                 </div>
-                <div class="input-group" style="max-width: 600px; margin: 0 auto;">
+                <div class="input-group" style="width: 100%; max-width: 600px;">
                     <label>URL Immagine</label>
                     <input type="text" th:field="*{imageUrl}" id="imgUrlInput" oninput="updatePreview()" class="magic-input" placeholder="Incolla qui il link dell'immagine..."/>
                 </div>
             </div>
 
             <div class="footer-buttons">
-                <button type="submit" class="btn-gold">Salva </button>
+                <button type="submit" class="btn-gold">Salva Ricetta</button>
                 <a th:href="@{/recipes}" class="btn-gold-outline">Annulla</a>
             </div>
 
@@ -133,7 +151,7 @@
     </div>
 
     <script>
-        // Funzione Anteprima
+        // Funzione Anteprima Immagine
         function updatePreview() {
             const url = document.getElementById('imgUrlInput').value;
             const img = document.getElementById('preview-img');
@@ -145,7 +163,7 @@
             }
         }
 
-        // --- GESTIONE INGREDIENTI ---
+        // --- GESTIONE INGREDIENTI (Javascript Invariato nella logica) ---
         let ingredientIndex = 0;
 
         function addIngredientField() {
@@ -157,21 +175,21 @@
             rowDiv.className = 'ing-row-dynamic';
             rowDiv.id = 'ing-block-' + index;
 
-            // HTML interno con i 3 campi ben separati
+            // HTML interno con i 3 campi (Classi CSS aggiornate per il nuovo stile)
             rowDiv.innerHTML = `
                 <div class="ing-input-group ing-name">
-                    <label>Nome</label>
-                    <input type="text" name="ingredients[${index}].name" placeholder="Es. Farina" class="magic-input-sm" required />
+                    <label style="font-size: 0.7rem; margin-bottom: 2px;">Ingrediente</label>
+                    <input type="text" name="ingredients[${index}].name" placeholder="" class="magic-input-sm" required />
                 </div>
                 
                 <div class="ing-input-group ing-qty">
-                    <label>Qt.</label>
-                    <input type="number" name="ingredients[${index}].quantity" placeholder="0" class="magic-input-sm" />
+                    <label style="font-size: 0.7rem; margin-bottom: 2px;">Qt.</label>
+                    <input type="number" name="ingredients[${index}].quantity" placeholder="" class="magic-input-sm" />
                 </div>
                 
                 <div class="ing-input-group ing-unit">
-                    <label>Unità</label>
-                    <input type="text" name="ingredients[${index}].unit" placeholder="gr" class="magic-input-sm" />
+                    <label style="font-size: 0.7rem; margin-bottom: 2px;">Unità</label>
+                    <input type="text" name="ingredients[${index}].unit" placeholder="" class="magic-input-sm" />
                 </div>
                 
                 <button type="button" onclick="removeIngredientField(${index})" class="mini-del-btn" title="Rimuovi">

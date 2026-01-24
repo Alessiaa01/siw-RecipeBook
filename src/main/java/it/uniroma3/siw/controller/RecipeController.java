@@ -64,6 +64,7 @@ public class RecipeController {
     public String getRecipe(@PathVariable("id") Long id, Model model) {
         Recipe recipe = recipeService.findById(id);
         model.addAttribute("recipe", recipe);
+  
         
         // Oggetti vuoti per i form nella pagina (recensioni e ingredienti admin)
         model.addAttribute("ingredient", new Ingredient()); 
