@@ -189,17 +189,20 @@ header {
 
 /* Bottone dentro la card */
 .dashboard-btn {
-    background-color: transparent;
-    border: 2px solid var(--marrone-dark);
-    color: var(--marrone-dark);
-    font-family: var(--font-ui); font-weight: 700;
-    text-transform: uppercase; font-size: 0.85rem;
-    padding: 10px 25px; border-radius: 50px;
-    transition: all 0.3s ease;
+	background-image: linear-gradient(45deg, #C5A059 0%, #E6C676 50%, #C5A059 100%);
+	   background-size: 200% auto;
+	   color: white !important;
+	   font-family: 'Lato', sans-serif; font-weight: 700;
+	   text-transform: uppercase; font-size: 0.8rem;
+	   padding: 10px 20px; border-radius: 50px;
+	   display: inline-flex; align-items: center; gap: 8px;
+	   box-shadow: 0 4px 15px rgba(197, 160, 89, 0.3);
+	   transition: all 0.3s ease; text-decoration: none;
+	   /* RIMOSSO IL BORDO NERO */
+	   border: none !important;
 }
 
 .dashboard-btn:hover {
-    background-color: var(--marrone-dark);
-    color: white;
-    box-shadow: 0 4px 10px rgba(93, 64, 55, 0.3);
+	background-position: right center; transform: translateY(-2px);
+	    box-shadow: 0 6px 20px rgba(197, 160, 89, 0.5);
 }

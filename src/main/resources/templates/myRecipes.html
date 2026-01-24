@@ -3,58 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <title>Le mie Ricette</title>
-    
-    <link rel="stylesheet" href="/css/myRecipes.css" />
-	<link rel="stylesheet" th:href="@{/css/stile.css}" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:wght@600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/myRecipes.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Great+Vibes&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div class="my-recipes-container">
-        
-        <div class="header-row">
-            <h1 class="page-title">
-                Le mie Ricette
-            </h1>
-            <div class="top-buttons">
-                <a href="/formNewRecipe" class="magic-btn">➕ Nuova Ricetta</a>
-                <a href="/" class="magic-btn">Home</a>
+    <div class="magic-background-layer"></div>
+
+    <header class="main-header">
+        <div class="header-content-wrapper">
+            <div class="header-left">
+                <div class="admin-link-header-left">
+                    <a th:href="@{/}"><i class="fa-solid fa-home"></i> Home</a>
+                </div>
+            </div>
+            
+            <div class="header-right user-actions-right">
+                 <div th:if="${currentUser}" class="chef-name">
+                    <i class="fa-solid fa-user-circle"></i> 
+                    <span th:text="${currentUser.name} + ' ' + ${currentUser.surname}">Utente</span>
+                </div>
+                <form th:action="@{/logout}" method="post" style="margin:0;">
+                    <button type="submit" class="btn-logout">Logout <i class="fa-solid fa-right-from-bracket"></i></button>
+                </form>
             </div>
         </div>
+    </header>
 
-        <div th:if="${recipes.empty}" class="empty-state">
-            <p>Il tuo ricettario è ancora vuoto... ✨</p>
-        </div>
-
-        <ul th:if="${!recipes.empty}" class="recipe-list">
+    <div class="enchanted-container">
+        <div class="parchment-panel">
             
-            <li th:each="recipe : ${recipes}" class="recipe-card">
-                
-                <div class="card-info">
-                    <a th:href="@{'/recipe/' + ${recipe.id}}" class="recipe-link">
-                       <span th:text="${recipe.title}">Titolo Ricetta</span>
-                    </a>
-                    <span class="desc-text" th:text="${recipe.description}">Descrizione della pozione...</span>
-                </div>
-                
-                <div class="card-actions">
-                    <a th:href="@{'/recipe/edit/' + ${recipe.id}}" class="action-btn btn-edit">
-                        ✏️ Modifica
-                    </a>
-                    
-                    <form th:action="@{'/recipe/delete/' + ${recipe.id}}" method="POST" style="display: inline;">
-                        <button type="submit" class="action-btn btn-delete" 
-                                onclick="return confirm('Sei sicuro di voler cancellare questa ricetta?');">
-                            🗑️ Elimina
-                        </button>
-                    </form>
-                </div>
-            </li>
-        </ul>
+            <div class="panel-header-top">
+                <h1 class="main-title">Le mie Ricette</h1>
+               
+            </div>
 
+            <div class="panel-actions-bar">
+                <div class="stats-info">
+                    Ricette Pubblicate: <span th:text="${recipes != null ? recipes.size() : 0}">0</span>
+                </div>
+                <a th:href="@{/formNewRecipe}" class="btn-add-recipe">
+                    <i class="fa-solid fa-feather-alt"></i> Nuova Ricetta
+                </a>
+            </div>
+
+            <div th:if="${recipes==null || recipes.isEmpty()}" class="empty-state-magic">
+                <p>Non ci sono ricette</p>
+                <a th:href="@{/formNewRecipe}" style="color:var(--oro); font-weight:bold;">Inizia ora!</a>
+            </div>
+
+            <table th:unless="${recipes.isEmpty()}" class="magic-table">
+                <thead>
+                    <tr>
+                        <th>Piatto</th>
+                        <th>Categoria</th> <th>Data</th>
+                        <th>Azioni</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="recipe : ${recipes}">
+                        <td>
+                            <div class="recipe-title-wrapper">
+                              
+                                <a th:href="@{'/recipe/' + ${recipe.id}}" class="recipe-link" th:text="${recipe.title}">Nome</a>
+                            </div>
+                        </td>
+                        
+                        <td th:text="${recipe.category}">Categoria</td>
+                        
+                        <td>
+                            <span class="date-badge">
+                                <i class="far fa-clock"></i>
+                                <span th:text="${recipe.creationDate}">Data</span>
+                            </span>
+                        </td>
+                        <td>
+                            <div class="action-buttons-wrapper">
+                                <a th:href="@{'/recipe/' + ${recipe.id}}" class="btn-action btn-view" title="Vedi"><i class="fa-solid fa-eye"></i></a>
+                                
+                                <a th:href="@{'/recipe/edit/' + ${recipe.id}}" class="btn-action btn-edit" title="Modifica"><i class="fa-solid fa-pen-nib"></i></a>
+                                
+                                <form th:action="@{'/recipe/delete/' + ${recipe.id}}" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn-action btn-delete" title="Elimina" onclick="return confirm('Eliminare definitivamente questa ricetta?');">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+          
+        </div>
     </div>
-
 </body>
 </html>

@@ -181,26 +181,19 @@ public class RecipeController {
     }
     
     @GetMapping("/myRecipes")
-    public String myRecipes(Model model, Principal principal) {
-        // 1. Controllo di sicurezza: se principal è null, l'utente non è loggato
-        if (principal == null) {
+    public String myRecipes(Model model) {
+        // Usiamo l'utente già caricato dal GlobalController (funziona anche per Google)
+        User currentUser = (User) model.getAttribute("currentUser");
+        
+        if (currentUser == null) {
             return "redirect:/login";
         }
 
-        // 2. Recuperiamo le credenziali e l'utente associato tramite il nome (username)
-        // Usiamo il Principal che Spring ci passa automaticamente
-        Credentials credentials = credentialsService.getCredentials(principal.getName());
-        User currentUser = credentials.getUser();
-        
-        // 3. Recuperiamo solo le sue ricette
         List<Recipe> recipes = recipeService.findByAuthor(currentUser);
-        
-        // 4. Passiamo i dati al template
         model.addAttribute("recipes", recipes);
-        model.addAttribute("viewTitle", "Le mie Ricette"); // Titolo dinamico per la pergamena
         
-        // Ritorna il nome del file (senza .html)
-        return "admin/manageRecipes"; 
+        // Ritorna la vista corretta per l'utente
+        return "myRecipes.html"; 
     }
     
    

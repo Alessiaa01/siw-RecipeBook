@@ -1,0 +1,249 @@
+/* ========================================================== */
+/* STILE PROFILO UTENTE - CON HEADER AGGIORNATO               */
+/* ========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap');
+
+:root {
+    --celeste-bg: #E1F5FE;       
+    --celeste-accent: #81D4FA;   
+    --marrone-dark: rgb(100, 62, 41);
+    --marrone-text: #5D4037;
+    --oro: #C5A059;
+    --oro-light: #FFF8E1;        
+    --bianco: #FFFFFF;
+    --parchment: #fffbf0;
+    --royal-gold: #c5a059;
+    --royal-gold-shine: #e6c676;
+    
+    --font-title: 'Cinzel Decorative', cursive; 
+    --font-body: 'Cormorant Garamond', serif;   
+    --font-ui: 'Lato', sans-serif;              
+}
+
+/* 2. RESET & GLOBAL */
+* { 
+    box-sizing: border-box; margin: 0; padding: 0; 
+    caret-color: var(--oro); 
+}
+
+/* Scrollbar Personalizzata */
+::-webkit-scrollbar { width: 12px; }
+::-webkit-scrollbar-track { background: var(--celeste-bg); }
+::-webkit-scrollbar-thumb {
+    background-color: var(--oro); 
+    border-radius: 20px;       
+    border: 3px solid var(--celeste-bg); 
+}
+
+body {
+    font-family: var(--font-body);
+    font-weight: 500; 
+    background-color: var(--celeste-bg);
+    background-image: linear-gradient(to bottom, #E1F5FE 0%, #B3E5FC 100%);
+    background-attachment: fixed; 
+    color: var(--marrone-text);
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+}
+
+a { text-decoration: none; transition: 0.3s; }
+ul { list-style: none; }
+
+/* ========================================================== */
+/* 3. HEADER STANDARD & BOTTONI (Gestione Distanze)           */
+/* ========================================================== */
+.main-header {
+    position: sticky; top: 0; z-index: 1000; 
+    background-color: rgba(255, 255, 255, 0.15); 
+    backdrop-filter: blur(10px); 
+    border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+    padding: 0.8rem 2rem;
+}
+
+.header-content-wrapper {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+}
+
+/* GESTIONE DISTANZE BOTTONI SX e DX */
+.header-left, .header-right {
+    display: flex; align-items: center; 
+    gap: 15px; /* Distanza uniforme tra i bottoni */
+}
+
+/* Gruppi interni (es. user-profile, guest-actions) ereditano il gap */
+.user-profile, .guest-actions {
+    display: flex; align-items: center; gap: 15px;
+}
+
+/* STILE UNIFICATO BOTTONI DORATI (Home, Admin, Recipes, Logout, Accedi, Registrati) */
+.admin-link-header-left a, 
+.btn-home-royal, 
+.btn-my-recipes, 
+.btn-logout, 
+.btn-gold {
+    background-image: linear-gradient(45deg, #C5A059 0%, #E6C676 50%, #C5A059 100%);
+    background-size: 200% auto;
+    color: white !important; /* Testo Bianco */
+    font-family: 'Lato', sans-serif; font-weight: 700;
+    text-transform: uppercase; font-size: 0.8rem;
+    padding: 10px 20px; border-radius: 50px;
+    display: inline-flex; align-items: center; gap: 8px;
+    box-shadow: 0 4px 15px rgba(197, 160, 89, 0.3);
+    transition: all 0.3s ease; text-decoration: none; border: none; cursor: pointer;
+}
+
+.admin-link-header-left a:hover, 
+.btn-home-royal:hover, 
+.btn-my-recipes:hover, 
+.btn-logout:hover, 
+.btn-gold:hover {
+    background-position: right center; transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(197, 160, 89, 0.5);
+}
+
+/* Form Logout Reset */
+.logout-form { margin: 0; display: inline-flex; }
+
+/* Testi Header */
+.chef-name {
+    font-family: 'Lato', sans-serif; font-weight: 700;
+    color: #5D4037; font-size: 0.9rem;
+    display: flex; align-items: center; gap: 8px;
+}
+.welcome-text {
+    font-family: 'Lato', sans-serif; font-weight: 700;
+    color: #5D4037; font-size: 0.9rem;
+}
+
+/* ========================================================== */
+/* 4. LAYOUT CONTENITORE                                      */
+/* ========================================================== */
+.enchanted-container {
+    padding: 3rem 1rem;
+    display: flex; justify-content: center;
+    min-height: calc(100vh - 80px); 
+}
+
+/* ========================================================== */
+/* 5. CARD PROFILO (Stile Pergamena)                          */
+/* ========================================================== */
+.profile-card {
+    background-color: var(--parchment);
+    background-image: linear-gradient(to bottom, #fffbf0 0%, #fff8e1 100%);
+    border-radius: 12px;
+    padding: 2.5rem;
+    width: 100%; max-width: 650px;
+    position: relative; overflow: hidden;
+    text-align: center;
+    box-shadow: 0 0 0 1px rgba(197, 160, 89, 0.3), 0 15px 35px rgba(0,0,0,0.15);
+}
+
+.profile-card::before {
+    content: ''; position: absolute;
+    top: 12px; left: 12px; right: 12px; bottom: 12px;
+    border: 1px solid rgba(197, 160, 89, 0.2);
+    border-radius: 8px; pointer-events: none; z-index: 0;
+}
+
+.card-content-wrapper { position: relative; z-index: 1; }
+
+/* ========================================================== */
+/* 6. DETTAGLI UTENTE                                         */
+/* ========================================================== */
+.profile-header {
+    margin-bottom: 2rem; display: flex; flex-direction: column; align-items: center;
+}
+
+.avatar-circle {
+    width: 100px; height: 100px;
+    background: linear-gradient(45deg, var(--oro) 0%, var(--royal-gold-shine) 100%);
+    color: var(--bianco);
+    font-family: var(--font-title); font-size: 3rem; font-weight: bold;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    box-shadow: 0 5px 15px rgba(197, 160, 89, 0.4);
+    border: 4px solid var(--bianco);
+    margin-bottom: 1rem;
+    animation: magicFloat 4s ease-in-out infinite;
+}
+
+@keyframes magicFloat {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+    100% { transform: translateY(0px); }
+}
+
+.profile-header h1 {
+    font-family: var(--font-title); color: var(--marrone-dark);
+    font-size: 2.2rem; margin-bottom: 0.5rem;
+    text-shadow: 1px 1px 0px rgba(197, 160, 89, 0.3);
+}
+
+.user-meta {
+    font-family: var(--font-ui); color: var(--marrone-text);
+    font-size: 1rem; opacity: 0.9; margin-top: 5px;
+    display: flex; align-items: center; gap: 8px; justify-content: center;
+}
+.user-meta i { color: var(--oro); }
+
+.divider {
+    border: 0; height: 1px;
+    background-image: linear-gradient(to right, transparent, var(--oro), transparent);
+    margin: 2rem 0; opacity: 0.5;
+}
+
+/* ========================================================== */
+/* 7. SEZIONE RICETTE DELLO CHEF                              */
+/* ========================================================== */
+.user-recipes-section h2 {
+    font-family: var(--font-title); color: var(--marrone-dark);
+    font-size: 1.5rem; margin-bottom: 1.5rem;
+}
+
+.empty-state {
+    font-style: italic; color: #888;
+    background-color: rgba(255,255,255,0.5);
+    padding: 1.5rem; border-radius: 8px;
+    border: 1px dashed var(--oro);
+}
+
+.recipe-list { list-style: none; padding: 0; text-align: left; }
+
+.recipe-card-mini {
+    background-color: var(--bianco);
+    border: 1px solid rgba(197, 160, 89, 0.3);
+    border-radius: 8px; padding: 1.2rem;
+    margin-bottom: 15px;
+    display: flex; justify-content: space-between; align-items: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.recipe-card-mini:hover {
+    transform: translateX(5px);
+    border-color: var(--oro);
+    box-shadow: 0 4px 15px rgba(197, 160, 89, 0.2);
+}
+
+.recipe-link {
+    font-family: var(--font-body); font-weight: 700;
+    color: var(--marrone-dark); font-size: 1.2rem; display: block;
+}
+
+.recipe-difficulty {
+    font-family: var(--font-ui); font-size: 0.75rem; color: var(--oro);
+    text-transform: uppercase; font-weight: bold;
+    margin-top: 4px; display: block;
+}
+
+.btn-icon-go { color: var(--oro); font-size: 1.2rem; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .enchanted-container { padding: 1rem; }
+    .profile-card { padding: 1.5rem; }
+    .header-content-wrapper { flex-direction: column; gap: 15px; }
+    .header-left, .header-right { justify-content: center; width: 100%; }
+}
