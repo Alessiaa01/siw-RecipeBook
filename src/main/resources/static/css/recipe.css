@@ -2,27 +2,20 @@
 /* STILE COERENTE CON RECIPES.CSS (Celeste, Oro, Trasparenze) */
 /* ========================================================== */
 
-/* 1. IMPORTAZIONE FONT & VARIABILI (Identiche a recipes.css) */
+/* 1. IMPORTAZIONE FONT & VARIABILI */
 @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap');
 
 :root {
-    /* Palette Celeste (Sfondo) */
     --celeste-bg: #E1F5FE;       
     --celeste-accent: #81D4FA;   
-    
-    /* Palette Colori Elementi */
     --marrone-dark: rgb(100, 62, 41);
     --marrone-text: #5D4037;
     --oro: #C5A059;
     --oro-light: #FFF8E1;        
     --bianco: #FFFFFF;
-    
-    /* Variabili Card */
     --parchment: #fffbf0;   
     --royal-gold: #c5a059;  
     --royal-gold-shine: #e6c676;
-    
-    /* Font */
     --font-title: 'Cinzel Decorative', cursive; 
     --font-body: 'Cormorant Garamond', serif;   
     --font-ui: 'Lato', sans-serif;              
@@ -41,7 +34,6 @@ body {
     display: flex; flex-direction: column;
 }
 
-/* Sfondo Magico (Opzionale, texture leggera) */
 .magic-background {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: radial-gradient(circle at center, rgba(255,255,255,0.4) 0%, transparent 70%);
@@ -65,43 +57,27 @@ body {
     display: flex; align-items: center; gap: 15px;
 }
 
-/* --- TASTI ORO (Home, Admin, User, Accedi) --- */
-.admin-link-header-left a, .btn-home-royal {
+/* --- TASTI ORO (Home, Admin, User, Accedi, Pubblica, Modifica) --- */
+.admin-link-header-left a, .btn-home-royal, .btn-my-recipes, .btn-publish-review, .btn-edit-recipe, .btn-gold {
     background-image: linear-gradient(45deg, #C5A059 0%, #E6C676 50%, #C5A059 100%);
     background-size: 200% auto;
     color: white !important;
     font-family: 'Lato', sans-serif; font-weight: 700;
     text-transform: uppercase; font-size: 0.8rem;
-    padding: 8px 18px; border-radius: 50px;
+    padding: 10px 20px; border-radius: 50px;
     display: inline-flex; align-items: center; gap: 8px;
     box-shadow: 0 4px 15px rgba(197, 160, 89, 0.3);
     transition: all 0.3s ease; text-decoration: none;
+    /* RIMOSSO IL BORDO NERO */
+    border: none !important;
 }
 
-.admin-link-header-left a:hover, .btn-home-royal:hover {
+.admin-link-header-left a:hover, .btn-home-royal:hover, .btn-my-recipes:hover, 
+.btn-publish-review:hover, .btn-edit-recipe:hover, .btn-gold:hover {
     background-position: right center; transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(197, 160, 89, 0.5);
 }
 
-/* --- TASTO LOGOUT ROSSO --- */
-.btn-logout-header {
-    background-image: linear-gradient(45deg, #D32F2F 0%, #FF6B6B 50%, #D32F2F 100%);
-    background-size: 200% auto;
-    color: white; border: none;
-    font-family: 'Lato', sans-serif; font-weight: 700;
-    text-transform: uppercase; font-size: 0.8rem;
-    padding: 8px 18px; border-radius: 50px;
-    cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
-    box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
-    transition: all 0.3s ease;
-}
-
-.btn-logout-header:hover {
-    background-position: right center; transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(211, 47, 47, 0.5);
-}
-
-/* --- TESTI E DECORAZIONI --- */
 .chef-name, .welcome-text {
     font-family: 'Lato', sans-serif; font-weight: 700;
     color: #5D4037; font-size: 0.9rem;
@@ -114,315 +90,197 @@ body {
 }
 
 .btn-gold-outline:hover { border-bottom: 2px solid #C5A059; }
+
 /* ========================================================== */
 /* 4. CARD DETTAGLIO RICETTA */
 /* ========================================================== */
 .single-recipe-card {
-    position: relative;
-    z-index: 1;
-    width: 90%;
-    max-width: 1100px;
-    margin: 40px auto;
-    padding: 60px 50px;
-    
+    position: relative; z-index: 1; width: 90%; max-width: 1100px;
+    margin: 40px auto; padding: 60px 50px;
     background-color: var(--parchment);
-    /* Sfumatura carta antica */
     background-image: linear-gradient(to bottom, #fffbf0 0%, #fff8e1 100%);
-    
-    /* Bordo Cornice Preziosa */
     border-radius: 12px;
-    box-shadow: 
-        0 0 0 1px rgba(197, 160, 89, 0.3), /* Bordo sottile oro */
-        0 20px 50px rgba(78, 52, 46, 0.15); /* Ombra profonda */
+    box-shadow: 0 0 0 1px rgba(197, 160, 89, 0.3), 0 20px 50px rgba(78, 52, 46, 0.15);
 }
 
-/* Decorazione interna sottile */
-.single-recipe-card::before {
-    content: ''; position: absolute;
-    top: 15px; left: 15px; right: 15px; bottom: 15px;
-    border: 1px solid rgba(197, 160, 89, 0.2);
-    border-radius: 8px;
-    pointer-events: none;
-}
-
-/* Titolo */
 .title-section h1 {
-    font-family: var(--font-title);
-    font-size: 3.5rem;
-    color: var(--marrone-dark);
-    text-align: center;
-    margin-bottom: 0.5rem;
-    text-shadow: 1px 1px 0px var(--oro);
+    font-family: var(--font-title); font-size: 3.5rem; color: var(--marrone-dark);
+    text-align: center; margin-bottom: 0.5rem; text-shadow: 1px 1px 0px var(--oro);
 }
 
-.subtitle {
-    text-align: center;
-    font-size: 1.4rem;
-    color: #777;
-    margin-bottom: 2rem;
-    font-style: italic;
-}
+.subtitle { text-align: center; font-size: 1.4rem; color: #777; margin-bottom: 2rem; font-style: italic; }
 
-/* Meta Info (Autore, Data) */
-.meta-info-row {
-    display: flex; justify-content: center; gap: 20px;
-    color: var(--marrone-text);
-    font-family: var(--font-ui);
-    font-weight: 600;
-    margin-bottom: 30px;
-}
+.meta-info-row { display: flex; justify-content: center; gap: 20px; color: var(--marrone-text); font-family: var(--font-ui); font-weight: 600; margin-bottom: 30px; }
 .meta-info-row i { color: var(--oro); margin-right: 5px; }
 
 /* ========================================================== */
-/* 5. GRIGLIA CONTENUTO (2 Colonne) */
+/* 5. GRIGLIA CONTENUTO */
 /* ========================================================== */
-.content-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 50px;
-    align-items: start;
-    position: relative; z-index: 2;
-}
+.content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: start; position: relative; z-index: 2; }
 
-/* Colonna Ingredienti */
-.ingredients-header {
-    text-align: center; margin-bottom: 20px;
-    font-family: var(--font-title); color: var(--marrone-dark);
-    border-bottom: 2px solid var(--oro); display: inline-block;
-    padding-bottom: 5px;
-}
-
-.ingredients-list {
-    list-style: none; font-size: 1.2rem;
-}
-.ingredients-list li {
-    margin-bottom: 12px;
-    border-bottom: 1px dotted rgba(197, 160, 89, 0.4);
-    padding-bottom: 5px;
-    display: flex; align-items: center; gap: 10px;
-}
+.ingredients-header { text-align: center; margin-bottom: 20px; font-family: var(--font-title); color: var(--marrone-dark); border-bottom: 2px solid var(--oro); display: inline-block; padding-bottom: 5px; }
+.ingredients-list { list-style: none; font-size: 1.2rem; }
+.ingredients-list li { margin-bottom: 12px; border-bottom: 1px dotted rgba(197, 160, 89, 0.4); padding-bottom: 5px; display: flex; align-items: center; gap: 10px; }
 .star-icon { color: var(--oro); font-size: 0.8rem; }
 
-/* Procedimento */
-.procedure-text {
-    margin-top: 30px;
-    font-size: 1.15rem;
-    line-height: 1.8;
-    text-align: justify;
-    background: rgba(255,255,255,0.5);
-    padding: 20px;
-    border-radius: 10px;
-    border-left: 3px solid var(--oro);
-}
+.procedure-text { margin-top: 30px; font-size: 1.15rem; line-height: 1.8; text-align: justify; background: rgba(255,255,255,0.5); padding: 20px; border-radius: 10px; border-left: 3px solid var(--oro); }
 
-/* Colonna Destra (Immagine) */
-.recipe-image-wrapper {
-    position: relative;
-    padding: 10px;
-    background: #fff;
-    border: 1px solid var(--oro);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    transform: rotate(2deg); /* Leggera inclinazione artistica */
-    margin-bottom: 30px;
-}
-.recipe-image-wrapper img {
-    width: 100%; height: auto; display: block;
-}
+.recipe-image-wrapper { position: relative; padding: 10px; background: #fff; border: 1px solid var(--oro); box-shadow: 0 10px 20px rgba(0,0,0,0.1); transform: rotate(2deg); margin-bottom: 30px; }
+.recipe-image-wrapper img { width: 100%; height: auto; display: block; }
 
-/* Dettagli Tecnici */
-.tech-details {
-    background-color: var(--oro-light);
-    padding: 20px;
-    border-radius: 10px;
-    border: 1px dashed var(--oro);
-}
+.tech-details { background-color: var(--oro-light); padding: 20px; border-radius: 10px; border: 1px dashed var(--oro); }
 .tech-list { list-style: none; font-size: 1.1rem; }
 .tech-list li { margin-bottom: 10px; display: flex; justify-content: space-between; }
 .tech-list strong { color: var(--marrone-dark); font-family: var(--font-ui); }
 
-
-
 /* ========================================================== */
 /* 7. RECENSIONI */
 /* ========================================================== */
-.reviews-section {
-    margin-top: 60px; padding-top: 40px;
-    border-top: 1px solid rgba(197, 160, 89, 0.3);
-}
+.reviews-section { margin-top: 60px; padding-top: 40px; border-top: 1px solid rgba(197, 160, 89, 0.3); }
+.review-card { background: #fff; border: 1px solid #eee; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: 5px solid var(--oro); }
+.review-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: bold; color: var(--marrone-dark); }
+.review-stars { color: #FFD700; }
+.review-title-text { display: block; margin-bottom: 5px; color: var(--marrone-dark); }
+.review-body-text { color: #555; font-style: italic; line-height: 1.5; }
 
-.review-card {
-    background: #fff; border: 1px solid #eee;
-    padding: 20px; margin-bottom: 20px; border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
-.review-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: bold; color: var(--oro); }
+/* Form Input */
+.form-magic input, .form-magic select, .form-magic textarea { width: 100%; border: 1px solid #ddd; background-color: var(--oro-light); border-radius: 20px; padding: 12px 20px; font-family: var(--font-ui); margin-bottom: 15px; outline: none; transition: 0.3s; }
+.form-magic input:focus, .form-magic textarea:focus, .form-magic select:focus { border-color: var(--oro); background-color: #fff; box-shadow: 0 0 8px rgba(197, 160, 89, 0.2); }
 
-/* Form Input Stile "Magic" */
-.form-magic input, .form-magic select, .form-magic textarea {
+/* ========================================================== */
+/* 9. BOTTONI AZIONE E CENTRATURA */
+/* ========================================================== */
+
+.admin-actions-centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin: 40px auto 20px;
     width: 100%;
-    border: 1px solid #ddd;
-    background-color: var(--oro-light);
-    border-radius: 20px;
-    padding: 12px 20px;
-    font-family: var(--font-ui);
-    margin-bottom: 15px;
-    outline: none; transition: 0.3s;
-}
-.form-magic input:focus, .form-magic textarea:focus {
-    border-color: var(--oro); background-color: #fff;
 }
 
-/* ========================================================== */
-/* 8. RESPONSIVE */
-/* ========================================================== */
+/* MODIFICA ED ELIMINA DELLA STESSA DIMENSIONE */
+.btn-edit-recipe, .btn-delete-recipe {
+    min-width: 180px; 
+    justify-content: center;
+}
+
+/* TASTO CANCELLA / ELIMINA RICETTA */
+.btn-delete-recipe {
+    background-image: linear-gradient(45deg, #D32F2F 0%, #FF6B6B 50%, #D32F2F 100%);
+    background-size: 200% auto;
+    color: white;
+    font-family: var(--font-ui); font-weight: 700;
+    text-transform: uppercase; font-size: 0.85rem;
+    padding: 12px 25px; border-radius: 50px;
+    cursor: pointer; display: inline-flex; align-items: center; gap: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(211, 47, 47, 0.4);
+    /* RIMOSSO IL BORDO NERO */
+    border: none !important;
+}
+
+.btn-delete-recipe:hover {
+    background-position: right center; transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(211, 47, 47, 0.6);
+}
+
+.delete-form-inline { margin: 0; display: flex; align-items: center; }
+
+/* Contenitore Bottoni Form */
+form.form-magic div.form-magic {
+    display: flex; justify-content: center;
+    width: 100%; margin-top: 10px; border: none;
+}
+
+.form-magic .row { display: flex; justify-content: space-between; align-items: center; width: 100%; gap: 15px; }
+.form-row-title { flex: 1; }
+.form-row-rating { width: 150px; }
+
+/* Modifica Inline Recensione */
+.edit-inline-title { color: var(--oro); margin-bottom: 15px; font-family: var(--font-title); }
+.edit-actions-container { margin-top: 15px; display: flex; gap: 15px; }
+
+.btn-annulla-inline { 
+    text-decoration: none; background-color: #f0f0f0; color: rgb(255, 255, 255);
+    display: flex; align-items: center; justify-content: center;
+    padding: 8px 20px; border-radius: 50px; font-family: var(--font-ui); font-weight: 700; border: none;
+}
+
+/* Box Nuova Recensione */
+.new-review-box {
+    background: rgba(255,255,255,0.6); padding: 30px; border-radius: 15px; border: 1px solid var(--oro); margin-top: 40px;
+}
+.new-review-box h3 { text-align: center; margin-bottom: 25px; color: var(--marrone-dark); font-family: var(--font-title); }
+
+.error-global { color: #d32f2f; text-align: center; margin-bottom: 15px; font-weight: bold; }
+.error-field { color: #d32f2f; font-size: 0.85rem; margin-top: -10px; margin-bottom: 10px; display: block; padding-left: 15px; }
+
+.guest-msg-container { text-align: center; margin-top: 30px; padding: 20px; background: rgba(255,255,255,0.4); border-radius: 10px; }
+.link-accedi-gold { color: var(--oro); font-weight: bold; }
+
 @media (max-width: 768px) {
     .content-grid { grid-template-columns: 1fr; }
     .recipe-image-wrapper { transform: rotate(0deg); max-width: 100%; }
     .title-section h1 { font-size: 2.5rem; }
     .single-recipe-card { padding: 30px 20px; }
+    .btn-edit-recipe, .btn-delete-recipe { min-width: 140px; }
 }
 
-/* ========================================================== */
-/* 9. BOTTONI AZIONE (Pubblica, Modifica, Cancella) */
-/* ========================================================== */
 
-/* Contenitore per i tasti Admin (Modifica/Cancella) */
-.recipe-admin-actions {
-    display: flex;
+/* --- BOTTONI AZIONE RECENSIONE (Modifica e Cancella) --- */
+.btn-review-edit, .btn-review-delete {
+    min-width: 120px; /* Dimensione fissa per renderli uguali */
     justify-content: center;
-    gap: 20px;
-    margin-top: 40px;
-    padding-top: 20px;
-    border-top: 1px dashed var(--oro);
-}
-
-/* --- TASTO PUBBLICA & MODIFICA (Oro Reale) --- */
-.btn-publish-review, .btn-edit-recipe {
-    background-image: linear-gradient(45deg, #C5A059 0%, #E6C676 50%, #C5A059 100%);
-    background-size: 200% auto;
-    color: white !important;
-    border: 1px solid rgba(255,255,255,0.2);
+    padding: 8px 15px;
+    font-size: 0.75rem;
+    border-radius: 50px;
     font-family: var(--font-ui);
     font-weight: 700;
     text-transform: uppercase;
-    font-size: 0.85rem;
-    padding: 12px 25px;
-    border-radius: 50px;
-    cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 10px;
+    gap: 6px;
+    border: none !important; /* Rimosso bordo nero */
+    outline: none;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4);
-    text-decoration: none;
-}
-
-.btn-publish-review:hover, .btn-edit-recipe:hover {
-    background-position: right center;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(197, 160, 89, 0.6);
-}
-
-/* --- TASTO CANCELLA (Rosso Shimmer - Coerente con Logout) --- */
-.btn-delete-recipe {
-    background-image: linear-gradient(45deg, #D32F2F 0%, #FF6B6B 50%, #D32F2F 100%);
-    background-size: 200% auto;
-    color: white;
-    border: none;
-    font-family: var(--font-ui);
-    font-weight: 700;
-    text-transform: uppercase;
-    font-size: 0.85rem;
-    padding: 12px 25px;
-    border-radius: 50px;
     cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(211, 47, 47, 0.4);
-}
-
-.btn-delete-recipe:hover {
-    background-position: right center;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(211, 47, 47, 0.6);
-}
-
-/* Icone nei tasti */
-.btn-publish-review i, .btn-edit-recipe i, .btn-delete-recipe i {
-    font-size: 1rem;
-}
-
-/* Contenitore centrato per i tasti */
-.admin-actions-centered {
-    display: flex;
-    justify-content: center; /* Centra orizzontalmente */
-    align-items: center;     /* Allinea verticalmente */
-    gap: 20px;               /* Spazio tra i due bottoni */
-    margin: 40px auto 20px;  /* Spazio sopra e sotto il blocco */
-    width: 100%;
-}
-
-/* Assicuriamoci che il form non rompa l'allineamento */
-.delete-form-inline {
-    margin: 0;
-    display: flex;
-    align-items: center;
-}
-
-/* Ottimizzazione per i bottoni esistenti */
-.btn-edit-recipe, .btn-delete-recipe {
-    min-width: 150px;       /* Rende i tasti della stessa dimensione minima */
-    justify-content: center;
-}
-
-
-
-/* --- 2. IL CONTENITORE DEL BOTTONE (Centratura) --- */
-/* Questo seleziona il div.form-magic che avvolge il pulsante */
-form.form-magic div.form-magic {
-    display: flex;
-    justify-content: center; /* Centra il bottone orizzontalmente */
-    width: 100%;
-    margin-top: 10px;
-    padding: 0;
-    background: transparent; /* Evita che erediti lo sfondo del contenitore padre */
-    border: none;
-}
-
-/* --- 3. LO STILE DEL BOTTONE PUBBLICA --- */
-.btn-publish-review {
-    background-image: linear-gradient(45deg, #C5A059 0%, #E6C676 50%, #C5A059 100%);
-    background-size: 200% auto;
-    color: white !important;
-    border: none;
-    font-family: 'Lato', sans-serif;
-    font-weight: 700;
-    text-transform: uppercase;
-    font-size: 0.9rem;
-    padding: 12px 30px;
-    border-radius: 50px;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4);
     text-decoration: none !important;
 }
 
-.btn-publish-review:hover {
-    background-position: right center;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(197, 160, 89, 0.6);
+/* Bottone Modifica Recensione (Oro) */
+.btn-review-edit {
+    background-image: linear-gradient(45deg, #C5A059 0%, #E6C676 50%, #C5A059 100%);
+    background-size: 200% auto;
+    color: white !important;
+    box-shadow: 0 4px 12px rgba(197, 160, 89, 0.3);
 }
 
-/* --- 4. FIX PER I CAMPI SOPRA --- */
-.form-magic .row {
+.btn-review-edit:hover {
+    background-position: right center;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(197, 160, 89, 0.5);
+}
+
+/* Bottone Cancella Recensione (Rosso) */
+.btn-review-delete {
+    background-image: linear-gradient(45deg, #D32F2F 0%, #FF6B6B 50%, #D32F2F 100%);
+    background-size: 200% auto;
+    color: white !important;
+    box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
+}
+
+.btn-review-delete:hover {
+    background-position: right center;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(211, 47, 47, 0.5);
+}
+
+/* Centratura dei bottoni nella card recensione */
+.review-actions {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 10px;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 15px;
 }

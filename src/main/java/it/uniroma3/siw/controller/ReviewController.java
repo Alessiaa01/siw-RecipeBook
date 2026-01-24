@@ -42,7 +42,7 @@ public class ReviewController {
         return "redirect:/recipes";
     }
 
-    // --- MODIFICA (Form) ---
+ // --- MODIFICA (Form inline nella pagina ricetta) ---
     @GetMapping("/review/edit/{id}")
     public String editReviewForm(@PathVariable("id") Long id, Model model) {
         Review review = reviewService.findById(id);
@@ -53,33 +53,39 @@ public class ReviewController {
             return "redirect:/recipe/" + (recipeId != null ? recipeId : "") + "?error=notAuthorized";
         }
 
-        model.addAttribute("review", review);
-        return "formEditReview.html";
-    }
+        // Carichiamo i dati necessari per "recipe.html"
+        model.addAttribute("recipe", review.getRecipe());
+        model.addAttribute("reviewToEdit", review); // Questa è la recensione da modificare
+        
+        // Dobbiamo aggiungere anche gli oggetti vuoti che il template recipe.html si aspetta normalmente
+        model.addAttribute("review", new Review()); 
+        model.addAttribute("ingredient", new it.uniroma3.siw.model.Ingredient());
 
-    // --- MODIFICA (Salvataggio) ---
+        return "recipe.html"; // Ritorniamo il template della ricetta, non il form separato
+    }
     @PostMapping("/review/update/{id}")
     public String updateReview(@PathVariable("id") Long id, 
-                               @Valid @ModelAttribute("review") Review reviewDetails,
+                               @Valid @ModelAttribute("reviewToEdit") Review reviewDetails, // Nota il nome cambiato
                                BindingResult bindingResult,
                                Model model) {
 
         Review reviewInDb = reviewService.findById(id);
         User currentUser = (User) model.getAttribute("currentUser");
 
-        // Controllo Sicurezza
         if (!isAuthorized(reviewInDb, currentUser)) {
              return "redirect:/recipes?error=notAuthorized";
         }
 
-        // Controllo Validazione (Form vuoto ecc.)
         if (bindingResult.hasErrors()) {
-            reviewDetails.setId(id);
-            reviewDetails.setRecipe(reviewInDb.getRecipe()); // Rimettiamo la ricetta per il link 'Annulla'
-            return "formEditReview.html"; 
+            // Se c'è un errore, rimaniamo sulla pagina della ricetta mostrando il form di modifica
+            model.addAttribute("recipe", reviewInDb.getRecipe());
+            model.addAttribute("reviewToEdit", reviewDetails);
+            model.addAttribute("review", new Review());
+            model.addAttribute("ingredient", new it.uniroma3.siw.model.Ingredient());
+            return "recipe.html";
         }
 
-        // Aggiornamento
+        // Aggiornamento dei dati
         reviewInDb.setTitle(reviewDetails.getTitle());
         reviewInDb.setText(reviewDetails.getText());
         reviewInDb.setRating(reviewDetails.getRating());
