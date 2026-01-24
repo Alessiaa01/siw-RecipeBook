@@ -45,7 +45,7 @@
 	            <div sec:authorize="!isAuthenticated()" class="guest-actions">
 	                <span class="welcome-text">Benvenuto!</span>
 	                <div class="admin-link-header-left"> <a th:href="@{/login}">Accedi</a></div>
-	                <a th:href="@{/register}" class="btn-gold-outline">Registrati</a>
+	                <a th:href="@{/register}" class="btn-gold">Registrati</a>
 	            </div>
 	        </div>
 	    </div>
@@ -95,16 +95,31 @@
                     <img th:if="${recipe.imageUrl}" th:src="${recipe.imageUrl}" alt="Immagine Ricetta"/>
                     <img th:unless="${recipe.imageUrl}" src="/images/placeholder-piatto.jpg" alt="Nessuna immagine"/>
                 </div>
-                <div class="tech-details">
-                    <h3>Dettagli</h3>
-                    <ul class="tech-list">
-                        <li><strong><i class="fas fa-clock"></i> Tempo:</strong> <span th:text="${recipe.preparationTime} + ' min'"> min</span></li>
-                        <li><strong><i class="fas fa-signal"></i> Difficoltà:</strong> <span th:text="${recipe.difficulty}"></span></li>
-                        <li><strong><i class="fas fa-fire"></i> Cottura:</strong> <span th:text="${recipe.cookingTime != null} ? ${recipe.cookingTime} + ' min' : '-'">-</span></li>
-                        <li><strong><i class="fas fa-utensils"></i> Porzioni:</strong> <span th:text="${recipe.servings} != null ? ${recipe.servings} : '-'">4</span></li>
-                        <li><strong><i class="fas fa-bookmark"></i> Categoria:</strong> <span th:text="${recipe.category}">Categoria</span></li>
-                    </ul>
-                </div>
+				<div class="tech-details">
+				    <h3><i class="fas fa-info-circle"></i> Dettagli</h3>
+				    <ul class="tech-list">
+				        <li>
+				            <span><i class="fas fa-clock"></i> Tempo:</span>
+				            <strong th:text="${recipe.preparationTime} + ' min'">30 min</strong>
+				        </li>
+				        <li>
+				            <span><i class="fas fa-signal"></i> Difficoltà:</span>
+				            <strong th:text="${recipe.difficulty}">Media</strong>
+				        </li>
+				        <li>
+				            <span><i class="fas fa-fire"></i> Cottura:</span>
+				            <strong th:text="${recipe.cookingTime != null} ? ${recipe.cookingTime} + ' min' : '-'">20 min</strong>
+				        </li>
+				        <li>
+				            <span><i class="fas fa-utensils"></i> Porzioni:</span>
+				            <strong th:text="${recipe.servings} != null ? ${recipe.servings} : '-'">4</strong>
+				        </li>
+				        <li>
+				            <span><i class="fas fa-bookmark"></i> Categoria:</span>
+				            <strong th:text="${recipe.category}">Categoria</strong>
+				        </li>
+				    </ul>
+				</div>
             </div>
         </div>
 

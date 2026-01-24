@@ -284,3 +284,62 @@ form.form-magic div.form-magic {
     gap: 10px;
     margin-top: 15px;
 }
+
+
+
+/* --- SISTEMAZIONE SEZIONE DETTAGLI --- */
+.tech-details {
+    background-color: var(--oro-light);
+    padding: 30px;
+    border-radius: 15px;
+    border: 1px dashed var(--oro);
+    box-shadow: inset 0 0 15px rgba(197, 160, 89, 0.1);
+}
+
+.tech-details h3 {
+    text-align: center;
+    color: var(--marrone-dark);
+    margin-bottom: 20px;
+    font-family: var(--font-title);
+    font-size: 1.6rem;
+    border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+    padding-bottom: 10px;
+}
+
+.tech-list {
+    list-style: none;
+    padding: 0;
+}
+
+.tech-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px dotted rgba(197, 160, 89, 0.2);
+    font-size: 1.1rem;
+}
+
+.tech-list li:last-child {
+    border-bottom: none;
+}
+
+.tech-list span {
+    color: var(--marrone-text);
+    font-family: var(--font-ui);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tech-list i {
+    color: var(--oro);
+    width: 20px;
+    text-align: center;
+}
+
+.tech-list strong {
+    color: var(--marrone-dark);
+    font-weight: 700;
+}
