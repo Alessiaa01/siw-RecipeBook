@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Lato:wght@400;700&display=swap" rel="stylesheet">
-    
+	<link rel="stylesheet" th:href="@{/css/stile.css}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link rel="stylesheet" th:href="@{/css/manageUsers.css}" />
@@ -66,7 +66,6 @@
                 <table class="magic-table">
                     <thead>
                         <tr>
-                            <th>Avatar</th>
                             <th>Nome Utente</th>
                             <th>Email</th>
                             <th>Ruolo</th>
@@ -78,11 +77,6 @@
                         <tr th:each="user : ${credentialsList}" 
                             th:classappend="${!user.enabled} ? 'row-banned' : ''">
                             
-                            <td>
-                                <div class="user-avatar-circle">
-                                    <span th:text="${#strings.substring(user.username,0,1).toUpperCase()}">U</span>
-                                </div>
-                            </td>
                             
                             <td class="font-title" th:text="${user.username}"
                                 th:style="${!user.enabled} ? 'text-decoration: line-through; color: #999;' : ''">
@@ -145,7 +139,7 @@
                         
                         <tr th:if="${credentialsList == null or credentialsList.empty}">
                             <td colspan="6" class="empty-row">
-                                <i class="fas fa-wind"></i> Nessun utente trovato nel regno.
+                                <i class="fas fa-wind"></i> Nessun utente trovato
                             </td>
                         </tr>
                     </tbody>

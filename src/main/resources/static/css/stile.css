@@ -1,162 +1,57 @@
-/* =/* ========================================================== */
-/* 1. FONT E IMPORTAZIONI: Cormorant Unicase, Cinzel, Rouge Script, Quicksand */
 /* ========================================================== */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Unicase:wght@300;400;500;600;700&family=Rouge+Script&family=Quicksand:wght@300;400;500;600;700&display=swap');
+/* GLOBAL.CSS - SCROLLBAR REALE & VARIABILI BASE              */
+/* ========================================================== */
 
-html {
-    height: 100%; 
-}
-
-/* NUOVE VARIABILI: Palette Elegante Pastello (Lavanda e Oro Scuro) */
 :root {
-    --primary-color: #9B59B6; /* Viola Lavanda Scuro */
-    --secondary-color: #C39BD3; /* Lavanda Chiaro */
-    --accent-color: #B8860B; /* <<< MODIFICATO: ORO SCURO (DarkGoldenrod) >>> */
-    --background-color: #FBF7FF; /* Bianco Sporco/Lilla Subtilo */
-    --box-shadow-color: rgba(195, 155, 211, 0.3); 
-    --button-base: #C39BD3; 
-    --button-shadow: #9B59B6; 
-    --max-content-width: 900px;
+    /* Palette per la Scrollbar */
+    --celeste-bg: #E1F5FE;       
+    --oro: #C5A059;
+    --oro-shine: #E6C676;
+    --marrone-dark: #5D4037;
 }
 
-/* ========================================================== */
-/* 2. STILE GENERALE E LAYOUT */
-/* ========================================================== */
-body {
-    font-family: 'Quicksand', sans-serif; 
-    background-color: var(--background-color);
-    margin: 0;
-    padding: 0;
-    color: #333;
-    line-height: 1.6;
-    min-height: 100vh;
-    font-weight: 400; 
+/* --- LOGICA SCROLLBAR DORATA (Chrome, Safari, Edge) --- */
+
+/* 1. Larghezza complessiva */
+::-webkit-scrollbar {
+    width: 12px;
 }
 
-/* ==== Titoli H1 (Default): Cormorant Unicase (se non sovrascritto) ==== */
-h1 {
-    font-family: 'Cormorant Unicase', serif;
-    font-weight: 700; 
-    text-align: center;
-    margin-top: 2.5rem;
-    color: var(--primary-color); 
-    font-size: 3rem;
-    text-shadow: none; 
-    letter-spacing: 1px;
+/* 2. Il binario (Track) - mimetizzato con lo sfondo */
+::-webkit-scrollbar-track {
+    background-color: var(--celeste-bg);
 }
 
-/* ==== Sotto-Titoli H2/H3: Cormorant Unicase ==== */
-h2, h3 {
-    font-family: 'Cormorant Unicase', serif;
-    font-weight: 700; 
-    color: var(--primary-color);
-    text-shadow: none;
-    margin-top: 1.5rem;
-}
-
-
-
-/* ==== Contenitori (div generici) - Leggeri ==== */
-div {
-    background-color: #FFFFFF;
-    max-width: 700px;
-    margin: 2rem auto;
-    padding: 1.5rem;
-    border-radius: 10px; 
-    box-shadow: 0 4px 10px var(--box-shadow-color); 
-    border: 1px solid var(--secondary-color); 
-}
-
-/* === REGOLA AGGIUNTA PER NEUTRALIZZARE I DIV STRUTTURALI === */
-body > div:not(header):not(:first-of-type) {
-    background: none !important;
-    box-shadow: none !important;
-    border: none !important;
-    padding: 0 2rem !important;
-    max-width: var(--max-content-width) !important;
-}
-
-
-/* ==== Form (Contenitore) - Leggero (Solo se non è un form speciale come formLogin) ==== */
-form {
-    padding: 20px 2rem;
-    border: 1px solid var(--secondary-color); 
-    box-shadow: 0 4px 10px var(--box-shadow-color); 
-    border-radius: 10px;
-    max-width: 500px;
-}
-
-form > div {
-    background: none;
-    box-shadow: none;
-    border: none;
-    padding: 0;
-    margin: 10px 0;
-}
-form label {
-    font-weight: 600;
-    color: var(--primary-color); 
-    display: block;
-    margin-bottom: 5px;
-}
-input[type="text"], input[type="password"], input[type="email"], input[type="number"], textarea, select {
-    border: 1px solid var(--secondary-color); 
-    border-radius: 5px; 
-    padding: 10px;
-    margin: 5px 0;
-    width: 100%;
-    box-sizing: border-box;
-    font-family: 'Quicksand', sans-serif;
-    transition: border-color 0.2s;
-}
-
-/* ==== Bottoni: Effetto Elegante (Rimuovi 3D) ==== */
-button[type="submit"], button, a.button {
-    background-color: var(--button-base); 
-    color: var(--primary-color); 
-    border: none;
-    padding: 12px 25px;
-    border-radius: 5px; 
-    font-weight: 600;
-    font-size: 1rem;
+/* 3. La barra che scorre (Thumb) */
+::-webkit-scrollbar-thumb {
+    /* Gradiente per l'effetto metallico tridimensionale */
+    background: linear-gradient(to bottom, var(--oro) 0%, var(--oro-shine) 50%, var(--oro) 100%);
+    border-radius: 20px;
     
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
-    transition: all 0.2s ease;
+    /* Il "trucco" del bordo per farla sembrare sottile e fluttuante */
+    border: 3px solid var(--celeste-bg);
+    
+    /* Leggero bagliore (Glow) iniziale */
+    box-shadow: 0 0 5px rgba(197, 160, 89, 0.3);
+    
+    transition: all 0.3s ease-in-out;
 }
 
-button[type="submit"]:hover, button:hover, a.button:hover {
-    background-color: var(--secondary-color);
-    color: white; 
-    box-shadow: 0 4px 8px var(--box-shadow-color);
+/* 4. Effetto Hover - Quando l'utente tocca o scorre */
+::-webkit-scrollbar-thumb:hover {
+    background: var(--marrone-dark);
+    /* Bagliore più intenso al passaggio del mouse */
+    box-shadow: 0 0 12px rgba(197, 160, 89, 0.6);
+    cursor: pointer;
 }
 
-button[type="submit"]:active, button:active, a.button:active {
-    transform: translateY(1px); 
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+/* --- SUPPORTO PER FIREFOX --- */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--oro) var(--celeste-bg);
 }
 
-/* ==== Link e Testo ==== */
-a {
-    text-decoration: none;
-    color: var(--primary-color);
-    font-weight: bold;
-}
-
-a:hover {
-    text-decoration: underline;
-    color: var(--secondary-color);
-}
-strong {
-    color: var(--secondary-color);
-    font-weight: 700;
-}
-
-/* Link di ritorno */
-a[href="/recipes"], a[href="/login"] {
-    display: block;
-    text-align: center;
-    margin: 2rem auto;
-    color: var(--secondary-color);
-    font-size: 1.2rem;
-    font-family: 'Quicksand', sans-serif;
+/* --- ANIMAZIONE OPZIONALE PER TUTTO IL CORPO --- */
+html {
+    scroll-behavior: smooth; /* Rende lo scorrimento fluido e non a scatti */
 }
