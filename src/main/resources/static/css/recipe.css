@@ -48,45 +48,72 @@ body {
     pointer-events: none; z-index: -1;
 }
 
-/* ========================================================== */
-/* 3. HEADER TRASPARENTE (Identico a recipes.css) */
-/* ========================================================== */
+/* --- STRUTTURA HEADER --- */
 .main-header {
-    position: sticky; 
-    top: 0;
-    z-index: 1000; 
-    background-color: rgba(255, 255, 255, 0.15); /* Molto trasparente */
-    backdrop-filter: blur(10px); 
-    -webkit-backdrop-filter: blur(10px); 
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3); 
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(197, 160, 89, 0.3);
     padding: 0.8rem 2rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    position: sticky; top: 0; z-index: 1000;
 }
 
 .header-content-wrapper {
-    max-width: 1200px;  
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between; 
-    align-items: center;
+    display: flex; justify-content: space-between; align-items: center;
 }
 
-.nav-left, .user-right {
+.header-left, .header-right, .user-profile, .guest-actions {
     display: flex; align-items: center; gap: 15px;
 }
 
-/* User Info Styles */
-.chef-badge {
-    display: flex; align-items: center; gap: 8px;
-    background-color: rgba(255,255,255,0.6);
-    padding: 5px 15px;
-    border-radius: 30px;
-    border: 1px solid var(--oro);
-    font-family: var(--font-ui);
-    font-weight: 700;
-    color: var(--marrone-dark);
+/* --- TASTI ORO (Home, Admin, User, Accedi) --- */
+.admin-link-header-left a, .btn-home-royal {
+    background-image: linear-gradient(45deg, #C5A059 0%, #E6C676 50%, #C5A059 100%);
+    background-size: 200% auto;
+    color: white !important;
+    font-family: 'Lato', sans-serif; font-weight: 700;
+    text-transform: uppercase; font-size: 0.8rem;
+    padding: 8px 18px; border-radius: 50px;
+    display: inline-flex; align-items: center; gap: 8px;
+    box-shadow: 0 4px 15px rgba(197, 160, 89, 0.3);
+    transition: all 0.3s ease; text-decoration: none;
 }
 
+.admin-link-header-left a:hover, .btn-home-royal:hover {
+    background-position: right center; transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(197, 160, 89, 0.5);
+}
+
+/* --- TASTO LOGOUT ROSSO --- */
+.btn-logout-header {
+    background-image: linear-gradient(45deg, #D32F2F 0%, #FF6B6B 50%, #D32F2F 100%);
+    background-size: 200% auto;
+    color: white; border: none;
+    font-family: 'Lato', sans-serif; font-weight: 700;
+    text-transform: uppercase; font-size: 0.8rem;
+    padding: 8px 18px; border-radius: 50px;
+    cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
+    box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
+    transition: all 0.3s ease;
+}
+
+.btn-logout-header:hover {
+    background-position: right center; transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(211, 47, 47, 0.5);
+}
+
+/* --- TESTI E DECORAZIONI --- */
+.chef-name, .welcome-text {
+    font-family: 'Lato', sans-serif; font-weight: 700;
+    color: #5D4037; font-size: 0.9rem;
+}
+
+.btn-gold-outline {
+    color: #C5A059; font-family: 'Lato', sans-serif; font-weight: 700;
+    text-decoration: none; text-transform: uppercase; font-size: 0.8rem;
+    border-bottom: 2px solid transparent; transition: 0.3s;
+}
+
+.btn-gold-outline:hover { border-bottom: 2px solid #C5A059; }
 /* ========================================================== */
 /* 4. CARD DETTAGLIO RICETTA */
 /* ========================================================== */
@@ -213,41 +240,7 @@ body {
 .tech-list li { margin-bottom: 10px; display: flex; justify-content: space-between; }
 .tech-list strong { color: var(--marrone-dark); font-family: var(--font-ui); }
 
-/* ========================================================== */
-/* 6. BOTTONI (Stile recipes.css) */
-/* ========================================================== */
-.btn-gold, .btn-royal, .btn-logout, .btn-login {
-    border: none; cursor: pointer;
-    font-family: var(--font-ui); font-weight: 700;
-    text-transform: uppercase; letter-spacing: 1px;
-    padding: 10px 24px; border-radius: 50px;
-    transition: all 0.3s ease; text-decoration: none;
-    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-    font-size: 0.9rem;
-}
 
-/* Oro Pieno */
-.btn-gold {
-    background-image: linear-gradient(45deg, #C5A059 0%, #E6C676 50%, #C5A059 100%);
-    background-size: 200% auto; color: white;
-    box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4);
-}
-.btn-gold:hover { background-position: right center; transform: translateY(-2px); }
-
-/* Outline (Trasparente con bordo) */
-.btn-gold-outline {
-    background: transparent; border: 2px solid var(--oro); color: var(--marrone-dark);
-    padding: 8px 20px; border-radius: 50px; font-weight: 700; font-family: var(--font-ui);
-    display: inline-flex; align-items: center; gap: 5px; text-decoration: none; text-transform: uppercase; font-size: 0.8rem;
-}
-.btn-gold-outline:hover { background: var(--oro); color: white; }
-
-/* Logout / Delete (Scuri) */
-.btn-dark {
-    background-color: var(--marrone-dark); color: #F8F1E0;
-    box-shadow: 0 4px 10px rgba(93, 64, 55, 0.3);
-}
-.btn-dark:hover { background-color: #3E2723; transform: translateY(-2px); color: white; }
 
 /* ========================================================== */
 /* 7. RECENSIONI */
@@ -287,4 +280,99 @@ body {
     .recipe-image-wrapper { transform: rotate(0deg); max-width: 100%; }
     .title-section h1 { font-size: 2.5rem; }
     .single-recipe-card { padding: 30px 20px; }
+}
+
+/* ========================================================== */
+/* 9. BOTTONI AZIONE (Pubblica, Modifica, Cancella) */
+/* ========================================================== */
+
+/* Contenitore per i tasti Admin (Modifica/Cancella) */
+.recipe-admin-actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px dashed var(--oro);
+}
+
+/* --- TASTO PUBBLICA & MODIFICA (Oro Reale) --- */
+.btn-publish-review, .btn-edit-recipe {
+    background-image: linear-gradient(45deg, #C5A059 0%, #E6C676 50%, #C5A059 100%);
+    background-size: 200% auto;
+    color: white !important;
+    border: 1px solid rgba(255,255,255,0.2);
+    font-family: var(--font-ui);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    padding: 12px 25px;
+    border-radius: 50px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4);
+    text-decoration: none;
+}
+
+.btn-publish-review:hover, .btn-edit-recipe:hover {
+    background-position: right center;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(197, 160, 89, 0.6);
+}
+
+/* --- TASTO CANCELLA (Rosso Shimmer - Coerente con Logout) --- */
+.btn-delete-recipe {
+    background-image: linear-gradient(45deg, #D32F2F 0%, #FF6B6B 50%, #D32F2F 100%);
+    background-size: 200% auto;
+    color: white;
+    border: none;
+    font-family: var(--font-ui);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    padding: 12px 25px;
+    border-radius: 50px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(211, 47, 47, 0.4);
+}
+
+.btn-delete-recipe:hover {
+    background-position: right center;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(211, 47, 47, 0.6);
+}
+
+/* Icone nei tasti */
+.btn-publish-review i, .btn-edit-recipe i, .btn-delete-recipe i {
+    font-size: 1rem;
+}
+
+/* Contenitore centrato per i tasti */
+.admin-actions-centered {
+    display: flex;
+    justify-content: center; /* Centra orizzontalmente */
+    align-items: center;     /* Allinea verticalmente */
+    gap: 20px;               /* Spazio tra i due bottoni */
+    margin: 40px auto 20px;  /* Spazio sopra e sotto il blocco */
+    width: 100%;
+}
+
+/* Assicuriamoci che il form non rompa l'allineamento */
+.delete-form-inline {
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+/* Ottimizzazione per i bottoni esistenti */
+.btn-edit-recipe, .btn-delete-recipe {
+    min-width: 150px;       /* Rende i tasti della stessa dimensione minima */
+    justify-content: center;
 }

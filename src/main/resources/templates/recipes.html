@@ -39,9 +39,10 @@
                 
                 <div sec:authorize="isAuthenticated()" class="user-profile" style="display: flex; align-items: center; gap: 15px;">
                     <span class="chef-name">
-						<i class="fa-solid fa-user"></i>
+						  <i class="fa-solid fa-user-circle"></i>
                         <span th:if="${currentUser != null}" th:text="${currentUser.name} + ' ' + ${currentUser.surname}">Nome Cognome</span>
                         <span th:if="${currentUser == null}" sec:authentication="name">User</span>
+						
                     </span>
                     
                     <form th:action="@{/logout}" method="post" style="margin: 0;">

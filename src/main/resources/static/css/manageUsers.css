@@ -50,49 +50,76 @@ body {
 a { text-decoration: none; transition: 0.3s; }
 ul { list-style: none; }
 
-/* --- 3. HEADER & HERO (IDENTICI AL TUO FILE) --- */
-.main-header {
+/* --- 3. HEADER (Uso il tag header generico) --- */
+header {
     position: sticky; top: 0; z-index: 1000; 
     background-color: rgba(255, 255, 255, 0.15); 
-    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); 
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px); 
     border-bottom: 1px solid rgba(255, 255, 255, 0.3); 
-    padding: 0.8rem 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-}
-.header-content-wrapper { max-width: 100%; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-.header-left, .header-right { display: flex; align-items: center; gap: 15px; }
-.welcome-text { font-family: var(--font-ui); font-weight: 700; color: var(--marrone-dark); font-size: 1rem; }
-
-.hero-section { text-align: center; padding: 2rem 1rem 1rem; }
-.main-logo {
-    max-height: 200px; margin-bottom: 1rem;
-    filter: drop-shadow(0 5px 15px rgba(78, 52, 46, 0.2));
-    animation: magicFloat 4s ease-in-out infinite;
-}
-@keyframes magicFloat { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
-
-.main-title {
-    font-family: var(--font-title); color: var(--marrone-dark);
-    font-size: 3rem; margin-bottom: 0.5rem;
-    text-shadow: 1px 1px 0px var(--oro); font-style: italic; 
+    padding: 0.8rem 2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
 }
 
-/* --- BUTTONS (Inclusi i tuoi gradienti) --- */
-.btn-logout-header {
+.header-content-wrapper {
+    max-width: 100%; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+}
+
+/* --- 4. TASTO HOME (Sinistra) --- */
+.admin-link-header-left a {
+    /* Stile Bottone Oro Gradient */
+    background-image: linear-gradient(45deg, #C5A059 0%, #E6C676 50%, #C5A059 100%);
+    background-size: 200% auto; 
+    color: white;
+    font-family: var(--font-ui); font-weight: 700;
+    text-transform: uppercase; font-size: 0.85rem;
+    padding: 8px 20px; border-radius: 50px; 
+    display: inline-flex; align-items: center; gap: 8px;
+    box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4); 
+    transition: all 0.3s ease;
+}
+
+.admin-link-header-left a:hover {
+    background-position: right center; transform: translateY(-2px); 
+    box-shadow: 0 6px 20px rgba(197, 160, 89, 0.6); 
+}
+
+/* --- 5. UTENTE & LOGOUT (Destra) --- */
+.user-actions-right {
+    display: flex; align-items: center; gap: 15px;
+}
+.welcome-text {
+    font-family: var(--font-ui);
+    font-weight: 700;
+    color: var(--marrone-dark);
+    font-size: 1rem;
+    margin-right: 5px;
+}
+
+.chef-name {
+	font-family: 'Lato', sans-serif; font-weight: 700;
+	   color: #5D4037; font-size: 0.9rem;
+}
+
+/* Tasto Logout (Stile Rosso Gradient) */
+.btn-logout {
     background-image: linear-gradient(45deg, #D32F2F 0%, #FF6B6B 50%, #D32F2F 100%);
-    background-size: 200% auto; color: white;
-    border: 1px solid rgba(255,255,255,0.2);
-    font-family: 'Lato', sans-serif; font-weight: 700; text-transform: uppercase; font-size: 0.85rem;
-    padding: 8px 20px; border-radius: 50px; cursor: pointer;
-    display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s ease;
+    background-size: 200% auto;
+    color: white;
+    font-family: var(--font-ui); font-weight: 700;
+    text-transform: uppercase; font-size: 0.85rem;
+    padding: 8px 20px; border-radius: 50px;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(211, 47, 47, 0.4); 
 }
-.btn-logout-header:hover { background-position: right center; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(211, 47, 47, 0.6); }
 
-.magic-background {
-    position: fixed; bottom: 0; left: 0; width: 100%; height: 300px;
-    background: linear-gradient(to top, rgba(255,255,255,0.8) 0%, transparent 100%);
-    pointer-events: none; z-index: -1;
+.btn-logout:hover {
+    background-position: right center; transform: translateY(-2px); 
+    box-shadow: 0 6px 20px rgba(211, 47, 47, 0.6); 
 }
+
 
 /* ========================================================== */
 /* --- SPECIFIC FOR MANAGE USERS (NUOVO CODICE) --- */

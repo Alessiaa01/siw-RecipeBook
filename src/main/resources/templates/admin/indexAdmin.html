@@ -23,12 +23,15 @@
             </div>
 
             <div class="user-actions-right">
-                <span class="chef-name">
-                    Benvenuto <span sec:authentication="name">Admin</span>
-                </span>
+				<span class="chef-name">
+								  <i class="fa-solid fa-user-circle"></i>
+				                       <span th:if="${currentUser != null}" th:text="${currentUser.name} + ' ' + ${currentUser.surname}">Nome Cognome</span>
+				                       <span th:if="${currentUser == null}" sec:authentication="name">User</span>
+									
+				                   </span>
                 
                 <a th:href="@{/logout}" class="btn-logout">
-                    <i class="fa-solid fa-right-from-bracket"></i> Logout
+                   Logout <i class="fa-solid fa-right-from-bracket"></i> 
                 </a>
             </div>
 

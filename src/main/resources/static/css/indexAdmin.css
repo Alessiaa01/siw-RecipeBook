@@ -70,10 +70,17 @@ header {
 .user-actions-right {
     display: flex; align-items: center; gap: 15px;
 }
+.welcome-text {
+    font-family: var(--font-ui);
+    font-weight: 700;
+    color: var(--marrone-dark);
+    font-size: 1rem;
+    margin-right: 5px;
+}
 
 .chef-name {
-    font-family: var(--font-ui); font-weight: 700;
-    color: var(--marrone-dark);
+	font-family: 'Lato', sans-serif; font-weight: 700;
+	   color: #5D4037; font-size: 0.9rem;
 }
 
 /* Tasto Logout (Stile Rosso Gradient) */

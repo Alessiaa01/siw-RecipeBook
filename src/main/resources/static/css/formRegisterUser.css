@@ -1,315 +1,231 @@
 /* ========================================================== */
-/* GRIMORIO MASTER CSS - VERSIONE INTEGRALE 2024        */
+/* FORM REGISTER - STILE MAGICO/REALE (Bootstrap Override) */
 /* ========================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Great+Vibes&family=Lato:wght@300;400;700&display=swap');
-
 :root {
-    /* Palette Colori */
-    --gold-border: #C5A059;      
-    --gold-btn: #E6CFA0;         
-    --gold-shadow: #8B5A2B;      
-    --blue-bg: #DDF4F8;          
-    --parchment: #FDF6E3;        
-    --text-color: #4E342E;       
-    --primary-marrone: #5D4037;
+    /* Palette Celeste (Sfondo) */
+    --celeste-bg: #E1F5FE;       
+    --celeste-accent: #81D4FA;   
+    
+    /* Palette Colori Elementi */
+    --marrone-dark: #5D4037;
+    --marrone-text: #4E342E;
+    --oro: #C5A059;
+    --oro-shine: #E6C676;
+    --bianco: #FFFFFF;
+    
+    /* Variabili Card */
+    --parchment: #fffbf0;   /* Crema carta antica */
+    --shadow-card: 0 15px 35px rgba(78, 52, 46, 0.15);
     
     /* Font */
-    --font-magic: 'Cinzel Decorative', cursive;
-    --font-cursive: 'Great Vibes', cursive;
-    --font-body: 'Cormorant Garamond', serif;
-    --font-ui: 'Lato', sans-serif;
+    --font-title: 'Cinzel Decorative', cursive; 
+    --font-body: 'Cormorant Garamond', serif;   
+    --font-ui: 'Lato', sans-serif;              
 }
 
-/* --- 1. RESET & SETUP BASE --- */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
+/* --- GLOBAL RESET & BACKGROUND --- */
 body {
-    background-color: var(--blue-bg);
-    background-image: linear-gradient(to bottom, #DDF4F8 0%, #B3E5FC 100%);
-    background-attachment: fixed;
     font-family: var(--font-body);
-    color: var(--text-color);
     min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    position: relative;
     overflow-x: hidden;
 }
 
-/* Strato magico radiale fisso */
+/* Sfondo Sfumato Fisso */
 .magic-background-layer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at center, rgba(255,255,255,0.6) 0%, transparent 75%);
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: var(--celeste-bg);
+    background-image: linear-gradient(135deg, #E1F5FE 0%, #B3E5FC 100%);
     z-index: -1;
-    pointer-events: none;
 }
 
-/* --- 2. HEADER TRASPARENTE --- */
-.main-header {
-    background: transparent;
-    position: absolute;
-    top: 0;
+/* --- CARD (RICETTARIO) --- */
+.enchanted-container {
     width: 100%;
-    z-index: 1000;
-    padding: 1.5rem 2rem;
+    max-width: 800px; /* Larghezza massima per desktop */
+    z-index: 10;
 }
 
-.header-content-wrapper {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.recipe-book-card {
+    background-color: var(--parchment);
+    border-radius: 15px;
+    box-shadow: var(--shadow-card), 0 0 0 1px rgba(197, 160, 89, 0.3);
+    position: relative;
+    overflow: hidden;
+    /* Bordo decorativo superiore */
+    border-top: 5px solid var(--oro);
 }
 
-.header-left a, .welcome-text {
-    font-family: var(--font-magic);
-    font-size: 0.9rem;
-    text-decoration: none;
-    color: var(--text-color);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: 0.3s;
+.card-content-wrapper {
+    padding: 2.5rem;
 }
 
-.header-left a:hover {
-    color: var(--gold-shadow);
-    transform: scale(1.05);
+/* --- HEADER & LOGO --- */
+.header-decoration {
+    text-align: center;
+    margin-bottom: 2rem;
 }
 
-.btn-logout-header {
-    background: var(--gold-btn);
-    border: 1px solid var(--gold-border);
-    padding: 6px 15px;
-    border-radius: 20px;
+.main-logo {
+    max-height: 120px;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+    animation: magicFloat 4s ease-in-out infinite;
+}
+
+@keyframes magicFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+h1.display-6 {
+    font-family: var(--font-title);
+    color: var(--marrone-dark);
+    font-weight: 700;
+    font-size: 2rem;
+}
+
+/* --- INPUT FIELDS (Override Bootstrap) --- */
+.magic-field label {
     font-family: var(--font-ui);
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
+    font-weight: 700;
+    color: var(--marrone-dark);
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.btn-logout-header:hover {
-    background: var(--gold-border);
+.field-wrapper {
+    position: relative;
+}
+
+/* Icona dentro l'input */
+.input-icon {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: var(--oro);
+    font-size: 1.1rem;
+    z-index: 10;
+}
+
+/* Input Box Styling */
+.form-control {
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 12px 12px 12px 45px; /* Padding sinistro per l'icona */
+    font-family: var(--font-ui);
+    color: var(--marrone-dark);
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+/* Input Focus (Diventa Oro invece di Blu Bootstrap) */
+.form-control:focus {
+    background-color: #fff;
+    border-color: var(--oro);
+    box-shadow: 0 0 0 0.25rem rgba(197, 160, 89, 0.25); /* alone oro */
+    color: var(--marrone-dark);
+}
+
+/* Placeholder Style */
+.form-control::placeholder {
+    color: #aaa;
+    font-style: italic;
+    font-family: var(--font-body);
+}
+
+/* Messaggi di Errore */
+.error-msg {
+    color: #D32F2F;
+    font-size: 0.8rem;
+    font-style: italic;
+    margin-top: 5px;
+    display: block;
+    font-weight: 600;
+}
+
+/* --- BOTTONI --- */
+
+/* Bottone Principale (Royal) */
+.royal-btn {
+    background-image: linear-gradient(45deg, #C5A059 0%, #E6C676 50%, #C5A059 100%);
+    background-size: 200% auto;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 50px;
+    font-family: var(--font-ui);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4);
+}
+
+.royal-btn:hover {
+    background-position: right center;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(197, 160, 89, 0.6);
     color: white;
 }
 
-/* --- 3. LAYOUT CONTENITORE CENTRATO --- */
-.enchanted-container {
-    padding: 6rem 1rem 2rem; /* Padding top per non finire sotto l'header */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    width: 100%;
-}
-
-/* --- 4. LA PERGAMENA --- */
-.parchment-panel {
-    background-color: var(--parchment);
-    background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
-    width: 100%;
-    max-width: 950px;
-    padding: 3rem;
-    border-radius: 10px;
-    border: 2px solid var(--gold-border);
-    position: relative;
-    box-shadow: 
-        inset 0 0 60px rgba(139, 90, 43, 0.1),
-        0 20px 50px rgba(0,0,0,0.15);
-}
-
-/* Angoli decorativi opzionali */
-.parchment-panel::after {
-    content: '⚜';
-    position: absolute;
-    bottom: 10px;
-    right: 15px;
-    color: var(--gold-border);
-    opacity: 0.4;
-    font-size: 1.5rem;
-}
-
-/* --- 5. TITOLI --- */
-.main-title {
-    font-family: var(--font-cursive);
-    font-size: 4rem;
-    color: var(--primary-marrone);
-    text-align: center;
-    margin-bottom: 2rem;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
-}
-
-.panel-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px dashed var(--gold-border);
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-}
-
-.panel-header h3 {
-    font-family: var(--font-magic);
-    font-size: 1.2rem;
-    color: var(--primary-marrone);
-}
-
-/* --- 6. TABELLA MAGICA --- */
-.table-responsive {
-    overflow-x: auto;
-}
-
-.magic-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0 10px;
-}
-
-.magic-table th {
-    font-family: var(--font-magic);
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    color: var(--gold-shadow);
-    padding: 10px;
-    text-align: left;
-}
-
-.magic-table tbody tr {
-    background: rgba(255, 255, 255, 0.4);
-    transition: 0.3s ease;
-}
-
-.magic-table td {
-    padding: 12px 15px;
-    border-top: 1px solid rgba(197, 160, 89, 0.2);
-    border-bottom: 1px solid rgba(197, 160, 89, 0.2);
-    font-size: 1.1rem;
-}
-
-/* Effetto bordi arrotondati per le righe "pillola" */
-.magic-table td:first-child {
-    border-left: 1px solid rgba(197, 160, 89, 0.2);
-    border-top-left-radius: 25px;
-    border-bottom-left-radius: 25px;
-}
-
-.magic-table td:last-child {
-    border-right: 1px solid rgba(197, 160, 89, 0.2);
-    border-top-right-radius: 25px;
-    border-bottom-right-radius: 25px;
-}
-
-.magic-table tr:hover td {
-    background: rgba(255, 255, 255, 0.8);
-    border-color: var(--gold-border);
-}
-
-/* --- 7. BOTTONI MAGICI --- */
-.btn-magic {
+/* Bottone Home (Outline) */
+.btn-gold-outline {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 8px 20px;
-    border-radius: 25px;
-    border: none;
-    cursor: pointer;
-    font-family: var(--font-magic);
+    color: var(--marrone-dark);
     font-weight: bold;
-    font-size: 0.75rem;
     text-decoration: none;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    color: white;
+    padding: 8px 16px;
+    border: 1px solid transparent;
+    border-radius: 20px;
+    transition: all 0.3s;
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
 }
 
-/* Varianti Colore */
-.btn-gold-magic {
-    background: linear-gradient(135deg, #C5A059, #E6CFA0);
-    color: var(--text-color);
-    box-shadow: 0 3px 0 var(--gold-shadow);
+.btn-gold-outline:hover {
+    background-color: rgba(197, 160, 89, 0.1);
+    color: var(--oro);
+    transform: translateX(-3px);
 }
 
-.btn-blue-magic {
-    background: #B2EBF2;
-    color: #006064;
-    box-shadow: 0 3px 0 #00838F;
+/* --- LINK LOGIN --- */
+.scroll-link {
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    color: var(--marrone-text);
 }
 
-.btn-red-magic {
-    background: #FFCDD2;
-    color: #B71C1C;
-    box-shadow: 0 3px 0 #C62828;
-}
-
-.btn-magic:hover {
-    transform: translateY(-3px);
-    filter: brightness(1.1);
-}
-
-.btn-magic:active {
-    transform: translateY(0);
-}
-
-/* --- 8. BADGES & STATI --- */
-.role-badge, .status-badge {
-    padding: 4px 12px;
-    border-radius: 12px;
-    font-size: 0.8rem;
-    font-weight: bold;
+.scroll-link a {
+    color: var(--oro);
+    font-weight: 700;
+    text-decoration: none;
     font-family: var(--font-ui);
 }
 
-.badge-admin { background: #E1BEE7; color: #4A148C; }
-.badge-user { background: #E3F2FD; color: #0D47A1; }
-.badge-active { background: #C8E6C9; color: #1B5E20; }
-.badge-banned { background: #FFEBEE; color: #B71C1C; }
-
-/* --- 9. FORM ELEMENTS (Per Aggiungi/Modifica) --- */
-.magic-input {
-    width: 100%;
-    background: rgba(255, 251, 240, 0.6);
-    border: 1px solid var(--gold-border);
-    border-radius: 8px;
-    padding: 10px 15px;
-    font-family: var(--font-body);
-    font-size: 1.1rem;
-    color: var(--text-color);
-    transition: 0.3s;
-}
-
-.magic-input:focus {
-    background: white;
-    outline: none;
-    box-shadow: 0 0 8px rgba(197, 160, 89, 0.4);
-}
-
-/* --- 10. FOOTER LINKS --- */
-.back-link {
-    display: block;
-    text-align: center;
-    margin-top: 2rem;
-    font-family: var(--font-cursive);
-    font-size: 1.8rem;
-    color: var(--primary-marrone);
-    text-decoration: none;
-    transition: 0.3s;
-}
-
-.back-link:hover {
-    letter-spacing: 1px;
-    color: var(--gold-border);
+.scroll-link a:hover {
+    text-decoration: underline;
+    color: var(--marrone-dark);
 }
 
 /* --- RESPONSIVE --- */
 @media (max-width: 768px) {
-    .parchment-panel { padding: 1.5rem; }
-    .main-title { font-size: 2.5rem; }
-    .panel-header { flex-direction: column; gap: 10px; }
-    .magic-table td { font-size: 0.9rem; }
+    .card-content-wrapper {
+        padding: 1.5rem;
+    }
+    
+    .display-6 {
+        font-size: 1.5rem;
+    }
 }

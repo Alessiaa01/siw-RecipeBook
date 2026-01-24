@@ -14,32 +14,40 @@
 </head>
 <body>
 
-	<header class="main-header">
-	    <div class="header-content-wrapper">
-	        
-	        <div class="header-left">
-	            <a th:href="@{/admin}" class="btn-back-header">
-	                <i class="fas fa-arrow-left"></i>
-	                <span>Indietro</span>
-	            </a>
+	<header>
+	        <div class="header-content-wrapper">
+	            
+				<div class="header-left">
+				    
+				    <div class="admin-link-header-left">
+				        <a th:href="@{/}">
+				            <i class="fa-solid fa-house-chimney"></i> Home
+				        </a>
+				    </div>
 
-	            <a th:href="@{/}" class="welcome-text">
-	                <i class="fas fa-home"></i> Home
-	            </a>
+				    <div sec:authorize="hasAuthority('ADMIN')" class="admin-link-header-left">
+				        <a th:href="@{/admin/indexAdmin}">
+				            <i class="fa-solid fa-crown"></i> Gestione Admin
+				        </a>
+				    </div>
+
+				</div>
+
+	            <div class="user-actions-right">
+					<span class="chef-name">
+									  <i class="fa-solid fa-user-circle"></i>
+					                       <span th:if="${currentUser != null}" th:text="${currentUser.name} + ' ' + ${currentUser.surname}">Nome Cognome</span>
+					                       <span th:if="${currentUser == null}" sec:authentication="name">User</span>
+										
+					                   </span>
+	                
+	                <a th:href="@{/logout}" class="btn-logout">
+	                   Logout <i class="fa-solid fa-right-from-bracket"></i> 
+	                </a>
+	            </div>
+
 	        </div>
-
-	        <div class="header-right">
-	            <span class="welcome-text">Area Amministratore</span>
-	            <form th:action="@{/logout}" method="post" style="margin: 0;">
-	                <button type="submit" class="btn-logout-header">
-	                    <i class="fas fa-sign-out-alt"></i> Logout
-	                </button>
-	            </form>
-	        </div>
-
-	    </div>
-	</header>
-
+	    </header>
     <div class="hero-section">
         <div class="main-logo">
           

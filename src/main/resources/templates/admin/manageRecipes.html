@@ -17,120 +17,110 @@
 <body>
 
     <div class="magic-background-layer"></div>
-
-    <header class="main-header">
-        <div class="header-content-wrapper">
-            
-            <div class="header-left">
-                <a th:href="@{/admin}" class="btn-back-header">
-                    <i class="fas fa-arrow-left"></i>
-                    <span>Indietro</span>
-                </a>
-                <a th:href="@{/}" class="welcome-text">
-                    <i class="fas fa-home"></i> Home
+<header>
+    <div class="header-content-wrapper">
+        <div class="header-left">
+            <div class="admin-link-header-left">
+                <a th:href="@{/}">
+                    <i class="fa-solid fa-house-chimney"></i> Home
                 </a>
             </div>
-
-            <div class="header-right">
-                <span class="welcome-text" sec:authorize="isAuthenticated()">
-                    <i class="fas fa-hat-wizard"></i> ✨ <span th:text="${#authentication.name}">Admin</span>
-                </span>
-                <form th:action="@{/logout}" method="post" class="logout-form">
-                    <button type="submit" class="btn-logout-header">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </button>
-                </form>
+            <div sec:authorize="hasAuthority('ADMIN')" class="admin-link-header-left">
+                <a th:href="@{/admin/indexAdmin}">
+                    <i class="fa-solid fa-crown"></i> Gestione Admin
+                </a>
             </div>
         </div>
-    </header>
 
-    <div class="enchanted-container">
-        <div class="parchment-panel">
-            
-            <div class="panel-header-top">
-                <h1 class="main-title" th:text="${viewTitle ?: 'Registro delle Ricette'}">Elenco Ricette</h1>
-                <p class="admin-motto">"Custodisci ogni segreto del gusto tramandato nel Regno"</p>
-            </div>
-
-            <div class="panel-actions-bar">
-                <div class="stats-info">
-                    <i class="fas fa-scroll"></i> 
-                    <span th:text="${recipes != null ? recipes.size() : '0'}">0</span> Creazioni Trovate
-                </div>
-                <a th:href="@{/formNewRecipe}" class="btn-magic btn-add-recipe">
-                    <i class="fas fa-plus-circle"></i> Nuova Ricetta
-                </a>
-            </div>
-
-            <div class="table-responsive">
-                <table class="magic-table">
-                    <thead>
-                        <tr>
-                            <th>Titolo Ricetta</th>
-                            <th>Autore</th>
-                            <th>Categoria</th>
-                            <th class="text-right">Azioni</th>
-                        </tr>
-                    </thead>
-                    
-                    <tbody>
-                        <tr th:each="recipe : ${recipes}">
-                            <td class="recipe-name-cell">
-                                <div class="recipe-title-wrapper">
-                                    <i class="fas fa-utensils recipe-icon"></i>
-                                    <span class="font-title-recipe" th:text="${recipe.title}">Titolo</span>
-                                </div>
-                            </td>
-                            
-                            <td>
-                                <span class="author-badge">
-                                    <i class="fas fa-user-pen"></i>
-                                    <span th:text="${recipe.author != null ? recipe.author.name : 'Anonimo'}">Autore</span>
-                                </span>
-                            </td>
-
-                            <td>
-                                <span class="category-tag" th:text="${recipe.category}">Categoria</span>
-                            </td>
-                            
-                            <td class="text-right">
-                                <div class="action-buttons-wrapper">
-                                    <a th:href="@{'/recipe/' + ${recipe.id}}" class="btn-action btn-view" title="Visualizza">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                    
-                                    <a th:href="@{'/recipe/edit/' + ${recipe.id}}" class="btn-action btn-edit" title="Modifica">
-                                        <i class="fas fa-pencil-alt"></i>
-                                    </a>
-                                    
-                                    <form th:action="@{'/recipe/delete/' + ${recipe.id}}" method="post" class="delete-form">
-                                        <button type="submit" class="btn-action btn-delete" 
-                                                title="Elimina"
-                                                onclick="return confirm('Sei sicuro di voler distruggere questa ricetta per sempre?');">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                        
-                        <tr th:if="${recipes == null or recipes.empty}">
-                            <td colspan="4" class="empty-row">
-                                <i class="fas fa-feather"></i> Non ci sono ancora storie culinarie da mostrare.
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="footer-navigation">
-                <a th:href="@{/admin}" class="back-link-ornate">
-                    <i class="fas fa-feather-pointed"></i> Torna alla Dashboard Admin
-                </a>
-            </div>
-
+        <div class="user-actions-right">
+            <span class="chef-name">
+                <i class="fa-solid fa-user-circle"></i>
+                <span th:if="${currentUser != null}" th:text="${currentUser.name} + ' ' + ${currentUser.surname}">Nome Cognome</span>
+                <span th:if="${currentUser == null}" sec:authentication="name">User</span>
+            </span>
+            <a th:href="@{/logout}" class="btn-logout">
+                Logout <i class="fa-solid fa-right-from-bracket"></i> 
+            </a>
         </div>
     </div>
+</header>
+
+    <div class="enchanted-container">
+    <div class="parchment-panel">
+        <div class="panel-header-top">
+            <h1 class="main-title" th:text="${viewTitle ?: 'Registro delle Ricette'}">Elenco Ricette</h1>
+        </div>
+
+        <div class="panel-actions-bar">
+            <div class="stats-info">
+                <i class="fas fa-scroll"></i> 
+                <span th:text="${recipes != null ? recipes.size() : '0'}">0</span> Ricette Trovate
+            </div>
+            <a th:href="@{/formNewRecipe}" class="btn-magic btn-add-recipe">
+                <i class="fas fa-plus-circle"></i> Nuova Ricetta
+            </a>
+        </div>
+
+        <div class="table-responsive">
+    <table class="magic-table">
+        <thead>
+            <tr>
+                <th>Titolo Ricetta</th>
+                <th>Autore</th>
+                <th>Categoria</th>
+                <th>Data</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="recipe : ${recipes}">
+                <td>
+                    <div class="recipe-title-wrapper">
+                        <i class="fas fa-utensils recipe-icon"></i>
+                        <span class="font-title-recipe" th:text="${recipe.title}">Titolo</span>
+                    </div>
+                </td>
+                
+                <td>
+                    <span class="author-badge">
+                        <i class="fas fa-user-pen"></i>
+                        <span th:text="${recipe.author != null ? recipe.author.name : 'Anonimo'}">Autore</span>
+                    </span>
+                </td>
+
+                <td>
+                    <span class="category-tag" th:text="${recipe.category}">Categoria</span>
+                </td>
+
+                <td>
+                    <span class="date-badge">
+                        <i class="far fa-calendar-alt"></i>
+                        <span th:text="${recipe.creationDate != null ? #temporals.format(recipe.creationDate, 'dd/MM/yyyy') : 'N/A'}">24/01/2026</span>
+                    </span>
+                </td>
+                
+                <td>
+                    <div class="action-buttons-wrapper">
+                        <a th:href="@{'/recipe/' + ${recipe.id}}" class="btn-action btn-view" title="Visualizza">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                        <a th:href="@{'/recipe/edit/' + ${recipe.id}}" class="btn-action btn-edit" title="Modifica">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
+                        <form th:action="@{'/recipe/delete/' + ${recipe.id}}" method="post" class="delete-form">
+                            <button type="submit" class="btn-action btn-delete" 
+                                    onclick="return confirm('Sei sicuro?');">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+    </div>
+</div>
 
 </body>
 </html>

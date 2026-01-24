@@ -13,43 +13,55 @@
 <body>
     <div class="magic-background"></div>
 
-    <header class="main-header">
-        <div class="header-content-wrapper">
-            
-            <div class="nav-left">
-                <a href="/" class="btn-gold-outline">
-                    <i class="fas fa-arrow-left"></i> Home
-                </a>
-                
-                <span sec:authorize="hasAuthority('ADMIN')">
-                    <a href="/admin" class="btn-gold-outline">
-                        <i class="fas fa-tools"></i> Admin
-                    </a>
-                </span>
-            </div>
-<div class="user-right">
-    <div sec:authorize="isAnonymous()">
-        <a th:href="@{/login}" class="btn-gold">
-            <i class="fas fa-sign-in-alt"></i> Accedi
-        </a>
-    </div>
+	<header class="main-header">
+	    <div class="header-content-wrapper">
+	        
+	        <div class="header-left">
+	            <div class="admin-link-header-left">
+	                <a th:href="@{/}">
+	                    <i class="fa-solid fa-house-chimney"></i> Home
+	                </a>
+	            </div>
 
-    <div sec:authorize="isAuthenticated()" style="display: flex; align-items: center; gap: 15px;">
-        
-        <div class="chef-badge">
-            <i class="fas fa-user"></i>
-            <span th:text="${#authentication.name}">Username</span>
-        </div>
-        
-        <form th:action="@{/logout}" method="post" style="margin: 0;">
-            <button type="submit" class="btn-dark btn-logout" style="cursor: pointer; border: none; padding: 10px 20px; border-radius: 50px;">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </button>
-        </form>
-    </div>
-</div>
-        </div>
-    </header>
+	            <div sec:authorize="hasAuthority('ADMIN')">
+	                <a th:href="@{/admin}" class="btn-home-royal">
+	                    <i class="fa-solid fa-crown"></i> Gestione Admin
+	                </a>
+	            </div>
+
+				<div sec:authorize="isAuthenticated() and !hasAuthority('ADMIN')">
+				                  <a th:href="@{/myRecipes}" class="btn-my-recipes">
+				                      <i class="fa-solid fa-book-open"></i> Le mie ricette
+				                  </a>
+				              </div>
+	        </div>
+	        
+	        <div class="header-right">
+	            
+	            <div sec:authorize="isAuthenticated()" class="user-profile">
+	                <span class="chef-name">
+	                    <i class="fa-solid fa-user-circle"></i>
+	                    <span th:if="${currentUser != null}" th:text="${currentUser.name} + ' ' + ${currentUser.surname}">Nome Cognome</span>
+	                    <span th:if="${currentUser == null}" sec:authentication="name">User</span>
+	                </span>
+	                
+	                <form th:action="@{/logout}" method="post" style="margin: 0;">
+	                    <button type="submit" class="btn-logout-header">
+	                        Logout <i class="fa-solid fa-right-from-bracket"></i>
+	                    </button>
+	                </form>
+	            </div>
+
+	            <div sec:authorize="!isAuthenticated()" class="guest-actions">
+	                <span class="welcome-text">Benvenuto!</span>
+	                <div class="admin-link-header-left"> <a th:href="@{/login}">Accedi</a>
+	                </div>
+	                <a th:href="@{/register}" class="btn-gold-outline">Registrati</a>
+	            </div>
+	            
+	        </div>
+	    </div>
+	</header>
 
     <main class="single-recipe-card">
         
@@ -199,9 +211,11 @@
 		            <textarea th:field="*{text}" rows="3" placeholder="Raccontaci la tua esperienza..." required></textarea>
 		            <span th:if="${#fields.hasErrors('text')}" th:errors="*{text}" style="color: red;"></span>
 
-		            <div style="text-align: center;">
-                        <button type="submit" class="btn-gold">Pubblica Recensione</button>
-                    </div>
+					<div class="form-magic">
+					    <button type="submit" class="btn-publish-review">
+					        <i class="fas fa-feather-pointed"></i> Pubblica Recensione
+					    </button>
+					</div>
 		        </form>
 		    </div>
 
@@ -210,26 +224,22 @@
 		    </div>
 		</div>
        
-        <div style="text-align: center; margin-top: 50px; display: flex; justify-content: center; gap: 15px;">
-		    <a href="/recipes" class="btn-gold-outline">
-		        <i class="fas fa-arrow-left"></i> Torna all'elenco
+		
+		<div class="admin-actions-centered" 
+		     th:if="${currentUser != null} and (${recipe.author.id} == ${currentUser.id} or ${#authorization.expression('hasAuthority(''ADMIN'')')})">
+		    
+		    <a th:href="@{'/recipe/edit/' + ${recipe.id}}" class="btn-edit-recipe">
+		        <i class="fas fa-pencil-alt"></i> Modifica
 		    </a>
-		    
-		    <span th:if="${currentUser != null} and (${recipe.author.id} == ${currentUser.id} or ${#authorization.expression('hasAuthority(''ADMIN'')')})">
-		        <a th:href="@{'/recipe/edit/' + ${recipe.id}}" class="btn-gold">
-		            <i class="fas fa-pencil-alt"></i> Modifica
-		        </a>
-		    </span>
-		    
-		    <span th:if="${currentUser != null} and (${recipe.author.id} == ${currentUser.id} or ${#authorization.expression('hasAuthority(''ADMIN'')')})">
-		         <form th:action="@{'/recipe/delete/' + ${recipe.id}}" method="POST" style="display:inline;">
-		            <button type="submit" class="btn-dark"
-		                    onclick="return confirm('Sei sicuro di voler eliminare questa ricetta?');">
-		                <i class="fas fa-trash-alt"></i> Elimina
-		            </button>
-		         </form>
-		    </span>
+
+		    <form th:action="@{'/recipe/delete/' + ${recipe.id}}" method="POST" class="delete-form-inline">
+		        <button type="submit" class="btn-delete-recipe"
+		                onclick="return confirm('Sei sicuro di voler eliminare questa ricetta?');">
+		            <i class="fas fa-trash-alt"></i> Elimina
+		        </button>
+		    </form>
 		</div>
+	
 
     </main>
 

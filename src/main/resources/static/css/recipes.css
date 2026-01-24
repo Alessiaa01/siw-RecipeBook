@@ -95,8 +95,8 @@ ul { list-style: none; }
 }
 
 .chef-name {
-    font-weight: 700;
-    color: var(--marrone-dark);
+	font-family: 'Lato', sans-serif; font-weight: 700;
+	   color: #5D4037; font-size: 0.9rem;
 }
 
 /* --- 4. HERO SECTION (Logo & Titolo) --- */
@@ -326,7 +326,6 @@ button, .btn-gold, .btn-royal, .btn-login, .btn-register,
     box-shadow: 0 4px 10px rgba(197, 160, 89, 0.3);
 }
 
-/* --- 1. BOTTONE ADMIN (Transparent -> Gold Fill) --- */
 /* --- 1. BOTTONE ADMIN (Stile Gold Gradient - Come Cerca) --- */
 .btn-admin-badge {
     /* Sfondo Gradiente Oro (Identico a .btn-search) */
