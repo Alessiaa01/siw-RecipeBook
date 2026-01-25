@@ -48,23 +48,16 @@ header {
 }
 
 /* --- 4. TASTO HOME (Sinistra) --- */
-.admin-link-header-left a {
-    /* Stile Bottone Oro Gradient */
+.btn-home-royal  {
     background-image: linear-gradient(45deg, #C5A059 0%, #E6C676 50%, #C5A059 100%);
-    background-size: 200% auto; 
-    color: white;
-    font-family: var(--font-ui); font-weight: 700;
-    text-transform: uppercase; font-size: 0.85rem;
-    padding: 8px 20px; border-radius: 50px; 
+    background-size: 200% auto; color: white !important;
+    font-family: var(--font-ui); font-weight: 700; text-transform: uppercase;
+    font-size: 0.85rem; padding: 8px 20px; border-radius: 50px;
     display: inline-flex; align-items: center; gap: 8px;
-    box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4); 
-    transition: all 0.3s ease;
+    transition: 0.3s ease; text-decoration: none !important;
+    box-shadow: 0 4px 15px rgba(197, 160, 89, 0.3);
 }
-
-.admin-link-header-left a:hover {
-    background-position: right center; transform: translateY(-2px); 
-    box-shadow: 0 6px 20px rgba(197, 160, 89, 0.6); 
-}
+.btn-home-royal:hover { background-position: right center; transform: translateY(-2px); }
 
 /* --- 5. UTENTE & LOGOUT (Destra) --- */
 .user-actions-right {

@@ -206,7 +206,10 @@ public class RecipeController {
     // -------------------------------------------------------------------------
 
     @PostMapping("/recipe/{id}/favorite")
-    public String toggleFavorite(@PathVariable("id") Long id, Model model) {
+    public String toggleFavorite(@PathVariable("id") Long id, 
+                                 @RequestParam(value = "redirect", required = false) String redirect, // 1. Leggi il parametro
+                                 Model model) {
+        
         User currentUser = (User) model.getAttribute("currentUser");
         if (currentUser == null) return "redirect:/login";
 
@@ -220,7 +223,12 @@ public class RecipeController {
             userRepository.save(currentUser);
         }
         
-        // Cambiato da "redirect:/recipe/" + id a:
+        // 2. Controllo: se il parametro è "profile", torna al profilo dell'utente loggato
+        if ("profile".equals(redirect)) {
+            return "redirect:/user/" + currentUser.getId();
+        }
+        
+        // Altrimenti (se clicchi dalla home) torna alla lista ricette
         return "redirect:/recipes"; 
     }
     
