@@ -36,6 +36,8 @@ public class UserController {
         
         model.addAttribute("user", user);
         model.addAttribute("userRecipes", ricetteDelloChef); 
+     // Aggiungiamo esplicitamente i preferiti al modello per chiarezza nel template
+        model.addAttribute("favoriteRecipes", user.getFavoriteRecipes());
         
         return "userProfile";
     }

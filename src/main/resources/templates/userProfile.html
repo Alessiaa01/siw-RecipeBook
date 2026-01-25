@@ -11,46 +11,42 @@
 
     <header class="main-header">
         <div class="header-content-wrapper">
-            
             <div class="header-left">
-                
                 <a th:href="@{/}" class="btn-home-royal">
                     <i class="fa-solid fa-house-chimney"></i> Home
                 </a>
-                
-                <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/admin}" class="btn-home-royal">
+                <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/admin/indexAdmin}" class="btn-home-royal">
                     <i class="fa-solid fa-crown"></i> Gestione Admin
                 </a>
-                
                 <a sec:authorize="isAuthenticated() and !hasAuthority('ADMIN')" th:href="@{/myRecipes}" class="btn-home-royal">
                     <i class="fa-solid fa-book-open"></i> Le mie ricette
                 </a>
-                
             </div>
             
             <div class="header-right">
-                
-                <div sec:authorize="isAuthenticated()" class="user-profile">
-                    <span class="chef-name">
-                        <i class="fa-solid fa-user-circle"></i>
-                        <span th:if="${currentUser != null}" th:text="${currentUser.name} + ' ' + ${currentUser.surname}">Nome Cognome</span>
-                        <span th:if="${currentUser == null}" sec:authentication="name">User</span>
-                    </span>
-                    
-                    <form th:action="@{/logout}" method="post" style="margin: 0;">
-                        <button type="submit" class="btn-logout">
-                            Logout <i class="fa-solid fa-right-from-bracket"></i>
-                        </button>
-                    </form>
-                </div>
-                
+				<div sec:authorize="isAuthenticated()" class="user-profile">
+				    <span class="chef-name">
+				        <i class="fa-solid fa-user-circle"></i>
+				        <a th:if="${currentUser != null}" 
+				           th:href="@{'/user/' + ${currentUser.id}}" 
+				           th:text="${currentUser.name} + ' ' + ${currentUser.surname}"
+				           style="color: inherit; text-decoration: none;">
+				            Nome Cognome
+				        </a>
+				        <span th:if="${currentUser == null}" sec:authentication="name">User</span>
+				    </span>
+				    
+				    <form th:action="@{/logout}" method="post" style="margin: 0;">
+				        <button type="submit" class="btn-logout">
+				            Logout <i class="fa-solid fa-right-from-bracket"></i>
+				        </button>
+				    </form>
+				</div>
                 <div sec:authorize="!isAuthenticated()" class="header-right" style="gap: 10px;">
                     <span class="welcome-text" style="font-weight: bold; color: #5D4037; margin-right: 5px;">Benvenuto!</span>
-                    
                     <a th:href="@{/login}" class="btn-home-royal">Accedi</a>
-                    <a th:href="@{/register}" class="btn-gold-outline" style="background: white;">Registrati</a>
+                    <a th:href="@{/register}" class="btn-home-royal">Registrati</a>
                 </div>
-                
             </div>
         </div>
     </header>
@@ -63,14 +59,11 @@
                     <div class="avatar-circle">
                         <span th:text="${user.name != null ? #strings.substring(user.name, 0, 1) : 'U'}">U</span>
                     </div>
-                    
                     <h1 th:text="${user.name} + ' ' + ${user.surname}">Nome Cognome</h1>
-                    
                     <p class="user-meta">
                         <i class="fa-solid fa-envelope"></i> 
                         <span th:text="${user.email}">email</span>
                     </p>
-                    
                     <p class="user-meta" th:if="${user.dateOfBirth != null}">
                         <i class="fa-solid fa-cake-candles"></i>
                         <span th:text="${#temporals.format(user.dateOfBirth, 'dd MMMM yyyy')}">Data</span>
@@ -81,28 +74,49 @@
 
                 <section class="user-recipes-section">
                     <h2>Ricette dello Chef</h2>
-
                     <div th:if="${userRecipes.isEmpty()}" class="empty-state">
                         <p>Nessuna ricetta pubblicata.</p>
                     </div>
-
                     <ul th:unless="${userRecipes.isEmpty()}" class="recipe-list">
                         <li th:each="recipe : ${userRecipes}">
-                            
                             <a th:href="@{'/recipe/' + ${recipe.id}}" class="recipe-card-mini">
-                                
                                 <div>
                                     <span class="recipe-link" th:text="${recipe.title}">Nome Ricetta</span>
-                                    
-                                    <span class="recipe-difficulty" 
-                                          th:if="${recipe.difficulty != null}" 
-                                          th:text="${recipe.difficulty}">
-                                    </span>
+                                    <span class="recipe-difficulty" th:if="${recipe.difficulty != null}" th:text="${recipe.difficulty}"></span>
                                 </div>
-                                
                                 <i class="fa-solid fa-chevron-right btn-icon-go"></i>
                             </a>
+                        </li>
+                    </ul>
+                </section>
 
+                <div class="divider"></div>
+
+                <section class="user-recipes-section">
+                    <h2><i class="fa-solid fa-heart" style="color: #e74c3c;"></i> Preferiti</h2>
+                    
+                    <div th:if="${user.favoriteRecipes == null or user.favoriteRecipes.isEmpty()}" class="empty-state">
+                        <p>Ancora nessuna ricetta salvata </p>
+                    </div>
+
+                    <ul th:unless="${user.favoriteRecipes == null or user.favoriteRecipes.isEmpty()}" class="recipe-list">
+                        <li th:each="favRecipe : ${user.favoriteRecipes}">
+                            <div class="recipe-card-mini" style="justify-content: space-between;">
+                                <a th:href="@{'/recipe/' + ${favRecipe.id}}" style="display: flex; align-items: center; text-decoration: none; color: inherit; flex-grow: 1;">
+                                    <div>
+                                        <span class="recipe-link" th:text="${favRecipe.title}">Titolo</span>
+                                        <span class="recipe-difficulty" th:if="${favRecipe.author != null}" th:text="'di Chef ' + ${favRecipe.author.name}"></span>
+                                    </div>
+                                </a>
+                                
+                                <form th:if="${currentUser != null and currentUser.id == user.id}" 
+                                      th:action="@{'/recipe/' + ${favRecipe.id} + '/favorite'}" method="post" style="margin: 0;">
+                                    <button type="submit" style="background: none; border: none; cursor: pointer; padding: 5px;">
+                                        <i class="fa-solid fa-heart-crack" style="color: #e74c3c;" title="Rimuovi dai preferiti"></i>
+                                    </button>
+                                </form>
+                                <i th:unless="${currentUser != null and currentUser.id == user.id}" class="fa-solid fa-chevron-right btn-icon-go"></i>
+                            </div>
                         </li>
                     </ul>
                 </section>

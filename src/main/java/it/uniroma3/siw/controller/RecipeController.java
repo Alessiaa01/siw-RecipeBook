@@ -30,6 +30,7 @@ import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.IngredientService;
 import it.uniroma3.siw.service.RecipeService;
 import it.uniroma3.siw.service.ReviewService;
+import it.uniroma3.siw.repository.UserRepository;
 import jakarta.validation.Valid;
 
 @Controller
@@ -49,6 +50,9 @@ public class RecipeController {
     
     @Autowired
     private CredentialsService credentialsService;
+    
+    @Autowired
+    private UserRepository userRepository;
 
     // Blocca l'invio malevolo di campi sensibili tramite form
     @InitBinder("recipe")
@@ -201,6 +205,25 @@ public class RecipeController {
     // SEZIONE MODIFICA (Richiede Autore o Admin)
     // -------------------------------------------------------------------------
 
+    @PostMapping("/recipe/{id}/favorite")
+    public String toggleFavorite(@PathVariable("id") Long id, Model model) {
+        User currentUser = (User) model.getAttribute("currentUser");
+        if (currentUser == null) return "redirect:/login";
+
+        Recipe recipe = recipeService.findById(id);
+        if (recipe != null) {
+            if (currentUser.getFavoriteRecipes().contains(recipe)) {
+                currentUser.getFavoriteRecipes().remove(recipe);
+            } else {
+                currentUser.getFavoriteRecipes().add(recipe);
+            }
+            userRepository.save(currentUser);
+        }
+        
+        // Cambiato da "redirect:/recipe/" + id a:
+        return "redirect:/recipes"; 
+    }
+    
     @GetMapping("/recipe/edit/{id}")
     public String editRecipe(@PathVariable("id") Long id, Model model) {
         Recipe recipe = recipeService.findById(id); //prende in archivio la ricetta

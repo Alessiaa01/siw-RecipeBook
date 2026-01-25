@@ -30,18 +30,24 @@
 	        </div>
 	        
 	        <div class="header-right">
-	            <div sec:authorize="isAuthenticated()" class="user-profile">
-	                <span class="chef-name">
-	                    <i class="fa-solid fa-user-circle"></i>
-	                    <span th:if="${currentUser != null}" th:text="${currentUser.name} + ' ' + ${currentUser.surname}">Nome Cognome</span>
-	                    <span th:if="${currentUser == null}" sec:authentication="name">User</span>
-	                </span>
-	                <form th:action="@{/logout}" method="post" class="logout">
-	                    <button type="submit" class="btn-logout">
-	                        Logout <i class="fa-solid fa-right-from-bracket"></i>
-	                    </button>
-	                </form>
-	            </div>
+				<div sec:authorize="isAuthenticated()" class="user-profile">
+				    <a th:if="${currentUser != null}" th:href="@{'/user/' + ${currentUser.id}}" 
+				       class="chef-name" style="color: inherit; text-decoration: none; display: flex; align-items: center; gap: 8px;">
+				        <i class="fa-solid fa-user-circle"></i>
+				        <span th:text="${currentUser.name} + ' ' + ${currentUser.surname}">Nome Cognome</span>
+				    </a>
+				    
+				    <span th:if="${currentUser == null}" class="chef-name">
+				        <i class="fa-solid fa-user-circle"></i>
+				        <span sec:authentication="name">User</span>
+				    </span>
+
+				    <form th:action="@{/logout}" method="post" style="margin: 0;">
+				        <button type="submit" class="btn-logout">
+				            Logout <i class="fa-solid fa-right-from-bracket"></i>
+				        </button>
+				    </form>
+				</div>
 	            <div sec:authorize="!isAuthenticated()" class="guest-actions">
 	                <span class="welcome-text">Benvenuto!</span>
 	                <div class="admin-link-header-left"> <a th:href="@{/login}">Accedi</a></div>

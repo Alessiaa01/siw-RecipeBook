@@ -7,7 +7,7 @@
     <title>Disney RecipeBook - Elenco Ricette</title>
     
     <link rel="stylesheet" href="/css/recipes.css" />
-	<link rel="stylesheet" th:href="@{/css/stile.css}" />
+    <link rel="stylesheet" th:href="@{/css/stile.css}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,7 +21,6 @@
         <div class="header-content-wrapper">
             
             <div class="header-left">
-                
                 <div sec:authorize="hasAuthority('ADMIN')">
                     <a th:href="@{/admin/indexAdmin}" class="btn-admin-badge">
                         <i class="fa-solid fa-crown"></i> Gestione Admin
@@ -36,28 +35,30 @@
             </div>
             
             <div class="header-right">
-                
-                <div sec:authorize="isAuthenticated()" class="user-profile" style="display: flex; align-items: center; gap: 15px;">
-                    <span class="chef-name">
-						  <i class="fa-solid fa-user-circle"></i>
-                        <span th:if="${currentUser != null}" th:text="${currentUser.name} + ' ' + ${currentUser.surname}">Nome Cognome</span>
-                        <span th:if="${currentUser == null}" sec:authentication="name">User</span>
-						
-                    </span>
-                    
-                    <form th:action="@{/logout}" method="post" style="margin: 0;">
-                        <button type="submit" class="btn-logout-header">
-                            Logout <i class="fa-solid fa-right-from-bracket"></i>
-                        </button>
-                    </form>
-                </div>
+				<div sec:authorize="isAuthenticated()" class="user-profile" style="display: flex; align-items: center; gap: 15px;">
+				    <span class="chef-name">
+				        <i class="fa-solid fa-user-circle"></i>
+				        <a th:if="${currentUser != null}" 
+				           th:href="@{'/user/' + ${currentUser.id}}" 
+				           th:text="${currentUser.name} + ' ' + ${currentUser.surname}"
+				           style="color: inherit; text-decoration: none;">
+				            Nome Cognome
+				        </a>
+				        <span th:if="${currentUser == null}" sec:authentication="name">User</span>
+				    </span>
+				    
+				    <form th:action="@{/logout}" method="post" style="margin: 0;">
+				        <button type="submit" class="btn-logout-header">
+				            Logout <i class="fa-solid fa-right-from-bracket"></i>
+				        </button>
+				    </form>
+				</div>
 
                 <div sec:authorize="!isAuthenticated()" class="guest-actions">
                     <span class="welcome-text">Benvenuto!</span>
                     <a th:href="@{/login}" class="btn-gold">Accedi</a>
                     <a th:href="@{/register}" class="btn-gold">Registrati</a>
                 </div>
-                
             </div>
         </div>
     </header>
@@ -73,7 +74,6 @@
     
     <div class="search-wrapper">
         <form th:action="@{/searchRecipes}" method="get" class="magic-search-form">
-            
             <div class="input-group">
                 <i class="fa-solid fa-magnifying-glass icon-input"></i>
                 <input type="text" name="title" placeholder="Cerca per Titolo..." />
@@ -109,6 +109,15 @@
                               th:text="${#numbers.formatDecimal(#aggregates.avg(recipe.reviews.![rating]), 1, 1)}">4.5</span>
                         <span th:if="${#lists.isEmpty(recipe.reviews)}">-</span>
                     </div>
+
+                    <div sec:authorize="isAuthenticated()" class="favorite-action">
+                        <form th:action="@{'/recipe/' + ${recipe.id} + '/favorite'}" method="post">
+                            <button type="submit" class="btn-favorite" title="Aggiungi/Rimuovi dai preferiti">
+                                <i th:if="${currentUser != null and #sets.contains(currentUser.favoriteRecipes, recipe)}" class="fa-solid fa-heart" style="color: #e74c3c;"></i>
+                                <i th:unless="${currentUser != null and #sets.contains(currentUser.favoriteRecipes, recipe)}" class="fa-regular fa-heart"></i>
+                            </button>
+                        </form>
+                    </div>
                 </div>
                 
                 <div class="card-content">
@@ -135,13 +144,11 @@
 
                         <span class="meta-item author">
                             <i class="fa-solid fa-user-pen"></i>
-                            
                             <a th:if="${recipe.author != null}" 
                                th:href="@{'/user/' + ${recipe.author.id}}" 
                                class="author-link">
                                <span th:text="${recipe.author.name}">Chef</span>
                             </a>
-
                             <span th:unless="${recipe.author != null}">Anonimo</span>
                         </span>
                         

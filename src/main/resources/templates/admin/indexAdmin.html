@@ -14,30 +14,44 @@
 
 <body>
     
-    <header>
-        <div class="header-content-wrapper">
-            
-            <div class="admin-link-header-left">
-                <a href="/">
-                    <i class="fa-solid fa-house-chimney"></i> Home
-                </a>
-            </div>
+	<header>
+	    <div class="header-content-wrapper">
+	        
+	        <div class="header-left">
+	            <div class="admin-link-header-left">
+	                <a th:href="@{/}">
+	                    <i class="fa-solid fa-house-chimney"></i> Home
+	                </a>
+	            </div>
 
-            <div class="user-actions-right">
-				<span class="chef-name">
-								  <i class="fa-solid fa-user-circle"></i>
-				                       <span th:if="${currentUser != null}" th:text="${currentUser.name} + ' ' + ${currentUser.surname}">Nome Cognome</span>
-				                       <span th:if="${currentUser == null}" sec:authentication="name">User</span>
-									
-				                   </span>
-                
-                <a th:href="@{/logout}" class="btn-logout">
-                   Logout <i class="fa-solid fa-right-from-bracket"></i> 
-                </a>
-            </div>
+	            <div sec:authorize="hasAuthority('ADMIN')" class="admin-link-header-left">
+	                <a th:href="@{/admin/indexAdmin}">
+	                    <i class="fa-solid fa-crown"></i> Gestione Admin
+	                </a>
+	            </div>
+	        </div>
 
-        </div>
-    </header>
+	        <div class="user-actions-right">
+	            <div sec:authorize="isAuthenticated()">
+	                <a th:if="${currentUser != null}" th:href="@{'/user/' + ${currentUser.id}}" 
+	                   class="chef-name" style="color: inherit; text-decoration: none; display: flex; align-items: center; gap: 8px;">
+	                    <i class="fa-solid fa-user-circle"></i>
+	                    <span th:text="${currentUser.name} + ' ' + ${currentUser.surname}">Nome Cognome</span>
+	                </a>
+	                
+	                <span th:if="${currentUser == null}" class="chef-name">
+	                    <i class="fa-solid fa-user-circle"></i>
+	                    <span sec:authentication="name">User</span>
+	                </span>
+	            </div>
+
+	            <a th:href="@{/logout}" class="btn-logout">
+	               Logout <i class="fa-solid fa-right-from-bracket"></i> 
+	            </a>
+	        </div>
+
+	    </div>
+	</header>
 
     <div class="logo-container">
         <a href="/"><img src="/images/logo2.png" class="main-logo" onerror="this.style.display='none'"/></a>

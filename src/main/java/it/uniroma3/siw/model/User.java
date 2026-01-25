@@ -1,13 +1,15 @@
 package it.uniroma3.siw.model;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
@@ -29,7 +31,20 @@ public class User {
 	
 	private LocalDate dateOfBirth;
 	
-    public Long getId() {
+	@ManyToMany
+	private Set<Recipe> favoriteRecipes = new HashSet<>();
+	
+    public Set<Recipe> getFavoriteRecipes() {
+		return favoriteRecipes;
+	}
+
+
+	public void setFavoriteRecipes(Set<Recipe> favoriteRecipes) {
+		this.favoriteRecipes = favoriteRecipes;
+	}
+
+
+	public Long getId() {
 		return id;
 	}
    
