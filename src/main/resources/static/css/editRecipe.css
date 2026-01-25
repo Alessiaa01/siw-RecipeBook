@@ -55,7 +55,7 @@ body {
     display: flex; align-items: center; gap: 15px;
 }
 
-.btn-home-royal, .btn-logout-header ,.btn-home a{
+.btn-home-royal, .btn-logout-header ,.btn-home a,.btn-my-recipes {
     background-image: linear-gradient(45deg, #C5A059 0%, #e6c676 50%, #C5A059 100%);
     background-size: 200% auto;
     color: white !important;
@@ -67,7 +67,7 @@ body {
     transition: all 0.3s ease; text-decoration: none; border: none; cursor: pointer;
 }
 
-.btn-home-royal:hover, .btn-logout-header:hover ,.btn-home a:hover{
+.btn-home-royal:hover, .btn-logout-header:hover ,.btn-home a:hover, .btn-my-recipes :hover{
     background-position: right center; transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(197, 160, 89, 0.5);
 }

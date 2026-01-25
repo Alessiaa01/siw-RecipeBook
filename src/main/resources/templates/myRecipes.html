@@ -50,7 +50,7 @@
 
             <div th:if="${recipes==null || recipes.isEmpty()}" class="empty-state-magic">
                 <p>Non ci sono ricette</p>
-                <a th:href="@{/formNewRecipe}" style="color:var(--oro); font-weight:bold;">Inizia ora!</a>
+               
             </div>
 
             <table th:unless="${recipes.isEmpty()}" class="magic-table">
