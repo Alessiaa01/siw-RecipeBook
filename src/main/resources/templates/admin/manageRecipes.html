@@ -42,11 +42,14 @@
                
             </div>
 
-            <div class="panel-actions-bar">
-                <div class="stats-info">
-                    Totale Ricette: <span th:text="${recipes != null ? recipes.size() : 0}">0</span>
-                </div>
-            </div>
+			<div class="panel-actions-bar">
+			                <div class="stats-info">
+			                   
+			                </div>
+			                <a th:href="@{/formNewRecipe}" class="btn-gold">
+			                    <i class="fa-solid fa-feather-alt"></i> Nuova Ricetta
+			                </a>
+			            </div>
 
             <div th:if="${recipes==null || recipes.isEmpty()}" class="empty-state-magic">
                 <p>Non ci sono ricette</p>

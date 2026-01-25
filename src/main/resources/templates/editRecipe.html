@@ -1,53 +1,74 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="'Modifica: ' + ${recipe.title}">Modifica Ricetta</title>
     
     <link rel="stylesheet" th:href="@{/css/editRecipe.css}" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" th:href="@{/css/stile.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
 
     <div class="magic-background"></div>
 
-    <header class="main-header">
-        <div class="header-content-wrapper">
-            
-            <div class="header-left">
-                <a th:href="@{/}" class="btn-gold">
-                    <i class="fa-solid fa-house-chimney"></i> Home
-                </a>
-            </div>
-            
-            <div class="header-right">
-                 <div th:if="${currentUser}" class="chef-name">
-                    <i class="fa-solid fa-user-circle"></i> 
-                    <span th:text="${currentUser.name} + ' ' + ${currentUser.surname}">Chef</span>
-                </div>
-                
-				<button type="submit" class="btn-logout">
-					 Logout <i class="fa-solid fa-right-from-bracket"></i>
-                </button>
-            </div>
-            
-        </div>
-    </header>
+	<header class="main-header">
+		    <div class="header-content-wrapper">
+		        <div class="header-left">
+		            <div class="btn-home">
+		                <a th:href="@{/}"><i class="fa-solid fa-house-chimney"></i> Home</a>
+		            </div>
+		            <div sec:authorize="hasAuthority('ADMIN')">
+		                <a th:href="@{/admin}" class="btn-home-royal"><i class="fa-solid fa-crown"></i> Gestione Admin</a>
+		            </div>
+					<div sec:authorize="isAuthenticated() and !hasAuthority('ADMIN')">
+	                    <a th:href="@{/myRecipes}" class="btn-my-recipes">
+	                        <i class="fa-solid fa-book-open"></i> Le mie ricette
+	                    </a>
+	                </div>
+		        </div>
+		        
+		        <div class="header-right">
+		            <div sec:authorize="isAuthenticated()" class="user-profile">
+		                <span class="chef-name">
+		                    <i class="fa-solid fa-user-circle"></i>
+		                    <span th:if="${currentUser != null}" th:text="${currentUser.name} + ' ' + ${currentUser.surname}">Nome Cognome</span>
+		                    <span th:if="${currentUser == null}" sec:authentication="name">User</span>
+		                </span>
+		                <form th:action="@{/logout}" method="post" class="logout">
+		                    <button type="submit" class="btn-logout">
+		                        Logout <i class="fa-solid fa-right-from-bracket"></i>
+		                    </button>
+		                </form>
+		            </div>
+		            <div sec:authorize="!isAuthenticated()" class="guest-actions">
+		                <span class="welcome-text">Benvenuto!</span>
+		                <div class="admin-link-header-left"> <a th:href="@{/login}">Accedi</a></div>
+		                <a th:href="@{/register}" class="btn-gold">Registrati</a>
+		            </div>
+		        </div>
+		    </div>
+		</header>
 
-    <div class="enchanted-form-card">
+    <div class="single-recipe-card">
         
         <div class="form-title">
-            <h1>Modifica Ricetta</h1>
-            <p class="recipe-subtitle" th:text="${recipe.title}"></p>
+            <h1><i class="fas fa-edit"></i> Modifica Ricetta</h1>
         </div>
 
         <form th:action="@{'/recipe/update/' + ${recipe.id}}" th:object="${recipe}" method="POST" id="editForm">
             
+            <div th:if="${#fields.hasGlobalErrors()}" class="error-banner">
+                <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+            </div>
+
             <div class="input-group">
                 <label>Titolo della Ricetta</label>
                 <input type="text" th:field="*{title}" class="magic-input" required/>
+                <span style="color: #d32f2f; font-size: 0.9rem;" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
             </div>
 
             <div class="input-group">
@@ -88,74 +109,96 @@
                 </div>
             </div> 
 
-            <div class="columns-split">
+            <div class="columns-container">
                 
                 <div class="ingredients-section">
-                    <h3 class="section-header-styled">
+                    <label class="section-header-styled">
                         <i class="fas fa-flask"></i> Ingredienti
-                    </h3>
+                    </label>
                     
-                    <div class="ing-list-scroll">
-                        <div th:each="ing : ${recipe.ingredients}" class="ing-item-row">
-                            <span class="ing-text-style">
-                                <i class="fas fa-pepper-hot icon-gold"></i>
-                                <span th:text="${ing.name} + ' (' + ${ing.quantity} + ' ' + ${ing.unit} + ')'"></span>
-                            </span>
-                            
-                            <button type="submit" 
-                                    th:form="'form-delete-' + ${ing.id}"
-                                    class="btn-magic btn-red-magic btn-xs"
-                                    title="Rimuovi">
+                    <div id="ingredients-container">
+                        <div th:each="ing : ${recipe.ingredients}" class="ing-row-dynamic">
+                            <div class="ing-name">
+                                <input type="text" th:value="${ing.name}" class="magic-input-sm" readonly title="Per modificare, rimuovi e riaggiungi"/>
+                            </div>
+                            <div class="ing-qty">
+                                <input type="text" th:value="${ing.quantity}" class="magic-input-sm" readonly/>
+                            </div>
+                            <div class="ing-unit">
+                                <input type="text" th:value="${ing.unit}" class="magic-input-sm" readonly/>
+                            </div>
+                            <button type="submit" th:form="'form-delete-' + ${ing.id}" class="mini-del-btn" title="Rimuovi Ingrediente">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </div>
-                        
-                        <div th:if="${#lists.isEmpty(recipe.ingredients)}" class="empty-ing-msg">
-                            Nessun ingrediente ancora inserito.
+                        <div th:if="${#lists.isEmpty(recipe.ingredients)}" style="text-align: center; color: #888; font-style: italic; padding: 10px;">
+                            Nessun ingrediente presente.
                         </div>
                     </div>
 
                     <div class="add-ing-panel">
-                        <label class="add-ing-label">Aggiungi Ingrediente:</label>
-                        <div class="add-ing-inputs">
-                            <input type="text" name="name" placeholder="Nome" class="magic-input-sm flex-grow-2"/>
-                            <input type="text" name="quantity" placeholder="Qt." class="magic-input-sm flex-grow-1"/>
-                            <input type="text" name="unit" placeholder="Unit" class="magic-input-sm flex-grow-1"/>
-                            
-                            <button type="submit" 
-                                    th:formaction="@{'/recipe/' + ${recipe.id} + '/ingredient/add'}" 
-                                    formnovalidate
-                                    class="btn-magic btn-gold-magic btn-add-ing"
-                                    title="Aggiungi">
-                                <i class="fas fa-plus"></i>
-                            </button>
+                        <label style="font-weight: bold; color: var(--oro); display: block; margin-bottom: 10px;">+ Aggiungi Nuovo:</label>
+                        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                            <input type="text" name="name" placeholder="Nome" class="magic-input-sm" style="flex: 2"/>
+                            <input type="text" name="quantity" placeholder="Qt." class="magic-input-sm" style="flex: 1"/>
+                            <input type="text" name="unit" placeholder="Unit" class="magic-input-sm" style="flex: 1"/>
                         </div>
+                        <button type="submit" 
+                                th:formaction="@{'/recipe/' + ${recipe.id} + '/ingredient/add'}" 
+                                formnovalidate
+                                class="btn-add-dashed">
+                            <i class="fas fa-plus"></i> Inserisci in Lista
+                        </button>
                     </div>
                 </div>
 
                 <div class="procedure-section">
-                    <h3 class="section-header-styled">
-                        <i class="fas fa-scroll"></i> Procedimento
-                    </h3>
                     
-                    <label>Istruzioni passo dopo passo</label>
-                    <textarea th:field="*{procedure}" rows="12" class="magic-textarea" placeholder="Procedimento..."></textarea>
+                    <div class="tags-container">
+                        <label class="diet-label">
+                            <i class="fas fa-leaf"></i> Diete & Intolleranze:
+                        </label>
+                        <div class="checkbox-wrapper">
+                            <label class="magic-checkbox-label checkbox-veg">
+                                <input type="checkbox" value="Vegetariano" th:field="*{tags}"> 
+                                <span><i class="fas fa-carrot"></i> Vegetariano</span>
+                            </label>
+                            <label class="magic-checkbox-label checkbox-vegan">
+                                <input type="checkbox" value="Vegano" th:field="*{tags}"> 
+                                <span><i class="fas fa-seedling"></i> Vegano</span>
+                            </label>
+                            <label class="magic-checkbox-label checkbox-gluten">
+                                <input type="checkbox" value="Senza Glutine" th:field="*{tags}"> 
+                                <span><i class="fas fa-bread-slice"></i> Senza Glutine</span>
+                            </label>
+                            <label class="magic-checkbox-label checkbox-lactose">
+                                <input type="checkbox" value="Senza Lattosio" th:field="*{tags}"> 
+                                <span><i class="fas fa-cheese"></i> Senza Lattosio</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <label class="section-header-styled">
+                        <i class="fas fa-scroll"></i> Procedimento:
+                    </label>
+
+                    <textarea th:field="*{procedure}" rows="12" class="magic-textarea" placeholder="Modifica i passaggi della preparazione..." required></textarea>
                 </div>
             </div>
 
-            <div class="preview-section">
+            <div class="preview-container">
                 <div class="polaroid-frame">
                     <img id="preview-img" th:src="${recipe.imageUrl} ? ${recipe.imageUrl} : '/images/placeholder-piatto.jpg'" alt="Anteprima">
                 </div>
-                <div class="input-group preview-input-group">
+                <div class="input-group" style="width: 100%; max-width: 600px;">
                     <label>URL Immagine</label>
-                    <input type="text" th:field="*{imageUrl}" id="imgUrlInput" oninput="updatePreview()" class="magic-input"/>
+                    <input type="text" th:field="*{imageUrl}" id="imgUrlInput" oninput="updatePreview()" class="magic-input" placeholder="Incolla qui il link dell'immagine..."/>
                 </div>
             </div>
 
-            <div class="footer-actions">
-                <button type="submit" class="btn-gold btn-large">Salva Modifiche</button>
-                <a th:href="@{'/recipe/' + ${recipe.id}}" class="btn-cancel-outline">Annulla</a>
+            <div class="footer-buttons">
+                <button type="submit" class="btn-gold">Salva Modifiche</button>
+                <a th:href="@{'/recipe/' + ${recipe.id}}" class="btn-gold-outline">Annulla</a>
             </div>
 
         </form>
@@ -165,7 +208,7 @@
         <form th:id="'form-delete-' + ${ing.id}" 
               th:action="@{'/recipe/' + ${recipe.id} + '/ingredient/' + ${ing.id} + '/remove'}" 
               method="post" 
-              class="hidden-form">
+              style="display: none;">
         </form>
     </div>
 
@@ -180,6 +223,9 @@
                 img.src = '/images/placeholder-piatto.jpg';
             }
         }
+        document.addEventListener("DOMContentLoaded", function() {
+            updatePreview();
+        });
     </script>
 </body>
 </html>

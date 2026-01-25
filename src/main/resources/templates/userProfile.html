@@ -13,19 +13,19 @@
         <div class="header-content-wrapper">
             
             <div class="header-left">
-                <div class="admin-link-header-left">
-                    <a th:href="@{/}"><i class="fa-solid fa-house-chimney"></i> Home</a>
-                </div>
                 
-                <div sec:authorize="hasAuthority('ADMIN')">
-                    <a th:href="@{/admin}" class="btn-home-royal"><i class="fa-solid fa-crown"></i> Gestione Admin</a>
-                </div>
+                <a th:href="@{/}" class="btn-home-royal">
+                    <i class="fa-solid fa-house-chimney"></i> Home
+                </a>
                 
-                <div sec:authorize="isAuthenticated() and !hasAuthority('ADMIN')">
-                    <a th:href="@{/myRecipes}" class="btn-my-recipes">
-                        <i class="fa-solid fa-book-open"></i> Le mie ricette
-                    </a>
-                </div>
+                <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/admin}" class="btn-home-royal">
+                    <i class="fa-solid fa-crown"></i> Gestione Admin
+                </a>
+                
+                <a sec:authorize="isAuthenticated() and !hasAuthority('ADMIN')" th:href="@{/myRecipes}" class="btn-home-royal">
+                    <i class="fa-solid fa-book-open"></i> Le mie ricette
+                </a>
+                
             </div>
             
             <div class="header-right">
@@ -36,19 +36,19 @@
                         <span th:if="${currentUser != null}" th:text="${currentUser.name} + ' ' + ${currentUser.surname}">Nome Cognome</span>
                         <span th:if="${currentUser == null}" sec:authentication="name">User</span>
                     </span>
-                    <form th:action="@{/logout}" method="post" class="logout-form">
+                    
+                    <form th:action="@{/logout}" method="post" style="margin: 0;">
                         <button type="submit" class="btn-logout">
                             Logout <i class="fa-solid fa-right-from-bracket"></i>
                         </button>
                     </form>
                 </div>
                 
-                <div sec:authorize="!isAuthenticated()" class="guest-actions">
-                    <span class="welcome-text">Benvenuto!</span>
-                    <div class="admin-link-header-left"> 
-                        <a th:href="@{/login}">Accedi</a>
-                    </div>
-                    <a th:href="@{/register}" class="btn-gold">Registrati</a>
+                <div sec:authorize="!isAuthenticated()" class="header-right" style="gap: 10px;">
+                    <span class="welcome-text" style="font-weight: bold; color: #5D4037; margin-right: 5px;">Benvenuto!</span>
+                    
+                    <a th:href="@{/login}" class="btn-home-royal">Accedi</a>
+                    <a th:href="@{/register}" class="btn-gold-outline" style="background: white;">Registrati</a>
                 </div>
                 
             </div>
@@ -56,13 +56,12 @@
     </header>
 
     <div class="enchanted-container">
-        
         <div class="profile-card">
             <div class="card-content-wrapper">
                 
                 <header class="profile-header">
                     <div class="avatar-circle">
-                        <span th:text="${#strings.substring(user.name, 0, 1)}">U</span>
+                        <span th:text="${user.name != null ? #strings.substring(user.name, 0, 1) : 'U'}">U</span>
                     </div>
                     
                     <h1 th:text="${user.name} + ' ' + ${user.surname}">Nome Cognome</h1>

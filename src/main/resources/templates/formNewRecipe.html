@@ -15,39 +15,43 @@
 
     <div class="magic-background"></div>
 
-    <header class="main-header">
-        <div class="header-content-wrapper">
-            
-            <div class="header-left">
-                <a th:href="@{/}" class="btn-home-royal">
-                    <i class="fas fa-home"></i> Home
-                </a>
-            </div>
-            
-            <div class="header-right">
-                
-                <div sec:authorize="isAuthenticated()" class="user-profile">
-                    <span class="chef-name">
-                        <i class="fa-solid fa-user-circle"></i>
-                        <span th:if="${currentUser != null}" th:text="${currentUser.name} + ' ' + ${currentUser.surname}">Chef</span>
-                        <span th:if="${currentUser == null}" sec:authentication="name">User</span>
-                    </span>
-                    
-                    <form th:action="@{/logout}" method="post" style="margin: 0;">
-                        <button type="submit" class="btn-logout">
-                            Logout <i class="fa-solid fa-right-from-bracket"></i>
-                        </button>
-                    </form>
-                </div>
-
-                <div sec:authorize="!isAuthenticated()" class="header-right">
-                     <a th:href="@{/login}" class="btn-home-royal">Accedi</a>
-                </div>
-                
-            </div>
-        </div>
-    </header>
-
+	<header class="main-header">
+	    <div class="header-content-wrapper">
+	        
+	        <div class="header-left">
+	            <div class="btn-home">
+	                <a th:href="@{/}"><i class="fa-solid fa-house-chimney"></i> Home</a>
+	            </div>
+	            <div sec:authorize="hasAuthority('ADMIN')">
+	                <a th:href="@{/admin}" class="btn-home-royal"><i class="fa-solid fa-crown"></i> Gestione Admin</a>
+	            </div>     
+	        </div>
+	        
+	        <div class="header-right">
+	            <div sec:authorize="isAuthenticated()" class="user-profile">
+	                <span class="chef-name">
+	                    <i class="fa-solid fa-user-circle"></i>
+	                    <span th:if="${currentUser != null}" th:text="${currentUser.name} + ' ' + ${currentUser.surname}">Nome Cognome</span>
+	                    <span th:if="${currentUser == null}" sec:authentication="name">User</span>
+	                </span>
+	                <form th:action="@{/logout}" method="post" class="logout">
+	                    <button type="submit" class="btn-logout">
+	                        Logout <i class="fa-solid fa-right-from-bracket"></i>
+	                    </button>
+	                </form>
+	            </div>
+	            
+	            <div sec:authorize="!isAuthenticated()" class="guest-actions">
+	                <span class="welcome-text">Benvenuto!</span>
+	                <div class="admin-link-header-left"> 
+	                    <a th:href="@{/login}">Accedi</a>
+	                </div>
+	                <a th:href="@{/register}" class="btn-gold">Registrati</a>
+	            </div>
+	        </div>
+	        
+	    </div>
+	</header>
     <div class="single-recipe-card">
         
         <div class="form-title">
@@ -117,19 +121,43 @@
                     </button>
                 </div>
 
-                <div class="procedure-section">
-                    <h3 class="section-header"><i class="fas fa-scroll"></i> Procedimento</h3>
-                    
-                    <div class="checkbox-wrapper">
-                        <label class="magic-check"><input type="checkbox" value="Vegetariano" th:field="*{tags}"> Vegetariano</label>
-                        <label class="magic-check"><input type="checkbox" value="Vegano" th:field="*{tags}"> Vegano</label>
-                        <label class="magic-check"><input type="checkbox" value="Senza Glutine" th:field="*{tags}"> No Glutine</label>
-                        <label class="magic-check"><input type="checkbox" value="Senza Lattosio" th:field="*{tags}"> No Lattosio</label>
-                    </div>
-					
-					<label>Istruzioni passo dopo passo</label>
-                    <textarea th:field="*{procedure}" rows="12" class="magic-textarea" placeholder="Scrivi qui i passaggi della preparazione..." required></textarea>
-                </div>
+				<div class="procedure-section">
+				    
+				    <div class="tags-container">
+				        <label class="diet-label">
+				            <i class="fas fa-leaf"></i> Diete & Intolleranze:
+				        </label>
+						
+				        <div class="checkbox-wrapper">
+				            
+				            <label class="magic-checkbox-label checkbox-veg">
+				                <input type="checkbox" value="Vegetariano" th:field="*{tags}"> 
+				                <span><i class="fas fa-carrot"></i> Vegetariano</span>
+				            </label>
+
+				            <label class="magic-checkbox-label checkbox-vegan">
+				                <input type="checkbox" value="Vegano" th:field="*{tags}"> 
+				                <span><i class="fas fa-seedling"></i> Vegano</span>
+				            </label>
+
+				            <label class="magic-checkbox-label checkbox-gluten">
+				                <input type="checkbox" value="Senza Glutine" th:field="*{tags}"> 
+				                <span><i class="fas fa-bread-slice"></i> Senza Glutine</span>
+				            </label>
+
+				            <label class="magic-checkbox-label checkbox-lactose">
+				                <input type="checkbox" value="Senza Lattosio" th:field="*{tags}"> 
+				                <span><i class="fas fa-cheese"></i> Senza Lattosio</span>
+				            </label>
+				            
+				        </div>
+				    </div>
+					<label class="section-header-styled">
+									            <i class="fas fa-scroll"></i>Procedimento:
+									        </label>
+
+				    <textarea th:field="*{procedure}" rows="12" class="magic-textarea" placeholder="Scrivi qui i passaggi della preparazione..." required></textarea>
+				</div>
             </div>
 
             <div class="preview-container">
@@ -144,7 +172,13 @@
 
             <div class="footer-buttons">
                 <button type="submit" class="btn-gold">Salva Ricetta</button>
-                <a th:href="@{/recipes}" class="btn-gold-outline">Annulla</a>
+				<a sec:authorize="hasAuthority('ADMIN')" th:href="@{/admin}" class="btn-gold-outline">
+				    Annulla
+				</a>
+
+				<a sec:authorize="!hasAuthority('ADMIN')" th:href="@{/myRecipes}" class="btn-gold-outline">
+				    Annulla
+				</a>
             </div>
 
         </form>
