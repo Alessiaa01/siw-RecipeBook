@@ -25,13 +25,13 @@ import jakarta.validation.Valid;
 public class AuthenticationController {
 	
 	@Autowired
-	private CredentialsService credentialsService;
-
+	private CredentialsService credentialsService; //gestisce username, psw e ruoli
+ 
     @Autowired
-	private UserService userService;
+	private UserService userService;//salva i dati anagrafici 
     
     @Autowired
-    private RecipeService recipeService;
+    private RecipeService recipeService;//serve all'admin per vedere l'elenco delle ricette
 	
 	// Mostra il form di registrazione
 	@GetMapping("/register") 
@@ -46,71 +46,11 @@ public class AuthenticationController {
 	public String showLoginForm() {
 		return "formLogin"; // template Thymeleaf
 	}
-/*
-	// Home page (index)
-	@GetMapping("/") 
-	public String index(Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (authentication instanceof AnonymousAuthenticationToken) {
-			return "redirect:/recipes"; 
-		} else {		
-			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-			Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-			if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
-				// se è admin, vai alla dashboard admin
-				//return "admin/indexAdmin.html";
-				return "redirect:/admin";
-			} else {
-				// se è utente normale, vai alla lista ricette
-				return "redirect:/recipes";
-			}
-		}
-	}
-		
-	
-/*
-		@GetMapping("/") 
-		public String index(Model model) {
-			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-			if (authentication instanceof AnonymousAuthenticationToken) {
-				return "redirect:/recipes"; 
-			} else {		
-				UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-				Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-				if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
-					// MODIFICA: Reindirizza direttamente a manageRecipes (saltando indexAdmin)
-					return "redirect:/admin/manageRecipes"; 
-				} else {
-					// se è utente normale, vai alla lista ricette
-					return "redirect:/recipes";
-				}
-			}
-		}
-	*/	
-	
-   //dove mandare l'utente 
+
 	@GetMapping(value = "/success")
-	public String defaultAfterLogin(Model model) {
-		//chi è l'utente connesso?
-	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-	    // CASO 1: Login con GOOGLE (OAuth2)
-	    if (authentication instanceof OAuth2AuthenticationToken) {
-	        // NON FARE NULLA QUI! L'utente è già stato salvato dal SuccessHandler.
-	        // Devi solo reindirizzare.
-	        return "redirect:/recipes";
-	    }
-
-	    // CASO 2: Login CLASSICO (Username/Password)
-	    else {
-	        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-	        Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-	        
-	        if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
-	            return "redirect:/admin/manageRecipes"; // O ovunque vada l'admin
-	        }
-	        return "redirect:/recipes";
-	    }
+	public String defaultAfterLogin() {
+	    // tutti vengono mandati alle ricette
+	    return "redirect:/recipes";
 	}
 	    
 	
@@ -124,9 +64,9 @@ public class AuthenticationController {
 
 		if (!userBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()) {
             // salva l'utente
-            userService.saveUser(user);
-            credentials.setUser(user);
-            credentialsService.saveCredentials(credentials);
+            userService.saveUser(user);//salva dati anagrafici
+            credentials.setUser(user);//collega credenziali all'utente
+            credentialsService.saveCredentials(credentials); //salva le credenziali 
             model.addAttribute("user", user);
             return "registrationSuccessful"; // pagina conferma registrazione
         }
@@ -140,32 +80,31 @@ public class AuthenticationController {
 	}
 	
 	//Pagina per gestire gli utenti(solo Admin)
-	@GetMapping("/admin/users")
+	@GetMapping("/admin/manageUsers")
     public String manageUsers(Model model) {
         model.addAttribute("credentialsList", this.credentialsService.getAllCredentials());
-        return "admin/manageUsers"; // Nome del template HTML che creeremo
+        return "admin/manageUsers"; 
     }
-	// Assicurati che ci sia un mapping che punta a /admin/recipes (o quello che hai usato nel link)
-	@GetMapping("/admin/recipes")
+	
+	@GetMapping("/admin/manageRecipes")
 	public String manageRecipes(Model model) {
 	    // Carica le ricette dal database
 	    model.addAttribute("recipes", this.recipeService.findAll()); 
 	    
-	    // ATTENZIONE: Il nome deve corrispondere al file in templates/admin/
 	    return "admin/manageRecipes"; 
 	}
 	
 	//Azione per bannare un utente 
-	@PostMapping("/admin/users/{username}/ban")
+	@PostMapping("/admin/manageUsers/{username}/ban")
     public String banUser(@PathVariable("username") String username) {
         this.credentialsService.lockCredentials(username);
-        return "redirect:/admin/users";
+        return "redirect:/admin/manageUsers";
     }
 	
 	//Azione per riabilitare un utente 
-	@PostMapping("/admin/users/{username}/unban")
+	@PostMapping("/admin/manageUsers/{username}/unban")
     public String unbanUser(@PathVariable("username") String username) {
         this.credentialsService.unlockCredentials(username);
-        return "redirect:/admin/users";
+        return "redirect:/admin/manageUsers";
     }
 }

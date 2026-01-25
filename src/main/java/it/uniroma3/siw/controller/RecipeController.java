@@ -55,6 +55,8 @@ public class RecipeController {
     private UserRepository userRepository;
 
     // Blocca l'invio malevolo di campi sensibili tramite form
+    //impedisce a un utente malintenzionato di iniettare un campo id o author nel form per sovrascrivere una ricetta 
+    //di qualcun altro o farsi passare per un altro autore
     @InitBinder("recipe")
     public void initBinder(WebDataBinder binder) {
         binder.setDisallowedFields("author", "author.id", "user", "user.id", "id");
@@ -66,11 +68,10 @@ public class RecipeController {
 
     @GetMapping("/recipe/{id}")
     public String getRecipe(@PathVariable("id") Long id, Model model) {
-        Recipe recipe = recipeService.findById(id);
+        Recipe recipe = recipeService.findById(id); //recupera la ricetta 
         model.addAttribute("recipe", recipe);
-  
-        
-        // Oggetti vuoti per i form nella pagina (recensioni e ingredienti admin)
+ 
+        // Oggetti vuoti per i form nella pagina 
         model.addAttribute("ingredient", new Ingredient()); 
         model.addAttribute("review", new Review()); 
         
@@ -79,7 +80,7 @@ public class RecipeController {
 
     @GetMapping(value = {"/", "/recipes"})
     public String getRecipes(Model model) {     
-        model.addAttribute("recipes", this.recipeService.findAll());
+        model.addAttribute("recipes", this.recipeService.findAll()); //carica tutte le ricette
         return "recipes.html";
     }
     
@@ -94,7 +95,7 @@ public class RecipeController {
                                 Model model) {
         
         List<Recipe> foundRecipes = new ArrayList<>();
-
+         //da priorità al titolo
         if (title != null && !title.trim().isEmpty()) {
             foundRecipes = recipeService.findByTitle(title);
         }
@@ -118,22 +119,24 @@ public class RecipeController {
                             @Valid @ModelAttribute("review") Review review,
                             BindingResult bindingResult, 
                             Model model) {
-        
+        //Recupero chi sta scrivendo e per quale ricetta
         User currentUser = (User) model.getAttribute("currentUser");
         Recipe recipe = recipeService.findById(recipeId);
 
+        //controllo errore 
         if (bindingResult.hasErrors()) {
             model.addAttribute("recipe", recipe);
             model.addAttribute("ingredient", new Ingredient()); 
             return "recipe.html"; 
         }
 
+        //salvataggio
         if (currentUser != null) {
-            review.setUser(currentUser); 
-            review.setRecipe(recipe);
+            review.setUser(currentUser); //Questa recensione l'ha scritta X
+            review.setRecipe(recipe); //Questa recensione è per la ricetta Y
             reviewService.save(review); 
         }
-        
+        //ricarico la pagina per far vedere il commento 
         return "redirect:/recipe/" + recipeId;
     }
 
@@ -142,7 +145,7 @@ public class RecipeController {
     	Recipe recipe = new Recipe();
     	// IMPOSTO IL DEFAULT A OGGI
     	recipe.setCreationDate(LocalDate.now());
-        model.addAttribute("recipe", new Recipe());
+        model.addAttribute("recipe", recipe);
         return "formNewRecipe.html";
     }
 

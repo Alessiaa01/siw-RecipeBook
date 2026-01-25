@@ -14,7 +14,7 @@ import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.UserService;
 
-@ControllerAdvice
+@ControllerAdvice //va applicato a tutti i controller 
 public class GlobalController {
 
     @Autowired
@@ -23,6 +23,8 @@ public class GlobalController {
     @Autowired
     private UserService userService;
 
+    //Questo metodo viene eseguito prima di qualsiasi pagina tu visiti.
+    //Prende l'user e lo mette in una scatola Model con l'etichetta currentUser, in modo da poterlo utilizzare ovunque 
     @ModelAttribute("currentUser") 
     public User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -34,6 +36,8 @@ public class GlobalController {
         Object principal = authentication.getPrincipal();
 
         // 1. LOGIN CLASSICO (Username/Password)
+        //Se ti sei loggato col form del sito, Spring ti vede come UserDetails. 
+        //Il codice prende il tuo username, cerca le credenziali nel DB e restituisce l'oggetto User collegato.
         if (principal instanceof UserDetails) {
             String username = ((UserDetails) principal).getUsername();
             Credentials credentials = credentialsService.getCredentials(username);
@@ -45,14 +49,14 @@ public class GlobalController {
         // 2. LOGIN GOOGLE (OAuth2)
         else if (principal instanceof OAuth2User) {
             OAuth2User oauth2User = (OAuth2User) principal;
-            String email = oauth2User.getAttribute("email");
+            String email = oauth2User.getAttribute("email"); //prende la mail da google
 
             if (email != null) {
                 // Cerchiamo l'utente nel DB
                 User user = userService.getUserByEmail(email);
                 
-                // --- NOVITÀ: REGISTRAZIONE AUTOMATICA ---
-                // Se l'utente non esiste, lo creiamo al volo!
+                // --- REGISTRAZIONE AUTOMATICA ---
+                // Se l'utente non esiste, lo creiamo
                 if (user == null) {
                     user = new User();
                     user.setEmail(email);

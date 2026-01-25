@@ -107,7 +107,7 @@
 							        <div th:if="${user.username != #authentication.name}" style="display: flex; gap: 10px;">
 							            
 							            <form th:if="${user.enabled}" 
-							                  th:action="@{'/admin/users/' + ${user.username} + '/ban'}" 
+							                  th:action="@{'/admin/manageUsers/' + ${user.username} + '/ban'}" 
 							                  method="post" style="margin:0;">
 							                
 							                <button type="submit" class="btn-magic btn-ban-magic" 
@@ -118,7 +118,7 @@
 							            </form>
 
 							            <form th:if="${!user.enabled}" 
-							                  th:action="@{'/admin/users/' + ${user.username} + '/unban'}" 
+							                  th:action="@{'/admin/manageUsers/' + ${user.username} + '/unban'}" 
 							                  method="post" style="margin:0;">
 							                  
 							                <button type="submit" class="btn-magic btn-unban-magic" 

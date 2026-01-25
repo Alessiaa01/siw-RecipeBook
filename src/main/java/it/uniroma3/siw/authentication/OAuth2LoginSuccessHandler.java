@@ -13,6 +13,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+//Questa è una classe utile, tienila pronta all'uso
 @Component
 public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
@@ -24,7 +25,7 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws ServletException, IOException {
     	
-    	// --- SPIA 1: SIAMO ENTRATI NEL METODO? ---
+    	// ---  SIAMO ENTRATI NEL METODO? ---
         System.out.println("DEBUG: 1. OAuth2 Success Handler attivato!");
 
         OAuth2AuthenticationToken token = (OAuth2AuthenticationToken) authentication;
@@ -37,16 +38,15 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
      // --- SPIA 2: ABBIAMO I DATI? ---
         System.out.println("DEBUG: 2. Dati ricevuti da Google: " + email + " - " + name + " - " + surname);
         
-        // salva solo se non esiste
-        userService.processOAuthPostLogin(email, name, surname);
-        
-        if (email != null) {
+       
+        // salva (se non esiste) nel DB 
+       if (email != null) {
             userService.processOAuthPostLogin(email, name, surname);
         } else {
              System.out.println("DEBUG: ERRORE GRAVE - L'email è NULL!");
         }
 
-        // Reindirizza alla pagina di successo (o dove vuoi tu)
+        // Reindirizza alla pagina
         this.setDefaultTargetUrl("/success");
         //chiama il metodo della classe genitore (SavedRequest...), perchè se l'utente prima di loggarsi voleva andare in una
         //determinata pagina, viene mandato direttamente lì. Ignora /success

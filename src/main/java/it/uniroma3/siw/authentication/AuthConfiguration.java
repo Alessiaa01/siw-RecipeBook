@@ -20,23 +20,23 @@ import static it.uniroma3.siw.model.Credentials.ADMIN_ROLE;
 
 import javax.sql.DataSource;
 
-@Configuration
-@EnableWebSecurity
+@Configuration //impostazioni e config da caricare all'avvio 
+@EnableWebSecurity //senza le regole sotto verrebbero ignorate
 public class AuthConfiguration {
 
 	//dataSource collega l'applicazione java al database
+	//Spring Security ne ha bisogno per andare a leggere le tabelle degli utenti.
     @Autowired
     private DataSource dataSource;
 
-    //per gestire chi entra tramite google
+    //Per gestire chi entra tramite google
     @Autowired
     private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
 
-    
+    //controllo se username e psw sono giusti 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth)
-            throws Exception {
-    	//Per capire chi è l'utente guarda il DB
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    	//Usa il DB per l'autenticazione
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 //controllo ruolo
@@ -45,14 +45,14 @@ public class AuthConfiguration {
                 .usersByUsernameQuery("SELECT username, password, enabled FROM credentials WHERE username=?");
     }
     
-    //usa l'algoritmo BCrypt. Usalo sia per criptare le password nuove, 
+    //usa l'algoritmo BCrypt. Usato sia per criptare le password nuove, 
     //sia per controllare quelle di chi sta facendo il login
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
-    //in questo caso mi serve solo per fare il login automatico post-registrazione
+    //Per fare il login automatico post-registrazione
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception{
         return authenticationConfiguration.getAuthenticationManager();
@@ -87,7 +87,7 @@ public class AuthConfiguration {
                 //Login speciale con google
                 .oauth2Login(oauth2 -> oauth2
                     .loginPage("/login")
-                      //Quando google dice ok è Mario, dobbiamo intercettare qwuel momento per dalavre Mario anche nel nostro DB locale
+                      //Quando google dice ok è Mario, dobbiamo intercettare qwuel momento per salvare Mario anche nel nostro DB locale
                     .successHandler(oAuth2LoginSuccessHandler) 
                 )
                 
