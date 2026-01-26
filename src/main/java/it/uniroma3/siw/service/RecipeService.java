@@ -70,5 +70,6 @@ public class RecipeService {
     public List<Recipe> findByAuthor(User author) {
         return recipeRepository.findByAuthor(author);
     }
+    
  
 }

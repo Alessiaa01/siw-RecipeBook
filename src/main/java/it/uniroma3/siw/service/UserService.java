@@ -48,7 +48,7 @@ public class UserService {
         return this.userRepository.save(user);
     }
     
-    
+  
 
     /**
      * This method retrieves all Users from the DB.
@@ -66,6 +66,9 @@ public class UserService {
     	return userRepository.findByEmail(email).orElse(null);
     }
     
+    public User findById(Long id) {
+    	return userRepository.findById(id).orElse(null);
+    }
 
     @Transactional
     public void processOAuthPostLogin(String email, String name, String surname) {

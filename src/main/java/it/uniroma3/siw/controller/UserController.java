@@ -11,32 +11,35 @@ import org.springframework.web.bind.annotation.PathVariable;
 import it.uniroma3.siw.model.Recipe;
 import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.repository.RecipeRepository;
-import it.uniroma3.siw.repository.UserRepository;
+import it.uniroma3.siw.service.UserService;
+import it.uniroma3.siw.service.RecipeService;
 
 @Controller 
 public class UserController {
 
     @Autowired 
-    private UserRepository userRepository;
+    private UserService userService;
     
     @Autowired 
-    private RecipeRepository recipeRepository;
+    private RecipeService recipeService;
     
+    //gestisce i profili pubbloco degli utenti 
     @GetMapping("/user/{id}")
     public String getUserProfile(@PathVariable("id") Long id, Model model) {
-        // Usa orElse(null) per sicurezza, così non crasha se l'ID è sbagliato
     	
-    	User user = userRepository.findById(id).orElse(null);
+    	User user = userService.findById(id);
         
         if (user == null) {
             return "redirect:/recipes"; // Se l'utente non esiste, torna indietro
         }
         
-        List<Recipe> ricetteDelloChef = recipeRepository.findByAuthor(user);
+    	//recuperiamo dal DB tutte le ricette scritte da questo utente
+        List<Recipe> ricetteDelloChef = recipeService.findByAuthor(user);
         
         model.addAttribute("user", user);
         model.addAttribute("userRecipes", ricetteDelloChef); 
-     // Aggiungiamo esplicitamente i preferiti al modello per chiarezza nel template
+        
+     // Aggiungiamo esplicitamente i preferiti al modello 
         model.addAttribute("favoriteRecipes", user.getFavoriteRecipes());
         
         return "userProfile";

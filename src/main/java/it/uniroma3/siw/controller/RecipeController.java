@@ -114,6 +114,57 @@ public class RecipeController {
     // SEZIONE PROTETTA (Richiede Login)
     // -------------------------------------------------------------------------
 
+
+    //Pagina di creazione
+    @GetMapping("/formNewRecipe")
+    public String formNewRecipe(Model model) {
+    	Recipe recipe = new Recipe();
+    	// IMPOSTO IL DEFAULT A OGGI
+    	recipe.setCreationDate(LocalDate.now());
+        model.addAttribute("recipe", recipe);
+        return "formNewRecipe.html";
+    }
+
+    //Salva la nuova ricetta
+    @PostMapping("/formNewRecipe")
+    public String newRecipe(@Valid @ModelAttribute("recipe") Recipe recipe, 
+                            BindingResult bindingResult, 
+                            Model model) {
+        
+        // Controllo utente loggato
+        User currentUser = (User) model.getAttribute("currentUser");
+        if (currentUser == null) 
+        	return "redirect:/login";
+
+        //  Validazione(es controlli se esiste già una ricetta con lo stesso nome)
+        recipeValidator.validate(recipe, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "formNewRecipe"; 
+        }
+        
+        //  Imposta i dati della ricetta (data e autore)
+        recipe.setCreationDate(LocalDate.now());
+        recipe.setAuthor(currentUser);
+
+        
+        // Il form ha riempito la lista 'recipe.ingredients', ma il campo 'recipe' 
+        // dentro ogni ingrediente è ancora NULL. Dobbiamo settarlo ora.
+        
+        if (recipe.getIngredients() != null) {
+            for (Ingredient ing : recipe.getIngredients()) { //prendi un ingrediente alla volta 
+                ing.setRecipe(recipe); //la tua ricetta è X
+               
+            }
+        }
+
+        // 4. Salvataggio a Cascata (Salva ricetta + ingredienti insieme)
+        //Salavo solo la ricetta, ma grazie a CascadeType.ALL (in recipe sulla lista ingredienti), salvando la madre (ricetta)
+        //salvo tutti i figli( ingredienti)
+        recipeService.save(recipe);
+        
+        return "redirect:/recipe/" + recipe.getId(); 
+    }
+
     @PostMapping("/recipe/{recipeId}/review")
     public String addReview(@PathVariable("recipeId") Long recipeId,
                             @Valid @ModelAttribute("review") Review review,
@@ -139,53 +190,6 @@ public class RecipeController {
         //ricarico la pagina per far vedere il commento 
         return "redirect:/recipe/" + recipeId;
     }
-
-    @GetMapping("/formNewRecipe")
-    public String formNewRecipe(Model model) {
-    	Recipe recipe = new Recipe();
-    	// IMPOSTO IL DEFAULT A OGGI
-    	recipe.setCreationDate(LocalDate.now());
-        model.addAttribute("recipe", recipe);
-        return "formNewRecipe.html";
-    }
-
-    @PostMapping("/formNewRecipe")
-    public String newRecipe(@Valid @ModelAttribute("recipe") Recipe recipe, 
-                            BindingResult bindingResult, 
-                            Model model) {
-        
-        // 1. Controllo utente loggato
-        User currentUser = (User) model.getAttribute("currentUser");
-        if (currentUser == null) return "redirect:/login";
-
-        // 2. Validazione
-        recipeValidator.validate(recipe, bindingResult);
-        if (bindingResult.hasErrors()) {
-            return "formNewRecipe"; // Torna al form se ci sono errori
-        }
-        
-        // 3. Imposta i dati della ricetta padre
-        recipe.setCreationDate(LocalDate.now());
-        recipe.setAuthor(currentUser);
-
-        // --- PUNTO CRUCIALE PER IL TUO FORM HTML ---
-        // Il form ha riempito la lista 'recipe.ingredients', ma il campo 'recipe' 
-        // dentro ogni ingrediente è ancora NULL. Dobbiamo settarlo ora.
-        
-        if (recipe.getIngredients() != null) {
-            for (Ingredient ing : recipe.getIngredients()) {
-                ing.setRecipe(recipe); // <--- COLLEGAMENTO MAGICO
-                // Assicuriamoci che la quantità non sia null se l'utente ha lasciato vuoto
-                // (Dipende se nel DB accetti null o no)
-            }
-        }
-        // -------------------------------------------
-
-        // 4. Salvataggio a Cascata (Salva ricetta + ingredienti insieme)
-        recipeService.save(recipe);
-        
-        return "redirect:/recipe/" + recipe.getId(); 
-    }
     
     @GetMapping("/myRecipes")
     public String myRecipes(Model model) {
@@ -195,11 +199,10 @@ public class RecipeController {
         if (currentUser == null) {
             return "redirect:/login";
         }
-
+        //Query filtrata, in base all'autore 
         List<Recipe> recipes = recipeService.findByAuthor(currentUser);
         model.addAttribute("recipes", recipes);
         
-        // Ritorna la vista corretta per l'utente
         return "myRecipes.html"; 
     }
     
@@ -207,106 +210,9 @@ public class RecipeController {
     // -------------------------------------------------------------------------
     // SEZIONE MODIFICA (Richiede Autore o Admin)
     // -------------------------------------------------------------------------
-
-    @PostMapping("/recipe/{id}/favorite")
-    public String toggleFavorite(@PathVariable("id") Long id, 
-                                 @RequestParam(value = "redirect", required = false) String redirect, // 1. Leggi il parametro
-                                 Model model) {
-        
-        User currentUser = (User) model.getAttribute("currentUser");
-        if (currentUser == null) return "redirect:/login";
-
-        Recipe recipe = recipeService.findById(id);
-        if (recipe != null) {
-            if (currentUser.getFavoriteRecipes().contains(recipe)) {
-                currentUser.getFavoriteRecipes().remove(recipe);
-            } else {
-                currentUser.getFavoriteRecipes().add(recipe);
-            }
-            userRepository.save(currentUser);
-        }
-        
-        // 2. Controllo: se il parametro è "profile", torna al profilo dell'utente loggato
-        if ("profile".equals(redirect)) {
-            return "redirect:/user/" + currentUser.getId();
-        }
-        
-        // Altrimenti (se clicchi dalla home) torna alla lista ricette
-        return "redirect:/recipes"; 
-    }
     
-    @GetMapping("/recipe/edit/{id}")
-    public String editRecipe(@PathVariable("id") Long id, Model model) {
-        Recipe recipe = recipeService.findById(id); //prende in archivio la ricetta
-        User currentUser = (User) model.getAttribute("currentUser");
-
-        if (!isAuthorized(recipe, currentUser)) {
-            return "redirect:/recipes?error=notAuthorized";
-        }
-
-        model.addAttribute("recipe", recipe); //vecchia ricetta da modificare 
-        model.addAttribute("ingredient", new Ingredient());
-        return "editRecipe.html"; 
-    }
-    
-    @PostMapping("/recipe/update/{id}")
-    public String updateRecipe(@PathVariable("id") Long id,
-                               @ModelAttribute("recipe") Recipe formRecipe,
-                               BindingResult bindingResult,
-                               Model model) {
-
-        User currentUser = (User) model.getAttribute("currentUser");
-        Recipe recipeInDb = recipeService.findById(id); //se siste, recuperi la ricetta originale dal database(recipeInDb)
-        
-        if (recipeInDb == null) 
-        	return "redirect:/recipes";
-
-        if (!isAuthorized(recipeInDb, currentUser)) {
-            return "redirect:/recipes?error=notAuthorized";
-        }
-
-        // Prepariamo l'oggetto per la validazione
-        //metto l'ID così capisce che è la ricetta vecchia, e non un duplicato
-        formRecipe.setId(id);
-        //metto gli ingredienti vecchi
-        formRecipe.setIngredients(recipeInDb.getIngredients()); // Manteniamo gli ingredienti esistenti
-        //controlla se ho fatto errori
-        this.recipeValidator.validate(formRecipe, bindingResult);
-        
-        if (bindingResult.hasErrors()) {
-            // Trick per visualizzare l'autore nel template anche in caso di errore
-        	//creo una copia temporanea dell autore 
-            User dummyAuthor = new User();
-            
-            //copio i dati dall'autore vero che ho recuperato dal DB(recipeInDb)
-            dummyAuthor.setId(recipeInDb.getAuthor().getId());
-            dummyAuthor.setName(recipeInDb.getAuthor().getName());
-            dummyAuthor.setSurname(recipeInDb.getAuthor().getSurname());
-            //assegni l'oggetto dummyAuthor al campo author dell'oggetto formRecipe
-            formRecipe.setAuthor(dummyAuthor);
-            
-            model.addAttribute("recipe", formRecipe); //contiene i dati che l'utente ha appena inserito nel form(anche quelli sbagliati)
-            model.addAttribute("ingredient", new Ingredient());//per non dare errore
-            return "editRecipe.html"; 
-        }
-
-        // Aggiornamento manuale dei campi
-        recipeInDb.setTitle(formRecipe.getTitle());
-        recipeInDb.setDescription(formRecipe.getDescription());
-        recipeInDb.setCategory(formRecipe.getCategory());
-        recipeInDb.setPreparationTime(formRecipe.getPreparationTime());
-        recipeInDb.setCookingTime(formRecipe.getCookingTime());
-        recipeInDb.setDifficulty(formRecipe.getDifficulty());
-        recipeInDb.setServings(formRecipe.getServings());
-        recipeInDb.setProcedure(formRecipe.getProcedure());
-        recipeInDb.setImageUrl(formRecipe.getImageUrl());
-        recipeInDb.setTags(formRecipe.getTags()); // Scommenta se gestisci i tag
-
-        recipeService.save(recipeInDb);
-
-        return "redirect:/recipe/" + id;
-    }
-
+    //Aggiunta ingrediente a una ricetta già esistente nel DB
+    //Relazione Uno-a-M (una ricetta->molti ingredienti)
     @PostMapping("/recipe/{recipeId}/ingredient/add")
     public String addIngredientToRecipe(@PathVariable("recipeId") Long recipeId,
                                         @ModelAttribute("ingredient") Ingredient ingredient,
@@ -321,7 +227,7 @@ public class RecipeController {
         if (!isAuthorized(recipe, currentUser)) {
             return "redirect:/recipe/" + recipeId + "?error=notAuthorized";
         }
-
+       //creiamo un oggetto nuovo, copiando solo ciò che serve. In questo modo viene salvato nel DB un dato pulito 
         Ingredient newIngredient = new Ingredient();
         newIngredient.setName(ingredient.getName());
         newIngredient.setQuantity(ingredient.getQuantity());
@@ -329,12 +235,10 @@ public class RecipeController {
         
         //collega l'ingrediente alla ricetta nel database: questo ingrediente appartiene a questa ricetta specifica
          newIngredient.setRecipe(recipe);
-
-         //il salvataggio avviene in due step:
          
-        this.ingredientService.save(newIngredient);
+       // this.ingredientService.save(newIngredient); ridondante, lo fa il cascade. Se salvo la ricetta, di conseguenza salvo tutti i nuovi figli 
         
-        recipe.getIngredients().add(newIngredient);
+        recipe.getIngredients().add(newIngredient); //aggiungi il nuovo ingrediente alla lista 
         this.recipeService.save(recipe);
 
         return "redirect:/recipe/edit/" + recipeId;
@@ -355,12 +259,119 @@ public class RecipeController {
             return "redirect:/recipe/" + recipeId + "?error=notAuthorized";
         }
 
+        //prendi la lista degli ingredienti e rimuovi se l'ID dell'ingrediente che stai guardando è uguale all'ID che vogliamo cancellare
         recipe.getIngredients().removeIf(ing -> ing.getId().equals(ingredientId));
         recipeService.save(recipe);
 
         return "redirect:/recipe/edit/" + recipeId;
     }    
+
+    @PostMapping("/recipe/{id}/favorite")
+    public String toggleFavorite(@PathVariable("id") Long id, 
+                                 @RequestParam(value = "redirect", required = false) String redirect, //redirect->User Experience
+                                 Model model) { 
+        
+        User currentUser = (User) model.getAttribute("currentUser");
+        if (currentUser == null) return "redirect:/login";
+
+        Recipe recipe = recipeService.findById(id);
+        if (recipe != null) {
+        	//logica interruttore 
+            if (currentUser.getFavoriteRecipes().contains(recipe)) { //controlla se quella ricetta è già nella lista prefe dell'utente 
+                currentUser.getFavoriteRecipes().remove(recipe);
+            } else {
+                currentUser.getFavoriteRecipes().add(recipe);
+            }
+            userRepository.save(currentUser); //salviamo l'utente, perchè la lista dei prefe è una proprietà dell'utente(User ha una lista (favoriteRecipes)
+        }                                     //aggiornando l'utente, il DB aggiorna la tabella di collegamente (M-T-M) tra utenti e ricette 
+        
+        // Controllo: se il parametro redirect che arriva dall'URl(?redirect=profile) 
+        if ("profile".equals(redirect)) {
+        	//(costruisce l'indirizzo (/user/5)
+            return "redirect:/user/" + currentUser.getId();
+        }
+        
+        // Altrimenti (se clicchi dalla home) torna alla lista ricette
+        return "redirect:/recipes"; 
+    }
     
+    //Prepara il form per modificare la ricetta
+    @GetMapping("/recipe/edit/{id}") //legge che ricetta vogliamo modificare dall 'URL
+    public String editRecipe(@PathVariable("id") Long id, Model model) {
+        Recipe recipe = recipeService.findById(id); //prende in archivio la ricetta
+        User currentUser = (User) model.getAttribute("currentUser"); //vediamo chi è l'utente corrente
+
+        //devi essere l'autore o Admin
+        if (!isAuthorized(recipe, currentUser)) {
+            return "redirect:/recipes?error=notAuthorized";
+        }
+
+        model.addAttribute("recipe", recipe); //vecchia ricetta da modificare nel modello 
+        model.addAttribute("ingredient", new Ingredient());
+        return "editRecipe.html"; 
+    }
+    
+    //salvataggio modifiche (fonde i dati nuovi che arrivano dal form con i dati del DB)
+    @PostMapping("/recipe/update/{id}")
+    public String updateRecipe(@PathVariable("id") Long id,
+                               @ModelAttribute("recipe") Recipe formRecipe,
+                               BindingResult bindingResult,
+                               Model model) {
+
+        User currentUser = (User) model.getAttribute("currentUser");
+        Recipe recipeInDb = recipeService.findById(id); //se esiste, recuperi la ricetta originale dal database(recipeInDb)
+        
+        if (recipeInDb == null) 
+        	return "redirect:/recipes";
+
+        if (!isAuthorized(recipeInDb, currentUser)) {
+            return "redirect:/recipes?error=notAuthorized";
+        }
+
+        // Prepariamo l'oggetto per la validazione
+        //metto l'ID così capisce che è la ricetta vecchia, e non un duplicato
+        formRecipe.setId(id);
+     
+        formRecipe.setIngredients(recipeInDb.getIngredients()); // Manteniamo gli ingredienti esistenti
+        //controlla se ho fatto errori
+        this.recipeValidator.validate(formRecipe, bindingResult);
+        
+        if (bindingResult.hasErrors()) {
+            // Trick per visualizzare l'autore nel template anche in caso di errore
+        	//creo una copia temporanea dell autore (dummyAuthor)
+            User dummyAuthor = new User();
+            
+            //copio i dati dall'autore vero che ho recuperato dal DB(recipeInDb)
+            dummyAuthor.setId(recipeInDb.getAuthor().getId());
+            dummyAuthor.setName(recipeInDb.getAuthor().getName());
+            dummyAuthor.setSurname(recipeInDb.getAuthor().getSurname());
+            //assegni l'oggetto dummyAuthor al campo author dell'oggetto formRecipe
+            formRecipe.setAuthor(dummyAuthor);
+            
+            model.addAttribute("recipe", formRecipe); //contiene i dati che l'utente ha appena inserito nel form(anche quelli sbagliati)
+            model.addAttribute("ingredient", new Ingredient());//per non dare errore
+            return "editRecipe.html"; 
+        }
+       
+       //Aggiorniamo solo cià che è permesso modificare, altrimenti salvando formRecipe, perderemo quei dati che non vengono gestisci 
+        //come id, autore, data, recensioni
+        recipeInDb.setTitle(formRecipe.getTitle());
+        recipeInDb.setDescription(formRecipe.getDescription());
+        recipeInDb.setCategory(formRecipe.getCategory());
+        recipeInDb.setPreparationTime(formRecipe.getPreparationTime());
+        recipeInDb.setCookingTime(formRecipe.getCookingTime());
+        recipeInDb.setDifficulty(formRecipe.getDifficulty());
+        recipeInDb.setServings(formRecipe.getServings());
+        recipeInDb.setProcedure(formRecipe.getProcedure());
+        recipeInDb.setImageUrl(formRecipe.getImageUrl());
+        recipeInDb.setTags(formRecipe.getTags()); 
+
+        recipeService.save(recipeInDb); //abbiamo messo l'ID all'inzio, questo metodo .save() capisce che deve fare un UPDATE
+
+        return "redirect:/recipe/" + id;
+    }
+
+       
     @PostMapping("/recipe/delete/{id}") 
     public String deleteRecipe(@PathVariable("id") Long id, Model model) {
         
@@ -372,10 +383,10 @@ public class RecipeController {
 
         // Questo controllo verifica se sei l'autore OPPURE un Admin
         if (isAuthorized(recipe, currentUser)) {
+            //cancellazione
+            recipeService.deleteById(id); //con cascade cancella la ricetta,i suoi ingredienti, le recensioni associate, i preferiri 
             
-            recipeService.deleteById(id);
-            
-            // --- QUI C'È LA MODIFICA ---
+            //Dobbiamo decidere dove mandare l'utente dopo aver cancellato 
             // Recuperiamo i permessi dell'utente loggato
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             
@@ -384,15 +395,14 @@ public class RecipeController {
                     .anyMatch(a -> a.getAuthority().equals("ADMIN"));
             
             if (isAdmin) {
-                // Se sei l'Admin, torni alla lista generale (o al pannello di controllo)
-                return "redirect:/recipes"; 
+                // Se sei l'Admin torni al pannello di controllo)
+                return "redirect:/admin/manageRecipes/all"; 
             } else {
                 // Se sei l'utente normale, torni alla tua bacheca personale
                 return "redirect:/myRecipes"; 
             }
-            // ---------------------------
-            
-        } else {
+  
+         } else {
             return "redirect:/recipe/" + id + "?error=notAuthorized";
         }
     }
@@ -407,12 +417,13 @@ public class RecipeController {
         return "admin/indexAdmin.html"; 
     }
     
-    @GetMapping("/admin/recipes/all")
+    @GetMapping("/admin/manageRecipes/all")
     @PreAuthorize("hasAuthority('ADMIN')") // Protegge il portale: solo Admin possono entrare
-    public String allRecipes(Model model, Principal principal) {
-        model.addAttribute("recipes", recipeService.findAll());
-        model.addAttribute("viewTitle", "Gran Registro Culinario"); // La tua scelta qui
-        model.addAttribute("userDetails", principal);
+    //principal è un oggetto standard di java security, rappresenta chi è loggato in quel momento 
+    public String allRecipes(Model model) {
+        model.addAttribute("recipes", recipeService.findAll()); //vede tutte le ricette 
+       // model.addAttribute("viewTitle", "Gestione Ricette"); 
+      
         return "admin/manageRecipes";
     }
 
@@ -422,7 +433,7 @@ public class RecipeController {
 
     /**
      * Controlla se l'utente corrente ha il permesso di modificare/cancellare la ricetta.
-     * Restituisce true se l'utente è l'autore della ricetta O se è un amministratore.
+     * Restituisce true se l'utente è l'autore della ricetta o se è un admin
      */
     private boolean isAuthorized(Recipe recipe, User currentUser) {
         if (currentUser == null || recipe == null) {

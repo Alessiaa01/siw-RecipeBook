@@ -29,8 +29,9 @@ public class ReviewController {
         Review review = reviewService.findById(id);
         User currentUser = (User) model.getAttribute("currentUser");
 
-        // Usiamo il metodo helper qui sotto!
+       
         if (isAuthorized(review, currentUser)) {
+        	//salviamo l?ID della ricetta prima di cancellare la recensione , altrimenti non sapremo dove ritornare 
             Long recipeId = review.getRecipe().getId();
             reviewService.deleteById(id);
             return "redirect:/recipe/" + recipeId;
@@ -42,7 +43,7 @@ public class ReviewController {
         return "redirect:/recipes";
     }
 
- // --- MODIFICA (Form inline nella pagina ricetta) ---
+ // --- Mostra il form (Form inline nella pagina ricetta) ---
     @GetMapping("/review/edit/{id}")
     public String editReviewForm(@PathVariable("id") Long id, Model model) {
         Review review = reviewService.findById(id);
@@ -55,21 +56,23 @@ public class ReviewController {
 
         // Carichiamo i dati necessari per "recipe.html"
         model.addAttribute("recipe", review.getRecipe());
-        model.addAttribute("reviewToEdit", review); // Questa è la recensione da modificare
+        model.addAttribute("reviewToEdit", review); // Questa è la recensione da modificare(con i dati vecchi)
         
-        // Dobbiamo aggiungere anche gli oggetti vuoti che il template recipe.html si aspetta normalmente
+        // Dobbiamo aggiungere anche gli oggetti vuoti che il template recipe.html si aspetta normalmente, per non crashare 
         model.addAttribute("review", new Review()); 
         model.addAttribute("ingredient", new it.uniroma3.siw.model.Ingredient());
 
-        return "recipe.html"; // Ritorniamo il template della ricetta, non il form separato
+        return "recipe.html"; // Ritorniamo il template della ricetta
     }
+    
     @PostMapping("/review/update/{id}")
     public String updateReview(@PathVariable("id") Long id, 
-                               @Valid @ModelAttribute("reviewToEdit") Review reviewDetails, // Nota il nome cambiato
+                               @Valid @ModelAttribute("reviewToEdit") Review reviewDetails, // deve avere lo stesso nome che abbiamo usato nel metodo GET precedente.
+                               //Così Spring capisce che stiamo parlando dello stesso oggetto.
                                BindingResult bindingResult,
                                Model model) {
 
-        Review reviewInDb = reviewService.findById(id);
+        Review reviewInDb = reviewService.findById(id); //recemsione originale dal DB
         User currentUser = (User) model.getAttribute("currentUser");
 
         if (!isAuthorized(reviewInDb, currentUser)) {
@@ -77,7 +80,7 @@ public class ReviewController {
         }
 
         if (bindingResult.hasErrors()) {
-            // Se c'è un errore, rimaniamo sulla pagina della ricetta mostrando il form di modifica
+            // Se c'è un errore, riempiamo il model con tutto ciò che serve alla pagina 
             model.addAttribute("recipe", reviewInDb.getRecipe());
             model.addAttribute("reviewToEdit", reviewDetails);
             model.addAttribute("review", new Review());
