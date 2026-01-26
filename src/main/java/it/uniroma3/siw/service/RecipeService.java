@@ -19,6 +19,8 @@ public class RecipeService {
 	private RecipeRepository recipeRepository;
 
 	// RICERCA PER ID
+	
+	//---OPERAZIONI STANDARD---
 	@Transactional(readOnly = true)
 	public Recipe findById(Long id) {
 		return recipeRepository.findById(id).orElse(null);
@@ -27,49 +29,50 @@ public class RecipeService {
 	// TUTTE LE RICETTE
 	@Transactional(readOnly = true)
 	public List<Recipe> findAll() {
-	    // Il cast (List<Recipe>) trasforma l'Iterable del database in una Lista vera e propria
-	    return (List<Recipe>) recipeRepository.findAll();
+	    return this.recipeRepository.findAll();
 	}
-	
 	
 	// SALVATAGGIO
-	@Transactional
-	public void save(Recipe recipe) {
-		recipeRepository.save(recipe);
-	}
-	
-	//CANCELLAZIONE
-	@Transactional 
-	public void deleteById(Long id) {
-	    recipeRepository.deleteById(id);
-	}
+		@Transactional
+		public void save(Recipe recipe) {
+			recipeRepository.save(recipe);
+		}
+		
+		//CANCELLAZIONE
+		@Transactional 
+		public void deleteById(Long id) {
+		    recipeRepository.deleteById(id);
+		}
 
+	
+	//---METODI DI RICERCA---
+	  @Transactional(readOnly = true)
+	    public List<Recipe> findByAuthor(User author) {
+	        return recipeRepository.findByAuthor(author);
+	    }
 	
 	// METODI PER LA RICERCA E VALIDAZIONE
-    public List<Recipe> findByTitle(String title) {
-        return recipeRepository.findByTitleContainingIgnoreCase(title);
-    }
+		@Transactional(readOnly = true)
+	    public List<Recipe> findByTitle(String title) {
+	        return recipeRepository.findByTitleContainingIgnoreCase(title);
+	    }
 
-    public List<Recipe> findByIngredient(String ingredientName) {
-        return recipeRepository.findByIngredientsNameContainingIgnoreCase(ingredientName);
-    }
+		@Transactional(readOnly = true)
+	    public List<Recipe> findByIngredient(String ingredientName) {
+	        return recipeRepository.findByIngredientsNameContainingIgnoreCase(ingredientName);
+	    }
+		
 	
-
+	//---VALIDAZIONE---
+		@Transactional(readOnly = true)
 	public boolean existsByTitle(String title) {
 		return recipeRepository.existsByTitle(title);
 	}
-
+		@Transactional(readOnly = true)
     public boolean existsByTitleAndIdNot(String title, Long id) {
         return recipeRepository.existsByTitleAndIdNot(title, id);
     }
-
-    public List<Recipe> getRecipesByAuthor(User author) {
-        return recipeRepository.findByAuthor(author);
-    }
-    
-    public List<Recipe> findByAuthor(User author) {
-        return recipeRepository.findByAuthor(author);
-    }
+   
     
  
 }

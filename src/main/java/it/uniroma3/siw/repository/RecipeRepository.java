@@ -1,11 +1,11 @@
 package it.uniroma3.siw.repository;
 
 import java.util.List;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import it.uniroma3.siw.model.Recipe;
 import it.uniroma3.siw.model.User;
 
-public interface RecipeRepository extends CrudRepository<Recipe, Long> {
+public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 	
 	public boolean existsByTitle(String title);	
 	
@@ -15,7 +15,6 @@ public interface RecipeRepository extends CrudRepository<Recipe, Long> {
     List<Recipe> findByIngredientsNameContainingIgnoreCase(String ingredientName);
     
     
-
     public boolean existsByTitleAndIdNot(String title, Long id);
     
     public List<Recipe> findByAuthor(User author);

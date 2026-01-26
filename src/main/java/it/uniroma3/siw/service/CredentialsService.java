@@ -1,6 +1,7 @@
 package it.uniroma3.siw.service;
 
 import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,13 +34,12 @@ public class CredentialsService {
 
     @Transactional
     public Credentials saveCredentials(Credentials credentials) {
-        // Imposta il ruolo di default (DEFAULT_ROLE) solo se non è già settato
-        // (Opzionale: dipende se vuoi permettere salvataggi di admin)
+        // Imposta il ruolo di default 
         if (credentials.getRole() == null) {
             credentials.setRole(Credentials.DEFAULT_ROLE);
         }
         
-        // CORRETTO: Gestione utenti Google (password null)
+        //Cifratura password
         if (credentials.getPassword() != null) {
             credentials.setPassword(this.passwordEncoder.encode(credentials.getPassword()));
         }
@@ -48,17 +48,16 @@ public class CredentialsService {
     }
 
     @Transactional
-    public Iterable<Credentials> getAllCredentials() {
+    public List<Credentials> getAllCredentials() {
         return this.credentialsRepository.findAll();
     }
     
-    // --- METODO BAN CORRETTO ---
+    // --- METODO BAN---
     @Transactional
     public void lockCredentials(String username) {
         Credentials credentials = this.credentialsRepository.findByUsername(username).orElse(null);
-        
-        // Correggiamo la logica:
-        // 1. Controlliamo se l'utente esiste (credentials != null)
+       
+        // 1. Controlliamo se l'utente esiste 
         // 2. NON controlliamo la password, così possiamo bannare anche gli utenti Google
         if (credentials != null) {
             credentials.setEnabled(false); // Disabilita l'account

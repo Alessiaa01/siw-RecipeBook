@@ -8,6 +8,7 @@ import org.springframework.validation.Validator;
 import it.uniroma3.siw.model.Recipe;
 import it.uniroma3.siw.service.RecipeService;
 
+//Serve a impedire che ci siano due ricette con lo stesso identico titolo nel database (Unicità del Titolo)
 @Component
 public class RecipeValidator implements Validator {
 
