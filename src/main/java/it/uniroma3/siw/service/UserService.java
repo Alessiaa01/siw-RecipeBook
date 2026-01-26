@@ -30,12 +30,12 @@ public class UserService {
      * @param id the id of the User to retrieve from the DB
      * @return the retrieved User, or null if no User with the passed ID could be found in the DB
      */
-    @Transactional
+  /*  @Transactional
     public User getUser(Long id) {
         Optional<User> result = this.userRepository.findById(id);
         return result.orElse(null);
     }
-
+*/
     /**
      * This method saves a User in the DB.
      * @param user the User to save into the DB

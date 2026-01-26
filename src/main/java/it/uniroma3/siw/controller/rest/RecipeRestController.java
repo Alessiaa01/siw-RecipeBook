@@ -13,19 +13,21 @@ import org.springframework.web.bind.annotation.RestController;
 import it.uniroma3.siw.model.Recipe;
 import it.uniroma3.siw.service.RecipeService;
 
+//I suoi metodi restituiscono direttamente l'Oggetto Java (Recipe), che Spring converte automaticamente in JSON.
+//Serve per far comunicare il sistema con applicazioni esterne o app mobile.
 @RestController
 public class RecipeRestController {
 
 	  @Autowired
 	  private RecipeService recipeService;
 
-	  // Restituisce un singolo film in formato JSON
+	  // Restituisce una singola ricetta in formato JSON
 	  @GetMapping("/rest/recipes/{id}")
 	  public Recipe getRecipe(@PathVariable("id") Long id) {
 	    return this.recipeService.findById(id);
 	  }
 
-	  // Restituisce la lista di tutti i film in formato JSON
+	  // Restituisce la lista di tutte le ricette in formato JSON
 	  @GetMapping("/rest/recipes")
 	  public List<Recipe> getRecipes() {
 	   List<Recipe> recipes= new ArrayList<>();
