@@ -81,7 +81,7 @@ public class AuthConfiguration {
                 
                 .formLogin(form -> form
                     .loginPage("/login") //la pagina con il form
-                    .defaultSuccessUrl("/recipes", true) //se entra, vai qui 
+                    .defaultSuccessUrl("/success", true) //se entra, vai qui 
                     .failureUrl("/login?error=true") // se sbaglia, ricarica la pagina con un errore
                 )
                 //Login speciale con google

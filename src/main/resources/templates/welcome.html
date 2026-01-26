@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benvenuto nel Ricettario</title>
+    
+    <link rel="stylesheet" th:href="@{/css/stile.css}" />
+    <link rel="stylesheet" th:href="@{/css/welcome.css}" />
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <header class="main-header">
+        <div class="header-content-wrapper">
+            
+            <div class="header-left">
+                <a th:href="@{/}" class="btn-home-royal">
+                    <i class="fa-solid fa-house-chimney"></i> Home
+                </a>
+            </div>
+            
+            <div class="header-right">
+                <form th:action="@{/logout}" method="post" class="logout-form">
+                    <button type="submit" class="btn-logout">
+                        Logout <i class="fa-solid fa-right-from-bracket"></i>
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </header>
+
+    <div class="magic-background-layer"></div>
+
+    <div class="enchanted-container">
+        
+        <div class="success-card">
+            <img src="/images/logo2.png" alt="Logo" class="main-logo" />
+            
+            <h1 class="title-success">Bentornato!</h1>
+            
+            <p class="welcome-msg">
+                Chef <span class="highlight-name" th:text="${currentUser.name}">Nome</span>,
+            </p>
+            
+            <p class="sub-text">La cucina magica è pronta per le tue nuove creazioni.</p>
+
+            <div class="seal-container">
+                <div class="seal-circle">
+                    <i class="fas fa-hat-wizard"></i>
+                </div>
+            </div>
+
+            <div class="buttons-wrapper">
+                <a th:href="@{/}" class="btn-royal">
+                    <i class="fas fa-search"></i> Cerca Ricette
+                </a>
+                
+                <a th:href="@{/myRecipes}" class="btn-royal btn-royal-outline">
+                    <i class="fas fa-book-open"></i> Le mie ricette
+                </a>
+            </div>
+        </div>
+        
+    </div>
+
+</body>
+</html>

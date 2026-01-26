@@ -50,7 +50,7 @@ public class AuthenticationController {
 	@GetMapping(value = "/success")
 	public String defaultAfterLogin() {
 	    // tutti vengono mandati alle ricette
-	    return "redirect:/recipes";
+	    return "welcome";
 	}
 	    
 	
