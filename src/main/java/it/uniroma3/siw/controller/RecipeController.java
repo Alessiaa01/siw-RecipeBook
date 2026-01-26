@@ -1,6 +1,6 @@
 package it.uniroma3.siw.controller;
 
-import java.security.Principal;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +31,7 @@ import it.uniroma3.siw.service.IngredientService;
 import it.uniroma3.siw.service.RecipeService;
 import it.uniroma3.siw.service.ReviewService;
 import it.uniroma3.siw.repository.UserRepository;
+import it.uniroma3.siw.repository.ReviewRepository;
 import jakarta.validation.Valid;
 
 @Controller
@@ -45,6 +46,7 @@ public class RecipeController {
     @Autowired
     private ReviewService reviewService;
 
+
     @Autowired 
     private RecipeValidator recipeValidator;
     
@@ -53,6 +55,8 @@ public class RecipeController {
     
     @Autowired
     private UserRepository userRepository;
+    
+  
 
     // Blocca l'invio malevolo di campi sensibili tramite form
     //impedisce a un utente malintenzionato di iniettare un campo id o author nel form per sovrascrivere una ricetta 
@@ -70,11 +74,13 @@ public class RecipeController {
     public String getRecipe(@PathVariable("id") Long id, Model model) {
         Recipe recipe = recipeService.findById(id); //recupera la ricetta 
         model.addAttribute("recipe", recipe);
- 
+    
+        
         // Oggetti vuoti per i form nella pagina 
         model.addAttribute("ingredient", new Ingredient()); 
         model.addAttribute("review", new Review()); 
-        
+ 
+      
         return "recipe.html";
     }
 
