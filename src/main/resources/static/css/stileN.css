@@ -1,0 +1,947 @@
+/* ========================================================== */
+/* STILE.CSS - GLOBAL STYLESHEET PER SIW RECIPEBOOK           */
+/* ========================================================== */
+
+/* --- 1. VARIABILI GLOBALI (Unione di tutti i tuoi file) --- */
+:root {
+    /* Palette Colori */
+    --celeste-bg: #E1F5FE;
+    --celeste-accent: #81D4FA;
+    --marrone-dark: #5D4037;
+    --marrone-text: #5D4037; /* Sinonimo per coerenza */
+    
+    /* Ori e Metalli */
+    --oro: #C5A059;
+    --oro-shine: #E6C676;
+    --oro-light: #FFF8E1;
+    --bianco: #FFFFFF;
+    
+    /* Carte e Sfondi */
+    --parchment: #fffbf0;
+    --paper-bg: rgba(255, 255, 255, 0.94);
+    
+    /* Gradienti Standard */
+    --gradiente-oro: linear-gradient(45deg, var(--oro) 0%, var(--oro-shine) 50%, var(--oro) 100%);
+    --gradiente-rosso: linear-gradient(45deg, #D32F2F 0%, #FF6B6B 50%, #D32F2F 100%);
+    
+    /* Fonts */
+    --font-title: 'Cinzel Decorative', cursive;
+    --font-script: 'Rouge Script', cursive;
+    --font-body: 'Cormorant Garamond', serif;
+    --font-ui: 'Lato', sans-serif;
+    
+    /* Ombre */
+    --shadow-card: 0 10px 20px rgba(78, 52, 46, 0.1);
+    --shadow-gold: 0 4px 15px rgba(197, 160, 89, 0.4);
+}
+
+/* --- 2. RESET E BASE --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--oro) var(--celeste-bg);
+}
+
+body {
+    font-family: var(--font-body);
+    font-weight: 500;
+    color: var(--marrone-dark);
+    min-height: 100vh;
+    /* Background Default (Celeste) - Il login lo sovrascriverà */
+    background-color: var(--celeste-bg);
+    background-image: linear-gradient(to bottom, #E1F5FE 0%, #B3E5FC 100%);
+    background-attachment: fixed;
+}
+
+a { text-decoration: none; transition: 0.3s; color: inherit; }
+ul { list-style: none; }
+
+/* --- 3. SCROLLBAR PERSONALIZZATA (Presa dal tuo stile.css originale) --- */
+::-webkit-scrollbar { width: 12px; }
+::-webkit-scrollbar-track { background-color: var(--celeste-bg); }
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, var(--oro) 0%, var(--oro-shine) 50%, var(--oro) 100%);
+    border-radius: 20px;
+    border: 3px solid var(--celeste-bg);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--marrone-dark); cursor: pointer; }
+
+/* --- 4. COMPONENTI UI: BOTTONI --- */
+/* Unifico .royal-btn, .btn-gold, .dashboard-btn in un'unica classe */
+
+.btn-gold, .btn-royal { 
+    border: none; cursor: pointer;
+    font-family: var(--font-ui); font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    padding: 10px 24px; border-radius: 50px;
+    
+    /* Stile Oro */
+    background-image: var(--gradiente-oro);
+    background-size: 200% auto;
+    color: white !important;
+    box-shadow: var(--shadow-gold);
+    border: 1px solid rgba(255,255,255,0.2);
+    
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    transition: all 0.3s ease;
+    text-decoration: none !important;
+    font-size: 0.9rem;
+}
+
+.btn-gold:hover, .btn-royal:hover {
+    background-position: right center;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(197, 160, 89, 0.6);
+}
+
+/* Bottone Rosso (Logout) */
+.btn-red, .btn-logout {
+    @extend .btn-gold; /* Concettualmente */
+	background-image: linear-gradient(45deg, #D32F2F 0%, #FF6B6B 50%, #D32F2F 100%);
+	   background-size: 200% auto;
+	   color: white; border: none;
+	   font-family: 'Lato', sans-serif; font-weight: 700;
+	   text-transform: uppercase; font-size: 0.8rem;
+	   padding: 8px 18px; border-radius: 50px;
+	   cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
+	   box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
+	   transition: all 0.3s ease;
+	   }
+
+.btn-red:hover, .btn-logout:hover {
+	background-position: right center; transform: translateY(-2px);
+	   box-shadow: 0 6px 20px rgba(211, 47, 47, 0.5);
+}
+
+/* Bottone Outline (Registrati) */
+.btn-outline-gold {
+    background: transparent;
+    border: 2px solid var(--oro);
+    color: var(--marrone-dark);
+    padding: 8px 22px;
+    border-radius: 50px;
+    font-family: var(--font-ui); font-weight: 700; text-transform: uppercase;
+}
+.btn-outline-gold:hover {
+    background: var(--oro); color: white;
+}
+
+/* --- 5. COMPONENTI UI: HEADER STICKY (Unione di recipes e admin) --- */
+.main-header {
+    position: sticky; top: 0; z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 0.8rem 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+}
+
+.header-group { display: flex; align-items: center; gap: 15px; }
+
+/* --- 6. SPECIFICO PER LOGIN (ex formLogin.css) --- */
+/* Nota: usiamo una classe sul body o un container specifico per sovrascrivere lo sfondo */
+body.login-page {
+    background: url('/images/sfondoLogin.jpg') no-repeat center center fixed;
+    background-size: cover;
+    display: flex; justify-content: center; align-items: center;
+}
+body.login-page::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.3); z-index: -1;
+}
+
+.card-login {
+    background: var(--paper-bg);
+    border-radius: 20px;
+    width: 90%; max-width: 450px;
+    border: 2px solid #fff;
+    outline: 4px double var(--oro);
+    outline-offset: -8px;
+    padding: 2rem;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    text-align: center;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+/* Input Styles (Condivisi) */
+.magic-input {
+    border-radius: 50px;
+    padding: 12px 15px 12px 45px;
+    border: 1px solid #ddd;
+    background-color: #fcfcfc;
+    width: 100%;
+    transition: 0.3s;
+}
+.magic-input:focus {
+    border-color: var(--oro);
+    box-shadow: 0 0 10px rgba(197, 160, 89, 0.3);
+}
+
+/* --- 7. SPECIFICO PER RICETTE (ex recipes.css) --- */
+.recipe-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 3rem; padding: 2rem; max-width: 1200px; margin: 0 auto;
+}
+
+.recipe-card {
+    background-color: var(--parchment);
+    border-radius: 12px; overflow: hidden;
+    box-shadow: var(--shadow-card);
+    transition: all 0.4s;
+    display: flex; flex-direction: column;
+}
+.recipe-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 0 2px var(--oro), 0 20px 40px rgba(197, 160, 89, 0.2);
+}
+
+/* Immagini Card */
+.card-img-top {
+    height: 200px; width: 100%; object-fit: cover;
+    border-bottom: 3px solid var(--oro);
+}
+
+/* --- 8. UTILITIES --- */
+.text-gold { color: var(--oro); }
+.font-title { font-family: var(--font-title); }
+.flex-center { display: flex; justify-content: center; align-items: center; }
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+/* --- 9. SEZIONE ADMIN DASHBOARD (Aggiunta a stile.css) --- */
+
+/* Logo che fluttua (usato in Home e Admin) */
+.main-logo {
+    max-height: 180px;
+    filter: drop-shadow(0 5px 15px rgba(78, 52, 46, 0.2));
+    animation: magicFloat 4s ease-in-out infinite;
+    display: block; margin: 0 auto 1rem;
+}
+
+@keyframes magicFloat {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Griglia Dashboard */
+.dashboard-container {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 0 1.5rem 5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+}
+
+/* Card Dashboard (diverse dalle ricette perché hanno testo centrato e icone grandi) */
+.dashboard-card {
+    background-color: var(--parchment);
+    border-radius: 15px;
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    box-shadow: var(--shadow-card);
+    transition: all 0.3s ease;
+    display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+    min-height: 280px;
+    border: 1px solid rgba(197, 160, 89, 0.3);
+}
+
+.dashboard-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 0 0 2px var(--oro), 0 20px 40px rgba(197, 160, 89, 0.3);
+}
+
+.dashboard-card .icon {
+    font-size: 3.5rem;
+    color: var(--marrone-dark);
+    margin-bottom: 1rem;
+    transition: 0.3s;
+}
+
+.dashboard-card:hover .icon {
+    color: var(--oro);
+    transform: scale(1.1);
+}
+
+.dashboard-card h2 {
+    font-family: var(--font-title);
+    color: var(--marrone-dark);
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.dashboard-card p {
+    color: #777;
+    margin-bottom: 2rem;
+}
+
+/* --- 10. TABELLE DI GESTIONE (Aggiungi in fondo a stile.css) --- */
+
+/* Contenitore stile pergamena grande */
+.manage-container {
+    max-width: 1100px; 
+    margin: 3rem auto; 
+    padding: 2.5rem;
+    background-color: var(--parchment);
+    border-radius: 15px;
+    box-shadow: var(--shadow-card);
+    border: 1px solid rgba(197, 160, 89, 0.3);
+}
+
+/* Stile della Tabella */
+.magic-table {
+    width: 100%; 
+    border-collapse: collapse; 
+    margin-top: 2rem;
+}
+
+.magic-table th {
+    text-align: left; 
+    padding: 15px;
+    font-family: var(--font-title); 
+    color: var(--marrone-dark);
+    font-size: 1.1rem;
+    border-bottom: 2px solid var(--oro);
+}
+
+.magic-table td {
+    padding: 15px; 
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    vertical-align: middle;
+    color: #666;
+}
+
+.magic-table tr:hover {
+    background-color: rgba(197, 160, 89, 0.05);
+}
+
+/* Icone Azioni (Occhio, Penna, Cestino) */
+.btn-icon {
+    border: none; 
+    background: transparent; 
+    cursor: pointer;
+    font-size: 1.1rem; 
+    padding: 5px;
+    transition: transform 0.2s;
+    margin-right: 5px;
+}
+.btn-icon:hover { transform: scale(1.2); }
+
+.text-view { color: var(--marrone-dark); }
+.text-edit { color: var(--oro); }
+.text-delete { color: #d32f2f; }
+
+
+/* --- 11. BADGES UTENTI & BUTTONS PICCOLI (Aggiungi in fondo a stile.css) --- */
+
+/* Badge Ruolo (Admin/User) */
+.role-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: inline-block;
+    letter-spacing: 0.5px;
+}
+
+.badge-admin {
+    background-color: var(--marrone-dark);
+    color: var(--oro);
+    border: 1px solid var(--oro);
+}
+
+.badge-user {
+    background-color: #f0f0f0;
+    color: #555;
+    border: 1px solid #ccc;
+}
+
+/* Stato (Attivo/Bannato) */
+.status-text-active {
+    color: #2e7d32; /* Verde bosco */
+    font-weight: bold; display: flex; align-items: center; gap: 5px;
+}
+
+.status-text-banned {
+    color: #c62828; /* Rosso scuro */
+    font-weight: bold; display: flex; align-items: center; gap: 5px;
+}
+
+/* Riga tabella bannata (sbiadita) */
+.row-banned td {
+    opacity: 0.6;
+    background-color: rgba(0,0,0,0.02);
+}
+
+/* Bottone Piccolo per le tabelle */
+.btn-small {
+    padding: 6px 14px !important; /* Forza la dimensione ridotta */
+    font-size: 0.75rem !important;
+}
+
+/* --- 12. DETTAGLI RICETTE (Search Bar, Badges, Cuore) --- */
+
+/* Barra di Ricerca */
+.search-wrapper { display: flex; justify-content: center; margin-bottom: 3rem; padding: 0 1rem; }
+
+.magic-search-form {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 0.8rem;
+    border-radius: 50px;
+    display: flex; gap: 10px;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--oro);
+    flex-wrap: wrap; justify-content: center;
+}
+
+.input-group { position: relative; display: flex; align-items: center; }
+.icon-input { position: absolute; left: 15px; color: var(--oro); z-index: 1; }
+
+.magic-search-form input {
+    border: 1px solid #ddd;
+    background-color: var(--oro-light);
+    border-radius: 30px;
+    padding: 10px 15px 10px 40px; 
+    font-family: var(--font-ui);
+    color: var(--marrone-dark);
+    outline: none;
+}
+.magic-search-form input:focus { border-color: var(--oro); background-color: #fff; }
+
+/* Contenitore Immagine Card (per posizionare i badge) */
+.card-image-wrapper {
+    position: relative; height: 200px; overflow: hidden;
+    border-bottom: 3px solid var(--oro);
+}
+.card-image-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+.recipe-card:hover .card-image-wrapper img { transform: scale(1.1); }
+
+/* Badges (Difficoltà e Voto) */
+.difficulty-badge {
+    position: absolute; top: 15px; right: 0;
+    background: var(--oro); color: white;
+    padding: 4px 12px; font-size: 0.8rem; font-weight: bold;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+    border-radius: 4px 0 0 4px;
+}
+
+.rating-badge {
+    position: absolute; top: 10px; left: 10px;
+    background: rgba(255,255,255,0.95); color: #F57F17;
+    padding: 5px 10px; border-radius: 20px; font-weight: bold; font-size: 0.85rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Cuore Preferiti */
+.favorite-action { position: absolute; bottom: 10px; right: 10px; z-index: 10; }
+
+.btn-favorite {
+    width: 35px; height: 35px; border-radius: 50%;
+    background: rgba(255,255,255,0.9); border: none;
+    color: var(--marrone-dark); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+.btn-favorite:hover { transform: scale(1.1); background: white; color: #d32f2f; }
+
+/* Stile per i testi dentro la card */
+.card-content { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
+.recipe-title { font-family: var(--font-title); font-size: 1.5rem; color: var(--marrone-dark); font-weight: 700; margin-bottom: 0.5rem; display: block; }
+.recipe-description { font-size: 1rem; color: #777; margin-bottom: 1rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.card-divider { height: 1px; background-color: rgba(197, 160, 89, 0.4); margin: 1rem 0; }
+.card-footer { display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: #888; }
+.meta-info { display: flex; gap: 10px; }
+
+/* ========================================================== */
+/* 13. SCHEDA DETTAGLIO RICETTA (Stile "Celeste & Oro")       */
+/* ========================================================== */
+
+/* --- CARD PRINCIPALE --- */
+.single-recipe-card {
+    position: relative; 
+    z-index: 1; 
+    width: 90%; 
+    max-width: 1100px;
+    margin: 40px auto; 
+    padding: 60px 50px;
+    background-color: var(--parchment);
+    background-image: linear-gradient(to bottom, #fffbf0 0%, #fff8e1 100%);
+    border-radius: 12px;
+    box-shadow: 0 0 0 1px rgba(197, 160, 89, 0.3), 0 20px 50px rgba(78, 52, 46, 0.15);
+}
+
+.title-section h1 {
+    font-family: var(--font-title); 
+    font-size: 3.5rem; 
+    color: var(--marrone-dark);
+    text-align: center; 
+    margin-bottom: 0.5rem; 
+    text-shadow: 1px 1px 0px var(--oro);
+}
+
+.subtitle { 
+    text-align: center; 
+    font-size: 1.4rem; 
+    color: #777; 
+    margin-bottom: 2rem; 
+    font-style: italic; 
+}
+
+.meta-info-row { 
+    display: flex; 
+    justify-content: center; 
+    gap: 20px; 
+    color: var(--marrone-text); 
+    font-family: var(--font-ui); 
+    font-weight: 600; 
+    margin-bottom: 30px; 
+}
+.meta-info-row i { color: var(--oro); margin-right: 5px; }
+
+/* --- GRIGLIA CONTENUTO (2 Colonne) --- */
+.content-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 50px; 
+    align-items: start; 
+    position: relative; 
+    z-index: 2; 
+}
+
+/* --- COLONNA SINISTRA: Ingredienti & Procedura --- */
+.ingredients-header { 
+    text-align: center; 
+    margin-bottom: 20px; 
+    font-family: var(--font-title); 
+    color: var(--marrone-dark); 
+    border-bottom: 2px solid var(--oro); 
+    display: inline-block; 
+    padding-bottom: 5px; 
+    width: 100%; /* Opzionale: per centrare meglio la linea */
+}
+
+.ingredients-list { list-style: none; font-size: 1.2rem; }
+.ingredients-list li { 
+    margin-bottom: 12px; 
+    border-bottom: 1px dotted rgba(197, 160, 89, 0.4); 
+    padding-bottom: 5px; 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+}
+.star-icon { color: var(--oro); font-size: 0.8rem; }
+
+.procedure-text { 
+    margin-top: 30px; 
+    font-size: 1.15rem; 
+    line-height: 1.8; 
+    text-align: justify; 
+    background: rgba(255,255,255,0.5); 
+    padding: 20px; 
+    border-radius: 10px; 
+    border-left: 3px solid var(--oro); 
+}
+.procedure-text h3 {
+    font-family: var(--font-title);
+    color: var(--marrone-dark);
+    margin-bottom: 15px;
+}
+
+/* --- COLONNA DESTRA: Immagine & Dettagli --- */
+.recipe-image-wrapper { 
+    position: relative; 
+    padding: 10px; 
+    background: #fff; 
+    border: 1px solid var(--oro); 
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1); 
+    transform: rotate(2deg); 
+    margin-bottom: 30px; 
+    /* Manteniamo la foto grande per la view */
+    width: 100%;
+}
+.recipe-image-wrapper img { width: 100%; height: auto; display: block; }
+
+.tech-details { 
+    background-color: var(--oro-light); 
+    padding: 30px; 
+    border-radius: 15px; 
+    border: 1px dashed var(--oro); 
+    box-shadow: inset 0 0 15px rgba(197, 160, 89, 0.1);
+}
+
+.tech-details h3 { 
+    text-align: center; 
+    color: var(--marrone-dark); 
+    margin-bottom: 20px; 
+    font-family: var(--font-title); 
+    font-size: 1.6rem; 
+    border-bottom: 1px solid rgba(197, 160, 89, 0.3); 
+    padding-bottom: 10px; 
+}
+
+.tech-list { list-style: none; padding: 0; font-size: 1.1rem; }
+.tech-list li { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 12px; 
+    padding-bottom: 8px; 
+    border-bottom: 1px dotted rgba(197, 160, 89, 0.2); 
+}
+.tech-list li:last-child { border-bottom: none; }
+.tech-list span { color: var(--marrone-text); font-family: var(--font-ui); display: flex; align-items: center; gap: 10px; }
+.tech-list i { color: var(--oro); width: 20px; text-align: center; }
+.tech-list strong { color: var(--marrone-dark); font-weight: 700; }
+
+
+/* --- 14. SEZIONE COMMENTI --- */
+.reviews-section { 
+    margin-top: 60px; 
+    padding-top: 40px; 
+    border-top: 1px solid rgba(197, 160, 89, 0.3); 
+}
+.reviews-title {
+    font-family: var(--font-title);
+    color: var(--marrone-dark);
+    margin-bottom: 20px;
+}
+
+.review-card { 
+    background: #fff; 
+    border: 1px solid #eee; 
+    padding: 20px; 
+    margin-bottom: 20px; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
+    border-left: 5px solid var(--oro); 
+}
+
+.review-header { 
+    display: flex; 
+    justify-content: space-between; 
+    margin-bottom: 10px; 
+    font-weight: bold; 
+    color: var(--marrone-dark); 
+}
+.review-stars { color: #FFD700; }
+.review-title-text { display: block; margin-bottom: 5px; color: var(--marrone-dark); font-weight: bold; }
+.review-body-text { color: #555; font-style: italic; line-height: 1.5; }
+
+/* Box Nuova Recensione */
+.new-review-box { 
+    background: rgba(255,255,255,0.6); 
+    padding: 30px; 
+    border-radius: 15px; 
+    border: 1px solid var(--oro); 
+    margin-top: 40px; 
+}
+.new-review-box h3 { text-align: center; margin-bottom: 25px; color: var(--marrone-dark); font-family: var(--font-title); }
+
+.form-magic input, .form-magic select, .form-magic textarea { 
+    width: 100%; 
+    border: 1px solid #ddd; 
+    background-color: var(--oro-light); 
+    border-radius: 20px; 
+    padding: 12px 20px; 
+    font-family: var(--font-ui); 
+    margin-bottom: 15px; 
+    outline: none; 
+    transition: 0.3s; 
+}
+.form-magic input:focus, .form-magic textarea:focus, .form-magic select:focus { 
+    border-color: var(--oro); 
+    background-color: #fff; 
+    box-shadow: 0 0 8px rgba(197, 160, 89, 0.2); 
+}
+.form-magic .row { display: flex; gap: 15px; }
+
+.error-global { color: #d32f2f; text-align: center; margin-bottom: 15px; font-weight: bold; }
+.error-field { color: #d32f2f; font-size: 0.85rem; margin-top: -10px; margin-bottom: 10px; display: block; padding-left: 15px; }
+.guest-msg-container { text-align: center; margin-top: 30px; padding: 20px; background: rgba(255,255,255,0.4); border-radius: 10px; }
+.link-accedi-gold { color: var(--oro); font-weight: bold; }
+
+
+/* --- BOTTONI AZIONE E CENTRATURA --- */
+.admin-actions-centered { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 20px; 
+    margin: 40px auto 20px; 
+    width: 100%; 
+}
+
+/* Modifica ed Elimina Ricetta */
+.btn-edit-recipe, .btn-delete-recipe {
+    min-width: 180px; 
+    justify-content: center;
+    padding: 12px 25px;
+    border-radius: 50px;
+    font-family: var(--font-ui); font-weight: 700;
+    text-transform: uppercase; font-size: 0.85rem;
+    cursor: pointer; display: inline-flex; align-items: center; gap: 10px;
+    transition: all 0.3s ease;
+    border: none !important;
+    text-decoration: none !important;
+    color: white !important;
+}
+
+.btn-edit-recipe {
+    background-image: linear-gradient(45deg, #C5A059 0%, #E6C676 50%, #C5A059 100%);
+    box-shadow: 0 4px 15px rgba(197, 160, 89, 0.3);
+}
+.btn-edit-recipe:hover {
+    background-position: right center; transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(197, 160, 89, 0.5);
+}
+
+.btn-delete-recipe {
+    background-image: linear-gradient(45deg, #D32F2F 0%, #FF6B6B 50%, #D32F2F 100%);
+    box-shadow: 0 4px 15px rgba(211, 47, 47, 0.4);
+}
+.btn-delete-recipe:hover {
+    background-position: right center; transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(211, 47, 47, 0.6);
+}
+
+/* Modifica ed Elimina Recensione */
+.review-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px; }
+
+.btn-review-edit, .btn-review-delete {
+    min-width: 120px; 
+    justify-content: center;
+    padding: 8px 15px;
+    font-size: 0.75rem;
+    border-radius: 50px;
+    font-family: var(--font-ui); font-weight: 700;
+    text-transform: uppercase;
+    display: inline-flex; align-items: center; gap: 6px;
+    border: none !important;
+    outline: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-decoration: none !important;
+    color: white !important;
+}
+
+.btn-review-edit {
+    background-image: linear-gradient(45deg, #C5A059 0%, #E6C676 50%, #C5A059 100%);
+    box-shadow: 0 4px 12px rgba(197, 160, 89, 0.3);
+}
+.btn-review-edit:hover {
+    background-position: right center; transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(197, 160, 89, 0.5);
+}
+
+.btn-review-delete {
+    background-image: linear-gradient(45deg, #D32F2F 0%, #FF6B6B 50%, #D32F2F 100%);
+    box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
+}
+.btn-review-delete:hover {
+    background-position: right center; transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(211, 47, 47, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .content-grid { grid-template-columns: 1fr; }
+    .recipe-image-wrapper { transform: rotate(0deg); max-width: 100%; }
+    .title-section h1 { font-size: 2.5rem; }
+    .single-recipe-card { padding: 30px 20px; }
+    .btn-edit-recipe, .btn-delete-recipe { min-width: 140px; }
+}
+
+
+/* --- 15. TABELLA "LE MIE RICETTE" (Empty State) --- */
+.empty-state-container { text-align: center; padding: 3rem 1rem; color: #999; }
+.empty-state-icon { font-size: 3.5rem; color: var(--oro); margin-bottom: 1rem; opacity: 0.5; }
+.table-date { font-size: 0.9rem; color: #666; display: flex; align-items: center; gap: 6px; font-weight: 600; }
+.table-date i { color: var(--oro); }
+.table-recipe-title { font-weight: 700; color: var(--marrone-dark); text-decoration: none; font-size: 1rem; transition: 0.2s; display: flex; align-items: center; gap: 8px; }
+.table-recipe-title:hover { color: var(--oro); transform: translateX(3px); }
+
+/* ========================================================== */
+/* STILE UNIFICATO: MAGIC & PARCHMENT (Nuova Ricetta)         */
+/* ========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap');
+
+:root {
+    --celeste-bg: #E1F5FE;       
+    --celeste-accent: #81D4FA;   
+    --marrone-dark: rgb(100, 62, 41);
+    --marrone-text: #5D4037;
+    --oro: #C5A059;
+    --oro-light: #FFF8E1;        
+    --bianco: #FFFFFF;
+    --parchment: #fffbf0;   
+    --royal-gold: #c5a059;
+    --font-title: 'Cinzel Decorative', cursive; 
+    --font-body: 'Cormorant Garamond', serif;   
+    --font-ui: 'Lato', sans-serif;              
+}
+
+body {
+    background-color: var(--celeste-bg);
+    background-image: linear-gradient(to bottom, #E1F5FE 0%, #B3E5FC 100%);
+    background-attachment: fixed;
+    font-family: var(--font-body);
+    color: var(--marrone-text);
+    min-height: 100vh;
+}
+
+/* --- HEADER --- */
+.main-header {
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+    padding: 0.8rem 2rem;
+    position: sticky; top: 0; z-index: 1000;
+}
+
+.header-content-wrapper { display: flex; justify-content: space-between; align-items: center; }
+.header-group { display: flex; align-items: center; gap: 15px; }
+
+/* --- CARD PERGAMENA --- */
+.single-recipe-card {
+    position: relative; z-index: 1; width: 90%; max-width: 1000px;
+    margin: 40px auto; padding: 50px;
+    background-color: var(--parchment);
+    background-image: linear-gradient(to bottom, #fffbf0 0%, #fff8e1 100%);
+    border-radius: 12px;
+    box-shadow: 0 0 0 1px rgba(197, 160, 89, 0.3), 0 20px 50px rgba(78, 52, 46, 0.15);
+}
+
+.form-title h1 {
+    font-family: var(--font-title); font-size: 3rem; color: var(--marrone-dark);
+    text-align: center; margin-bottom: 30px; text-shadow: 1px 1px 0px var(--oro);
+}
+
+/* --- INPUT & FORM --- */
+.input-group { margin-bottom: 25px; }
+label {
+    display: block; font-family: var(--font-ui); font-weight: 700;
+    color: var(--marrone-dark); margin-bottom: 8px;
+    text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;
+}
+
+.magic-input, .magic-textarea, select.magic-input {
+    width: 100%; background-color: var(--oro-light);
+    border: 1px solid #ddd; border-radius: 15px;
+    padding: 12px 20px; font-family: var(--font-body);
+    font-size: 1.1rem; color: var(--marrone-text);
+    transition: all 0.3s ease; outline: none;
+}
+.magic-input:focus, .magic-textarea:focus { background-color: #fff; border-color: var(--oro); box-shadow: 0 0 10px rgba(197, 160, 89, 0.2); }
+
+/* Griglia Dettagli Tecnici */
+.details-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px; background: rgba(255, 255, 255, 0.5);
+    padding: 25px; border-radius: 15px; border: 1px dashed var(--oro); margin-bottom: 30px;
+}
+
+/* --- INGREDIENTI DINAMICI --- */
+.columns-container { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 30px; }
+
+.section-header-styled {
+    text-align: center; margin-bottom: 20px; font-family: var(--font-title); 
+    color: var(--marrone-dark); border-bottom: 2px solid var(--oro); 
+    display: block; padding-bottom: 10px; font-size: 2.2rem; font-weight: bold;
+}
+
+.ing-row-dynamic {
+    display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-end;
+    background: #fff; padding: 10px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.magic-input-sm { width: 100%; padding: 8px 10px; border: 1px solid #eee; background: var(--oro-light); border-radius: 8px; }
+
+.mini-del-btn {
+    background: #FFCDD2; color: #D32F2F; width: 30px; height: 30px; border-radius: 50%;
+    border: none; display: flex; align-items: center; justify-content: center; cursor: pointer;
+}
+
+/* --- TAGS DIETE --- */
+.tags-container { margin-bottom: 20px; padding: 15px; background: rgba(255, 255, 255, 0.5); border-radius: 10px; border: 1px solid rgba(184, 134, 11, 0.3); }
+.diet-label { display: block; margin-bottom: 15px; font-weight: bold; color: #b8860b; font-size: 1.1em; }
+.checkbox-wrapper { display: flex; gap: 15px; flex-wrap: wrap; }
+.magic-checkbox-label {
+    cursor: pointer; display: flex; align-items: center; gap: 8px; padding: 8px 12px;
+    border-radius: 20px; background-color: rgba(255, 255, 255, 0.7); transition: 0.3s; font-weight: 500;
+}
+.magic-checkbox-label:hover { transform: translateY(-2px); box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+
+/* Colori Icone Tags */
+.checkbox-veg i { color: #4CAF50; } .checkbox-vegan i { color: #2E7D32; }
+.checkbox-gluten i { color: #FF9800; } .checkbox-lactose i { color: #2196F3; }
+
+/* --- POLAROID PREVIEW --- */
+.preview-container { display: flex; flex-direction: column; align-items: center; margin: 40px 0; padding-top: 30px; border-top: 1px solid rgba(197, 160, 89, 0.3); }
+.polaroid-frame {
+    background: white; padding: 15px 15px 40px 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    transform: rotate(-2deg); border: 1px solid #eee; margin-bottom: 20px; max-width: 300px;
+}
+.polaroid-frame img { width: 100%; height: auto; display: block; }
+
+/* --- FOOTER BUTTONS (Centratura Tasti) --- */
+.footer-buttons {
+    display: flex;
+    justify-content: center; /* Centra orizzontalmente i bottoni */
+    align-items: center;     /* Allinea verticalmente i bottoni */
+    gap: 20px;               /* Spazio tra il tasto Salva e il tasto Annulla */
+    margin-top: 40px;        /* Distanza dal contenuto superiore */
+    width: 100%;             /* Assicura che il contenitore occupi tutta la larghezza */
+}
+
+/* Opzionale: assicura che i bottoni abbiano una dimensione simile */
+.footer-buttons .btn-gold, 
+.footer-buttons .btn-gold-outline {
+    min-width: 180px;        /* Rende i tasti larghi uguali per simmetria */
+    justify-content: center;
+}
+
+/* --- TASTO AGGIUNGI INGREDIENTE (Nuovo Stile Coerente) --- */
+.btn-add-dashed {
+    background-image: linear-gradient(45deg, #C5A059 0%, #E6C676 50%, #C5A059 100%);
+    background-size: 200% auto;
+    color: white !important;
+    border: none !important;
+    border-radius: 50px;
+    padding: 10px 25px;
+    font-family: var(--font-ui);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(197, 160, 89, 0.3);
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.btn-add-dashed:hover {
+    background-position: right center;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(197, 160, 89, 0.5);
+}
+
+/* Centratura del tasto sotto la lista ingredienti */
+.ingredients-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra il tasto orizzontalmente */
+}
+
+#ingredients-container {
+    width: 100%; /* Assicura che la lista occupi tutto lo spazio */
+}
